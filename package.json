@@ -1,0 +1,47 @@
+{
+  "name": "allmywallets",
+  "version": "0.0.1",
+  "repository": "https://github.com/allmywallets/allmywallets",
+  "main": "app/main.js",
+  "scripts": {
+    "lint": "eslint 'app/**/*.@(js|vue)'",
+    "lint:fix": "eslint --fix 'app/**/*.@(js|vue)'",
+    "start": "webpack-dev-server --devtool eval --progress --hot --content-base app",
+    "deploy": "NODE_ENV=production webpack --config webpack.production.config.js"
+  },
+  "dependencies": {
+    "babel-runtime": "latest",
+    "bootstrap-4-grid": "^2.0.0",
+    "bootstrap-reboot": "^0.1.1",
+    "vue": "latest",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "latest",
+    "babel-eslint": "latest",
+    "babel-loader": "latest",
+    "babel-plugin-transform-runtime": "latest",
+    "babel-preset-es2015": "latest",
+    "babel-preset-stage-0": "latest",
+    "copy-webpack-plugin": "^4.2.3",
+    "css-loader": "^0.26.1",
+    "eslint": "^3.0.0",
+    "eslint-plugin-html": "^3.2.2",
+    "eslint-plugin-import": "^2.8.0",
+    "extract-text-webpack-plugin": "^2.0.0",
+    "file-loader": "^1.1.5",
+    "node-sass": "^3.0.0",
+    "resolve-url-loader": "^2.2.0",
+    "sass-loader": "^2.0.0",
+    "standard": "^10.0.3",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.6.2",
+    "vue-loader": "^13.5.0",
+    "vue-template-compiler": "^2.5.3",
+    "webpack": "^2.1.0-beta.22",
+    "webpack-dev-server": "^2.1.0-beta.8",
+    "workbox-webpack-plugin": "^2.1.2"
+  },
+  "author": "Quentin de Longraye",
+  "license": "MIT"
+}

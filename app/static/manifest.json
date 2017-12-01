@@ -1,0 +1,9 @@
+{
+  "name": "All My Wallets",
+  "short_name": "AllMyWallets",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#1576c4",
+  "theme_color": "#1576c4"
+}
