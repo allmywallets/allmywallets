@@ -11,17 +11,18 @@ module.exports = {
     port: 8080
   },
   devtool: 'source-map',
-  entry: [
-    'webpack-dev-server/client?http://localhost:8080',
-    path.resolve(__dirname, 'app/main.js')
-  ],
+  entry: {
+    'webpack': 'webpack-dev-server/client?http://localhost:8080',
+    'main': ['babel-polyfill', path.resolve(__dirname, 'app/main.js')],
+    'service-worker': path.resolve(__dirname, 'app/service-worker.js')
+  },
   output: {
-    path: __dirname + '/build',
+    path: path.resolve(__dirname, 'build'),
     publicPath: '/',
-    filename: './bundle.js'
+    filename: './[name].js'
   },
   module: {
-    loaders:[
+    loaders: [
       {
         test: /\.js$/,
         include: path.resolve(__dirname, 'app'),
