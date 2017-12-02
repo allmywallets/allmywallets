@@ -3,5 +3,9 @@
   "plugins": [
     "import",
     "html"
-  ]
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  }
 }

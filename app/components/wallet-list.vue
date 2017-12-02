@@ -12,7 +12,6 @@
 
 <script>
   import Wallet from './wallet.vue'
-  import Proxy from '../providers'
 
   export default {
     name: 'wallet-list',
