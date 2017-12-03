@@ -11,6 +11,7 @@
 </template>
 
 <script>
+  import Storage from '../storage'
   import Wallet from './wallet.vue'
 
   export default {
@@ -24,7 +25,7 @@
       Wallet
     },
     mounted () {
-      this.wallets = JSON.parse(localStorage['configuration']).profiles[0].wallets
+      this.wallets = Storage.configuration.profiles[0].wallets
     }
   }
 </script>

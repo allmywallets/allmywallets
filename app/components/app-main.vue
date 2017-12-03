@@ -2,7 +2,8 @@
   <main>
     <app-navigation></app-navigation>
     <app-header></app-header>
-    <span v-if="error">Error</span>
+    <span v-if="error">Error while loading service worker</span>
+    <span v-if="offline">Offline</span>
     <router-view></router-view>
   </main>
 </template>
@@ -15,7 +16,8 @@
     name: 'app-main',
     data () {
       return {
-        error: false
+        error: false,
+        offline: false
       }
     },
     components: {

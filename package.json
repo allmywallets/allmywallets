@@ -13,6 +13,7 @@
     "babel-runtime": "latest",
     "bootstrap-4-grid": "^2.0.0",
     "bootstrap-reboot": "^0.1.1",
+    "schema-object": "^4.0.11",
     "vue": "latest",
     "vue-router": "^3.0.1"
   },
