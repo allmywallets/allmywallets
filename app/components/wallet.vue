@@ -18,6 +18,7 @@
         <span v-if="loading">refreshing data</span>
       </div>
       <div v-else>
+        <a href="#" @click.prevent="refresh">refresh</a>
         error
       </div>
     </div>
