@@ -21,21 +21,15 @@
 </template>
 
 <script>
-  import Proxy from '../providers'
+  import Wallet from '../model/Wallet'
 
   export default {
     name: 'wallet',
-    props: ['currency', 'provider', 'parameters'],
-    data () {
-      return {
-        wallet: null
+    props: {
+      wallet: {
+        type: Wallet,
+        required: true
       }
-    },
-    mounted () {
-      new Proxy(this.currency, this.provider, this.parameters)
-          .getWalletData()
-          .then((wallet) => { this.wallet = wallet })
-          .catch(() => { this.wallet = false })
     }
   }
 </script>

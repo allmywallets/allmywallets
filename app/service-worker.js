@@ -1,3 +1,5 @@
+import Synchronizer from './synchronizer'
+
 const PRECACHE = 'precache-' + process.env.VERSION
 const RUNTIME = 'runtime'
 
@@ -44,5 +46,11 @@ self.addEventListener('fetch', event => {
         })
       })
     )
+  }
+})
+
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'wallets-sync') {
+    event.waitUntil(Synchronizer.sync())
   }
 })

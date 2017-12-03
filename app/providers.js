@@ -6,7 +6,7 @@ const providers = {
   'ethereum.etherscan': EthereumEtherscan
 }
 
-class Proxy {
+export default class Proxy {
   constructor (currency, provider, parameters) {
     const currencyProvider = `${currency}.${provider}`
 
@@ -17,5 +17,3 @@ class Proxy {
     return new providers[currencyProvider](parameters)
   }
 }
-
-export default Proxy

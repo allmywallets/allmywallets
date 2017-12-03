@@ -1,4 +1,4 @@
-export default class Wallet {
+export default class Transaction {
   constructor (type, from, to, amount) {
     this._type = type
     this._from = from
@@ -20,5 +20,16 @@ export default class Wallet {
 
   get amount () {
     return this._amount
+  }
+
+  static fromObject (object) {
+    const transaction = new Transaction()
+
+    transaction._type = object._type
+    transaction._from = object._from
+    transaction._to = object._to
+    transaction._amount = object._amount
+
+    return transaction
   }
 }

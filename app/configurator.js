@@ -1,7 +1,7 @@
 import SchemaObject from 'schema-object'
 import idbKeyval from 'idb-keyval'
 
-export default class Storage {
+export default class Configurator {
   static async getConfiguration () {
     let configuration = await idbKeyval.get('configuration')
 

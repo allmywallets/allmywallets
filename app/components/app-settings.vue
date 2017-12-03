@@ -35,7 +35,7 @@
 </template>
 
 <script>
-  import Storage from '../storage'
+  import Configurator from '../configurator'
 
   export default {
     name: 'app-settings',
@@ -48,7 +48,7 @@
     methods: {
       async updateConfiguration () {
         try {
-          await Storage.setConfiguration(JSON.parse(this.configuration))
+          await Configurator.setConfiguration(JSON.parse(this.configuration))
           this.error = ''
         } catch (e) {
           this.error = e.message
@@ -56,7 +56,7 @@
       }
     },
     async mounted () {
-      this.configuration = JSON.stringify(await Storage.getConfiguration(), null, 2)
+      this.configuration = JSON.stringify(await Configurator.getConfiguration(), null, 2)
     }
   }
 </script>
