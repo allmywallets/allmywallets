@@ -21,7 +21,13 @@ export default class Synchronizer {
   }
 
   static async load () {
-    return idbKeyval.get('wallets').then((wallets) => wallets.map(wallet => Wallet.fromObject(wallet)))
+    const wallets = idbKeyval.get('wallets')
+
+    if (wallets === null) {
+      return []
+    }
+
+    return wallets.then((wallets) => wallets.map(wallet => Wallet.fromObject(wallet)))
   }
 
   static async lastUpdate () {
