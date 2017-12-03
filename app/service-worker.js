@@ -49,8 +49,29 @@ self.addEventListener('fetch', event => {
   }
 })
 
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'wallets-sync') {
-    event.waitUntil(Synchronizer.sync())
+self.addEventListener('message', async (event) => {
+  const action = event.data.action
+
+  if (action !== 'sync') {
+    return
   }
+
+  const walletId = event.data.id
+
+  let success = true
+  try {
+    await event.waitUntil(Synchronizer.sync(walletId))
+  } catch (e) {
+    success = false
+  }
+
+  const clients = await self.clients.matchAll()
+
+  clients.forEach((client) => {
+    client.postMessage({
+      action: action,
+      id: walletId,
+      success: success
+    })
+  })
 })

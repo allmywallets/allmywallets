@@ -2,8 +2,7 @@
   <main>
     <app-navigation></app-navigation>
     <app-header></app-header>
-    <span v-if="error">Error while loading service worker</span>
-    <span v-if="offline">Offline</span>
+    <span v-if="offline">Offline mode</span>
     <a href="#" @click.prevent="enableNotifications()">enable notifs</a>
     <router-view></router-view>
   </main>
@@ -17,7 +16,6 @@
     name: 'app-main',
     data () {
       return {
-        error: false,
         offline: false
       }
     },
@@ -35,11 +33,7 @@
       }
     },
     mounted () {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js').catch(() => { this.error = true })
-      }
-
-      window.addEventListener('offline', () => { this.error = true })
+      window.addEventListener('offline', () => { this.offline = true })
     }
   }
 </script>

@@ -4,30 +4,31 @@ import Proxy from './providers'
 import Wallet from './model/Wallet'
 
 export default class Synchronizer {
-  static async sync () {
+  static async sync (walletId) {
     const configuration = await Configurator.getConfiguration()
+    const wallets = configuration.profiles[0].wallets
 
-    const wallets = []
-    for (const wallet of configuration.profiles[0].wallets) {
-      try {
-        wallets.push(await new Proxy(wallet.currency, wallet.provider, wallet.parameters).getWalletData())
-      } catch (e) {}
+    if (walletId >= wallets.length) {
+      return
     }
 
-    return Promise.all([
-      idbKeyval.set('wallets', wallets),
-      idbKeyval.set('lastUpdate', new Date())
-    ])
+    const wallet = await new Proxy(
+      wallets[walletId].currency,
+      wallets[walletId].provider,
+      wallets[walletId].parameters
+    ).getWalletData()
+
+    return idbKeyval.set(`wallet-${walletId}`, wallet)
   }
 
-  static async load () {
-    const wallets = await idbKeyval.get('wallets')
+  static async load (walletId) {
+    const wallet = await idbKeyval.get(`wallet-${walletId}`)
 
-    if (wallets === undefined) {
-      return []
+    if (wallet === undefined) {
+      return null
     }
 
-    return wallets.map(wallet => Wallet.fromObject(wallet))
+    return Wallet.fromObject(wallet)
   }
 
   static async lastUpdate () {

@@ -7,6 +7,7 @@ export default class Wallet {
     this._unit = unit
     this._amount = amount
     this._transactions = transactions
+    this._lastUpdate = new Date()
   }
 
   get name () {
@@ -27,6 +28,10 @@ export default class Wallet {
 
   get transactions () {
     return this._transactions
+  }
+
+  get lastUpdate () {
+    return this._lastUpdate
   }
 
   static fromObject (object) {
