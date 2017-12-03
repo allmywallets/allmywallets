@@ -24,8 +24,9 @@
     components: {
       Wallet
     },
-    mounted () {
-      this.wallets = Storage.configuration.profiles[0].wallets
+    async mounted () {
+      const configuration = await Storage.getConfiguration()
+      this.wallets = configuration.profiles[0].wallets
     }
   }
 </script>

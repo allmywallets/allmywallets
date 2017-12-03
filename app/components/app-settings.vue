@@ -46,17 +46,17 @@
       }
     },
     methods: {
-      updateConfiguration () {
+      async updateConfiguration () {
         try {
-          Storage.configuration = JSON.parse(this.configuration)
+          await Storage.setConfiguration(JSON.parse(this.configuration))
           this.error = ''
         } catch (e) {
           this.error = e.message
         }
       }
     },
-    mounted () {
-      this.configuration = JSON.stringify(Storage.configuration, null, 2)
+    async mounted () {
+      this.configuration = JSON.stringify(await Storage.getConfiguration(), null, 2)
     }
   }
 </script>

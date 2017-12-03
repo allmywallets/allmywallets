@@ -4,6 +4,7 @@
     <app-header></app-header>
     <span v-if="error">Error while loading service worker</span>
     <span v-if="offline">Offline</span>
+    <a href="#" @click.prevent="enableNotifications()">enable notifs</a>
     <router-view></router-view>
   </main>
 </template>
@@ -24,10 +25,20 @@
       AppNavigation,
       AppHeader
     },
+    methods: {
+      enableNotifications () {
+        if ('Notification' in window) {
+          if (Notification.permission !== 'denied' && Notification.permission !== 'granted') {
+            Notification.requestPermission()
+          }
+        }
+      }
+    },
     mounted () {
-      if ('serviceWorker' in navigator) {
+      if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
         navigator.serviceWorker.register('/service-worker.js').catch(() => { this.error = true })
       }
+
       window.addEventListener('offline', () => { this.error = true })
     }
   }

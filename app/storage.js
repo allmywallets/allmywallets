@@ -1,20 +1,17 @@
 import SchemaObject from 'schema-object'
+import idbKeyval from 'idb-keyval'
 
 export default class Storage {
-  static get configuration () {
-    let configuration = localStorage.getItem('configuration')
+  static async getConfiguration () {
+    let configuration = await idbKeyval.get('configuration')
 
-    if (configuration !== null) {
-      configuration = JSON.parse(configuration)
-    } else {
-      configuration = {}
-    }
+    configuration = configuration || { profiles: [ { wallets: [ ] } ] }
 
     return this.parseConfiguration(configuration)
   }
 
-  static set configuration (configuration) {
-    localStorage.setItem('configuration', JSON.stringify(this.parseConfiguration(configuration)))
+  static setConfiguration (configuration) {
+    return idbKeyval.set('configuration', this.parseConfiguration(configuration).toObject())
   }
 
   static parseConfiguration (configuration) {

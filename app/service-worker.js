@@ -1,11 +1,6 @@
-if (process.env.NODE_ENV !== 'production') {
-  throw new Error('Service worker will be ignored in development mode')
-}
-
 const PRECACHE = 'precache-' + process.env.VERSION
 const RUNTIME = 'runtime'
 
-// A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
   'index.html',
   './',
