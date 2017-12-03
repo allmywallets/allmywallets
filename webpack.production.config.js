@@ -1,16 +1,15 @@
 let webpack = require('webpack')
 let path = require('path')
-let uglifyJsPlugin = webpack.optimize.UglifyJsPlugin
 let CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   devtool: 'cheap-source-map',
   entry: {
-    'main': path.resolve(__dirname, 'app/main.js'),
+    'main': ['babel-polyfill', path.resolve(__dirname, 'app/main.js')],
     'service-worker': path.resolve(__dirname, 'app/service-worker.js')
   },
   output: {
-    path: __dirname + '/build',
+    path: path.resolve(__dirname, 'build'),
     publicPath: '/',
     filename: './[name].js'
   },
@@ -34,7 +33,7 @@ module.exports = {
           }
         }
       },
-      { test: /\.(png|jpe?g|gif|svg|ttf|woff2?|eot|ico)(\?.*)?$/, loader: 'url-loader', query: { limit: 10000, name: 'assets/[name].[ext]'}}
+      { test: /\.(png|jpe?g|gif|svg|ttf|woff2?|eot|ico)(\?.*)?$/, loader: 'url-loader', query: { limit: 10000, name: 'assets/[name].[ext]' } }
     ]
   },
   resolve: {
@@ -44,7 +43,7 @@ module.exports = {
     }
   },
   plugins: [
-    new uglifyJsPlugin({
+    new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       }

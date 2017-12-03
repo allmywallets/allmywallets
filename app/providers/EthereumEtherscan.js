@@ -1,7 +1,7 @@
 import Wallet from '../model/Wallet'
 import Transaction from '../model/Transaction'
 
-const API_URL = 'http://api.etherscan.io/api'
+const API_URL = 'https://api.etherscan.io/api'
 
 export default class EthereumEtherscan {
   constructor (parameters) {
