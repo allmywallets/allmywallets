@@ -35,7 +35,7 @@
       }
     },
     mounted () {
-      if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+      if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js').catch(() => { this.error = true })
       }
 
