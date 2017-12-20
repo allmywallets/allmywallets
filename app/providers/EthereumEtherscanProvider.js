@@ -13,28 +13,24 @@ export default class EthereumEtherscan extends AbstractProvider {
     this.address = parameters.address
     this.apiKey = parameters.apiKey || ''
 
-    this.tokens = parameters.tokens
-    this.customTokens = parameters.customTokens
+    this.tokens = parameters.tokens || []
+    this.customTokens = parameters.customTokens || []
   }
 
   async _getTokensBalances () {
     const promises = []
-    if (this.tokens) {
-      this.tokens.forEach(tokenTicker => {
-        const token = ERC20Token[tokenTicker]
-        if (!token) {
-          console.err(`${tokenTicker} not found`)
-          return
-        }
+    this.tokens.forEach(tokenTicker => {
+      const token = ERC20Token[tokenTicker]
+      if (!token) {
+        console.err(`${tokenTicker} not found`)
+        return
+      }
 
-        promises.push(this._getTokenBalance(token))
-      })
-    }
-    if (this.customTokens) {
-      this.customTokens.forEach(token => {
-        promises.push(this._getTokenBalance(token))
-      })
-    }
+      promises.push(this._getTokenBalance(token))
+    })
+    this.customTokens.forEach(token => {
+      promises.push(this._getTokenBalance(token))
+    })
 
     return Promise.all(promises)
   }
@@ -46,7 +42,6 @@ export default class EthereumEtherscan extends AbstractProvider {
   }
 
   async getWalletData () {
-    this._getTokensBalances()
     let promises = await Promise.all([
       fetch(`${API_URL}?module=account&action=balance&address=${this.address}&sort=desc&tag=latest`).then((response) => response.json()),
       fetch(`${API_URL}?module=account&action=txlist&address=${this.address}&sort=desc&tag=latest`).then((response) => response.json()),
