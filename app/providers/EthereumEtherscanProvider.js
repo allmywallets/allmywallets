@@ -33,15 +33,22 @@ export default class EthereumEtherscan extends AbstractProvider {
 
   async _getTokensBalances () {
     const promises = []
-    this.tokens.forEach(tokenTicker => {
-      const token = this.tokenList[tokenTicker]
-      if (!token) {
-        console.err(`${tokenTicker} not found`)
-        return
-      }
+    if (this.tokens) {
+      this.tokens.forEach(tokenTicker => {
+        const token = this.tokenList[tokenTicker]
+        if (!token) {
+          console.err(`${tokenTicker} not found`)
+          return
+        }
 
-      promises.push(this._getTokenBalance(token))
-    })
+        promises.push(this._getTokenBalance(token))
+      })
+    }
+    if (this.customTokens) {
+      this.customTokens.forEach(token => {
+        promises.push(this._getTokenBalance(token))
+      })
+    }
 
     return Promise.all(promises)
   }
@@ -60,7 +67,7 @@ export default class EthereumEtherscan extends AbstractProvider {
       this._getTokensBalances()
     ])
 
-    const ethereumBalance = new Balance('Ethereum', 'ETH', promises[0].result / 1e18, this.parseTransactions(promises[1].result))
+    const ethereumBalance = new Balance('Ethereum', 'ETH', promises[0].result / 1e18, this._parseTransactions(promises[1].result))
     const tokenBalances = promises[2]
     const balances = tokenBalances
     balances.unshift(ethereumBalance)
@@ -68,7 +75,7 @@ export default class EthereumEtherscan extends AbstractProvider {
     return new Wallet(balances, new Date())
   }
 
-  parseTransactions (rawTransactions) {
+  _parseTransactions (rawTransactions) {
     const transactions = []
 
     rawTransactions.forEach((transaction) => {
