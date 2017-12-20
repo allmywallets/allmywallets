@@ -65,7 +65,7 @@
     data () {
       return {
         wallet: null,
-        loading: true,
+        loading: false,
         status: { success: true, message: '' }
       }
     },
@@ -77,13 +77,11 @@
 
         this.status = message.data.status
 
-        try {
-          this.wallet = await database.getWallet(message.data.id)
-        } catch (e) {
-          this.status = { success: false, message: 'Failed to retrieve wallet data in database' }
+        if (!this.status.success) {
+          return
         }
 
-        this.loading = false
+        this.updateWallet()
       },
       async refresh () {
         this.loading = true
@@ -92,29 +90,31 @@
           action: 'sync',
           id: this.id
         })
+      },
+      async updateWallet () {
+        this.loading = true
+
+        try {
+          this.wallet = await database.getWallet(this.id)
+        } catch (e) {
+          this.status = { success: false, message: 'Failed to retrieve wallet data in database' }
+        }
+
+        this.loading = false
       }
     },
     async mounted () {
       this.$serviceWorker.addEventListener('message', this.load)
 
-      try {
-        this.wallet = await database.getWallet(this.id)
-      } catch (e) {
-        this.failure = true
-      }
-
-      this.loading = false
+      this.updateWallet()
     }
   }
 </script>
 
 <style scoped lang="scss">
   .wallet {
-    max-height: 200px;
+    height: 300px;
     overflow-y: scroll;
-    max-width: 500px;
-    float: left;
     border: 1px solid black;
-    margin-right: 10px;
   }
 </style>

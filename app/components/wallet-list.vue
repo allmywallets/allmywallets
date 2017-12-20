@@ -38,3 +38,12 @@
     }
   }
 </script>
+
+<style scoped lang="scss">
+  section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+  }
+</style>
