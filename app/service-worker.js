@@ -60,7 +60,7 @@ self.addEventListener('message', async event => {
 
   let success = true
   try {
-    await event.waitUntil(synchronizer.sync(walletId))
+    await synchronizer.sync(walletId)
   } catch (e) {
     success = false
   }
