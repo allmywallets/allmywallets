@@ -1,82 +1,20 @@
 <template>
   <div>
-   You can put as many wallets as you want.
-    <p>Example:</p>
-    <pre>
-{
-  "profiles": [
-    {
-      "wallets": [
-        {
-          "network": "bitcoin",
-          "provider": "blockexplorer",
-          "name": "My Bitcoin wallet",
-          "parameters": {
-            "address": "ADDRESS"
-          }
-        },
-        {
-          "network": "ethereum",
-          "provider": "etherscan",
-          "name": "My Ethereum wallet",
-          "parameters": {
-            "address": "ADDRESS",
-            "tokens": ["POWR"],
-            "customTokens": [
-              {
-                "name": "Indorse",
-                "ticker": "IND",
-                "decimals": 18,
-                "contractAdress": "0xf8e386eda857484f5a12e4b5daa9984e06e73705"
-              }
-            ]
-          }
-        },
-        {
-          "network": "iota",
-          "provider": "native",
-          "name": "My IOTA wallet",
-          "parameters": {
-            "address": "ADDRESS",
-            "node": "https://iota.thathost.net"
-          }
-        }
-      ]
-    }
-  ]
-}
-    </pre>
-    <p>Current (editable) config:</p>
-    <strong>{{ error }} <br /></strong>
-    <textarea v-model="configuration" @input="updateConfiguration()" cols="100" rows="20"></textarea>
+    <config-standard></config-standard>
+    <hr />
+    <config-expert></config-expert>
   </div>
 </template>
 
 <script>
-  import Configurator from '../configurator'
+  import ConfigStandard from './config-standard.vue'
+  import ConfigExpert from './config-expert.vue'
 
   export default {
-    name: 'app-settings',
-    data () {
-      return {
-        configuration: '',
-        error: ''
-      }
+    components: {
+      ConfigStandard,
+      ConfigExpert
     },
-    methods: {
-      async updateConfiguration () {
-        try {
-          await Configurator.setConfiguration(JSON.parse(this.configuration))
-          this.error = ''
-        } catch (e) {
-          this.error = e.message
-        }
-      }
-    },
-    async mounted () {
-      const configuration = await Configurator.getConfiguration()
-      this.configuration = JSON.stringify(configuration, null, 2)
-      this.error = !Configurator.validateConfiguration(configuration) ? 'Configuration needs to be updated!' : ''
-    }
+    name: 'app-settings'
   }
 </script>

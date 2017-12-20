@@ -22,11 +22,13 @@ export default class BitcoinBlockExplorerProvider extends AbstractProvider {
     return new Wallet([balance], new Date())
   }
 
-  getParametersList () {
-    return {
-      address: {
-        type: String
-      }
-    }
+  static getSupportedParameters () {
+    return [{
+      type: 'input',
+      inputType: 'text',
+      label: 'Bitcoin address',
+      model: 'address',
+      required: true
+    }]
   }
 }

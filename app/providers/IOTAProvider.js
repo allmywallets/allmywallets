@@ -31,11 +31,19 @@ export default class IOTAProvider extends AbstractProvider {
       })
   }
 
-  getParametersList () {
-    return {
-      address: {
-        type: String
-      }
-    }
+  static getSupportedParameters () {
+    return [{
+      type: 'input',
+      inputType: 'text',
+      label: 'IOTA address',
+      model: 'address',
+      required: true
+    }, {
+      type: 'select',
+      label: 'Node',
+      model: 'node',
+      values: ['https://iota.thathost.net'],
+      required: true
+    }]
   }
 }

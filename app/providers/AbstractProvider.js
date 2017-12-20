@@ -8,7 +8,7 @@ export default class AbstractProvider {
     throw new Error('This method should be implemented by child class')
   }
 
-  getConfiguration () {
+  static getSupportedParameters () {
     throw new Error('This method should be implemented by child class')
   }
 }

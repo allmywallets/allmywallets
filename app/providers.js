@@ -18,4 +18,8 @@ export default class Proxy {
 
     return new providers[networkProvider](parameters)
   }
+
+  static getProvidersList () {
+    return providers
+  }
 }

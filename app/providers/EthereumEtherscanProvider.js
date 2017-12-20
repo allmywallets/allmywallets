@@ -85,17 +85,18 @@ export default class EthereumEtherscan extends AbstractProvider {
     return transactions
   }
 
-  getParametersList () {
-    return {
-      address: {
-        type: String
-      },
-      tokens: {
-        type: 'Array'
-      },
-      customTokens: {
-        type: 'Array'
-      }
-    }
+  static getSupportedParameters () {
+    return [{
+      type: 'input',
+      inputType: 'text',
+      label: 'Ethereum address',
+      model: 'address',
+      required: true
+    }, {
+      type: 'input',
+      inputType: 'text',
+      label: 'API key (optional)',
+      model: 'apiKey'
+    }]
   }
 }
