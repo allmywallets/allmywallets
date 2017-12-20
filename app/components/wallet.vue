@@ -82,14 +82,14 @@
       async refresh () {
         this.loading = true
 
-        return navigator.serviceWorker.controller.postMessage({
+        return this.$serviceWorker.controller.postMessage({
           action: 'sync',
           id: this.id
         })
       }
     },
     async mounted () {
-      navigator.serviceWorker.addEventListener('message', this.load)
+      this.$serviceWorker.addEventListener('message', this.load)
 
       try {
         this.wallet = await synchronizer.load(this.id)

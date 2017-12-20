@@ -3,7 +3,8 @@
     <app-navigation></app-navigation>
     <app-header></app-header>
     <span v-if="offline">Offline mode</span>
-    <a href="#" @click.prevent="enableNotifications()">enable notifs</a>
+    <a href="#" @click.prevent="enableNotifications()">enable notifs</a><br />
+    <a v-if="needsRefresh" href="#" @click.prevent="refreshPage">PLEASE REFRESH THE PAGE</a>
     <router-view></router-view>
   </main>
 </template>
@@ -16,7 +17,8 @@
     name: 'app-main',
     data () {
       return {
-        offline: false
+        offline: false,
+        needsRefresh: this.$serviceWorker.controller === null
       }
     },
     components: {
@@ -30,9 +32,16 @@
             Notification.requestPermission()
           }
         }
+      },
+      refreshPage () {
+        location.reload()
       }
     },
     mounted () {
+      this.$serviceWorker.register('/service-worker.js')
+      this.$serviceWorker.addEventListener('controllerchange', () => {
+        this.needsRefresh = this.$serviceWorker.controller === null
+      })
       window.addEventListener('offline', () => { this.offline = true })
     }
   }
