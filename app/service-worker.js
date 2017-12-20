@@ -1,4 +1,6 @@
-import synchronizer from './synchronizer'
+import database from './database'
+import Configurator from "./configurator";
+import Proxy from "./providers";
 
 const PRECACHE = 'precache-' + process.env.VERSION
 const RUNTIME = 'runtime'
@@ -53,14 +55,27 @@ self.addEventListener('message', async event => {
   const action = event.data.action
 
   if (action !== 'sync') {
-    return
+    return // Todo: should be an error
   }
 
   const walletId = event.data.id
 
   let success = true
   try {
-    await synchronizer.sync(walletId)
+    const configuration = await Configurator.getConfiguration()
+    const wallets = configuration.profiles[0].wallets
+
+    if (walletId >= wallets.length) {
+      return // Todo: should be an error
+    }
+
+    const wallet = await new Proxy(
+      wallets[walletId].network,
+      wallets[walletId].provider,
+      wallets[walletId].parameters
+    ).getWalletData()
+
+    await database.saveWallet(walletId, wallet)
   } catch (e) {
     success = false
   }

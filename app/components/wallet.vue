@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import synchronizer from '../synchronizer'
+  import database from '../database'
 
   export default {
     name: 'wallet',
@@ -76,7 +76,7 @@
         this.failure = !message.data.success
 
         try {
-          this.wallet = await synchronizer.load(message.data.id)
+          this.wallet = await database.getWallet(message.data.id)
         } catch (e) {
           this.failure = true
         }
@@ -96,7 +96,7 @@
       this.$serviceWorker.addEventListener('message', this.load)
 
       try {
-        this.wallet = await synchronizer.load(this.id)
+        this.wallet = await database.getWallet(this.id)
       } catch (e) {
         this.failure = true
       }
