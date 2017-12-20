@@ -9,13 +9,15 @@
         {{ name }} ({{ network }} network) <br />
         last update {{ wallet.lastUpdate }} <br />
         <template v-if="wallet.balances.length > 0">
-          {{ wallet.balances[0].amount }} {{ wallet.balances[0].unit }}
-          <br /><br /> Transactions:
-          <div v-for="transaction, key in wallet.balances[0].transactions" :key="key">
-            type: {{ transaction.type }}<br />
-            from: {{ transaction.from }}<br />
-            to: {{ transaction.to }}<br />
-            amount: {{ transaction.amount }} {{ wallet.unit }}
+           <div v-for="balance in wallet.balances">
+            {{ balance.amount }} {{ balance.unit }}
+            <br /><br /> Transactions:
+            <div v-for="transaction, key in balance.transactions" :key="key">
+              type: {{ transaction.type }}<br />
+              from: {{ transaction.from }}<br />
+              to: {{ transaction.to }}<br />
+              amount: {{ transaction.amount }} {{ wallet.unit }}
+            </div>
           </div>
         </template>
         <template v-else>
