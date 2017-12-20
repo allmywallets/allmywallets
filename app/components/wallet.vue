@@ -6,7 +6,7 @@
         <template v-if="failure">
           Last wallet update failed.<br />
         </template>
-        {{ wallet.name }} ({{ network }} network) <br />
+        {{ name }} ({{ network }} network) <br />
         last update {{ wallet.lastUpdate }} <br />
         <template v-if="wallet.balances.length > 0">
           {{ wallet.balances[0].amount }} {{ wallet.balances[0].unit }}
@@ -41,6 +41,10 @@
     props: {
       id: {
         type: Number,
+        required: true
+      },
+      name: {
+        type: String,
         required: true
       },
       network: {

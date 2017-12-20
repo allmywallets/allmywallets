@@ -8,7 +8,6 @@ export default class BitcoinBlockExplorerProvider extends AbstractProvider {
   constructor (parameters) {
     super()
 
-    this.name = parameters.name
     this.address = parameters.address
   }
 
@@ -20,7 +19,7 @@ export default class BitcoinBlockExplorerProvider extends AbstractProvider {
 
     const balance = new Balance('Bitcoin', 'btc', rawBalance[0] / 1e8, [])
 
-    return new Wallet(this.name, [balance], new Date())
+    return new Wallet([balance], new Date())
   }
 
   getParametersList () {

@@ -65,7 +65,9 @@
       }
     },
     async mounted () {
-      this.configuration = JSON.stringify(await Configurator.getConfiguration(), null, 2)
+      const configuration = await Configurator.getConfiguration()
+      this.configuration = JSON.stringify(configuration, null, 2)
+      this.error = !Configurator.validateConfiguration(configuration) ? 'Configuration needs to be updated!' : ''
     }
   }
 </script>

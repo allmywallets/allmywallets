@@ -7,10 +7,6 @@ export default class Configurator {
 
     configuration = configuration || { profiles: [ { wallets: [ ] } ] }
 
-    if (!this.validateConfiguration(configuration)) {
-      throw new Error('Configuration is not valid')
-    }
-
     return configuration
   }
 
@@ -27,11 +23,12 @@ export default class Configurator {
       'id': '/Wallet',
       'type': 'object',
       'properties': {
+        'name': { 'type': 'string' },
         'network': { 'type': 'string' },
         'provider': { 'type': 'string' },
         'parameters': { 'type': 'object' }
       },
-      'required': ['network', 'provider', 'parameters']
+      'required': ['name', 'network', 'provider', 'parameters']
     }
 
     const configurationSchema = {

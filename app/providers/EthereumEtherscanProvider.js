@@ -9,7 +9,6 @@ export default class EthereumEtherscan extends AbstractProvider {
   constructor (parameters) {
     super()
 
-    this.name = parameters.name
     this.address = parameters.address
     this.apiKey = parameters.apiKey || ''
   }
@@ -22,7 +21,7 @@ export default class EthereumEtherscan extends AbstractProvider {
 
     const balance = new Balance('Ethereum', 'eth', rawBalance[0].result / 1e18, this.parseTransactions(rawBalance[1].result))
 
-    return new Wallet(this.name, [balance], new Date())
+    return new Wallet([balance], new Date())
   }
 
   parseTransactions (rawTransactions) {

@@ -4,6 +4,7 @@
             v-for="wallet, key in wallets"
             :key="key"
             :id="key"
+            :name="wallet.name"
             :network="wallet.network"
             :provider="wallet.provider"
             :parameters="wallet.parameters"

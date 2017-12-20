@@ -7,7 +7,6 @@ export default class IOTAProvider extends AbstractProvider {
     super()
 
     this.node = parameters.node
-    this.name = parameters.name
     this.address = parameters.address
   }
 
@@ -28,7 +27,7 @@ export default class IOTAProvider extends AbstractProvider {
       .then((data) => {
         const balance = new Balance('Iota', 'miota', data.balances[0], [])
 
-        return new Wallet(this.name, [balance], new Date())
+        return new Wallet([balance], new Date())
       })
   }
 

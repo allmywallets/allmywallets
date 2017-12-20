@@ -12,14 +12,9 @@ export default class Wallet {
    * @param {array<Balance>} balances
    * @param {Date} lastUpdate
    */
-  constructor (name, balances, lastUpdate) {
-    this._name = name
+  constructor (balances, lastUpdate) {
     this._balances = balances
     this._lastUpdate = lastUpdate
-  }
-
-  get name () {
-    return this._name
   }
 
   get balances () {
@@ -32,7 +27,6 @@ export default class Wallet {
 
   static fromObject (object) {
     return new Wallet(
-      object._name,
       object._balances.map(balance => Balance.fromObject(balance)),
       object._lastUpdate
     )
