@@ -1,0 +1,14 @@
+{
+  "POWR": {
+    "name": "Power Ledger",
+    "ticker": "POWR",
+    "contractAdress": "0x595832f8fc6bf59c85c527fec3740a1b7a361269",
+    "decimals": 6
+  },
+  "GNT": {
+    "name": "Golem",
+    "ticker": "GNT",
+    "contractAdress": "0xa74476443119A942dE498590Fe1f2454d7D4aC0d",
+    "decimals": 18
+  }
+}

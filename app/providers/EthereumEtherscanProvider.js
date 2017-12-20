@@ -2,6 +2,7 @@ import Balance from '../model/Balance'
 import Wallet from '../model/Wallet'
 import Transaction from '../model/Transaction'
 import AbstractProvider from './AbstractProvider'
+import ERC20Token from './ERC20Tokens.json'
 
 const API_URL = 'https://api.etherscan.io/api'
 
@@ -14,28 +15,13 @@ export default class EthereumEtherscan extends AbstractProvider {
 
     this.tokens = parameters.tokens
     this.customTokens = parameters.customTokens
-
-    this.tokenList = {
-      POWR: {
-        name: 'Power Ledger',
-        ticker: 'POWR',
-        contractAdress: '0x595832f8fc6bf59c85c527fec3740a1b7a361269',
-        decimals: 6
-      },
-      GNT: {
-        name: 'Golem',
-        ticker: 'GNT',
-        contractAdress: '0xa74476443119A942dE498590Fe1f2454d7D4aC0d',
-        decimals: 18
-      }
-    }
   }
 
   async _getTokensBalances () {
     const promises = []
     if (this.tokens) {
       this.tokens.forEach(tokenTicker => {
-        const token = this.tokenList[tokenTicker]
+        const token = ERC20Token[tokenTicker]
         if (!token) {
           console.err(`${tokenTicker} not found`)
           return
