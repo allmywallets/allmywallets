@@ -1,35 +1,33 @@
 <template>
   <div>
     <div class="wallet">
-      <div v-if="wallet && !loading">
+      <div v-if="!loading">
         <a href="#" @click.prevent="refresh">refresh</a><br />
         <template v-if="!status.success">
           <strong>Last wallet update failed: {{ status.message }}</strong><br />
         </template>
-        {{ name }} ({{ network }} network) <br />
-        last update {{ wallet.lastUpdate }} <br />
-        <template v-if="wallet.balances.length > 0">
-           <div v-for="balance in wallet.balances">
-            {{ balance.amount }} {{ balance.unit }}
-            <br /><br /> Transactions:
-            <div v-for="transaction, key in balance.transactions" :key="key">
-              type: {{ transaction.type }}<br />
-              from: {{ transaction.from }}<br />
-              to: {{ transaction.to }}<br />
-              amount: {{ transaction.amount }} {{ wallet.unit }}
+        <template v-if="wallet !== null">
+          {{ name }} ({{ network }} network) <br />
+          last update {{ wallet.lastUpdate }} <br />
+          <template v-if="wallet.balances.length > 0">
+            <div v-for="balance in wallet.balances">
+              {{ balance.amount }} {{ balance.unit }}
+              <br /><br /> Transactions:
+              <div v-for="transaction, key in balance.transactions" :key="key">
+                type: {{ transaction.type }}<br />
+                from: {{ transaction.from }}<br />
+                to: {{ transaction.to }}<br />
+                amount: {{ transaction.amount }} {{ wallet.unit }}
+              </div>
             </div>
-          </div>
-        </template>
-        <template v-else>
-          No balance
+          </template>
+          <template v-else>
+            No balance
+          </template>
         </template>
       </div>
       <div v-else-if="loading">
         <span v-if="loading">refreshing data</span>
-      </div>
-      <div v-else>
-        <a href="#" @click.prevent="refresh">refresh</a>
-        error
       </div>
     </div>
   </div>
@@ -97,7 +95,7 @@
         try {
           this.wallet = await database.getWallet(this.id)
         } catch (e) {
-          this.status = { success: false, message: 'Failed to retrieve wallet data in database' }
+          this.status = { success: false, message: e.message }
         }
 
         this.loading = false
