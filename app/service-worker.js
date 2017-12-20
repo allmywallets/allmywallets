@@ -61,6 +61,7 @@ self.addEventListener('message', async event => {
   const walletId = event.data.id
 
   let success = true
+  let message = ''
   try {
     const configuration = await Configurator.getConfiguration()
     const wallets = configuration.profiles[0].wallets
@@ -78,6 +79,7 @@ self.addEventListener('message', async event => {
     await database.saveWallet(walletId, wallet)
   } catch (e) {
     success = false
+    message = e.message
   }
 
   const clients = await self.clients.matchAll()
@@ -86,7 +88,7 @@ self.addEventListener('message', async event => {
     client.postMessage({
       action: action,
       id: walletId,
-      success: success
+      status: { success: success, message: message }
     })
   })
 })

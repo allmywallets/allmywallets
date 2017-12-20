@@ -3,8 +3,8 @@
     <div class="wallet">
       <div v-if="wallet && !loading">
         <a href="#" @click.prevent="refresh">refresh</a><br />
-        <template v-if="failure">
-          Last wallet update failed.<br />
+        <template v-if="!status.success">
+          <strong>Last wallet update failed: {{ status.message }}</strong><br />
         </template>
         {{ name }} ({{ network }} network) <br />
         last update {{ wallet.lastUpdate }} <br />
@@ -66,7 +66,7 @@
       return {
         wallet: null,
         loading: true,
-        failure: false
+        status: { success: true, message: '' }
       }
     },
     methods: {
@@ -75,12 +75,12 @@
           return
         }
 
-        this.failure = !message.data.success
+        this.status = message.data.status
 
         try {
           this.wallet = await database.getWallet(message.data.id)
         } catch (e) {
-          this.failure = true
+          this.status = { success: false, message: 'Failed to retrieve wallet data in database' }
         }
 
         this.loading = false
