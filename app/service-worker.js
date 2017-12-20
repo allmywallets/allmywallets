@@ -1,4 +1,4 @@
-import Synchronizer from './synchronizer'
+import synchronizer from './synchronizer'
 
 const PRECACHE = 'precache-' + process.env.VERSION
 const RUNTIME = 'runtime'
@@ -60,7 +60,7 @@ self.addEventListener('message', async event => {
 
   let success = true
   try {
-    await event.waitUntil(Synchronizer.sync(walletId))
+    await event.waitUntil(synchronizer.sync(walletId))
   } catch (e) {
     success = false
   }

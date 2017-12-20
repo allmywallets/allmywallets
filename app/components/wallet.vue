@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import Synchronizer from '../synchronizer'
+  import synchronizer from '../synchronizer'
 
   export default {
     name: 'wallet',
@@ -71,13 +71,16 @@
 
         this.failure = !message.data.success
 
-        this.wallet = await Synchronizer.load(message.data.id)
+        try {
+          this.wallet = await synchronizer.load(message.data.id)
+        } catch (e) {
+          this.failure = true
+        }
+
         this.loading = false
       },
       async refresh () {
         this.loading = true
-
-        navigator.serviceWorker.addEventListener('message', this.load)
 
         return navigator.serviceWorker.controller.postMessage({
           action: 'sync',
@@ -86,7 +89,14 @@
       }
     },
     async mounted () {
-      this.wallet = await Synchronizer.load(this.id)
+      navigator.serviceWorker.addEventListener('message', this.load)
+
+      try {
+        this.wallet = await synchronizer.load(this.id)
+      } catch (e) {
+        this.failure = true
+      }
+
       this.loading = false
     }
   }

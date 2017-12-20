@@ -1,10 +1,16 @@
-import idbKeyval from 'idb-keyval'
+import idb from 'idb'
 import Configurator from './configurator'
 import Proxy from './providers'
 import Wallet from './model/Wallet'
 
-export default class Synchronizer {
-  static async sync (walletId) {
+class Synchronizer {
+  constructor () {
+    this.connection = idb.open('wallet-store', 1, upgradeDB => {
+      upgradeDB.createObjectStore('wallet')
+    })
+  }
+
+  async sync (walletId) {
     const configuration = await Configurator.getConfiguration()
     const wallets = configuration.profiles[0].wallets
 
@@ -18,22 +24,24 @@ export default class Synchronizer {
       wallets[walletId].parameters
     ).getWalletData()
 
-    // todo: replace with dedicated db
-    return idbKeyval.set(`wallet-${walletId}`, wallet)
+    const db = await this.connection
+    const tx = db.transaction('wallet', 'readwrite')
+    tx.objectStore('wallet').put(wallet, walletId)
+
+    return tx.complete
   }
 
-  static async load (walletId) {
-    // todo: replace with dedicated db
-    const wallet = await idbKeyval.get(`wallet-${walletId}`)
+  async load (walletId) {
+    const db = await this.connection
+
+    const wallet = await db.transaction('wallet').objectStore('wallet').get(walletId)
 
     if (wallet === undefined) {
-      return null
+      throw new Error(`No such wallet (id: ${walletId})`)
     }
 
     return Wallet.fromObject(wallet)
   }
-
-  static async lastUpdate () {
-    return idbKeyval.get('lastUpdate')
-  }
 }
+
+export default new Synchronizer()

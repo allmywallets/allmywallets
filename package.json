@@ -14,6 +14,7 @@
     "babel-runtime": "latest",
     "bootstrap-4-grid": "^2.0.0",
     "bootstrap-reboot": "^0.1.1",
+    "idb": "^2.0.4",
     "idb-keyval": "^2.3.0",
     "jsonschema": "^1.2.2",
     "vue": "latest",
