@@ -36,7 +36,7 @@ export default class EthereumEtherscan extends AbstractProvider {
   }
 
   async _getTokenBalance (token) {
-    const response = await fetch(`${API_URL}?module=account&action=tokenbalance&contractaddress=${token.contractAdress}&address=${this.address}&tag=latest`)
+    const response = await fetch(`${API_URL}?module=account&action=tokenbalance&contractaddress=${token.contractAddress}&address=${this.address}&tag=latest`)
     const json = await response.json()
     return new Balance(token.name, token.ticker, json.result / Math.pow(10, token.decimals), [])
   }

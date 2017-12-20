@@ -27,7 +27,7 @@
                 "name": "Indorse",
                 "ticker": "IND",
                 "decimals": 18,
-                "contractAdress": "0xf8e386eda857484f5a12e4b5daa9984e06e73705"
+                "contractAddress": "0xf8e386eda857484f5a12e4b5daa9984e06e73705"
               }
             ]
           }
