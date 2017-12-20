@@ -17,7 +17,7 @@ export default class BitcoinBlockExplorerProvider extends AbstractProvider {
       fetch(`${API_URL}/txs/?address=${this.address}`).then((response) => response.json())
     ])
 
-    const balance = new Balance('Bitcoin', 'btc', rawBalance[0] / 1e8, [])
+    const balance = new Balance('Bitcoin', 'BTC', rawBalance[0] / 1e8, [])
 
     return new Wallet([balance], new Date())
   }

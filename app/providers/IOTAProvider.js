@@ -25,7 +25,7 @@ export default class IOTAProvider extends AbstractProvider {
     })
       .then(response => response.json())
       .then((data) => {
-        const balance = new Balance('Iota', 'miota', data.balances[0], [])
+        const balance = new Balance('Iota', 'MIOTA', data.balances[0], [])
 
         return new Wallet([balance], new Date())
       })

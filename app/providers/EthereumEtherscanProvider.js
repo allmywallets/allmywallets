@@ -14,14 +14,19 @@ export default class EthereumEtherscan extends AbstractProvider {
   }
 
   async getWalletData () {
+    const contractAdress = '0x595832f8fc6bf59c85c527fec3740a1b7a361269'
+    const decimals = 6
     let rawBalance = await Promise.all([
       fetch(`${API_URL}?module=account&action=balance&address=${this.address}&sort=desc&tag=latest`).then((response) => response.json()),
-      fetch(`${API_URL}?module=account&action=txlist&address=${this.address}&sort=desc&tag=latest`).then((response) => response.json())
+      fetch(`${API_URL}?module=account&action=txlist&address=${this.address}&sort=desc&tag=latest`).then((response) => response.json()),
+      fetch(`${API_URL}?module=account&action=tokenbalance&contractaddress=${contractAdress}&address=${this.address}&tag=latest`).then((response) => response.json())
     ])
 
-    const balance = new Balance('Ethereum', 'eth', rawBalance[0].result / 1e18, this.parseTransactions(rawBalance[1].result))
+    const balance = new Balance('Ethereum', 'ETH', rawBalance[0].result / 1e18, this.parseTransactions(rawBalance[1].result))
 
-    return new Wallet([balance], new Date())
+    const balance2 = new Balance('Power Ledger', 'POWR', rawBalance[2].result / Math.pow(10, decimals), [])
+
+    return new Wallet([balance, balance2], new Date())
   }
 
   parseTransactions (rawTransactions) {
