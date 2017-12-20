@@ -13,15 +13,17 @@ export default class Synchronizer {
     }
 
     const wallet = await new Proxy(
-      wallets[walletId].currency,
+      wallets[walletId].network,
       wallets[walletId].provider,
       wallets[walletId].parameters
     ).getWalletData()
 
+    // todo: replace with dedicated db
     return idbKeyval.set(`wallet-${walletId}`, wallet)
   }
 
   static async load (walletId) {
+    // todo: replace with dedicated db
     const wallet = await idbKeyval.get(`wallet-${walletId}`)
 
     if (wallet === undefined) {

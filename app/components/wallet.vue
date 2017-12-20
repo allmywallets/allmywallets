@@ -2,17 +2,25 @@
   <div>
     <div class="wallet">
       <div v-if="wallet && !loading">
-        <a href="#" @click.prevent="refresh">refresh</a>
-        {{ wallet.name }} ({{ wallet.currency }}) <br />
+        <a href="#" @click.prevent="refresh">refresh</a><br />
+        <template v-if="failure">
+          Last wallet update failed.<br />
+        </template>
+        {{ wallet.name }} ({{ network }} network) <br />
         last update {{ wallet.lastUpdate }} <br />
-        {{ wallet.amount }} {{ wallet.unit }}
-        <br /><br /> Transactions:
-        <div v-for="transaction, key in wallet.transactions" :key="key">
-          type: {{ transaction.type }}<br />
-          from: {{ transaction.from }}<br />
-          to: {{ transaction.to }}<br />
-          amount: {{ transaction.amount }} {{ wallet.unit }}
-        </div>
+        <template v-if="wallet.balances.length > 0">
+          {{ wallet.balances[0].amount }} {{ wallet.balances[0].unit }}
+          <br /><br /> Transactions:
+          <div v-for="transaction, key in wallet.balances[0].transactions" :key="key">
+            type: {{ transaction.type }}<br />
+            from: {{ transaction.from }}<br />
+            to: {{ transaction.to }}<br />
+            amount: {{ transaction.amount }} {{ wallet.unit }}
+          </div>
+        </template>
+        <template v-else>
+          No balance
+        </template>
       </div>
       <div v-else-if="loading">
         <span v-if="loading">refreshing data</span>
@@ -35,7 +43,7 @@
         type: Number,
         required: true
       },
-      currency: {
+      network: {
         type: String,
         required: true
       },
@@ -51,7 +59,8 @@
     data () {
       return {
         wallet: null,
-        loading: true
+        loading: true,
+        failure: false
       }
     },
     methods: {
@@ -60,9 +69,7 @@
           return
         }
 
-        if (!message.data.success) {
-          console.error('Failed loading wallet data')
-        }
+        this.failure = !message.data.success
 
         this.wallet = await Synchronizer.load(message.data.id)
         this.loading = false

@@ -4,7 +4,7 @@
             v-for="wallet, key in wallets"
             :key="key"
             :id="key"
-            :currency="wallet.currency"
+            :network="wallet.network"
             :provider="wallet.provider"
             :parameters="wallet.parameters"
     ></wallet>
@@ -27,7 +27,13 @@
     },
     async mounted () {
       const configuration = await Configurator.getConfiguration()
-      this.wallets = configuration.profiles[0].wallets
+      const profile = configuration.profiles[0]
+
+      if (!Object(profile).hasOwnProperty('wallets')) {
+        return
+      }
+
+      this.wallets = profile.wallets
     }
   }
 </script>

@@ -1,28 +1,28 @@
+import Balance from '../model/Balance'
 import Wallet from '../model/Wallet'
 import Transaction from '../model/Transaction'
+import AbstractProvider from './AbstractProvider'
 
 const API_URL = 'https://api.etherscan.io/api'
 
-export default class EthereumEtherscan {
+export default class EthereumEtherscan extends AbstractProvider {
   constructor (parameters) {
+    super()
+
     this.name = parameters.name
     this.address = parameters.address
     this.apiKey = parameters.apiKey || ''
   }
 
   async getWalletData () {
-    let wallet = await Promise.all([
+    let rawBalance = await Promise.all([
       fetch(`${API_URL}?module=account&action=balance&address=${this.address}&sort=desc&tag=latest`).then((response) => response.json()),
       fetch(`${API_URL}?module=account&action=txlist&address=${this.address}&sort=desc&tag=latest`).then((response) => response.json())
     ])
 
-    return new Wallet(
-      this.name,
-      'Ethereum',
-      'eth',
-      wallet[0].result / 1e18,
-      this.parseTransactions(wallet[1].result)
-    )
+    const balance = new Balance('Ethereum', 'eth', rawBalance[0].result / 1e18, this.parseTransactions(rawBalance[1].result))
+
+    return new Wallet(this.name, [balance], new Date())
   }
 
   parseTransactions (rawTransactions) {

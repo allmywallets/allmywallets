@@ -1,4 +1,16 @@
+/**
+ * A transaction is a coins exchange between
+ * two balances or wallets.
+ */
 export default class Transaction {
+  /**
+   * Creates a new transaction.
+   *
+   * @param {string} type
+   * @param {string} from
+   * @param {string} to
+   * @param {number} amount
+   */
   constructor (type, from, to, amount) {
     this._type = type
     this._from = from
@@ -23,13 +35,11 @@ export default class Transaction {
   }
 
   static fromObject (object) {
-    const transaction = new Transaction()
-
-    transaction._type = object._type
-    transaction._from = object._from
-    transaction._to = object._to
-    transaction._amount = object._amount
-
-    return transaction
+    return new Transaction(
+      object._type,
+      object._from,
+      object._to,
+      object._amount
+    )
   }
 }

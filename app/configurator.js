@@ -1,4 +1,4 @@
-import SchemaObject from 'schema-object'
+import { Validator } from 'jsonschema'
 import idbKeyval from 'idb-keyval'
 
 export default class Configurator {
@@ -7,31 +7,60 @@ export default class Configurator {
 
     configuration = configuration || { profiles: [ { wallets: [ ] } ] }
 
-    return this.parseConfiguration(configuration)
+    if (!this.validateConfiguration(configuration)) {
+      throw new Error('Configuration is not valid')
+    }
+
+    return configuration
   }
 
   static setConfiguration (configuration) {
-    return idbKeyval.set('configuration', this.parseConfiguration(configuration).toObject())
+    if (!this.validateConfiguration(configuration)) {
+      throw new Error('Configuration is not valid')
+    }
+
+    return idbKeyval.set('configuration', configuration)
   }
 
-  static parseConfiguration (configuration) {
-    return new this.ConfigurationSchema(configuration)
-  }
+  static validateConfiguration (configuration) {
+    const walletSchema = {
+      'id': '/Wallet',
+      'type': 'object',
+      'properties': {
+        'network': { 'type': 'string' },
+        'provider': { 'type': 'string' },
+        'parameters': { 'type': 'object' }
+      },
+      'required': ['network', 'provider', 'parameters']
+    }
 
-  static get ConfigurationSchema () {
-    const NotEmptyString = { type: String, minLength: 1 }
+    const configurationSchema = {
+      'id': '/Configuration',
+      'type': 'object',
+      'properties': {
+        'profiles': {
+          'type': 'array',
+          'items': {
+            'type': 'object',
+            'properties': {
+              'wallets': {
+                'type': 'array',
+                'items': {
+                  '$ref': '/Wallet'
+                }
+              }
+            },
+            'required': ['wallets']
+          }
+        }
+      },
+      'required': ['profiles']
+    }
 
-    const Wallet = new SchemaObject({
-      currency: NotEmptyString,
-      provider: NotEmptyString,
-      parameters: {
-        name: NotEmptyString,
-        address: NotEmptyString
-      }
-    })
+    const validator = new Validator()
 
-    return new SchemaObject({
-      profiles: [ { wallets: [Wallet] } ]
-    })
+    validator.addSchema(walletSchema, '/Wallet')
+
+    return validator.validate(configuration, configurationSchema).valid
   }
 }

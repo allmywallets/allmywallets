@@ -8,7 +8,7 @@
     {
       "wallets": [
         {
-          "currency": "bitcoin",
+          "network": "bitcoin",
           "provider": "blockexplorer",
           "parameters": {
             "name": "My Bitcoin wallet",
@@ -16,11 +16,20 @@
           }
         },
         {
-          "currency": "ethereum",
+          "network": "ethereum",
           "provider": "etherscan",
           "parameters": {
             "name": "My Ethereum wallet",
             "address": "ADDRESS"
+          }
+        },
+        {
+          "network": "iota",
+          "provider": "native",
+          "parameters": {
+            "name": "My IOTA wallet",
+            "address": "ADDRESS",
+            "node": "https://iota.thathost.net"
           }
         }
       ]

@@ -49,7 +49,7 @@ self.addEventListener('fetch', event => {
   }
 })
 
-self.addEventListener('message', async (event) => {
+self.addEventListener('message', async event => {
   const action = event.data.action
 
   if (action !== 'sync') {
@@ -67,7 +67,7 @@ self.addEventListener('message', async (event) => {
 
   const clients = await self.clients.matchAll()
 
-  clients.forEach((client) => {
+  clients.forEach(client => {
     client.postMessage({
       action: action,
       id: walletId,
