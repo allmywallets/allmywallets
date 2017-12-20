@@ -20,7 +20,16 @@
           "provider": "etherscan",
           "name": "My Ethereum wallet",
           "parameters": {
-            "address": "ADDRESS"
+            "address": "ADDRESS",
+            "tokens": ["POWR"],
+            "customTokens": [
+              {
+                "name": "Indorse",
+                "ticker": "IND",
+                "decimals": 18,
+                "contractAdress": "0xf8e386eda857484f5a12e4b5daa9984e06e73705"
+              }
+            ]
           }
         },
         {
