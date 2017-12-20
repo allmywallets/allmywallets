@@ -10,24 +10,24 @@
         {
           "network": "bitcoin",
           "provider": "blockexplorer",
+          "name": "My Bitcoin wallet",
           "parameters": {
-            "name": "My Bitcoin wallet",
             "address": "ADDRESS"
           }
         },
         {
           "network": "ethereum",
           "provider": "etherscan",
+          "name": "My Ethereum wallet",
           "parameters": {
-            "name": "My Ethereum wallet",
             "address": "ADDRESS"
           }
         },
         {
           "network": "iota",
           "provider": "native",
+          "name": "My IOTA wallet",
           "parameters": {
-            "name": "My IOTA wallet",
             "address": "ADDRESS",
             "node": "https://iota.thathost.net"
           }
