@@ -15,7 +15,7 @@
 
   aside {
     grid-area: notifications;
-    background: lightpink;
+    background: white;
     display: none;
 
     @media screen and (min-width: $breakpoint-medium) {

@@ -31,24 +31,24 @@
 
   main {
     display: grid;
-    min-width: 100%;
-    grid-template-columns: 60px auto;
     grid-template-areas:
-            "header header"
-            "menu content"
-            "menu footer";
+            "header"
+            "content"
+            "footer"
+            "menu";
     
     @media screen and (min-width: $breakpoint-medium) {
-      grid-template-columns: 75px auto 200px;
+      grid-template-columns: 60px 1fr 250px;
+      grid-template-rows: auto auto auto;
       grid-template-areas:
-              "header header header"
+              "menu header notifications"
               "menu content notifications"
               "menu footer notifications";
     }
     
     .content {
       grid-area: content;
-      background: lightcoral;
+      overflow: auto;
     }
   }
 </style>

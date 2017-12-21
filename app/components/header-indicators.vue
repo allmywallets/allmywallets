@@ -1,8 +1,8 @@
 <template>
   <div class="indicators">
-    <worker></worker>
-    <online></online>
-    <notifications></notifications>
+    <worker class="indicator"></worker>
+    <online class="indicator"></online>
+    <notifications class="indicator"></notifications>
   </div>
 </template>
 
@@ -22,7 +22,15 @@
 </script>
 
 <style scoped lang="scss">
-  .indicators div {
-    display: inline-block;
+  @import '../scss/vars';
+
+  .indicators {
+    text-align: right;
+
+    .indicator {
+      padding: .3rem .5rem .1rem;
+      display: inline-block;
+      font-size: 1.1rem;
+    }
   }
 </style>

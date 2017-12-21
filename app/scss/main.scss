@@ -3,6 +3,14 @@
 @import '~@fortawesome/fontawesome/styles.css';
 @import 'vars';
 
+body {
+  background: #eeeeee;
+}
+
+*:focus {
+  outline: none;
+}
+
 .text-info {
   color: $color-info;
 }

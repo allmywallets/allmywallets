@@ -11,6 +11,5 @@
 <style scoped lang="scss">
   footer {
     grid-area: footer;
-    background: lightsalmon;
   }
 </style>

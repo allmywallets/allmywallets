@@ -112,5 +112,6 @@
 <style scoped lang="scss">
   .wallet {
     border: 1px solid black;
+    overflow: auto;
   }
 </style>

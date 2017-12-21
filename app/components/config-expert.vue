@@ -49,7 +49,7 @@
   </pre>
     <p>Current (editable) config:</p>
     <strong>{{ error }} <br /></strong>
-    <textarea v-model="configuration" @input="updateConfiguration()" cols="100" rows="20"></textarea>
+    <textarea v-model="configuration" @input="updateConfiguration()"></textarea>
   </div>
 </template>
 
@@ -81,3 +81,16 @@
     }
   }
 </script>
+
+<style scoped lang="scss">
+  textarea {
+    width: 100%;
+    height: 300px;
+  }
+
+  pre {
+    font-size: 0.8em;
+    width: 100%;
+    overflow: scroll;
+  }
+</style>
