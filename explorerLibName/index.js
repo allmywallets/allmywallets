@@ -12,6 +12,6 @@ module.exports = {
     }
   },
   list: function () {
-    return ['BitcoinBlockExplorerExplorer', 'EthereumEtherscan', 'IOTA']
+    return ['BitcoinBlockExplorer', 'EthereumEtherscan']
   }
 }

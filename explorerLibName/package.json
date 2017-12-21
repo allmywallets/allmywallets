@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "node-fetch": "^1.7.3"
+  },
+  "devDependencies": {
+    "ava": "^0.24.0"
   }
 }
