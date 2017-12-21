@@ -1,9 +1,16 @@
 <template>
-  <header></header>
+  <header>
+    <header-indicators></header-indicators>
+  </header>
 </template>
 
 <script>
+  import HeaderIndicators from './header-indicators.vue'
+
   export default {
-    name: 'app-header'
+    name: 'app-header',
+    components: {
+      HeaderIndicators
+    }
   }
 </script>
