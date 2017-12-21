@@ -1,3 +1,16 @@
 @import '~bootstrap-reboot/bootstrap-reboot.scss';
 @import '~bootstrap-4-grid/scss/grid.scss';
 @import '~@fortawesome/fontawesome/styles.css';
+@import 'vars';
+
+.text-info {
+  color: $color-info;
+}
+
+.text-warning {
+  color: #ffc107;
+}
+
+.text-danger {
+  color: $color-danger;
+}

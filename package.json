@@ -20,6 +20,7 @@
     "idb": "^2.0.4",
     "idb-keyval": "^2.3.0",
     "jsonschema": "^1.2.2",
+    "tippy.js": "^2.0.8",
     "vue": "latest",
     "vue-form-generator": "^2.1.1",
     "vue-router": "^3.0.1"
