@@ -1,19 +1,11 @@
 <template>
   <div>
-    <template v-if="!supported">
-      <icon icon="bell-slash" ref="unsupported" title="Notifications not supported" class="text-warning"></icon>
-    </template>
-    <template v-else-if="denied">
+    <icon v-if="!supported" icon="bell-slash" ref="unsupported" title="Notifications not supported" class="text-warning"></icon>
+    <icon v-else-if="denied" icon="bell-slash"></icon>
+    <icon v-else-if="granted" icon="bell"></icon>
+    <a v-else @click.prevent="enableNotifications" ref="enable" href="#" title="Click here to enable notifications" class="text-info">
       <icon icon="bell-slash"></icon>
-    </template>
-    <template v-else-if="granted">
-      <icon icon="bell"></icon>
-    </template>
-    <template v-else>
-      <a href="#" @click.prevent="enableNotifications" ref="enable" title="Click here to enable notifications" class="text-info">
-        <icon icon="bell-slash"></icon>
-      </a>
-    </template>
+    </a>
   </div>
 </template>
 
