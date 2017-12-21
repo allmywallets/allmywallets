@@ -1,8 +1,8 @@
 <template>
   <div>
     <icon v-if="!supported" icon="bell-slash" title="Notifications not supported" class="text-warning" v-tippy></icon>
-    <icon v-else-if="denied" icon="bell-slash"></icon>
-    <icon v-else-if="granted" icon="bell"></icon>
+    <icon v-else-if="denied" icon="bell-slash" title="Notifications are disabled" v-tippy></icon>
+    <icon v-else-if="granted" icon="bell" title="No new notification" v-tippy></icon>
     <a v-else @click.prevent="enableNotifications" ref="enable" href="#" title="Click here to enable notifications" class="text-info" v-tippy>
       <icon icon="bell-slash"></icon>
     </a>
