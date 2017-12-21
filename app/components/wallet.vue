@@ -111,8 +111,6 @@
 
 <style scoped lang="scss">
   .wallet {
-    height: 300px;
-    overflow-y: scroll;
     border: 1px solid black;
   }
 </style>

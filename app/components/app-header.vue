@@ -14,3 +14,12 @@
     }
   }
 </script>
+
+<style scoped lang="scss">
+  header {
+    grid-area: header;
+    background: lightgreen;
+    position: sticky;
+    top: 0;
+  }
+</style>

@@ -11,3 +11,9 @@
   }
 </script>
 
+<style scoped lang="scss">
+  nav {
+    grid-area: menu;
+    background: lightblue;
+  }
+</style>
