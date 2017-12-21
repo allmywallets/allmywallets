@@ -7,8 +7,8 @@ class MockExplorer extends AbstractExplorer {
 
   async getTransactions (address) {
     return [
-      {timestamp: '1513683799', hash: '', from: 'fromAddress', to: 'toAddress', amount: 1},
-      {timestamp: '1513253473', hash: '', from: 'fromAddress', to: 'toAddress', amount: 1}
+      {timeStamp: '1513683799', id: '', from: 'fromAddress', to: 'toAddress', amount: 1},
+      {timeStamp: '1513253473', id: '', from: 'fromAddress', to: 'toAddress', amount: 1}
     ]
   }
 }
