@@ -32,7 +32,7 @@
   main {
     display: grid;
     height: 100vh;
-    grid-template-rows: auto 1fr auto 50px;
+    grid-template-rows: 0 1fr 20px 50px;
     grid-template-areas:
             "header"
             "content"
@@ -40,12 +40,13 @@
             "menu";
     
     @media screen and (min-width: $breakpoint-medium) {
-      grid-template-columns: 50px 1fr 250px;
-      grid-template-rows: auto auto auto;
+      grid-template-columns: 1fr 250px;
+      grid-template-rows: 50px 0 1fr 40px;
       grid-template-areas:
-              "menu header notifications"
-              "menu content notifications"
-              "menu footer notifications";
+              "menu menu"
+              "header notifications"
+              "content notifications"
+              "footer notifications";
     }
     
     .content {

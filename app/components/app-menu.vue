@@ -1,9 +1,17 @@
 <template>
   <nav>
-    <router-link :to="{ name: 'home' }"><icon icon="home"></icon></router-link>
-    <router-link :to="{ name: 'add' }"><icon icon="plus"></icon></router-link>
-    <router-link :to="{ name: 'settings' }"><icon icon="cog"></icon></router-link>
-    <router-link to="#"><icon icon="heart"></icon></router-link>
+    <router-link :to="{ name: 'home' }">
+        <icon icon="home"></icon> <span class="title">All My Wallets</span>
+    </router-link>
+    <router-link :to="{ name: 'add' }">
+        <icon icon="plus"></icon> <span class="title">Add a wallet</span>
+    </router-link>
+    <router-link :to="{ name: 'settings' }">
+        <icon icon="cog"></icon> <span class="title">Settings</span>
+    </router-link>
+    <router-link to="#">
+        <icon icon="heart"></icon> <span class="title">Contribute</span>
+    </router-link>
   </nav>
 </template>
 
@@ -22,10 +30,10 @@
     justify-content: center;
     box-shadow: 0 0 3px rgba(#000000, .3);
     background: white;
+    z-index: 1000;
 
     @media screen and (min-width: $breakpoint-medium) {
-      flex-direction: column;
-      justify-content: left;
+      justify-content: center;
     }
 
     a {
@@ -37,17 +45,25 @@
       justify-content: center;
       flex-direction: column;
 
+      .title {
+        display: none;
+
+        @media screen and (min-width: $breakpoint-medium) {
+          display: inline-block;
+        }
+      }
       @media screen and (min-width: $breakpoint-medium) {
-        padding: 1rem 0;
-        flex-direction: row;
+        font-size: 0.8rem;
+
+        svg {
+          margin: 0 auto 3px;
+          font-size: 1.3rem;
+        }
       }
 
       &.router-link-exact-active {
-        border-top: 3px solid #007bff;
-
-        @media screen and (min-width: $breakpoint-medium) {
-          border-top: 0;
-          border-right: 3px solid #007bff;
+        svg {
+          color: $color-info;
         }
       }
     }

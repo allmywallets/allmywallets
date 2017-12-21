@@ -22,3 +22,7 @@ body {
 .text-danger {
   color: $color-danger;
 }
+
+a:hover {
+  text-decoration: none;
+}
