@@ -8,7 +8,6 @@ export default class Wallet {
   /**
    * Creates a new wallet.
    *
-   * @param {string} name
    * @param {array<Balance>} balances
    * @param {Date} lastUpdate
    */
