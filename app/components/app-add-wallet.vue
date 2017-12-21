@@ -1,6 +1,6 @@
 <template>
   <div>
-    Noob mode<br />
+    <h2>Add a new wallet</h2>
     <ul>
       <li v-for="key in Object.keys(providers)" :key="key">
         <a href="#" @click.prevent="loadProvider(key)">{{ key }}</a>

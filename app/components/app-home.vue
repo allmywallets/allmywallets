@@ -1,6 +1,6 @@
 <template>
   <div>
-    Hello, home.
+    <h2>All My Wallets</h2>
     <wallet-list></wallet-list>
   </div>
 </template>

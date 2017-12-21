@@ -31,6 +31,8 @@
 
   main {
     display: grid;
+    height: 100vh;
+    grid-template-rows: auto 1fr auto 50px;
     grid-template-areas:
             "header"
             "content"
@@ -38,7 +40,7 @@
             "menu";
     
     @media screen and (min-width: $breakpoint-medium) {
-      grid-template-columns: 60px 1fr 250px;
+      grid-template-columns: 50px 1fr 250px;
       grid-template-rows: auto auto auto;
       grid-template-areas:
               "menu header notifications"
@@ -48,6 +50,7 @@
     
     .content {
       grid-area: content;
+      padding: 0 20px;
       overflow: auto;
     }
   }

@@ -1,9 +1,9 @@
 <template>
   <nav>
     <router-link :to="{ name: 'home' }"><icon icon="home"></icon></router-link>
-    <router-link to="#1"><icon icon="plus"></icon></router-link>
+    <router-link :to="{ name: 'add' }"><icon icon="plus"></icon></router-link>
     <router-link :to="{ name: 'settings' }"><icon icon="cog"></icon></router-link>
-    <router-link to="#2"><icon icon="heart"></icon></router-link>
+    <router-link to="#"><icon icon="heart"></icon></router-link>
   </nav>
 </template>
 
@@ -18,10 +18,6 @@
 
   nav {
     grid-area: menu;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    height: 50px;
     display: flex;
     justify-content: center;
     box-shadow: 0 0 3px rgba(#000000, .3);
@@ -30,8 +26,6 @@
     @media screen and (min-width: $breakpoint-medium) {
       flex-direction: column;
       justify-content: left;
-      height: 100%;
-      width: 50px;
     }
 
     a {
