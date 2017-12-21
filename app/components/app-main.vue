@@ -10,6 +10,7 @@
 </template>
 
 <script>
+  import runtime from 'serviceworker-webpack-plugin/lib/runtime'
   import AppNavigation from './app-navigation.vue'
   import AppHeader from './app-header.vue'
 
@@ -38,7 +39,7 @@
       }
     },
     mounted () {
-      this.$serviceWorker.register('/service-worker.js')
+      runtime.register()
       this.$serviceWorker.addEventListener('controllerchange', () => {
         this.needsRefresh = this.$serviceWorker.controller === null
       })

@@ -1,12 +1,12 @@
-let webpack = require('webpack')
-let path = require('path')
-let CopyWebpackPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack')
+const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 
 module.exports = {
   devtool: 'cheap-source-map',
   entry: {
-    'main': ['babel-polyfill', path.resolve(__dirname, 'app/main.js')],
-    'service-worker': path.resolve(__dirname, 'app/service-worker.js')
+    'main': ['babel-polyfill', path.resolve(__dirname, 'app/main.js')]
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -65,6 +65,9 @@ module.exports = {
           path: path.join(__dirname, 'www')
         }
       }
+    }),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'app/service-worker.js')
     })
   ]
 }

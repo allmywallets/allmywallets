@@ -1,5 +1,6 @@
-let webpack = require('webpack')
-let path = require('path')
+const webpack = require('webpack')
+const path = require('path')
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 
 module.exports = {
   devServer: {
@@ -13,8 +14,7 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     'webpack': 'webpack-dev-server/client?http://localhost:8080',
-    'main': ['babel-polyfill', path.resolve(__dirname, 'app/main.js')],
-    'service-worker': path.resolve(__dirname, 'app/service-worker.js')
+    'main': ['babel-polyfill', path.resolve(__dirname, 'app/main.js')]
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -59,6 +59,9 @@ module.exports = {
           path: path.join(__dirname, 'www')
         }
       }
+    }),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'app/service-worker.js')
     })
   ]
 }
