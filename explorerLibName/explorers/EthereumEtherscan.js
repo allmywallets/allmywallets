@@ -12,11 +12,23 @@ class EthereumEtherscan extends AbstractExplorer {
   }
 
   async getBalance (address) {
-    return fetch(`${API_URL}?module=account&action=balance&address=${address}&sort=desc&tag=latest`).then((response) => response.json())
+    const res = await fetch(`${API_URL}?module=account&action=balance&address=${address}&sort=desc&tag=latest`).then((response) => response.json())
+    return res.result / 1e18
   }
 
   async getTransactions (address) {
-    return fetch(`${API_URL}?module=account&action=txlist&address=${address}&sort=desc&tag=latest`).then((response) => response.json())
+    const res = await fetch(`${API_URL}?module=account&action=txlist&address=${address}&sort=desc&tag=latest`).then((response) => response.json())
+    const transactions = res.result
+
+    transactions.forEach(tx => {
+      tx.id = tx.hash
+      delete tx.hash
+
+      tx.amount = tx.value
+      delete tx.value
+    })
+
+    return transactions
   }
 }
 

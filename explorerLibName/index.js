@@ -7,11 +7,13 @@ module.exports = {
         return require('./explorers/EthereumEtherscan')
       case 'IOTA':
         return require('./explorers/IOTA')
+      case 'MockExplorer':
+        return require('./explorers/MockExplorer')
       default:
         throw new Error(explorerName + ' does not exist')
     }
   },
   list: function () {
-    return ['BitcoinBlockExplorerExplorer', 'EthereumEtherscan', 'IOTA']
+    return ['MockExplorer', 'BitcoinBlockExplorer', 'EthereumEtherscan']
   }
 }

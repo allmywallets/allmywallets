@@ -16,7 +16,36 @@ class BitcoinBlockExplorer extends AbstractExplorer {
   }
 
   async getTransactions (address) {
-    return fetch(`${API_URL}/txs/?address=${address}`).then((response) => response.json())
+    const res = await fetch(`${API_URL}/txs/?address=${address}`).then((response) => response.json())
+    const transactions = res.txs
+
+    transactions.forEach(tx => {
+      tx.timeStamp = tx.time
+      delete tx.time
+
+      tx.id = tx.txid
+      delete tx.txid
+
+      tx.vin.forEach(vin => {
+        if (vin.addr === address) {
+          tx.from = address
+          tx.to = '?'
+          tx.amount = vin.value
+          return false
+        }
+      })
+
+      tx.vout.forEach(vout => {
+        if (vout.scriptPubKey.addresses[0] === address) {
+          tx.from = '?'
+          tx.to = address
+          tx.amount = vout.value
+          return false
+        }
+      })
+    })
+
+    return transactions
   }
 }
 
