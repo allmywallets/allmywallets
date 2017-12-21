@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a v-if="needsRefresh" href="#" @click.prevent="refreshPage" title="App restart required" ref="refresh">
+    <a v-if="needsRefresh" href="#" @click.prevent="refreshPage" title="App restart required" ref="refresh" v-tippy>
       <icon icon="cogs" class="text-danger"></icon>
     </a>
     <icon v-else icon="cogs" title="App working properly"></icon>
@@ -9,7 +9,6 @@
 
 <script>
   import runtime from 'serviceworker-webpack-plugin/lib/runtime'
-  import tippy from 'tippy.js'
 
   export default {
     name: 'worker',
@@ -24,11 +23,6 @@
       }
     },
     mounted () {
-      tippy('[title]', {
-        animation: 'fade',
-        arrow: true
-      })
-
       runtime.register()
       this.$serviceWorker.addEventListener('controllerchange', () => {
         this.needsRefresh = this.$serviceWorker.controller === null

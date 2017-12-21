@@ -23,7 +23,8 @@
     "tippy.js": "^2.0.8",
     "vue": "latest",
     "vue-form-generator": "^2.1.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-tippy": "^2.0.3"
   },
   "devDependencies": {
     "babel-core": "latest",

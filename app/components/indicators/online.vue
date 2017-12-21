@@ -1,6 +1,6 @@
 <template>
   <div>
-    <icon :icon="getIcon()" :class="{ 'offline': !online }"></icon>
+    <icon :icon="getIcon()" :class="{ 'text-warning': !online }" :title="getTitle()" ref="connectivity" v-tippy></icon>
   </div>
 </template>
 
@@ -9,23 +9,30 @@
     name: 'online',
     data () {
       return {
-        online: true
+        online: navigator.onLine
       }
     },
     methods: {
       getIcon () {
         return this.online ? 'link' : 'unlink'
+      },
+      getTitle () {
+        return this.online ? 'The app is online' : 'The app is offline'
       }
     },
     mounted () {
-      window.addEventListener('offline', () => { this.online = false })
-      window.addEventListener('online', () => { this.online = true })
+      if (!this.online) {
+        this.$refs.connectivity._tippy.show()
+      }
+
+      window.addEventListener('offline', () => {
+        this.online = false
+        this.$refs.connectivity._tippy.show()
+      })
+      window.addEventListener('online', () => {
+        this.online = true
+        this.$refs.connectivity._tippy.hide()
+      })
     }
   }
 </script>
-
-<style scoped lang="scss">
-  .offline {
-    color: red;
-  }
-</style>
