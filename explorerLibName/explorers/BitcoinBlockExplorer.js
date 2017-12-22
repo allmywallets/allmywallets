@@ -10,7 +10,7 @@ class BitcoinBlockExplorer extends AbstractExplorer {
   }
 
   async getBalance (address) {
-    return this.constructor._fetchJson(`${API_URL}/addr/${address}/balance`)
+    return this.constructor._fetchJson(`${API_URL}/addr/${address}/balance`).then(amount => amount / 1e8)
   }
 
   async getTransactions (address) {
