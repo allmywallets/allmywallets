@@ -29,7 +29,7 @@
     display: flex;
     justify-content: center;
     box-shadow: 0 0 3px rgba(#000000, .3);
-    background: white;
+    background: linear-gradient(to bottom, #ffffff 0%, #f6f6f6 100%);
     z-index: 1000;
 
     @media screen and (min-width: $breakpoint-medium) {
@@ -39,7 +39,7 @@
     a {
       padding: 0 2rem;
       font-size: 1.3rem;
-      color: #3E3E3E;
+      color: $color-section-notifications;
       border-top: 3px solid transparent;
       display: flex;
       justify-content: center;
@@ -52,12 +52,13 @@
           display: inline-block;
         }
       }
+
       @media screen and (min-width: $breakpoint-medium) {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
 
         svg {
           margin: 0 auto 3px;
-          font-size: 1.3rem;
+          font-size: 1.4rem;
         }
       }
 

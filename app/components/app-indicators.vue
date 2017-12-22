@@ -46,6 +46,7 @@
       justify-content: center;
       flex-direction: column;
       padding: 0 1.5rem;
+      color: $color-section-notifications;
     }
   }
 </style>

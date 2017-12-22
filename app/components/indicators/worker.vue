@@ -1,7 +1,7 @@
 <template>
   <div>
     <a v-if="needsRefresh" href="#" @click.prevent="refreshPage" title="App restart required" ref="refresh" v-tippy>
-      <icon icon="cogs" class="text-danger"></icon>
+      <icon icon="sync-alt" class="text-danger"></icon>
     </a>
     <icon v-else icon="cogs" title="App working properly" v-tippy></icon>
   </div>

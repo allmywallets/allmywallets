@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Expert mode</p>
+    <h3>Expert mode</h3>
     You can put as many wallets as you want.
     <p>Example:</p>
     <pre>
