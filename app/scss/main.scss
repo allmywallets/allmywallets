@@ -63,3 +63,7 @@ a:hover {
     background-color: #b3b3b3;
   }
 }
+
+::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0);
+}
