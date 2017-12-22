@@ -1,22 +1,20 @@
 const AbstractExplorer = require('./AbstractExplorer')
 
-if (typeof window === 'undefined') {
-  fetch = require('node-fetch')
-}
-
 const API_URL = 'https://blockexplorer.com/api'
 
 class BitcoinBlockExplorer extends AbstractExplorer {
-  constructor (proxy) {
+  constructor () {
     super()
+    this.currencyName = 'Bitcoin'
+    this.currencyTicker = 'BTC'
   }
 
   async getBalance (address) {
-    return fetch(`${API_URL}/addr/${address}/balance`).then((response) => response.json())
+    return this.constructor._fetchJson(`${API_URL}/addr/${address}/balance`).then(amount => amount / 1e8)
   }
 
   async getTransactions (address) {
-    const res = await fetch(`${API_URL}/txs/?address=${address}`).then((response) => response.json())
+    const res = await this.constructor._fetchJson(`${API_URL}/txs/?address=${address}`)
     const transactions = res.txs
 
     transactions.forEach(tx => {
@@ -28,6 +26,7 @@ class BitcoinBlockExplorer extends AbstractExplorer {
 
       tx.vin.forEach(vin => {
         if (vin.addr === address) {
+          tx.type = 'out'
           tx.from = address
           tx.to = '?'
           tx.amount = vin.value
@@ -37,6 +36,7 @@ class BitcoinBlockExplorer extends AbstractExplorer {
 
       tx.vout.forEach(vout => {
         if (vout.scriptPubKey.addresses[0] === address) {
+          tx.type = 'in'
           tx.from = '?'
           tx.to = address
           tx.amount = vout.value

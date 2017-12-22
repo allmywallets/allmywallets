@@ -1,4 +1,9 @@
 class AbstractExplorer {
+  constructor () {
+    this.currencyName = 'Currency'
+    this.currencyTicker = 'CUR'
+  }
+
   /**
    * Gets the balance given an address
    *
@@ -15,6 +20,11 @@ class AbstractExplorer {
    */
   async getTransactions (address) {
     throw new Error('This method should be implemented by child class')
+  }
+
+  static async _fetchJson (url) {
+    // TODO : require('node-fetch')
+    return fetch(url).then((response) => response.json())
   }
 }
 
