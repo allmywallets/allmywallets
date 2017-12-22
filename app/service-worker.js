@@ -1,7 +1,7 @@
 import 'babel-polyfill'
 import database from './database'
-import Configurator from "./configurator";
-import Proxy from "./providers";
+import Configurator from './configurator';
+import Proxy from './providers'
 
 const PRECACHE = 'precache-' + process.env.VERSION
 const RUNTIME = 'runtime'
