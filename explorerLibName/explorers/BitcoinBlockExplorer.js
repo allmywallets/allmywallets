@@ -1,9 +1,5 @@
 const AbstractExplorer = require('./AbstractExplorer')
 
-if (typeof window === 'undefined') {
-  fetch = require('node-fetch')
-}
-
 const API_URL = 'https://blockexplorer.com/api'
 
 class BitcoinBlockExplorer extends AbstractExplorer {
@@ -12,11 +8,11 @@ class BitcoinBlockExplorer extends AbstractExplorer {
   }
 
   async getBalance (address) {
-    return fetch(`${API_URL}/addr/${address}/balance`).then((response) => response.json())
+    return this.constructor._fetchJson(`${API_URL}/addr/${address}/balance`)
   }
 
   async getTransactions (address) {
-    const res = await fetch(`${API_URL}/txs/?address=${address}`).then((response) => response.json())
+    const res = await this.constructor._fetchJson(`${API_URL}/txs/?address=${address}`)
     const transactions = res.txs
 
     transactions.forEach(tx => {
