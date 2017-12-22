@@ -4,8 +4,10 @@ const ERC20Token = require('./ERC20Tokens.json')
 const API_URL = 'https://api.etherscan.io/api'
 
 class EthereumEtherscan extends AbstractExplorer {
-  constructor (proxy) {
+  constructor () {
     super()
+    this.currencyName = 'Ethereum'
+    this.currencyTicker = 'ETH'
   }
 
   async getBalance (address) {

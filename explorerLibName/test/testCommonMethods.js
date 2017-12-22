@@ -14,6 +14,11 @@ for (let i = 0; i < explorers.length; i++) {
   const explorerName = explorersName[i]
   const address = testAddresses[explorerName]
 
+  test(`[${explorerName}] attributes`, async t => {
+    t.not(explorer.currencyName, undefined)
+    t.not(explorer.currencyTicker, undefined)
+  })
+
   test(`[${explorerName}] getBalance`, async t => {
     const balance = await explorer.getBalance(address)
     t.not(balance, undefined)

@@ -18,7 +18,7 @@ export default function getGenericProviderClass (explorerName) {
         explorer.getTransactions(this.address)
       ])
 
-      const balance = new Balance('Bitcoin', 'BTC', promises[0], [])
+      const balance = new Balance(explorer.currencyName, explorer.currencyTicker, promises[0], [])
 
       return new Wallet([balance], new Date())
     }
@@ -27,7 +27,7 @@ export default function getGenericProviderClass (explorerName) {
       return [{
         type: 'input',
         inputType: 'text',
-        label: 'Bitcoin address',
+        label: `${explorer.currencyName} address`,
         model: 'address',
         required: true
       }]

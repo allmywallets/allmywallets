@@ -3,8 +3,10 @@ const AbstractExplorer = require('./AbstractExplorer')
 const API_URL = 'https://blockexplorer.com/api'
 
 class BitcoinBlockExplorer extends AbstractExplorer {
-  constructor (proxy) {
+  constructor () {
     super()
+    this.currencyName = 'Bitcoin'
+    this.currencyTicker = 'BTC'
   }
 
   async getBalance (address) {

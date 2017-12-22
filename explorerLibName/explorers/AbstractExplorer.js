@@ -1,4 +1,9 @@
 class AbstractExplorer {
+  constructor () {
+    this.currencyName = 'Currency'
+    this.currencyTicker = 'CUR'
+  }
+
   /**
    * Gets the balance given an address
    *

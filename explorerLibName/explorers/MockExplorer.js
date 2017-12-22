@@ -1,6 +1,12 @@
 const AbstractExplorer = require('./AbstractExplorer')
 
 class MockExplorer extends AbstractExplorer {
+  constructor () {
+    super()
+    this.currencyName = 'Mock'
+    this.currencyTicker = 'MOC'
+  }
+
   async getBalance (address) {
     return 42
   }
