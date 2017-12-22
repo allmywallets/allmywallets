@@ -26,6 +26,7 @@ class BitcoinBlockExplorer extends AbstractExplorer {
 
       tx.vin.forEach(vin => {
         if (vin.addr === address) {
+          tx.type = 'out'
           tx.from = address
           tx.to = '?'
           tx.amount = vin.value
@@ -35,6 +36,7 @@ class BitcoinBlockExplorer extends AbstractExplorer {
 
       tx.vout.forEach(vout => {
         if (vout.scriptPubKey.addresses[0] === address) {
+          tx.type = 'in'
           tx.from = '?'
           tx.to = address
           tx.amount = vout.value

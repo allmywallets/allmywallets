@@ -34,6 +34,8 @@ for (let i = 0; i < explorers.length; i++) {
       t.not(tx.from, undefined)
       t.not(tx.to, undefined)
       t.not(tx.amount, undefined)
+      t.not(tx.type, undefined)
+      t.is(tx.type === 'in' || tx.type === 'out', true)
     })
   })
 }

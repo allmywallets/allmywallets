@@ -20,6 +20,8 @@ class EthereumEtherscan extends AbstractExplorer {
     const transactions = res.result
 
     transactions.forEach(tx => {
+      tx.type = tx.from === this.address ? 'out' : 'in'
+
       tx.id = tx.hash
       delete tx.hash
 

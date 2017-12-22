@@ -13,8 +13,8 @@ class MockExplorer extends AbstractExplorer {
 
   async getTransactions (address) {
     return [
-      {timeStamp: '1513683799', id: '', from: 'fromAddress', to: 'toAddress', amount: 1},
-      {timeStamp: '1513253473', id: '', from: 'fromAddress', to: 'toAddress', amount: 1}
+      {timeStamp: '1513683799', id: '', from: 'fromAddress', to: 'toAddress', amount: 1, type: 'in'},
+      {timeStamp: '1513253473', id: '', from: 'fromAddress', to: 'toAddress', amount: 1, type: 'out'}
     ]
   }
 }
