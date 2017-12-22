@@ -10,7 +10,6 @@
 
 <style scoped lang="scss">
   footer {
-    grid-area: footer;
     padding: 10px 20px;
     font-size: 0.8em;
     text-align: center;

@@ -1,16 +1,18 @@
 <template>
   <main>
     <app-menu></app-menu>
-    <app-header></app-header>
+    <app-indicators></app-indicators>
     <app-notifications></app-notifications>
-    <router-view class="content"></router-view>
-    <app-footer></app-footer>
+    <section class="content">
+      <router-view></router-view>
+      <app-footer></app-footer>
+    </section>
   </main>
 </template>
 
 <script>
   import AppMenu from './app-menu.vue'
-  import AppHeader from './app-header.vue'
+  import AppIndicators from './app-indicators.vue'
   import AppFooter from './app-footer.vue'
   import AppNotifications from './app-notifications.vue'
 
@@ -18,7 +20,7 @@
     name: 'app-main',
     components: {
       AppMenu,
-      AppHeader,
+      AppIndicators,
       AppNotifications,
       AppFooter
     }
@@ -32,21 +34,18 @@
   main {
     display: grid;
     height: 100vh;
-    grid-template-rows: 0 1fr 20px 50px;
+    grid-template-rows: $grid-menu-height 1fr $grid-menu-height;
     grid-template-areas:
-            "header"
+            "indicators"
             "content"
-            "footer"
             "menu";
     
     @media screen and (min-width: $breakpoint-medium) {
-      grid-template-columns: 1fr 250px;
-      grid-template-rows: 50px 0 1fr 40px;
+      grid-template-columns: 1fr $grid-notifications-width 0;
+      grid-template-rows: $grid-header-height 1fr;
       grid-template-areas:
-              "menu menu"
-              "header notifications"
-              "content notifications"
-              "footer notifications";
+              "menu menu indicators"
+              "content notifications notifications";
     }
     
     .content {

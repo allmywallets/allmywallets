@@ -4,7 +4,7 @@
 @import 'vars';
 
 body {
-  background: #eeeeee;
+  background: #f2f2f2;
 }
 
 *:focus {
@@ -25,4 +25,26 @@ body {
 
 a:hover {
   text-decoration: none;
+}
+
+::-webkit-scrollbar-track
+{
+  background: transparent;
+}
+
+::-webkit-scrollbar
+{
+  width: 20px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb
+{
+  background-color: #cfcfcf;
+  border-radius: 15px;
+  border: 6px solid #f2f2f2;
+
+  &:hover {
+    background-color: #b3b3b3;
+  }
 }
