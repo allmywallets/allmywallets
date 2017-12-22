@@ -1,4 +1,5 @@
 const AbstractExplorer = require('./AbstractExplorer')
+const ERC20Token = require('./ERC20Tokens.json')
 
 const API_URL = 'https://api.etherscan.io/api'
 
@@ -25,6 +26,24 @@ class EthereumEtherscan extends AbstractExplorer {
     })
 
     return transactions
+  }
+
+  async getTokenBalance (address, contractAddress, decimals) {
+    const json = await this.constructor._fetchJson(`${API_URL}?module=account&action=tokenbalance&contractaddress=${contractAddress}
+                                                            &address=${address}&tag=latest`)
+    return json.result / decimals ? Math.pow(10, decimals) : 1e18
+  }
+
+  async getTokenBalanceByTicker (address, ticker, decimals) {
+    const token = ERC20Token[ticker]
+    if (!token) {
+      console.err(`${ticker} not found`)
+      return null
+    }
+
+    const json = await this.constructor._fetchJson(`${API_URL}?module=account&action=tokenbalance&contractaddress=${token.contractAddress}
+                                                            &address=${address}&tag=latest`)
+    return json.result / Math.pow(10, token.decimals)
   }
 }
 

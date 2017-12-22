@@ -5,7 +5,7 @@ const explorersName = libName.list()
 let explorers = []
 for (let i = 0; i < explorersName.length; i++) {
   const Explorer = libName.explorer(explorersName[i])
-  explorers[i] = new Explorer({key: '', secret: ''})
+  explorers[i] = new Explorer()
 }
 
 const testAddresses = ['', '15jdxjFhXUsp2xuycmKnjw8yk1WsVon69c', '0xB13CE87F4f0519B54f768847Bda0389cEF0d479B']
