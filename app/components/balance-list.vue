@@ -9,19 +9,17 @@
 
 <script>
   import Configurator from '../configurator'
-  import database from '../database'
   import Balance from './balance.vue'
 
   export default {
     name: 'balance-list',
-    data () {
-      return {
-        balances: [],
-        wallets: []
-      }
-    },
     components: {
       Balance
+    },
+    computed: {
+      balances () {
+        return this.$store.state.balances
+      }
     },
     methods: {
       async refreshAll () {
@@ -34,7 +32,6 @@
       }
     },
     async mounted () {
-      this.balances = await database.getBalances()
       this.wallets = await Configurator.getWallets()
     }
   }

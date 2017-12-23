@@ -2,6 +2,8 @@ import 'babel-polyfill'
 import database from './database'
 import Configurator from './configurator';
 import Proxy from './providers'
+import BalanceRefreshError from "./errors/BalanceRefreshError";
+import GlobalError from "./errors/GlobalError";
 
 const PRECACHE = 'precache-' + process.env.VERSION
 const RUNTIME = 'runtime'
@@ -53,43 +55,46 @@ self.addEventListener('fetch', event => {
 })
 
 self.addEventListener('message', async event => {
-  const action = event.data.action
+  const { action } = event.data
+  const clients = await self.clients.matchAll()
 
-  if (action !== 'sync') {
-    return // Todo: should be an error
+  if (action !== 'balance-refresh') {
+    clients.forEach(client => {
+      client.postMessage({
+        action: action,
+        error: new GlobalError(new GlobalError(`Message action ${action} is not supported`))
+      })
+    })
   }
 
-  const walletId = event.data.id
+  const { walletId, currency } = event.data
 
-  let success = true
-  let message = ''
+  let error = false
   try {
     const configuration = await Configurator.getConfiguration()
     const wallets = configuration.profiles[0].wallets
 
     if (walletId >= wallets.length) {
-      return // Todo: should be an error
+      error = new GlobalError(`Wallet ${walletId} does not exist`)
+    } else {
+      const wallet = await new Proxy(
+        wallets[walletId].network,
+        wallets[walletId].provider,
+        wallets[walletId].parameters
+      ).getWalletData()
+
+      await database.saveBalances(wallet, walletId)
     }
-
-    const wallet = await new Proxy(
-      wallets[walletId].network,
-      wallets[walletId].provider,
-      wallets[walletId].parameters
-    ).getWalletData()
-
-    await database.saveBalances(wallet, walletId)
   } catch (e) {
-    success = false
-    message = e.message
+    error = new BalanceRefreshError(walletId, currency, e.message)
   }
-
-  const clients = await self.clients.matchAll()
 
   clients.forEach(client => {
     client.postMessage({
       action: action,
-      id: walletId,
-      status: { success: success, message: message }
+      walletId: walletId,
+      currency: currency,
+      error: error
     })
   })
 })

@@ -26,7 +26,8 @@
     "vue-filter": "^0.2.3",
     "vue-form-generator": "^2.1.1",
     "vue-router": "^3.0.1",
-    "vue-tippy": "^2.0.3"
+    "vue-tippy": "^2.0.3",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "babel-core": "latest",

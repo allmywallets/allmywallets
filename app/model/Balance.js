@@ -22,14 +22,6 @@ export default class Balance {
     this._transactions = transactions
   }
 
-  get walletId () {
-    return this._walletId
-  }
-
-  set walletId (walletId) {
-    this._walletId = walletId
-  }
-
   get currency () {
     return this._currency
   }

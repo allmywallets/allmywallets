@@ -23,6 +23,9 @@
       AppIndicators,
       AppNotifications,
       AppFooter
+    },
+    mounted () {
+      this.$store.dispatch('initApplication')
     }
   }
 </script>

@@ -46,6 +46,10 @@ class Database {
     const balances = db.transaction('balance').objectStore('balance').getAll()
 
     return Promise.all([keys, balances]).then(([keys, balances]) => {
+      if (keys === undefined) {
+        return []
+      }
+
       return keys.map((val, index) => {
         return { key: val, value: balances[index] }
       })

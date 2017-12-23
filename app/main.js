@@ -6,9 +6,10 @@ import VueFilter from 'vue-filter'
 import '@fortawesome/fontawesome-free-solid'
 
 import router from './router'
+import store from './store'
 import AppMain from './components/app-main.vue'
 
-Vue.use(VueFilter);
+Vue.use(VueFilter)
 Vue.use(VueFormGenerator)
 Vue.use(VueTippy, {
   animation: 'fade',
@@ -19,6 +20,7 @@ Vue.component('icon', VueFontAwesome)
 Vue.prototype.$serviceWorker = navigator.serviceWorker
 
 new Vue({
+  store,
   router,
   render: h => h(AppMain)
 }).$mount('#app-main')
