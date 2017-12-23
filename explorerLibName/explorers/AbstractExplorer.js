@@ -7,7 +7,7 @@ class AbstractExplorer {
   constructor (params) {
     this.params = params
 
-    this.addresses = []
+    this._addresses = []
     this.wallets = []
 
     this.tickers = []
@@ -44,7 +44,7 @@ class AbstractExplorer {
    * @param {String} address
    */
   address (address) {
-    this.addresses.push(address)
+    this._addresses.push(address)
     return this
   }
 
@@ -147,7 +147,11 @@ class AbstractExplorer {
     let promises = []
     let wallets = []
 
-    this.addresses.forEach(address => {
+    if (this.tickers.length === 0) {
+      this.tickers.push(this.supportedTickers[0])
+    }
+
+    this._addresses.forEach(address => {
       const wallet = {}
       if (this.elementsToFetch.includes('balances')) {
         promises.push(this._getBalances(address, wallet))
