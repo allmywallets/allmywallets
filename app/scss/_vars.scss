@@ -1,10 +1,14 @@
 $breakpoint-medium: 700px;
 
 $grid-header-height: 50px;
-$grid-menu-height: 40px;
+$grid-menu-height: 45px;
 $grid-notifications-width: 250px;
 
-$color-section-notifications: #3b3b3b;
+$color-primary: #00FFBF;
+$color-secondary: darken($color-primary, 30);
 $color-info: #007bff;
 $color-warning: #ffc107;
 $color-danger: #dc3545;
+$color-section-menu: $color-primary;
+$color-section-notifications: #545454;
+$color-section-content: #f2f2f2;

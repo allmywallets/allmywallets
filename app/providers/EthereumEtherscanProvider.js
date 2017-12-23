@@ -1,5 +1,4 @@
 import Balance from '../model/Balance'
-import Wallet from '../model/Wallet'
 import Transaction from '../model/Transaction'
 import AbstractProvider from './AbstractProvider'
 import ERC20Token from './ERC20Tokens.json'
@@ -38,7 +37,7 @@ export default class EthereumEtherscan extends AbstractProvider {
   async _getTokenBalance (token) {
     const response = await fetch(`${API_URL}?module=account&action=tokenbalance&contractaddress=${token.contractAddress}&address=${this.address}&tag=latest`)
     const json = await response.json()
-    return new Balance(token.name, token.ticker, json.result / Math.pow(10, token.decimals), [])
+    return new Balance(token.name, token.ticker, json.result / Math.pow(10, token.decimals), new Date(), [])
   }
 
   async getWalletData () {
@@ -48,12 +47,12 @@ export default class EthereumEtherscan extends AbstractProvider {
       this._getTokensBalances()
     ])
 
-    const ethereumBalance = new Balance('Ethereum', 'ETH', promises[0].result / 1e18, this._parseTransactions(promises[1].result))
+    const ethereumBalance = new Balance('Ethereum', 'ETH', promises[0].result / 1e18, new Date(), this._parseTransactions(promises[1].result))
     const tokenBalances = promises[2]
     const balances = tokenBalances
     balances.unshift(ethereumBalance)
 
-    return new Wallet(balances, new Date())
+    return balances
   }
 
   _parseTransactions (rawTransactions) {

@@ -77,7 +77,7 @@ self.addEventListener('message', async event => {
       wallets[walletId].parameters
     ).getWalletData()
 
-    await database.saveWallet(walletId, wallet)
+    await database.saveBalances(wallet, walletId)
   } catch (e) {
     success = false
     message = e.message

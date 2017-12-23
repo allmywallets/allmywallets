@@ -1,37 +1,55 @@
 import idb from 'idb'
-import Wallet from './model/Wallet'
+import Balance from './model/Balance'
 
 class Database {
   constructor () {
-    this.connection = idb.open('wallet-store', 1, upgradeDB => {
-      upgradeDB.createObjectStore('wallet')
+    this.connection = idb.open('balance-store', 1, upgradeDB => {
+      upgradeDB.createObjectStore('balance')
     })
   }
 
   /**
    * Saves a wallet in the object store.
    *
-   * @param walletId
-   * @param {Wallet} wallet
+   * @param {array} balances
+   * @param {number} walletId
    * @returns {Promise}
    */
-  async saveWallet (walletId, wallet) {
+  async saveBalances (balances, walletId) {
     const db = await this.connection
-    const tx = db.transaction('wallet', 'readwrite')
+    const tx = db.transaction('balance', 'readwrite')
 
-    return tx.objectStore('wallet').put(wallet, walletId)
+    const txs = []
+    balances.forEach((balance, id) => {
+      txs.push(tx.objectStore('balance').put(balance, `${walletId}.${id}`))
+    })
+
+    return Promise.all(txs)
   }
 
-  async getWallet (walletId) {
+  async getBalance (balanceId) {
     const db = await this.connection
 
-    const wallet = await db.transaction('wallet').objectStore('wallet').get(walletId)
+    const balance = await db.transaction('balance').objectStore('balance').get(balanceId)
 
-    if (wallet === undefined) {
-      throw new Error(`No such wallet (id: ${walletId})`)
+    if (balance === undefined) {
+      throw new Error(`No such balance (id: ${balanceId})`)
     }
 
-    return Wallet.fromObject(wallet)
+    return Balance.fromObject(balance)
+  }
+
+  async getBalances () {
+    const db = await this.connection
+
+    const keys = db.transaction('balance').objectStore('balance').getAllKeys()
+    const balances = db.transaction('balance').objectStore('balance').getAll()
+
+    return Promise.all([keys, balances]).then(([keys, balances]) => {
+      return keys.map((val, index) => {
+        return { key: val, value: balances[index] }
+      })
+    })
   }
 }
 

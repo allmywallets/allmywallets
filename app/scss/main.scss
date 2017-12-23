@@ -1,6 +1,7 @@
 @import '~bootstrap-reboot/bootstrap-reboot.scss';
 @import '~bootstrap-4-grid/scss/grid.scss';
 @import '~@fortawesome/fontawesome/styles.css';
+@import '~cryptofont/sass/cryptofont.scss';
 @import 'vars';
 
 @font-face {
@@ -9,7 +10,7 @@
 }
 
 body {
-  background: #f2f2f2;
+  background: $color-section-content;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
@@ -25,19 +26,20 @@ body {
   outline: none;
 }
 
-.text-info {
+.text-info, .text-info:hover {
   color: $color-info;
 }
 
-.text-warning {
+.text-warning, .text-info:hover {
   color: #ffc107;
 }
 
-.text-danger {
+.text-danger, .text-info:hover {
   color: $color-danger;
 }
 
-a:hover {
+a, a:hover {
+  color: $color-primary;
   text-decoration: none;
 }
 
@@ -61,7 +63,7 @@ a:hover {
   background-clip: padding-box;
 
   &:hover {
-    background-color: #b3b3b3;
+    background-color: rgba(0, 0, 0, 0.2);
   }
 }
 

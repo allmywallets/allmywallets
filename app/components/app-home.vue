@@ -1,17 +1,17 @@
 <template>
   <div>
     <h2>All My Wallets</h2>
-    <wallet-list></wallet-list>
+    <balance-list></balance-list>
   </div>
 </template>
 
 <script>
-  import WalletList from './wallet-list.vue'
+  import BalanceList from './balance-list.vue'
 
   export default {
     name: 'app-home',
     components: {
-      WalletList
+      BalanceList
     }
   }
 </script>

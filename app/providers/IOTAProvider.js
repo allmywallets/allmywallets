@@ -1,5 +1,4 @@
 import Balance from '../model/Balance'
-import Wallet from '../model/Wallet'
 import AbstractProvider from './AbstractProvider'
 
 export default class IOTAProvider extends AbstractProvider {
@@ -25,9 +24,9 @@ export default class IOTAProvider extends AbstractProvider {
     })
       .then(response => response.json())
       .then((data) => {
-        const balance = new Balance('Iota', 'MIOTA', data.balances[0], [])
+        const balance = new Balance('Iota', 'IOTA', parseFloat(data.balances[0]), new Date(), [])
 
-        return new Wallet([balance], new Date())
+        return [balance]
       })
   }
 

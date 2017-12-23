@@ -1,5 +1,4 @@
 import Balance from '../model/Balance'
-import Wallet from '../model/Wallet'
 import Transaction from '../model/Transaction'
 import AbstractProvider from './AbstractProvider'
 import ExplorerLib from '../../explorerLibName'
@@ -21,9 +20,9 @@ export default function getGenericProviderClass (explorerName) {
 
       const amount = promises[0]
       const transactions = promises[1].map(tx => new Transaction(tx.type, tx.from, tx.to, tx.amount))
-      const balance = new Balance(explorer.currencyName, explorer.currencyTicker, amount, transactions)
+      const balance = new Balance(explorer.currencyName, explorer.currencyTicker, amount, new Date(), transactions)
 
-      return new Wallet([balance], new Date())
+      return [balance]
     }
 
     static getSupportedParameters () {

@@ -10,6 +10,20 @@ export default class Configurator {
     return configuration
   }
 
+  static async getWallets () {
+    const configuration = await Configurator.getConfiguration()
+
+    return configuration.profiles[0].wallets
+  }
+
+  static async getWallet (walletId) {
+    const configuration = await Configurator.getConfiguration()
+
+    const wallets = configuration.profiles[0].wallets
+
+    return wallets[walletId]
+  }
+
   static setConfiguration (configuration) {
     if (!this.validateConfiguration(configuration)) {
       throw new Error('Configuration is not valid')

@@ -29,18 +29,18 @@
     display: flex;
     justify-content: center;
     box-shadow: 0 0 3px rgba(#000000, .3);
-    background: linear-gradient(to bottom, #ffffff 0%, #f6f6f6 100%);
+    background: $color-section-menu;
     z-index: 1000;
 
     @media screen and (min-width: $breakpoint-medium) {
       justify-content: center;
+      padding-right: $grid-notifications-width;
     }
 
     a {
-      padding: 0 2rem;
-      font-size: 1.3rem;
+      padding: 0 1.5rem;
+      font-size: 1.5rem;
       color: $color-section-notifications;
-      border-top: 3px solid transparent;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -64,7 +64,7 @@
 
       &.router-link-exact-active {
         svg {
-          color: $color-info;
+          color: $color-secondary;
         }
       }
     }
