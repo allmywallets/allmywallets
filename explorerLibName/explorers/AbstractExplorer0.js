@@ -6,7 +6,7 @@ class AbstractExplorer0 {
     this.wallets = []
 
     this.tickers = []
-    this.fetch = []
+    this.elementsToFetch = []
 
     this.currencyName = 'Currency'
     this.currencyTicker = 'CUR'
@@ -36,7 +36,7 @@ class AbstractExplorer0 {
   }
 
   fetch (fetchs) {
-    fetch.forEach(f => this.fetch.push(f))
+    this.elementsToFetch = fetchs
     return this
   }
 
@@ -74,7 +74,7 @@ class AbstractExplorer0 {
 
   static async _fetchJson (url) {
     // TODO : require('node-fetch')
-    return fetch(url).then((response) => response.json())
+    return require('node-fetch')(url).then((response) => response.json())
   }
 }
 
