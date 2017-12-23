@@ -2,18 +2,22 @@ const AbstractExplorer = require('./AbstractExplorer')
 
 const API_URL = 'https://blockexplorer.com/api'
 
+/**
+ * Bitcoin blockchain explorer for https://blockexplorer.com/
+ */
 class BitcoinBlockExplorer extends AbstractExplorer {
   constructor () {
     super()
     this.currencyName = 'Bitcoin'
-    this.currencyTicker = 'BTC'
+    this.supportedTickers = ['BTC']
   }
 
-  async getBalance (address) {
-    return this.constructor._fetchJson(`${API_URL}/addr/${address}/balance`).then(amount => amount / 1e8)
+  async _getBalances (address, result) {
+    let btcBalance = await this.constructor._fetchJson(`${API_URL}/addr/${address}/balance`).then(amount => amount / 1e8)
+    result.balances = [btcBalance]
   }
 
-  async getTransactions (address) {
+  async _getTransactions (address, result) {
     const res = await this.constructor._fetchJson(`${API_URL}/txs/?address=${address}`)
     const transactions = res.txs
 
@@ -45,7 +49,7 @@ class BitcoinBlockExplorer extends AbstractExplorer {
       })
     })
 
-    return transactions
+    result.transactions = [transactions]
   }
 }
 

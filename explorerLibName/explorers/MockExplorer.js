@@ -4,18 +4,22 @@ class MockExplorer extends AbstractExplorer {
   constructor () {
     super()
     this.currencyName = 'Mock'
-    this.currencyTicker = 'MOC'
+    this.supportedTickers = ['MOC']
   }
 
-  async getBalance (address) {
-    return 42
+  async _getBalances (address, result) {
+    result.balances = [42]
+    return Promise.resolve()
   }
 
-  async getTransactions (address) {
-    return [
+  async _getTransactions (address, result) {
+    result.transactions = [[
       {timeStamp: '1513683799', id: '', from: 'fromAddress', to: 'toAddress', amount: 1, type: 'in'},
       {timeStamp: '1513253473', id: '', from: 'fromAddress', to: 'toAddress', amount: 1, type: 'out'}
     ]
+    ]
+
+    return Promise.resolve()
   }
 }
 

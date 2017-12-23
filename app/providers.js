@@ -4,6 +4,7 @@ import IOTA from './providers/IOTAProvider'
 
 const providers = {
   'bitcoin.blockexplorer': GenericProvider('BitcoinBlockExplorer'),
+  'bitcoin.mockexplorer': GenericProvider('MockExplorer'),
   'ethereum.etherscan': EthereumEtherscan,
   'iota.native': IOTA
 }
