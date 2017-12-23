@@ -109,7 +109,7 @@
     width: 100%;
     margin: 0 10px 20px;
     background: #fafafa;
-    border-radius: 3px;
+    border-radius: 5px;
     padding: 3px 15px;
     display: grid;
     grid-template-columns: 1fr;
@@ -185,6 +185,7 @@
       .balance-tools {
         text-align: right;
         margin-right: 5px;
+        letter-spacing: 0.3rem;
       }
     }
   }

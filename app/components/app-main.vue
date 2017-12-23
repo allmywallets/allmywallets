@@ -34,7 +34,7 @@
   main {
     display: grid;
     height: 100vh;
-    grid-template-rows: $grid-menu-height 1fr $grid-menu-height;
+    grid-template-rows: $grid-header-height 1fr $grid-header-height;
     grid-template-areas:
             "indicators"
             "content"

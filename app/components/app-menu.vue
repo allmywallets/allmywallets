@@ -63,9 +63,8 @@
       }
 
       &.router-link-exact-active {
-        svg {
-          color: $color-secondary;
-        }
+        color: white;
+        font-weight: bold;
       }
     }
   }
