@@ -65,6 +65,8 @@
         this.status = message.data.status
 
         if (!this.status.success) {
+          this.loading = false
+
           return
         }
 
