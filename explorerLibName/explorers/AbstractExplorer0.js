@@ -1,5 +1,8 @@
 const NotSupportedCurrencyError = require('./errors/NotSupportedCurrencyError')
 
+/**
+ * A block/DAGchain explorer
+ */
 class AbstractExplorer0 {
   constructor (params) {
     this.params = params
@@ -16,45 +19,94 @@ class AbstractExplorer0 {
     this.supportedTickers = ['CUR']
   }
 
-  wallets (wallets) {
-    wallets.forEach(wallet => this.wallets.push(wallet))
+  /**
+   * Used for special blockchain with multiple identifier for a wallet
+   * Example wallet object : {address1: '0x', address2: '0x'}
+   * Use the method address for classic blockchain @see AbtractExplorer.address
+   * @param {object} wallet
+   */
+  wallet (wallet) {
+    this.wallets.push(wallet)
     return this
   }
 
+  /**
+   * Multiple wallet version of wallet method @see AbtractExplorer.wallet
+   * @param {[object]} wallets
+   */
+  wallets (wallets) {
+    wallets.forEach(wallets => this.wallet(wallets))
+    return this
+  }
+
+  /**
+   * Set the wallet address
+   * @param {String} address
+   */
   address (address) {
     this.addresses.push(address)
     return this
   }
+
+  /**
+   * Multiple address version of address method @see AbtractExplorer.address
+   * @param {[object]} addresses
+   */
   addresses (addresses) {
-    addresses.forEach(address => this.addresses.push(address))
+    addresses.forEach(address => this.address(address))
     return this
   }
 
+  /**
+   * Set the currency
+   * @param {String} ticker
+   */
   currency (ticker) {
     if (!this.supportedTickers.includes(ticker)) throw new NotSupportedCurrencyError('WIP')
 
     this.tickers.push(ticker)
     return this
   }
+
+  /**
+   * Multiple currency version of currency method @see AbtractExplorer.currency
+   * @param {[object]} tickers
+   */
   currencies (tickers) {
     tickers.forEach(ticker => this.currency(ticker))
     return this
   }
 
+  /**
+   * Set the elements to fetch
+   * @param {[String]} fetchs
+   */
   fetch (fetchs) {
     this.elementsToFetch = fetchs
     return this
   }
 
+  /**
+   * Set the maximum number of transaction return
+   * @param {Number} fetchs
+   */
   transactionsLimit (limit) {
     this.transactionsLimit = limit
     return this
   }
 
-  transactionsStartDate () {
+  /**
+   * Set the date to fetch transaction from
+   * @param {Date} startDate
+   */
+  transactionsStartDate (startDate) {
     throw new Error('Not yet implemented')
   }
 
+  /**
+   * Return the params needed for the constructor
+   * @returns {object}
+   */
   static getExplorerParams () {
     return [{
       type: 'input',
@@ -64,6 +116,10 @@ class AbstractExplorer0 {
     }]
   }
 
+  /**
+   * Get the information needed to identify an account
+   * @returns {object}
+   */
   static getAddressParam () {
     return [{
       type: 'input',
@@ -81,6 +137,10 @@ class AbstractExplorer0 {
     throw new Error('This method should be implemented by child class')
   }
 
+  /**
+   * Execute the request
+   * @returns {Promise<object>}
+   */
   async exec () {
     let promises = []
     let wallets = []

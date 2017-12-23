@@ -2,6 +2,9 @@ const AbstractExplorer = require('./AbstractExplorer0')
 
 const API_URL = 'https://blockexplorer.com/api'
 
+/**
+ * Bitcoin blockchain explorer for https://blockexplorer.com/
+ */
 class BitcoinBlockExplorer0 extends AbstractExplorer {
   constructor () {
     super()
@@ -47,28 +50,6 @@ class BitcoinBlockExplorer0 extends AbstractExplorer {
     })
 
     result.transactions = [transactions]
-  }
-
-  async exec () {
-    let promises = []
-    let wallets = []
-
-    this.addresses.forEach(address => {
-      const wallet = {}
-      if (this.elementsToFetch.includes('balances')) {
-        promises.push(this._getBalances(address, wallet))
-      }
-
-      if (this.elementsToFetch.includes('transactions')) {
-        promises.push(this._getTransactions(address, wallet))
-      }
-
-      wallets.push(wallet)
-    })
-
-    await Promise.all(promises)
-
-    return wallets
   }
 }
 
