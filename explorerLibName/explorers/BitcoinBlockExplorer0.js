@@ -6,10 +6,10 @@ class BitcoinBlockExplorer0 extends AbstractExplorer {
   constructor () {
     super()
     this.currencyName = 'Bitcoin'
-    this.currencyTicker = 'BTC'
+    this.supportedTickers = ['BTC']
   }
 
-  async _getBalance (address, result) {
+  async _getBalances (address, result) {
     let btcBalance = await this.constructor._fetchJson(`${API_URL}/addr/${address}/balance`).then(amount => amount / 1e8)
     result.balances = [btcBalance]
   }
@@ -50,22 +50,25 @@ class BitcoinBlockExplorer0 extends AbstractExplorer {
   }
 
   async exec () {
-    if (!this.tickers.includes('BTC')) return []
-
     let promises = []
+    let wallets = []
 
-    let result = {}
-    if (this.elementsToFetch.includes('balances')) {
-      promises.push(this._getBalance(this.addresses[0], result))
-    }
+    this.addresses.forEach(address => {
+      const wallet = {}
+      if (this.elementsToFetch.includes('balances')) {
+        promises.push(this._getBalances(address, wallet))
+      }
 
-    if (this.elementsToFetch.includes('transactions')) {
-      promises.push(this._getTransactions(this.addresses[0], result))
-    }
+      if (this.elementsToFetch.includes('transactions')) {
+        promises.push(this._getTransactions(address, wallet))
+      }
+
+      wallets.push(wallet)
+    })
 
     await Promise.all(promises)
 
-    return [result]
+    return wallets
   }
 }
 

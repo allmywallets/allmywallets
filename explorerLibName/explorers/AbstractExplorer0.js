@@ -1,3 +1,5 @@
+const NotSupportedCurrencyError = require('./errors/NotSupportedCurrencyError')
+
 class AbstractExplorer0 {
   constructor (params) {
     this.params = params
@@ -10,6 +12,8 @@ class AbstractExplorer0 {
 
     this.currencyName = 'Currency'
     this.currencyTicker = 'CUR'
+
+    this.supportedTickers = ['CUR']
   }
 
   wallets (wallets) {
@@ -27,11 +31,13 @@ class AbstractExplorer0 {
   }
 
   currency (ticker) {
+    if (!this.supportedTickers.includes(ticker)) throw new NotSupportedCurrencyError('WIP')
+
     this.tickers.push(ticker)
     return this
   }
   currencies (tickers) {
-    tickers.forEach(ticker => this.tickers.push(ticker))
+    tickers.forEach(ticker => this.currency(ticker))
     return this
   }
 
@@ -68,8 +74,33 @@ class AbstractExplorer0 {
     }]
   }
 
-  async exec () {
+  async _getBalances (address, result) {
     throw new Error('This method should be implemented by child class')
+  }
+  async _getTransactions (address, result) {
+    throw new Error('This method should be implemented by child class')
+  }
+
+  async exec () {
+    let promises = []
+    let wallets = []
+
+    this.addresses.forEach(address => {
+      const wallet = {}
+      if (this.elementsToFetch.includes('balances')) {
+        promises.push(this._getBalances(address, wallet))
+      }
+
+      if (this.elementsToFetch.includes('transactions')) {
+        promises.push(this._getTransactions(address, wallet))
+      }
+
+      wallets.push(wallet)
+    })
+
+    await Promise.all(promises)
+
+    return wallets
   }
 
   static async _fetchJson (url) {
