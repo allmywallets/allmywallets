@@ -79,6 +79,7 @@ self.addEventListener('message', async event => {
 
     await database.saveBalances(wallet, walletId)
   } catch (e) {
+    console.error(e)
     success = false
     message = e.message
   }
