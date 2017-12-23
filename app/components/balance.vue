@@ -2,7 +2,7 @@
   <div v-if="wallet && balance" class="balance">
     <header class="balance-header">
       <span class="balance-logo">
-        <i :class="`cf cf-${balance.ticker.toLowerCase()}`"></i>
+        <i :class="`cc ${balance.ticker}-alt`"></i>
       </span>
       <h3 class="balance-name">
         {{ wallet.name }}<br />
@@ -10,9 +10,9 @@
       </h3>
     </header>
     <div class="balance-amount">
-      <i :class="`cf cf-${balance.ticker.toLowerCase()}`"></i><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
+      <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
       <span class="balance-btc">
-        <i class="cf cf-btc"></i>? ($?)
+        <i class="cc BTC-alt"></i>? (<span class="dollar">$</span>?)
       </span>
     </div>
     <footer class="balance-footer">
@@ -152,13 +152,8 @@
       padding: 20px 10px 25px;
       line-height: 1.4rem;
 
-      .cf, .balance-amount-value {
-        display: inline-block;
-        vertical-align: middle;
-      }
-
-      .cf {
-        font-size: 0.6em;
+      small {
+        font-size: 0.4em;
       }
 
       .balance-btc {
@@ -166,8 +161,13 @@
         font-size: 0.8rem;
         vertical-align: middle;
 
-        .cf {
+        .cc {
           font-size: 0.8em;
+          vertical-align: 1px;
+        }
+
+        .dollar {
+          font-weight: bold;
         }
       }
     }

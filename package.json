@@ -17,7 +17,7 @@
     "babel-runtime": "latest",
     "bootstrap-4-grid": "^2.0.0",
     "bootstrap-reboot": "^0.1.1",
-    "cryptofont": "^0.1.1",
+    "cryptocoins-icons": "^2.7.0",
     "idb": "^2.0.4",
     "idb-keyval": "^2.3.0",
     "jsonschema": "^1.2.2",
