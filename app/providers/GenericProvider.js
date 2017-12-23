@@ -9,27 +9,32 @@ export default function getGenericProviderClass (explorerName) {
   class GenericProvider extends AbstractProvider {
     constructor (parameters) {
       super()
-      this.address = parameters.address
+      this.parameters = parameters
     }
 
     async getWalletData () {
-      let promises = await Promise.all([
-        explorer.getBalance(this.address),
-        explorer.getTransactions(this.address)
-      ])
+      const res = await explorer
+          .address(this.parameters.address)
+          .currencies(this.parameters.currencies)
+          .fetch(['balances', 'transactions'])
+          .exec()
 
-      const amount = promises[0]
-      const transactions = promises[1].map(tx => new Transaction(tx.type, tx.from, tx.to, tx.amount))
-      const balance = new Balance(explorer.currencyName, explorer.currencyTicker, amount, new Date(), transactions)
+      const balances = []
+      this.parameters.currencies.forEach(currency => {
+        const amount = res[0].balances[0]
+        const transactions = res[0].transactions[0].map(tx => new Transaction(tx.type, tx.from, tx.to, tx.amount))
+        const balance = new Balance(currency, currency, amount, new Date(), transactions)
+        balances.push(balance)
+      })
 
-      return [balance]
+      return balances
     }
 
     static getSupportedParameters () {
       return [{
         type: 'input',
         inputType: 'text',
-        label: `${explorer.currencyName} address`,
+        label: `BTC address`, // TODO : hardcoded
         model: 'address',
         required: true
       }]
