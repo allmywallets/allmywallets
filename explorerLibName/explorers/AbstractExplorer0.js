@@ -62,7 +62,9 @@ class AbstractExplorer0 {
    * @param {String} ticker
    */
   currency (ticker) {
-    if (!this.supportedTickers.includes(ticker)) throw new NotSupportedCurrencyError('WIP')
+    if (!this.supportedTickers.includes(ticker)) {
+      throw new NotSupportedCurrencyError(`${ticker} is not supported`)
+    }
 
     this.tickers.push(ticker)
     return this
