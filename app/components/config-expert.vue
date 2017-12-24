@@ -13,7 +13,7 @@
           "provider": "blockexplorer",
           "name": "My Bitcoin wallet",
           "parameters": {
-            "address": "ADDRESS"
+            "addresses": ["ADDRESS"]
           }
         },
         {

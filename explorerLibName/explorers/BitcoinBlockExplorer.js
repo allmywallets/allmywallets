@@ -8,8 +8,9 @@ const API_URL = 'https://blockexplorer.com/api'
 class BitcoinBlockExplorer extends AbstractExplorer {
   constructor () {
     super()
-    this.currencyName = 'Bitcoin'
-    this.supportedTickers = ['BTC']
+
+    this.defaultTicker = 'BTC'
+    this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
   }
 
   async _getBalances (address, result) {

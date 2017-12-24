@@ -14,18 +14,23 @@ export default function getGenericProviderClass (explorerName) {
 
     async getWalletData (currencies = []) {
       // Todo: take currencies into account
-      const res = await explorer
-          .address(this.parameters.address)
-          .currencies(this.parameters.currencies)
-          .fetch(['balances', 'transactions'])
-          .exec()
+      if (this.parameters.currencies) {
+        explorer.currencies(this.parameters.currencies)
+      }
+
+      const wallets = await explorer
+        .addresses(this.parameters.addresses)
+        .fetch(['balances', 'transactions'])
+        .exec()
 
       const balances = []
-      this.parameters.currencies.forEach(currency => {
-        const amount = res[0].balances[0]
-        const transactions = res[0].transactions[0].map(tx => new Transaction(tx.type, tx.from, tx.to, tx.amount))
-        const balance = new Balance(currency, currency, amount, new Date(), transactions)
-        balances.push(balance)
+      wallets.forEach(wallet => {
+        explorer.getSelectedCurrencies().forEach(selectedCurrency => {
+          const amount = wallet.balances[0]
+          const transactions = wallet.transactions[0].map(tx => new Transaction(tx.type, tx.from, tx.to, tx.amount))
+          const balance = new Balance(selectedCurrency.name, selectedCurrency.ticker, amount, new Date(), transactions)
+          balances.push(balance)
+        })
       })
 
       return balances
