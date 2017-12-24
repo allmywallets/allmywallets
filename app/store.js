@@ -25,7 +25,7 @@ const mutations = {
   },
   UPDATE_BALANCES (state, { balances }) {
     balances.forEach(updatedBalance => {
-      const index = state.balances.findIndex(balance => updatedBalance.is(balance.walletId, balance.currency))
+      const index = state.balances.findIndex(balance => updatedBalance.equals(balance))
       state.balances.splice(index, 1, updatedBalance)
     })
   },

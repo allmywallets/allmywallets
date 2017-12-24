@@ -2,7 +2,7 @@
   <section>
     <a href="#" @click.prevent="refreshAll">refresh all</a>
     <article>
-      <balance v-for="balance, key in balances" :key="key" :wallet-id="balance.walletId" :currency="balance.currency"></balance>
+      <balance v-for="balance, key in balances" :key="key" :id="balance.id"></balance>
     </article>
   </section>
 </template>

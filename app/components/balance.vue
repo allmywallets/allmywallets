@@ -37,11 +37,7 @@
   export default {
     name: 'balance',
     props: {
-      walletId: {
-        type: Number,
-        required: true
-      },
-      currency: {
+      id: {
         type: String,
         required: true
       }
@@ -55,15 +51,15 @@
       balance () {
         this.loading = false
 
-        return this.$store.state.balances.find(balance => balance.is(this.walletId, this.currency))
+        return this.$store.state.balances.find(balance => balance.id === this.id)
       },
       wallet () {
-        return this.$store.state.configuration.profiles[0].wallets[this.walletId]
+        return this.$store.state.configuration.profiles[0].wallets[this.balance.walletId]
       },
       status () {
         this.loading = false
 
-        return this.$store.state.errors.find(error => error.walletId === this.walletId)
+        return this.$store.state.errors.find(error => error.walletId === this.balance.walletId)
       }
     },
     methods: {
@@ -72,8 +68,8 @@
 
         return this.$serviceWorker.controller.postMessage({
           action: 'balance-refresh',
-          walletId: this.walletId,
-          balanceIds: [this.balance.balanceIds]
+          walletId: this.balance.walletId,
+          currencies: [this.balance.currency]
         })
       }
     },

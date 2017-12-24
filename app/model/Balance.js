@@ -50,12 +50,18 @@ export default class Balance {
     return this._walletId
   }
 
-  is (walletId, currency) {
-    return this._walletId === walletId && this._currency === currency
+  /**
+   * Checks if two balances are the same
+   *
+   * @param {Balance} balance
+   * @returns {boolean}
+   */
+  equals (balance) {
+    return this.walletId === balance.walletId && this.ticker === balance.ticker
   }
 
   get id () {
-    return `${this._walletId}.${this._currency}`
+    return `${this._walletId}.${this._ticker}`
   }
 
   static fromObject (object) {
