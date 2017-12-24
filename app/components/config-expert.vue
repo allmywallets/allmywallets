@@ -48,8 +48,10 @@
 }
   </pre>
     <p>Current (editable) config:</p>
-    <strong>{{ error }} <br /></strong>
-    <textarea v-model="configuration" @input="updateConfiguration()"></textarea>
+    <strong>{{ error }} <br />
+          <span v-if="needsUpdate">Configuration needs to be updated!</span>
+    </strong>
+    <textarea @input="updateConfiguration" title="Edit your configuration">{{ configuration }}</textarea>
   </div>
 </template>
 
@@ -60,24 +62,30 @@
     name: 'config-expert',
     data () {
       return {
-        configuration: '',
-        error: ''
+        error: '',
+        timeout: 0
+      }
+    },
+    computed: {
+      configuration () {
+        return JSON.stringify(this.$store.state.configuration, null, 2)
+      },
+      needsUpdate () {
+        return !Configurator.validateConfiguration(this.$store.state.configuration)
       }
     },
     methods: {
-      async updateConfiguration () {
-        try {
-          await Configurator.setConfiguration(JSON.parse(this.configuration))
+      async updateConfiguration (e) {
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(async () => {
           this.error = ''
-        } catch (e) {
-          this.error = e.message
-        }
+          try {
+            await this.$store.dispatch('updateConfiguration', JSON.parse(e.target.value))
+          } catch (e) {
+            this.error = e.message
+          }
+        }, 500)
       }
-    },
-    async mounted () {
-      const configuration = await Configurator.getConfiguration()
-      this.configuration = JSON.stringify(configuration, null, 2)
-      this.error = !Configurator.validateConfiguration(configuration) ? 'Configuration needs to be updated!' : ''
     }
   }
 </script>

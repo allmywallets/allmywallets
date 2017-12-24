@@ -21,7 +21,7 @@ export default class EthereumEtherscan extends AbstractProvider {
     this.tokens.forEach(tokenTicker => {
       const token = ERC20Token[tokenTicker]
       if (!token) {
-        console.err(`${tokenTicker} not found`)
+        console.error(`${tokenTicker} not found`)
         return
       }
 
@@ -40,7 +40,8 @@ export default class EthereumEtherscan extends AbstractProvider {
     return new Balance(token.name, token.ticker, json.result / Math.pow(10, token.decimals), new Date(), [])
   }
 
-  async getWalletData () {
+  async getWalletData (currencies = []) {
+    // Todo: take currencies into account
     let promises = await Promise.all([
       fetch(`${API_URL}?module=account&action=balance&address=${this.address}&sort=desc&tag=latest`).then((response) => response.json()),
       fetch(`${API_URL}?module=account&action=txlist&address=${this.address}&sort=desc&tag=latest`).then((response) => response.json()),

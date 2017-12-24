@@ -1,5 +1,6 @@
 import { Validator } from 'jsonschema'
 import idbKeyval from 'idb-keyval'
+import WalletError from './errors/WalletError'
 
 export default class Configurator {
   static async getConfiguration () {
@@ -10,16 +11,14 @@ export default class Configurator {
     return configuration
   }
 
-  static async getWallets () {
-    const configuration = await Configurator.getConfiguration()
-
-    return configuration.profiles[0].wallets
-  }
-
   static async getWallet (walletId) {
     const configuration = await Configurator.getConfiguration()
 
     const wallets = configuration.profiles[0].wallets
+
+    if (walletId > wallets.length) {
+      throw new WalletError(`Wallet ${walletId} is not defined`)
+    }
 
     return wallets[walletId]
   }

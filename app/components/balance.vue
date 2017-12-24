@@ -1,5 +1,5 @@
 <template>
-  <div v-if="wallet && balance" class="balance">
+  <div class="balance">
     <header class="balance-header">
       <span class="balance-logo">
         <i :class="`cc ${balance.ticker}-alt`"></i>
@@ -25,79 +25,60 @@
         <a href="#" @click.prevent="refresh" :title="`Last update: ${balance.lastUpdate.getMonth() + 1}/${balance.lastUpdate.getDate()}/${balance.lastUpdate.getFullYear()} at ${balance.lastUpdate.getHours()}:${balance.lastUpdate.getMinutes()}`" v-tippy>
           <icon icon="sync-alt" :spin="loading"></icon>
         </a>
-        <a href="#" :title="`Last update failed: ${status.message}`" v-if="!status.success" class="text-warning">
+        <a href="#" v-if="status" :title="`Wallet update failed: ${status.message}`" class="text-warning" v-tippy>
           <icon icon="exclamation-triangle"></icon>
         </a>
       </div>
     </footer>
   </div>
-  <div v-else>
-    No data
-  </div>
 </template>
 
 <script>
-  import database from '../database'
-  import Configurator from '../configurator'
-
   export default {
     name: 'balance',
     props: {
-      id: {
+      walletId: {
+        type: Number,
+        required: true
+      },
+      currency: {
         type: String,
         required: true
       }
     },
     data () {
       return {
-        wallet: null,
-        balance: null,
-        status: { success: true, message: '' },
         loading: false
       }
     },
-    methods: {
-      async load (message) {
-        if (message.data.action !== 'sync' || message.data.id !== parseInt(this.id.split('.')[0])) {
-          return
-        }
+    computed: {
+      balance () {
+        this.loading = false
 
-        this.status = message.data.status
-
-        if (!this.status.success) {
-          this.loading = false
-
-          return
-        }
-
-        this.updateBalance()
+        return this.$store.state.balances.find(balance => balance.is(this.walletId, this.currency))
       },
+      wallet () {
+        return this.$store.state.configuration.profiles[0].wallets[this.walletId]
+      },
+      status () {
+        this.loading = false
+
+        return this.$store.state.errors.find(error => error.walletId === this.walletId)
+      }
+    },
+    methods: {
       async refresh () {
         this.loading = true
 
         return this.$serviceWorker.controller.postMessage({
-          action: 'sync',
-          id: parseInt(this.id.split('.')[0])
+          action: 'balance-refresh',
+          walletId: this.walletId,
+          balanceIds: [this.balance.balanceIds]
         })
-      },
-      async updateBalance () {
-        this.loading = true
-
-        try {
-          this.balance = await database.getBalance(this.id)
-        } catch (e) {
-          this.status = { success: false, message: e.message }
-        }
-
-        this.loading = false
       }
     },
     async mounted () {
       this.$serviceWorker.addEventListener('message', this.load)
-
-      this.wallet = await Configurator.getWallet(this.id.split('.')[0])
-
-      this.updateBalance()
     }
   }
 </script>

@@ -26,21 +26,21 @@ body {
   outline: none;
 }
 
+a, a:hover {
+  color: $color-primary;
+  text-decoration: none;
+}
+
 .text-info, .text-info:hover {
   color: $color-info;
 }
 
-.text-warning, .text-info:hover {
+.text-warning, .text-warning:hover {
   color: #ffc107;
 }
 
-.text-danger, .text-info:hover {
+.text-danger, .text-danger:hover {
   color: $color-danger;
-}
-
-a, a:hover {
-  color: $color-primary;
-  text-decoration: none;
 }
 
 ::-webkit-scrollbar-track

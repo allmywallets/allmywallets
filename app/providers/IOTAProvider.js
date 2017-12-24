@@ -9,16 +9,17 @@ export default class IOTAProvider extends AbstractProvider {
     this.address = parameters.address
   }
 
-  async getWalletData () {
+  async getWalletData (currencies = []) {
     const headers = new Headers()
     headers.append('X-IOTA-API-Version', '1')
 
+    // Todo: take currencies into account
     return fetch(this.node, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({
         addresses: [this.address],
-        command: 'getBalances',
+        command: 'findAllBalances',
         threshold: 3
       })
     })

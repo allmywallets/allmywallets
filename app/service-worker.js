@@ -1,9 +1,7 @@
 import 'babel-polyfill'
 import database from './database'
-import Configurator from './configurator';
+import Configurator from './configurator'
 import Proxy from './providers'
-import BalanceRefreshError from "./errors/BalanceRefreshError";
-import GlobalError from "./errors/GlobalError";
 
 const PRECACHE = 'precache-' + process.env.VERSION
 const RUNTIME = 'runtime'
@@ -55,45 +53,26 @@ self.addEventListener('fetch', event => {
 })
 
 self.addEventListener('message', async event => {
-  const { action } = event.data
   const clients = await self.clients.matchAll()
 
-  if (action !== 'balance-refresh') {
-    clients.forEach(client => {
-      client.postMessage({
-        action: action,
-        error: new GlobalError(new GlobalError(`Message action ${action} is not supported`))
-      })
-    })
-  }
-
-  const { walletId, currency } = event.data
+  const { walletId, currencies } = event.data
 
   let error = false
+  let balances = []
   try {
-    const configuration = await Configurator.getConfiguration()
-    const wallets = configuration.profiles[0].wallets
+    const wallet = await Configurator.getWallet(walletId)
+    balances = await new Proxy(wallet.network, wallet.provider, wallet.parameters).getWalletData(currencies)
+    balances.forEach(balance => { balance.walletId = walletId })
 
-    if (walletId >= wallets.length) {
-      error = new GlobalError(`Wallet ${walletId} does not exist`)
-    } else {
-      const wallet = await new Proxy(
-        wallets[walletId].network,
-        wallets[walletId].provider,
-        wallets[walletId].parameters
-      ).getWalletData()
-
-      await database.saveBalances(wallet, walletId)
-    }
+    await database.storeBalances(balances)
   } catch (e) {
-    error = new BalanceRefreshError(walletId, currency, e.message)
+    error = { _walletId: walletId, _message: e.message, _stack: e.stack }
   }
 
   clients.forEach(client => {
     client.postMessage({
-      action: action,
       walletId: walletId,
-      currency: currency,
+      balanceIds: balances.map(balance => balance.id),
       error: error
     })
   })

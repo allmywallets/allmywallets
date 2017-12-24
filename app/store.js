@@ -18,15 +18,18 @@ const mutations = {
     state.balances = balances
   },
   ADD_WALLET (state, wallet) {
-    state.configuration.profile[0].wallets.push(wallet)
+    state.configuration.profiles[0].wallets.push(wallet)
   },
-  UPDATE_CONFIGURATION (state, configuration) {
+  UPDATE_CONFIGURATION (state, { configuration }) {
     state.configuration = configuration
   },
-  REFRESH_BALANCE (state, balance, walletId) {
-    state.balances[`${walletId}.${balance.currency}`] = balance
+  UPDATE_BALANCES (state, { balances }) {
+    balances.forEach(updatedBalance => {
+      const index = state.balances.findIndex(balance => updatedBalance.is(balance.walletId, balance.currency))
+      state.balances.splice(index, 1, updatedBalance)
+    })
   },
-  ADD_ERROR (state, error) {
+  ADD_ERROR (state, { error }) {
     console.error(error)
     state.errors.push(error)
   },
@@ -38,21 +41,25 @@ const mutations = {
 const actions = {
   initApplication: async ({ commit }) => {
     const configuration = await Configurator.getConfiguration()
-    const balances = await database.getBalances()
+    const balances = await database.findAllBalances()
 
     commit('INIT_APPLICATION', { configuration, balances })
   },
-  addWallet: ({ dispatch }) => {
-    dispatch('ADD_WALLET')
+  addWallet: ({ commit }) => {
+    commit('ADD_WALLET')
   },
-  updateConfiguration: ({ dispatch }) => {
-    dispatch('UPDATE_CONFIGURATION')
+  updateConfiguration: async ({ commit }, configuration) => {
+    await Configurator.setConfiguration(configuration)
+
+    commit('UPDATE_CONFIGURATION', { configuration })
   },
-  refreshBalance: ({ dispatch }) => {
-    dispatch('REFRESH_BALANCE')
+  updateBalances: async ({ commit }, { balanceIds }) => {
+    const balances = await database.findBalances(balanceIds)
+
+    commit('UPDATE_BALANCES', { balances })
   },
-  addError: ({ dispatch }) => {
-    dispatch('ADD_ERROR')
+  addError: ({ commit }, { error }) => {
+    commit('ADD_ERROR', { error })
   }
 }
 

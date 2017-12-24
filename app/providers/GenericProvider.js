@@ -12,7 +12,8 @@ export default function getGenericProviderClass (explorerName) {
       this.parameters = parameters
     }
 
-    async getWalletData () {
+    async getWalletData (currencies = []) {
+      // Todo: take currencies into account
       const res = await explorer
           .address(this.parameters.address)
           .currencies(this.parameters.currencies)

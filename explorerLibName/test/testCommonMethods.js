@@ -20,7 +20,7 @@ for (let i = 0; i < explorers.length; i++) {
   })
 
   test(`[${explorerName}] getBalance`, async t => {
-    const balance = await explorer.getBalance(address)
+    const balance = await explorer.findBalance(address)
     t.not(balance, undefined)
     t.is(typeof balance, 'number')
   })

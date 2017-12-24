@@ -42,13 +42,33 @@ export default class Balance {
     return this._lastUpdate
   }
 
+  set walletId (walletId) {
+    this._walletId = walletId
+  }
+
+  get walletId () {
+    return this._walletId
+  }
+
+  is (walletId, currency) {
+    return this._walletId === walletId && this._currency === currency
+  }
+
+  get id () {
+    return `${this._walletId}.${this._currency}`
+  }
+
   static fromObject (object) {
-    return new Balance(
+    const balance = new Balance(
       object._currency,
       object._ticker,
       object._amount,
       object._lastUpdate,
       object._transactions.map(transaction => Transaction.fromObject(transaction))
-   )
+    )
+
+    balance.walletId = object._walletId
+
+    return balance
   }
 }

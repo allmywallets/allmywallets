@@ -9,8 +9,7 @@
 
 <script>
   import runtime from 'serviceworker-webpack-plugin/lib/runtime'
-  import database from '../../database'
-  import GlobalError from '../../errors/GlobalError'
+  import WalletError from '../../errors/WalletError'
 
   export default {
     name: 'worker',
@@ -24,15 +23,15 @@
         location.reload()
       },
       async handleMessage ({ data }) {
-        if (data.action !== 'sync') {
-          return this.addError(new GlobalError(`Message action ${data.action} is not supported.`))
-        }
-
         if (data.error) {
-          return this.addError(data.error)
+          const error = WalletError.fromObject(data.error)
+
+          return this.$store.dispatch('addError', { error })
         }
 
-        this.refreshBalance(await database.getBalance(data.walletId, data.currency), data.walletId)
+        const { balanceIds } = data
+
+        return this.$store.dispatch('updateBalances', { balanceIds })
       }
     },
     mounted () {

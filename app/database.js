@@ -11,49 +11,49 @@ class Database {
   /**
    * Saves a wallet in the object store.
    *
-   * @param {array} balances
-   * @param {number} walletId
+   * @param {Balance[]} balances
    * @returns {Promise}
    */
-  async saveBalances (balances, walletId) {
+  async storeBalances (balances) {
     const db = await this.connection
     const tx = db.transaction('balance', 'readwrite')
 
     const txs = []
-    balances.forEach((balance, id) => {
-      txs.push(tx.objectStore('balance').put(balance, `${walletId}.${id}`))
+    balances.forEach(balance => {
+      txs.push(tx.objectStore('balance').put(balance, balance.id))
     })
 
     return Promise.all(txs)
   }
 
-  async getBalance (balanceId) {
+  async findBalance (id) {
     const db = await this.connection
 
-    const balance = await db.transaction('balance').objectStore('balance').get(balanceId)
+    const balance = await db.transaction('balance').objectStore('balance').get(id)
 
     if (balance === undefined) {
-      throw new Error(`No such balance (id: ${balanceId})`)
+      throw new Error(`No such balance (${id})`)
     }
 
     return Balance.fromObject(balance)
   }
 
-  async getBalances () {
+  async findBalances (ids) {
+    const balancePromises = []
+
+    ids.forEach(id => {
+      balancePromises.push(this.findBalance(id))
+    })
+
+    return Promise.all(balancePromises)
+  }
+
+  async findAllBalances () {
     const db = await this.connection
 
-    const keys = db.transaction('balance').objectStore('balance').getAllKeys()
-    const balances = db.transaction('balance').objectStore('balance').getAll()
+    const balances = await db.transaction('balance').objectStore('balance').getAll()
 
-    return Promise.all([keys, balances]).then(([keys, balances]) => {
-      if (keys === undefined) {
-        return []
-      }
-
-      return keys.map((val, index) => {
-        return { key: val, value: balances[index] }
-      })
-    })
+    return balances.map(balance => Balance.fromObject(balance))
   }
 }
 

@@ -2,13 +2,12 @@
   <section>
     <a href="#" @click.prevent="refreshAll">refresh all</a>
     <article>
-      <balance v-for="balance in balances" :key="balance.key" :id="balance.key"></balance>
+      <balance v-for="balance, key in balances" :key="key" :wallet-id="balance.walletId" :currency="balance.currency"></balance>
     </article>
   </section>
 </template>
 
 <script>
-  import Configurator from '../configurator'
   import Balance from './balance.vue'
 
   export default {
@@ -23,16 +22,14 @@
     },
     methods: {
       async refreshAll () {
-        this.wallets.forEach((wallet, key) => {
-          return this.$serviceWorker.controller.postMessage({
-            action: 'sync',
-            id: key
+        this.$store.state.configuration.profiles[0].wallets.forEach((wallet, walletId) => {
+          this.$serviceWorker.controller.postMessage({
+            action: 'balance-refresh',
+            walletId: walletId,
+            currencies: []
           })
         })
       }
-    },
-    async mounted () {
-      this.wallets = await Configurator.getWallets()
     }
   }
 </script>
