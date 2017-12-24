@@ -8,8 +8,7 @@ Vue.use(Vuex)
 const state = {
   balances: [],
   configuration: {},
-  errors: [],
-  loading: false
+  errors: []
 }
 
 const mutations = {
@@ -23,10 +22,15 @@ const mutations = {
   UPDATE_CONFIGURATION (state, { configuration }) {
     state.configuration = configuration
   },
-  UPDATE_BALANCES (state, { balances }) {
+  RELOAD_BALANCES (state, { balances }) {
     balances.forEach(updatedBalance => {
       const index = state.balances.findIndex(balance => updatedBalance.equals(balance))
-      state.balances.splice(index, 1, updatedBalance)
+
+      if (index === -1) {
+        state.balances.push(updatedBalance)
+      } else {
+        state.balances.splice(index, 1, updatedBalance)
+      }
     })
   },
   ADD_ERROR (state, { error }) {
@@ -49,14 +53,14 @@ const actions = {
     commit('ADD_WALLET')
   },
   updateConfiguration: async ({ commit }, configuration) => {
-    await Configurator.setConfiguration(configuration)
+    await Configurator.setConfiguration(configuration) // Todo: reset all balances and re-init app
 
     commit('UPDATE_CONFIGURATION', { configuration })
   },
-  updateBalances: async ({ commit }, { balanceIds }) => {
+  reloadBalances: async ({ commit }, { balanceIds }) => {
     const balances = await database.findBalances(balanceIds)
 
-    commit('UPDATE_BALANCES', { balances })
+    commit('RELOAD_BALANCES', { balances })
   },
   addError: ({ commit }, { error }) => {
     commit('ADD_ERROR', { error })

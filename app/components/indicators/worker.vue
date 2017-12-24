@@ -31,7 +31,7 @@
 
         const { balanceIds } = data
 
-        return this.$store.dispatch('updateBalances', { balanceIds })
+        return this.$store.dispatch('reloadBalances', { balanceIds })
       }
     },
     mounted () {

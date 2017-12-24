@@ -18,11 +18,14 @@
     computed: {
       balances () {
         return this.$store.state.balances
+      },
+      wallets () {
+        return this.$store.state.configuration.profiles[0].wallets
       }
     },
     methods: {
-      async refreshAll () {
-        this.$store.state.configuration.profiles[0].wallets.forEach((wallet, walletId) => {
+      refreshAll () {
+        this.$store.state.configuration.profiles[0].wallets.forEach((wallet, walletId) => { // Todo: replace wallet Id with conf value
           this.$serviceWorker.controller.postMessage({
             action: 'balance-refresh',
             walletId: walletId,
