@@ -13,11 +13,7 @@ export default function getGenericProviderClass (explorerName) {
     }
 
     async getWalletData (currencies = []) {
-      // Todo: take currencies into account
-      if (this.parameters.currencies) {
-        explorer.currencies(this.parameters.currencies)
-      }
-
+      this._selectCurrenciesToUpdate(explorer, currencies)
       const wallets = await explorer
         .addresses(this.parameters.addresses)
         .fetch(['balances', 'transactions'])
@@ -34,6 +30,16 @@ export default function getGenericProviderClass (explorerName) {
       })
 
       return balances
+    }
+
+    _selectCurrenciesToUpdate (explorer, currencies) {
+      if (currencies.length === 0) { // Refresh all
+        if (this.parameters.currencies) {
+          explorer.currencies(this.parameters.currencies)
+        }
+      } else { // Refresh only specified
+        explorer.currencies(currencies)
+      }
     }
 
     static getSupportedParameters () {
