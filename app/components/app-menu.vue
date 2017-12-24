@@ -9,7 +9,7 @@
     <router-link :to="{ name: 'settings' }">
         <icon icon="cog"></icon> <span class="title">Settings</span>
     </router-link>
-    <router-link to="#">
+    <router-link :to="{ name: 'contribute' }">
         <icon icon="heart"></icon> <span class="title">Contribute</span>
     </router-link>
   </nav>
