@@ -81,6 +81,7 @@ class AbstractExplorer {
    * @param {[object]} tickers
    */
   currencies (tickers) {
+    this.tickers = []
     tickers.forEach(ticker => this.currency(ticker))
     return this
   }
@@ -179,6 +180,10 @@ class AbstractExplorer {
     })
 
     await Promise.all(promises)
+
+    // Reset
+    this.tickers = []
+    this._addresses = []
 
     return wallets
   }
