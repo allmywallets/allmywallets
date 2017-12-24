@@ -3,8 +3,8 @@
     <router-link :to="{ name: 'home' }">
         <icon icon="home"></icon> <span class="title">All My Wallets</span>
     </router-link>
-    <router-link :to="{ name: 'add' }">
-        <icon icon="plus"></icon> <span class="title">Add a wallet</span>
+    <router-link :to="{ name: 'stats' }">
+        <icon icon="chart-pie"></icon> <span class="title">Statistics</span>
     </router-link>
     <router-link :to="{ name: 'settings' }">
         <icon icon="cog"></icon> <span class="title">Settings</span>

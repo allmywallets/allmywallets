@@ -1,6 +1,5 @@
 <template>
   <section>
-    <a href="#" @click.prevent="refreshAll">refresh all</a>
     <article>
       <balance v-for="balance, key in balances" :key="key" :id="balance.id"></balance>
     </article>
@@ -18,20 +17,6 @@
     computed: {
       balances () {
         return this.$store.state.balances
-      },
-      wallets () {
-        return this.$store.state.configuration.profiles[0].wallets
-      }
-    },
-    methods: {
-      refreshAll () {
-        this.$store.state.configuration.profiles[0].wallets.forEach((wallet, walletId) => { // Todo: replace wallet Id with conf value
-          this.$serviceWorker.controller.postMessage({
-            action: 'balance-refresh',
-            walletId: walletId,
-            currencies: []
-          })
-        })
       }
     }
   }

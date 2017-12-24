@@ -19,6 +19,11 @@ export default new Router({
       component: AppAddWallet
     },
     {
+      path: '/stats',
+      name: 'stats',
+      component: AppHome
+    },
+    {
       path: '/settings',
       name: 'settings',
       component: AppSettings
