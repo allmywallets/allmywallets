@@ -24,13 +24,12 @@ export default function getGenericProviderClass (explorerName) {
 
       const balances = []
       wallets.forEach(wallet => {
-        for (let i = 0; i < explorer.tickers.length; i++) {
-          console.log(wallet)
+        explorer.getSelectedCurrencies().forEach(selectedCurrency => {
           const amount = wallet.balances[0]
           const transactions = wallet.transactions[0].map(tx => new Transaction(tx.type, tx.from, tx.to, tx.amount))
-          const balance = new Balance(explorer.tickers[i], explorer.tickers[i], amount, new Date(), transactions)
+          const balance = new Balance(selectedCurrency.name, selectedCurrency.ticker, amount, new Date(), transactions)
           balances.push(balance)
-        }
+        })
       })
 
       return balances

@@ -13,10 +13,8 @@ class AbstractExplorer {
     this.tickers = []
     this.elementsToFetch = []
 
-    this.currencyName = 'Currency'
-    this.currencyTicker = 'CUR'
-
-    this.supportedTickers = ['CUR']
+    this.defaultTicker = 'AEC'
+    this.supportedCurrencies = {AEC: {name: 'AbstractExplorerCoin', ticker: 'AEC'}}
   }
 
   /**
@@ -58,11 +56,19 @@ class AbstractExplorer {
   }
 
   /**
+   * Returns true if the ticker is supported by the Explorer, false otherwise
+   * @returns {boolean}
+   */
+  isTickerSupported (ticker) {
+    return !!this.supportedCurrencies[ticker]
+  }
+
+  /**
    * Set the currency
    * @param {String} ticker
    */
   currency (ticker) {
-    if (!this.supportedTickers.includes(ticker)) {
+    if (!this.isTickerSupported(ticker)) {
       throw new NotSupportedCurrencyError(`${ticker} is not supported`)
     }
 
@@ -132,6 +138,14 @@ class AbstractExplorer {
     }]
   }
 
+  /**
+   * Return the selected currencies as ticker
+   * @returns {[Object]}
+   */
+  getSelectedCurrencies () {
+    return this.tickers.map(ticker => this.supportedCurrencies[ticker])
+  }
+
   async _getBalances (address, result) {
     throw new Error('This method should be implemented by child class')
   }
@@ -148,7 +162,7 @@ class AbstractExplorer {
     let wallets = []
 
     if (this.tickers.length === 0) {
-      this.tickers.push(this.supportedTickers[0])
+      this.tickers.push(this.supportedCurrencies[this.defaultTicker].ticker)
     }
 
     this._addresses.forEach(address => {
