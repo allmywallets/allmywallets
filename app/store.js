@@ -11,6 +11,10 @@ const state = {
   notifications: []
 }
 
+const getters = {
+  wallets: state => state.config.profiles[0].wallets
+}
+
 const mutations = {
   INIT_APPLICATION (state, { config, balances }) {
     state.config = config
@@ -76,4 +80,4 @@ const actions = {
   }
 }
 
-export default new Vuex.Store({ state, mutations, actions })
+export default new Vuex.Store({ state, getters, mutations, actions })

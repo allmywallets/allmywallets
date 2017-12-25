@@ -9,6 +9,7 @@
 
 <script>
   import BalanceList from './balance-list.vue'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'app-home',
@@ -16,9 +17,9 @@
       BalanceList
     },
     computed: {
-      wallets () {
-        return this.$store.state.config.profiles[0].wallets
-      }
+      ...mapGetters([
+        'wallets'
+      ])
     },
     methods: {
       refreshBalances () {

@@ -13,6 +13,7 @@
 
 <script>
   import Notification from '../model/Notification'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'notification',
@@ -23,8 +24,11 @@
       }
     },
     computed: {
+      ...mapGetters([
+        'wallets'
+      ]),
       wallet () {
-        return this.$store.state.config.profiles[0].wallets.find((wallet, key) => key === this.notification.walletId)
+        return this.wallets.find((wallet, key) => key === this.notification.walletId)
       }
     }
   }

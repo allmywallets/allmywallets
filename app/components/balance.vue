@@ -35,6 +35,7 @@
 
 <script>
   import moment from 'moment'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'balance',
@@ -50,13 +51,16 @@
       }
     },
     computed: {
+      ...mapGetters([
+        'wallets'
+      ]),
       balance () {
         this.loading = false
 
         return this.$store.state.balances.find(balance => balance.id === this.id)
       },
       wallet () {
-        return this.$store.state.config.profiles[0].wallets[this.balance.walletId]
+        return this.wallets[this.balance.walletId]
       },
       status () {
         this.loading = false
