@@ -8,6 +8,11 @@ handlers:
   upload: index.html
   secure: always
 
+- url: /[^.]+$ # All but files with an extension are redirected to index.html
+  static_files: index.html
+  upload: index.html
+  secure: always
+
 - url: /(.*)
   static_files: \1
   upload: (.*)
