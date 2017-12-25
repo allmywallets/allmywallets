@@ -194,50 +194,8 @@ class AbstractExplorer {
 
   static async _fetchJson (url) {
     // TODO : require('node-fetch')
-    return require('node-fetch')(url).then((response) => response.json())
+    return fetch(url).then((response) => response.json())
   }
 }
 
 module.exports = AbstractExplorer
-
-/*
-// config
-  {
-    explorer: 'BitcoinBlockExplorer',
-
-    // Specific
-    explorerParams: {node: 'https://iota.thathost.net', apiKey: '16546548'}, // Returned by explorer a.getParams()
-
-    // Mandatory
-    walletIdentifier : {address: '13213213212313213'},
-
-    // optional
-    currencies: ['BTC']
-  }
-
-// Example
-  explorer = TrucExplorer(parameters);
-  explorer
-    .wallets([{address: '0x010101'}, {address: '0x001010'}])
-    .currencies(['ETH', 'NEO', 'GAS'])
-    .transactionsLimit([5, 5, 5])
-    .transactionsStartDate([5, 5, 5])
-    .units(['miota', 'satoshi', 'lol'])
-    .fetch(['balances', 'transactions', 'sandwich'])
-    .exec()
-
-  // out
-  {
-     [{
-      balances : [
-      {name: 'bitcoin', balance: 9}, {name: 'lol', balance: 9}
-    ],
-    transactions : [
-      [new Transaction(), new Transaction()],
-      [new Transaction(), new Transaction()]
-    ]
-  },
-  ]
-}
-
-*/
