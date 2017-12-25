@@ -4,6 +4,7 @@ import Vue from 'vue'
 import VueFilter from 'vue-filter'
 import VueFormGenerator from 'vue-form-generator'
 import VueTippy from 'vue-tippy'
+import VueMoment from 'vue-moment'
 import VueFontAwesome from '@fortawesome/vue-fontawesome'
 import VueQRCode from '@xkeshi/vue-qrcode'
 
@@ -17,6 +18,7 @@ Vue.use(VueTippy, {
   animation: 'fade',
   arrow: true
 })
+Vue.use(VueMoment)
 Vue.component('icon', VueFontAwesome)
 Vue.component('qrcode', VueQRCode)
 

@@ -66,7 +66,7 @@ self.addEventListener('message', async event => {
 
     await database.storeBalances(balances)
   } catch (e) {
-    error = { _walletId: walletId, _message: e.message, _stack: e.stack }
+    error = { _level: 'ERROR', _date: new Date(), _walletId: walletId, _title: e.message, _content: e.stack }
   }
 
   clients.forEach(client => {

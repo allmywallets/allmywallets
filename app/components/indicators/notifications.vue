@@ -1,11 +1,12 @@
 <template>
   <div>
-    <icon v-if="!supported" icon="bell-slash" title="Notifications not supported" class="text-warning" v-tippy></icon>
-    <icon v-else-if="denied" icon="bell-slash" title="Notifications are disabled" v-tippy></icon>
-    <icon v-else-if="granted" icon="bell" title="No new notification" v-tippy></icon>
-    <a v-else @click.prevent="enableNotifications" ref="enable" href="#" title="Click here to enable notifications" class="text-info" v-tippy>
+    <icon v-if="!supported" icon="bell-slash" title="Browser notifications not supported" class="text-warning" v-tippy></icon>
+    <icon v-else-if="denied" icon="bell-slash" title="Browser notifications are disabled" v-tippy></icon>
+    <icon v-else-if="granted" icon="bell"></icon>
+    <a v-else @click.prevent="enableNotifications" ref="enable" href="#" title="Click to enable browser notifications" class="text-info" v-tippy>
       <icon icon="bell-slash"></icon>
     </a>
+    <div class="counter" v-if="countNotifications > 0">{{ countNotifications }}</div>
   </div>
 </template>
 
@@ -17,6 +18,11 @@
         supported: 'Notification' in window,
         granted: Notification.permission === 'granted',
         denied: Notification.permission === 'denied'
+      }
+    },
+    computed: {
+      countNotifications () {
+        return this.$store.state.notifications.length
       }
     },
     methods: {
@@ -38,3 +44,23 @@
     }
   }
 </script>
+
+<style scoped lang="scss">
+  @import '../../scss/vars';
+
+  div {
+    position: relative;
+
+    .counter {
+      position: absolute;
+      right: 1.1rem;
+      top: 0.8rem;
+      border-radius: 1em;
+      background: $color-info;
+      font-size: 0.7rem;
+      width: 15px;
+      color: white;
+      height: 15px;
+    }
+  }
+</style>

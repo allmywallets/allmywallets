@@ -22,10 +22,10 @@
       <div class="balance-tools">
         <a href="#" title="Click to copy your public key" v-tippy><icon icon="copy"></icon></a>
         <a href="#" title="View wallet transactions" v-tippy><icon icon="list"></icon></a>
-        <a href="#" @click.prevent="refresh" :title="`Last update: ${balance.lastUpdate.getMonth() + 1}/${balance.lastUpdate.getDate()}/${balance.lastUpdate.getFullYear()} at ${balance.lastUpdate.getHours()}:${balance.lastUpdate.getMinutes()}`" v-tippy>
+        <a href="#" @click.prevent="refresh" :title="`Updated ${lastUpdate}`" v-tippy>
           <icon icon="sync-alt" :spin="loading"></icon>
         </a>
-        <a href="#" v-if="status" :title="`Wallet update failed: ${status.message}`" class="text-warning" v-tippy>
+        <a href="#" v-if="status" :title="`Wallet update failed: ${status.title}`" class="text-warning" v-tippy>
           <icon icon="exclamation-triangle"></icon>
         </a>
       </div>
@@ -34,6 +34,8 @@
 </template>
 
 <script>
+  import moment from 'moment'
+
   export default {
     name: 'balance',
     props: {
@@ -59,7 +61,12 @@
       status () {
         this.loading = false
 
-        return this.$store.state.errors.find(error => error.walletId === this.balance.walletId)
+        return this.$store.state.notifications.find(notification => {
+          return notification.level === 'ERROR' && notification.walletId === this.balance.walletId
+        })
+      },
+      lastUpdate () {
+        return moment(this.balance.lastUpdate).fromNow()
       }
     },
     methods: {

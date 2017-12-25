@@ -8,7 +8,7 @@ Vue.use(Vuex)
 const state = {
   balances: [],
   config: {},
-  errors: []
+  notifications: []
 }
 
 const mutations = {
@@ -33,12 +33,18 @@ const mutations = {
       }
     })
   },
-  ADD_ERROR (state, { error }) {
-    console.error(error)
-    state.errors.push(error)
+  ADD_NOTIFICATION (state, { notification }) {
+    if (notification.level === 'ERROR') {
+      console.error(notification)
+    }
+
+    state.notifications.push(notification)
   },
-  REMOVE_ERROR (state, error) {
-    state.errors.splice(state.errors.indexOf(error), 1)
+  CLEAR_NOTIFICATION (state, { notification }) {
+    state.notifications.splice(state.notifications.indexOf(notification), 1)
+  },
+  CLEAR_ALL_NOTIFICATIONS (state) {
+    state.notifications = []
   }
 }
 
@@ -49,7 +55,7 @@ const actions = {
 
     commit('INIT_APPLICATION', { config: config, balances })
   },
-  addWallet: ({ commit }) => {
+  addWallet: ({ commit }) => { // Todo
     commit('ADD_WALLET')
   },
   updateConfig: async ({ commit }, { config }) => {
@@ -62,8 +68,11 @@ const actions = {
 
     commit('RELOAD_BALANCES', { balances })
   },
-  addError: ({ commit }, { error }) => {
-    commit('ADD_ERROR', { error })
+  addNotification: ({ commit }, { notification }) => {
+    commit('ADD_NOTIFICATION', { notification })
+  },
+  clearAllNotifications: ({ commit }) => {
+    commit('CLEAR_ALL_NOTIFICATIONS')
   }
 }
 

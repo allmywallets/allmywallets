@@ -1,11 +1,12 @@
 <template>
   <aside>
-    <p class="overall">You don't have any notification.</p>
-    <notification v-for="notification, key in notifications"
-                  :key="key"
-                  :title="notification.title"
-                  :content="notification.content"
-                  :date="notification.date"></notification>
+    <p class="overall" v-if="notifications.length === 0">You don't have any notification.</p>
+    <div class="notifications">
+      <notification v-for="notification, key in notifications" :key="key" :notification="notification"></notification>
+    </div>
+    <footer v-if="notifications.length > 0">
+      <a href="#" @click.prevent="clearAllNotifications"><icon icon="trash"></icon> Clear all notifications</a>
+    </footer>
   </aside>
 </template>
 
@@ -17,9 +18,14 @@
     components: {
       Notification
     },
-    data () {
-      return {
-        notifications: []
+    computed: {
+      notifications () {
+        return this.$store.state.notifications
+      }
+    },
+    methods: {
+      clearAllNotifications () {
+        return this.$store.dispatch('clearAllNotifications')
       }
     }
   }
@@ -33,6 +39,7 @@
     color: white;
     background: $color-section-notifications;
     display: none;
+    position: relative;
 
     @media screen and (min-width: $breakpoint-medium) {
       display: block;
@@ -42,6 +49,24 @@
       font-size: 0.85rem;
       text-align: center;
       margin: 5px 0;
+    }
+
+    .notifications {
+      max-height: 100%;
+      overflow: auto;
+      position: absolute;
+      padding-bottom: 35px;
+      width: 100%;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 0.85rem;
+      padding: 7px 0 7px;
+      background: $color-section-notifications;
     }
   }
 </style>

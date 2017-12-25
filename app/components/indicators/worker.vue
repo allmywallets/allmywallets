@@ -9,7 +9,7 @@
 
 <script>
   import runtime from 'serviceworker-webpack-plugin/lib/runtime'
-  import WalletError from '../../errors/WalletError'
+  import Notification from '../../model/Notification'
 
   export default {
     name: 'worker',
@@ -24,9 +24,9 @@
       },
       async handleMessage ({ data }) {
         if (data.error) {
-          const error = WalletError.fromObject(data.error)
+          const notification = Notification.fromObject(data.error)
 
-          return this.$store.dispatch('addError', { error })
+          return this.$store.dispatch('addNotification', { notification })
         }
 
         const { balanceIds } = data
