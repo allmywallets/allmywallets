@@ -17,7 +17,7 @@
     },
     computed: {
       wallets () {
-        return this.$store.state.configuration.profiles[0].wallets
+        return this.$store.state.config.profiles[0].wallets
       }
     },
     methods: {

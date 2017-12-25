@@ -3,9 +3,9 @@ import { assert } from 'chai'
 import Configurator from '../app/configurator.js'
 
 describe('Configurator', () => {
-  describe('#validateConfiguration()', () => {
-    it('validates a valid configuration', () => {
-      assert.isTrue(Configurator.validateConfiguration(
+  describe('#validateConfig()', () => {
+    it('validates a valid config', () => {
+      assert.isTrue(Configurator.validateConfig(
         {
           profiles: [
             {
@@ -16,16 +16,16 @@ describe('Configurator', () => {
       ))
     })
 
-    it('validates an empty configuration', () => {
-      assert.isTrue(Configurator.validateConfiguration(
+    it('validates an empty config', () => {
+      assert.isTrue(Configurator.validateConfig(
         {
           profiles: []
         }
       ))
     })
 
-    it('validates a valid wallet configuration', () => {
-      assert.isTrue(Configurator.validateConfiguration(
+    it('validates a valid wallet config', () => {
+      assert.isTrue(Configurator.validateConfig(
         {
           profiles: [
             {
@@ -42,28 +42,28 @@ describe('Configurator', () => {
       ))
     })
 
-    it('invalidates a void configuration', () => {
-      assert.isFalse(Configurator.validateConfiguration({}))
+    it('invalidates a void config', () => {
+      assert.isFalse(Configurator.validateConfig({}))
     })
 
     it('invalidates a void profile', () => {
-      assert.isFalse(Configurator.validateConfiguration(
+      assert.isFalse(Configurator.validateConfig(
         {
           profiles: [{}]
         }
       ))
     })
 
-    it('invalidates an invalid profiles configuration', () => {
-      assert.isFalse(Configurator.validateConfiguration(
+    it('invalidates an invalid profiles config', () => {
+      assert.isFalse(Configurator.validateConfig(
         {
           profiles: 'invalid'
         }
       ))
     })
 
-    it('invalidates an invalid wallet configuration', () => {
-      assert.isFalse(Configurator.validateConfiguration(
+    it('invalidates an invalid wallet config', () => {
+      assert.isFalse(Configurator.validateConfig(
         {
           profiles: [
             {

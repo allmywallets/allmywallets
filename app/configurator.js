@@ -3,18 +3,18 @@ import idbKeyval from 'idb-keyval'
 import WalletError from './errors/WalletError'
 
 export default class Configurator {
-  static async getConfiguration () {
-    let configuration = await idbKeyval.get('configuration')
+  static async getConfig () {
+    let config = await idbKeyval.get('config')
 
-    configuration = configuration || { profiles: [ { wallets: [ ] } ] }
+    config = config || { profiles: [ { wallets: [ ] } ] }
 
-    return configuration
+    return config
   }
 
   static async getWallet (walletId) {
-    const configuration = await Configurator.getConfiguration()
+    const config = await Configurator.getConfig()
 
-    const wallets = configuration.profiles[0].wallets
+    const wallets = config.profiles[0].wallets
 
     if (walletId > wallets.length) {
       throw new WalletError(`Wallet ${walletId} is not defined`)
@@ -23,15 +23,15 @@ export default class Configurator {
     return wallets[walletId]
   }
 
-  static setConfiguration (configuration) {
-    if (!this.validateConfiguration(configuration)) {
-      throw new Error('Configuration is not valid')
+  static setConfig (config) {
+    if (!this.validateConfig(config)) {
+      throw new Error('Config is not valid')
     }
 
-    return idbKeyval.set('configuration', configuration)
+    return idbKeyval.set('config', config)
   }
 
-  static validateConfiguration (configuration) {
+  static validateConfig (config) {
     const walletSchema = {
       'id': '/Wallet',
       'type': 'object',
@@ -44,8 +44,8 @@ export default class Configurator {
       'required': ['name', 'network', 'provider', 'parameters']
     }
 
-    const configurationSchema = {
-      'id': '/Configuration',
+    const configSchema = {
+      'id': '/Config',
       'type': 'object',
       'properties': {
         'profiles': {
@@ -71,6 +71,6 @@ export default class Configurator {
 
     validator.addSchema(walletSchema, '/Wallet')
 
-    return validator.validate(configuration, configurationSchema).valid
+    return validator.validate(config, configSchema).valid
   }
 }

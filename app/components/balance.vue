@@ -54,7 +54,7 @@
         return this.$store.state.balances.find(balance => balance.id === this.id)
       },
       wallet () {
-        return this.$store.state.configuration.profiles[0].wallets[this.balance.walletId]
+        return this.$store.state.config.profiles[0].wallets[this.balance.walletId]
       },
       status () {
         this.loading = false

@@ -1,9 +1,11 @@
-import Vue from 'vue'
-import VueFormGenerator from 'vue-form-generator'
-import VueFontAwesome from '@fortawesome/vue-fontawesome'
-import VueTippy from 'vue-tippy'
-import VueFilter from 'vue-filter'
 import '@fortawesome/fontawesome-free-solid'
+
+import Vue from 'vue'
+import VueFilter from 'vue-filter'
+import VueFormGenerator from 'vue-form-generator'
+import VueTippy from 'vue-tippy'
+import VueFontAwesome from '@fortawesome/vue-fontawesome'
+import VueQRCode from '@xkeshi/vue-qrcode'
 
 import router from './router'
 import store from './store'
@@ -16,6 +18,7 @@ Vue.use(VueTippy, {
   arrow: true
 })
 Vue.component('icon', VueFontAwesome)
+Vue.component('qrcode', VueQRCode)
 
 Vue.prototype.$serviceWorker = navigator.serviceWorker
 

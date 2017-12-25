@@ -3,13 +3,7 @@
     <h2>Application settings</h2>
     <h3>Customization</h3>
     <p>TBD</p>
-    <h3>Export configuration</h3>
-    <p>
-      You can export your configuration to another device by scanning the above QRCode or accessing the url from the
-      targeted device. This will replace its configuration with the current configuration of All My Wallets; it will
-      export your wallets and customization settings.
-    </p>
-    <canvas ref="qrcode"></canvas>
+    <config-export></config-export>
     <config-expert></config-expert>
     <h2>Danger zone</h2>
     <a href="#" @click.prevent="forceUpdate">Force app update</a>
@@ -18,11 +12,12 @@
 
 <script>
   import ConfigExpert from './config-expert.vue'
-  import QRCode from 'qrcode'
+  import ConfigExport from './config-export.vue'
 
   export default {
     name: 'app-settings',
     components: {
+      ConfigExport,
       ConfigExpert
     },
     methods: {
@@ -34,9 +29,6 @@
         })
         location.reload()
       }
-    },
-    mounted () {
-      QRCode.toCanvas(this.$refs.qrcode, 'hello world!', () => {})
     }
   }
 </script>

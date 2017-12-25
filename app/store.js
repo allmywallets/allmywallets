@@ -7,20 +7,20 @@ Vue.use(Vuex)
 
 const state = {
   balances: [],
-  configuration: {},
+  config: {},
   errors: []
 }
 
 const mutations = {
-  INIT_APPLICATION (state, { configuration, balances }) {
-    state.configuration = configuration
+  INIT_APPLICATION (state, { config, balances }) {
+    state.config = config
     state.balances = balances
   },
   ADD_WALLET (state, wallet) {
-    state.configuration.profiles[0].wallets.push(wallet)
+    state.config.profiles[0].wallets.push(wallet)
   },
-  UPDATE_CONFIGURATION (state, { configuration }) {
-    state.configuration = configuration
+  UPDATE_CONFIG (state, { config }) {
+    state.config = config
   },
   RELOAD_BALANCES (state, { balances }) {
     balances.forEach(updatedBalance => {
@@ -44,18 +44,18 @@ const mutations = {
 
 const actions = {
   initApplication: async ({ commit }) => {
-    const configuration = await Configurator.getConfiguration()
+    const config = await Configurator.getConfig()
     const balances = await database.findAllBalances()
 
-    commit('INIT_APPLICATION', { configuration, balances })
+    commit('INIT_APPLICATION', { config: config, balances })
   },
   addWallet: ({ commit }) => {
     commit('ADD_WALLET')
   },
-  updateConfiguration: async ({ commit }, configuration) => {
-    await Configurator.setConfiguration(configuration) // Todo: reset all balances and re-init app
+  updateConfig: async ({ commit }, { config }) => {
+    await Configurator.setConfig(config) // Todo: reset all balances and re-init app
 
-    commit('UPDATE_CONFIGURATION', { configuration })
+    commit('UPDATE_CONFIG', { config: config })
   },
   reloadBalances: async ({ commit }, { balanceIds }) => {
     const balances = await database.findBalances(balanceIds)

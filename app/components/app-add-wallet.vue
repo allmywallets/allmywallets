@@ -42,8 +42,8 @@
         this.currentProvider = provider
       },
       async save () {
-        const configuration = await Configurator.getConfiguration()
-        const profile = configuration.profiles[0]
+        const config = await Configurator.getConfig()
+        const profile = config.profiles[0]
 
         if (!Object(profile).hasOwnProperty('wallets')) {
           profile.wallets = []
@@ -57,7 +57,7 @@
           parameters: this.currentParameters
         })
 
-        Configurator.setConfiguration(configuration)
+        Configurator.setConfig(config)
         this.reset()
       },
       reset () {

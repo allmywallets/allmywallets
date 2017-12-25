@@ -43,6 +43,19 @@ a, a:hover {
   color: $color-danger;
 }
 
+.badge {
+  display: inline;
+  padding: .15em .5em .25em;
+  font-size: .85em;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+  background-color: #434343;
+}
+
 ::-webkit-scrollbar-track
 {
   background: transparent;
