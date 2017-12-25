@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <details class="notification-content">
-      <summary class="notification-title">{{ notification.title }}</summary>
-      {{ notification.content }}
-    </details>
+  <article>
+    <header class="notification-title">{{ notification.title }}</header>
+    <div class="notification-content">{{ notification.content }}</div>
     <footer class="notification-footer">
       <span class="badge" v-if="wallet">{{ wallet.name }} ({{ wallet.network|camelcase }})</span>
-      <time class="notification-date"><icon icon="clock"></icon> {{ notification.date|moment('from', 'now') }}</time>
+      <time class="notification-date" :datetime="notification.date" :title="notification.date">
+        <icon icon="clock"></icon> {{ notification.date|moment('from', 'now') }}
+      </time>
     </footer>
-  </div>
+  </article>
 </template>
 
 <script>
@@ -33,27 +33,27 @@
 <style scoped lang="scss">
   @import '../scss/vars';
 
-  div {
+  article {
     font-size: 0.9rem;
     background: lighten($color-section-notifications, 3);
-    margin: 2px 3px;
-    padding: 10px;
-    border-radius: 3px;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+
+    .notification-title {
+      font-weight: bold;
+      font-size: 1rem;
+      line-height: 1rem;
+    }
 
     .notification-content {
       font-size: 0.8rem;
       line-height: 0.95rem;
-
-      .notification-title {
-        margin-bottom: 3px;
-        font-weight: bold;
-        font-size: 1rem;
-        cursor: pointer;
-      }
     }
+
     .notification-footer {
-      font-size: 0.75rem;
-      margin-top: 3px;
+      font-size: 0.8rem;
+      margin-top: 5px;
 
       .notification-date {
         font-style: italic;

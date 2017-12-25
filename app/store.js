@@ -38,7 +38,7 @@ const mutations = {
       console.error(notification)
     }
 
-    state.notifications.push(notification)
+    state.notifications.unshift(notification)
   },
   CLEAR_NOTIFICATION (state, { notification }) {
     state.notifications.splice(state.notifications.indexOf(notification), 1)

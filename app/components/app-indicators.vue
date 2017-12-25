@@ -25,19 +25,17 @@
   @import '../scss/vars';
 
   .indicators {
-    text-align: right;
     grid-area: indicators;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    text-align: center;
 
     @media screen and (min-width: $breakpoint-medium) {
       z-index: 2000;
       position: fixed;
       width: $grid-notifications-width;
       height: $grid-header-height;
-      justify-content: center;
       right: 0;
-      text-align: center;
     }
 
     .indicator {
