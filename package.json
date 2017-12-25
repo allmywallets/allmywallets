@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix '@(app|tests)/**/*.@(js|vue)'",
     "start": "webpack-dev-server --host 0.0.0.0 --devtool eval --progress --hot --content-base app",
     "deploy": "NODE_ENV=production webpack --config webpack.production.config.js",
-    "test": "mocha --require babel-register"
+    "test": "mocha --require babel-register --require babel-polyfill"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.0",
