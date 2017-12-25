@@ -21,6 +21,7 @@
     "idb": "^2.0.4",
     "idb-keyval": "^2.3.0",
     "jsonschema": "^1.2.2",
+    "qrcode": "^1.0.0",
     "tippy.js": "^2.0.8",
     "vue": "latest",
     "vue-filter": "^0.2.3",
