@@ -5,46 +5,53 @@
     <p>Example:</p>
     <pre>
 {
-  "profiles": [
-    {
-      "wallets": [
-        {
-          "network": "bitcoin",
-          "provider": "blockexplorer",
-          "name": "My Bitcoin wallet",
-          "parameters": {
-            "addresses": ["ADDRESS"]
-          }
-        },
-        {
-          "network": "ethereum",
-          "provider": "etherscan",
-          "name": "My Ethereum wallet",
-          "parameters": {
-            "address": "ADDRESS",
-            "tokens": ["POWR"],
-            "customTokens": [
-              {
+  "profiles": [{
+    "wallets": [{
+        "network": "bitcoin",
+        "provider": "blockexplorer",
+        "name": "My Bitcoin wallet",
+        "parameters": {
+          "addresses": [
+            "ADDRESS"
+          ]
+        }
+      },
+      {
+        "network": "ethereum",
+        "provider": "etherscan",
+        "name": "My Ethereum wallet",
+        "parameters": {
+          "addresses": [
+            "ADDRESS"
+          ],
+          "currencies": [
+            "ETH",
+            "BAT",
+            "IND"
+          ],
+          "explorerSpecific": {
+            "customTokens": {
+              "IND": {
                 "name": "Indorse",
                 "ticker": "IND",
                 "decimals": 18,
                 "contractAddress": "0xf8e386eda857484f5a12e4b5daa9984e06e73705"
               }
-            ]
-          }
-        },
-        {
-          "network": "iota",
-          "provider": "native",
-          "name": "My IOTA wallet",
-          "parameters": {
-            "address": "ADDRESS",
-            "node": "https://iota.thathost.net"
+            }
           }
         }
-      ]
-    }
-  ]
+      },
+      {
+        "network": "iota",
+        "provider": "native",
+        "name": "My IOTA wallet",
+        "parameters": {
+          "address": "ADDRESS",
+          "node": "https://iota.thathost.net"
+        }
+      }
+    ]
+  }]
 }
   </pre>
     <p>Current (editable) config:</p>

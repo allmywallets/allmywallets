@@ -1,11 +1,10 @@
 import GenericProvider from './providers/GenericProvider'
-import EthereumEtherscan from './providers/EthereumEtherscanProvider'
 import IOTA from './providers/IOTAProvider'
 
 const providers = {
   'bitcoin.blockexplorer': GenericProvider('BitcoinBlockExplorer'),
   'bitcoin.mockexplorer': GenericProvider('MockExplorer'),
-  'ethereum.etherscan': EthereumEtherscan,
+  'ethereum.etherscan': GenericProvider('EthereumEtherscan'),
   'iota.native': IOTA
 }
 

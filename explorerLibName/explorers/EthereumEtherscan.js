@@ -21,8 +21,7 @@ class EthereumEtherscan extends AbstractExplorer {
       if (ticker === this.defaultTicker) { // ETH
         promises.push(this.constructor._fetchJson(`${API_URL}?module=account&action=balance&address=${address}&sort=desc&tag=latest`))
       } else { // Tokens
-        promises.push(this.constructor._fetchJson(`${API_URL}?module=account&action=tokenbalance&contractaddress=${this.supportedCurrencies[ticker].contractAddress}
-                                                                &address=${address}&tag=latest`))
+        promises.push(this.constructor._fetchJson(`${API_URL}?module=account&action=tokenbalance&contractaddress=${this.supportedCurrencies[ticker].contractAddress}&address=${address}&tag=latest`))
       }
     })
 
