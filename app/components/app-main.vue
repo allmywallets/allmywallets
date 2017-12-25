@@ -25,7 +25,7 @@
       AppFooter
     },
     mounted () {
-      this.$store.dispatch('initApplication')
+      return this.$store.dispatch('initApplication')
     }
   }
 </script>

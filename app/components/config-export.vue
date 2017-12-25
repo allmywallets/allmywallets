@@ -44,7 +44,7 @@
     },
     data () {
       return {
-        importUrl: `${window.location.origin}/settings/import`
+        importUrl: `${window.location.origin}/config/import`
       }
     }
   }

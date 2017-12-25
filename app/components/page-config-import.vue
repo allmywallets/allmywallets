@@ -14,7 +14,7 @@
   import LZString from 'lz-string'
 
   export default {
-    name: 'app-settings-import',
+    name: 'page-config-import',
     data () {
       return {
         config: ''

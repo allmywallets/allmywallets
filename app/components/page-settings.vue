@@ -15,7 +15,7 @@
   import ConfigExport from './config-export.vue'
 
   export default {
-    name: 'app-settings',
+    name: 'page-settings',
     components: {
       ConfigExport,
       ConfigExpert

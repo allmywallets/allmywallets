@@ -12,7 +12,7 @@
   import { mapGetters } from 'vuex'
 
   export default {
-    name: 'app-home',
+    name: 'page-home',
     components: {
       BalanceList
     },

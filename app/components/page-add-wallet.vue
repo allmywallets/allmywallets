@@ -24,7 +24,7 @@
   import Configurator from '../configurator'
 
   export default {
-    name: 'config-standard',
+    name: 'page-add-wallet',
     data () {
       return {
         providers: {},

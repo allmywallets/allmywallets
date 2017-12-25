@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import AppHome from './components/app-home.vue'
-import AppAddWallet from './components/app-add-wallet.vue'
-import AppSettings from './components/app-settings.vue'
-import AppSettingsImport from './components/app-settings-import.vue'
+import PageHome from './components/page-home.vue'
+import PageAddWallet from './components/page-add-wallet.vue'
+import PageSettings from './components/page-settings.vue'
+import PageConfigImport from './components/page-config-import.vue'
 
 Vue.use(Router)
 
@@ -13,37 +13,37 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: AppHome
+      component: PageHome
     },
     {
       path: '/add',
       name: 'add',
-      component: AppAddWallet
+      component: PageAddWallet
     },
     {
       path: '/stats',
       name: 'stats',
-      component: AppHome
+      component: PageHome
     },
     {
       path: '/settings',
       name: 'settings',
-      component: AppSettings
+      component: PageSettings
     },
     {
-      path: '/settings/import',
-      name: 'settings-import',
-      component: AppSettingsImport
+      path: '/config/import',
+      name: 'config-import',
+      component: PageConfigImport
     },
     {
-      path: '/settings/import/:config',
-      name: 'settings-import-config',
-      component: AppSettingsImport
+      path: '/config/import/:config',
+      name: 'config-import-config',
+      component: PageConfigImport
     },
     {
       path: '/contribute',
       name: 'contribute',
-      component: AppHome
+      component: PageHome
     }
   ]
 })
