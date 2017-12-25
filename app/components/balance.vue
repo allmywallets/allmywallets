@@ -4,10 +4,10 @@
       <span class="balance-logo">
         <i :class="`cc ${balance.ticker}-alt`"></i>
       </span>
-      <h3 class="balance-name">
+      <h4 class="balance-name">
         {{ wallet.name }}<br />
         <small class="balance-network">{{ wallet.network|camelcase }}</small>
-      </h3>
+      </h4>
     </header>
     <div class="balance-amount">
       <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
@@ -127,6 +127,7 @@
         line-height: 0.9rem;
         display: inline-block;
         margin-top: 13px;
+        white-space: nowrap;
 
         .balance-network {
           font-style: italic;
