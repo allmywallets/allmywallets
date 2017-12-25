@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 const state = {
   balances: [],
-  config: {},
+  config: { profiles: [{ wallets: [] }] },
   notifications: []
 }
 

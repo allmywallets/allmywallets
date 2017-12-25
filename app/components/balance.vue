@@ -19,35 +19,24 @@
       <div class="balance-provider">
         Data from {{ wallet.provider|camelcase }}
       </div>
-      <div class="balance-tools">
-        <a href="#" title="Click to copy your public key" v-tippy><icon icon="copy"></icon></a>
-        <a href="#" title="View wallet transactions" v-tippy><icon icon="list"></icon></a>
-        <a href="#" @click.prevent="refresh" :title="`Updated ${lastUpdate}`" v-tippy>
-          <icon icon="sync-alt" :spin="loading"></icon>
-        </a>
-        <a href="#" v-if="status" :title="`Wallet update failed: ${status.title}`" class="text-warning" v-tippy>
-          <icon icon="exclamation-triangle"></icon>
-        </a>
-      </div>
+      <balance-tools :balance="balance"></balance-tools>
     </footer>
   </div>
 </template>
 
 <script>
-  import moment from 'moment'
   import { mapGetters } from 'vuex'
+  import BalanceTools from './balance-tools.vue'
 
   export default {
     name: 'balance',
+    components: {
+      BalanceTools
+    },
     props: {
       id: {
         type: String,
         required: true
-      }
-    },
-    data () {
-      return {
-        loading: false
       }
     },
     computed: {
@@ -55,33 +44,10 @@
         'wallets'
       ]),
       balance () {
-        this.loading = false
-
         return this.$store.state.balances.find(balance => balance.id === this.id)
       },
       wallet () {
         return this.wallets[this.balance.walletId]
-      },
-      status () {
-        this.loading = false
-
-        return this.$store.state.notifications.find(notification => {
-          return notification.level === 'ERROR' && notification.walletId === this.balance.walletId
-        })
-      },
-      lastUpdate () {
-        return moment(this.balance.lastUpdate).fromNow()
-      }
-    },
-    methods: {
-      async refresh () {
-        this.loading = true
-
-        return this.$serviceWorker.controller.postMessage({
-          action: 'balance-refresh',
-          walletId: this.balance.walletId,
-          currencies: [this.balance.ticker]
-        })
       }
     },
     async mounted () {
@@ -170,12 +136,6 @@
       display: flex;
       justify-content: space-between;
       white-space: nowrap;
-
-      .balance-tools {
-        text-align: right;
-        margin-right: 5px;
-        letter-spacing: 0.3rem;
-      }
     }
   }
 </style>
