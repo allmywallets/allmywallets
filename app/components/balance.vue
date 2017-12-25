@@ -69,7 +69,7 @@
         return this.$serviceWorker.controller.postMessage({
           action: 'balance-refresh',
           walletId: this.balance.walletId,
-          currencies: [this.balance.currency]
+          currencies: [this.balance.ticker]
         })
       }
     },
