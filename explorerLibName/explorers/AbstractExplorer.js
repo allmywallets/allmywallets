@@ -193,9 +193,7 @@ class AbstractExplorer {
   }
 
   static async _fetchJson (url) {
-    if (typeof process === 'object') {
-      return require('node-fetch')(url).then((response) => response.json())
-    }
+    // TODO : require('node-fetch')
     return fetch(url).then((response) => response.json())
   }
 }
