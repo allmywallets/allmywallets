@@ -31,8 +31,9 @@ describe('Configurator', () => {
             {
               wallets: [
                 {
+                  network: 'Network',
                   provider: 'Provider',
-                  currency: 'Currency',
+                  name: 'Name',
                   parameters: { address: 'XABCDEFG' }
                 }
               ]
