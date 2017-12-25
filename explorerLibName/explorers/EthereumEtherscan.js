@@ -31,7 +31,7 @@ class EthereumEtherscan extends AbstractExplorer {
     result.balances = []
     for (let i = 0; i < this.tickers.length; i++) {
       let ticker = this.tickers[i]
-      let decimals = this.supportedCurrencies[ticker].decimals
+      let decimals = this.supportedCurrencies[ticker].decimals || 18
       result.balances.push(results[i].result / Math.pow(10, decimals))
     }
   }

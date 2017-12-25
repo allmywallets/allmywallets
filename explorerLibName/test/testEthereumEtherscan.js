@@ -1,25 +1,40 @@
 const test = require('ava')
-test(t => {
-  t.deepEqual([1, 2], [1, 2])
+const libName = require('../')
+
+const testAddresses = require('./fixtures.json').addresses
+
+const explorerName = 'EthereumEtherscan'
+const Explorer = libName.explorer(explorerName)
+
+const address = testAddresses[explorerName]
+
+test(`[${explorerName}] Custom tokens`, async t => {
+  const customTokens = {'MKR': {contractAddress: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2', ticker: 'MKR', name: 'Maker'}}
+  let explorer = new Explorer({customTokens})
+  const res = await explorer
+      .address(address)
+      .currency('MKR')
+      .fetch(['balances', 'transactions'])
+      .exec()
+
+  t.not(res, undefined)
+  t.not(res[0], undefined)
+  t.not(res[0].transactions, undefined)
+  t.not(res[0].balances, undefined)
+  t.not(res[0].balances[0] instanceof Number, true)
 })
-// const libName = require('../')
-//
-// const testAddresses = require('./fixtures.json').addresses
-//
-// const explorerName = 'EthereumEtherscan'
-// const Explorer = libName.explorer(explorerName)
-// const explorer = new Explorer()
-//
-// const address = testAddresses[explorerName]
-//
-// test(`[${explorerName}] getTokenBalance`, async t => {
-//   const balance = await explorer.getTokenBalance(address, '0x0d8775f648430679a709e98d2b0cb6250d2887ef')
-//   t.not(balance, undefined)
-//   t.is(typeof balance, 'number')
-// })
-//
-// test(`[${explorerName}] getTokenBalanceByTicker`, async t => {
-//   const balance = await explorer.getTokenBalanceByTicker(address, 'BAT')
-//   t.not(balance, undefined)
-//   t.is(typeof balance, 'number')
-// })
+
+test(`[${explorerName}] Get tokens`, async t => {
+  let explorer = new Explorer()
+  const res = await explorer
+      .address(address)
+      .currency('BAT')
+      .fetch(['balances', 'transactions'])
+      .exec()
+
+  t.not(res, undefined)
+  t.not(res[0], undefined)
+  t.not(res[0].transactions, undefined)
+  t.not(res[0].balances, undefined)
+  t.not(res[0].balances[0] instanceof Number, true)
+})
