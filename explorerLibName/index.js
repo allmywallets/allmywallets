@@ -14,6 +14,6 @@ module.exports = {
     }
   },
   list: function () {
-    return ['MockExplorer', 'BitcoinBlockExplorer']
+    return ['MockExplorer', 'BitcoinBlockExplorer', 'EthereumEtherscan']
   }
 }
