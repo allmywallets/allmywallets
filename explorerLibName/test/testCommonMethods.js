@@ -15,7 +15,7 @@ for (let i = 0; i < explorers.length; i++) {
   const address = testAddresses[explorerName]
 
   test(`[${explorerName}] attributes`, async t => {
-    t.not(explorer.defaultTicker, undefined)
+    t.not(explorer.constructor.getDefaultTicker(), undefined)
     t.not(explorer.supportedCurrencies, undefined)
   })
 

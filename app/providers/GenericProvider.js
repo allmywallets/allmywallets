@@ -47,7 +47,7 @@ export default function getGenericProviderClass (explorerName) {
       return [{
         type: 'input',
         inputType: 'text',
-        label: `${this.explorer.defaultTicker} address`,
+        label: `${Explorer.getDefaultTicker()} address`,
         model: 'address',
         required: true
       }]

@@ -13,8 +13,15 @@ class AbstractExplorer {
     this.tickers = []
     this.elementsToFetch = []
 
-    this.defaultTicker = 'AEC'
     this.supportedCurrencies = {AEC: {name: 'AbstractExplorerCoin', ticker: 'AEC'}}
+  }
+
+  /**
+   * Returns the default ticker that will be selected when no currency is provided
+   * @returns {String}
+   */
+  static getDefaultTicker () {
+    return 'AEC'
   }
 
   /**
@@ -164,7 +171,7 @@ class AbstractExplorer {
     let wallets = []
 
     if (this.tickers.length === 0) {
-      this.tickers.push(this.supportedCurrencies[this.defaultTicker].ticker)
+      this.tickers.push(this.supportedCurrencies[this.constructor.getDefaultTicker()].ticker)
     }
 
     this._addresses.forEach(address => {
@@ -187,7 +194,7 @@ class AbstractExplorer {
 
   static async _fetchJson (url) {
     // TODO : require('node-fetch')
-    return fetch(url).then((response) => response.json())
+    return require('node-fetch')(url).then((response) => response.json())
   }
 }
 

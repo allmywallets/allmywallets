@@ -4,8 +4,11 @@ class MockExplorer extends AbstractExplorer {
   constructor () {
     super()
 
-    this.defaultTicker = 'MOC'
     this.supportedCurrencies = {MOC: {name: 'MockCoin', ticker: 'MOC'}}
+  }
+
+  static getDefaultTicker () {
+    return 'MOC'
   }
 
   async _getBalances (address, result) {

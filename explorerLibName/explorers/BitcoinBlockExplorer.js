@@ -9,8 +9,11 @@ class BitcoinBlockExplorer extends AbstractExplorer {
   constructor () {
     super()
 
-    this.defaultTicker = 'BTC'
     this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
+  }
+
+  static getDefaultTicker () {
+    return 'BTC'
   }
 
   async _getBalances (address, result) {
