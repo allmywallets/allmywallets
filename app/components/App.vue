@@ -11,13 +11,13 @@
 </template>
 
 <script>
-  import AppMenu from './app-menu.vue'
-  import AppIndicators from './app-indicators.vue'
-  import AppFooter from './app-footer.vue'
-  import AppNotifications from './app-notifications.vue'
+  import AppMenu from './AppMenu.vue'
+  import AppIndicators from './AppIndicators.vue'
+  import AppFooter from './AppFooter.vue'
+  import AppNotifications from './AppNotifications.vue'
 
   export default {
-    name: 'app-main',
+    name: 'app',
     components: {
       AppMenu,
       AppIndicators,

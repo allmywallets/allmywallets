@@ -4,6 +4,7 @@
     <h3>Customization</h3>
     <p>TBD</p>
     <config-export></config-export>
+    <config-import></config-import>
     <config-expert></config-expert>
     <h2>Danger zone</h2>
     <a href="#" @click.prevent="forceUpdate">Force app update</a>
@@ -11,14 +12,16 @@
 </template>
 
 <script>
-  import ConfigExpert from './config-expert.vue'
-  import ConfigExport from './config-export.vue'
+  import ConfigExpert from './ConfigExpert.vue'
+  import ConfigExport from './ConfigExport.vue'
+  import ConfigImport from './ConfigImport.vue'
 
   export default {
     name: 'page-settings',
     components: {
       ConfigExport,
-      ConfigExpert
+      ConfigExpert,
+      ConfigImport
     },
     methods: {
       forceUpdate () {

@@ -1,22 +1,28 @@
 <template>
-  <aside>
+  <aside class="app-notifications">
     <p class="overall" v-if="notifications.length === 0">You don't have any notification.</p>
     <div class="notifications">
-      <notification v-for="notification, key in notifications" :key="key" :notification="notification"></notification>
+      <notification-item
+        v-for="notification, key in notifications"
+        :key="key"
+        :notification="notification"
+      ></notification-item>
     </div>
     <footer v-if="notifications.length > 0">
-      <a href="#" @click.prevent="clearAllNotifications"><icon icon="trash"></icon> Clear all notifications</a>
+      <a href="#" @click.prevent="clearAllNotifications">
+        <icon icon="trash"></icon> Clear all notifications
+      </a>
     </footer>
   </aside>
 </template>
 
 <script>
-  import Notification from './notification.vue'
+  import NotificationItem from './NotificationItem.vue'
 
   export default {
     name: 'app-notifications',
     components: {
-      Notification
+      NotificationItem
     },
     computed: {
       notifications () {
@@ -34,7 +40,7 @@
 <style scoped lang="scss">
   @import '../scss/vars';
 
-  aside {
+  .app-notifications {
     grid-area: notifications;
     color: white;
     background: $color-section-notifications;

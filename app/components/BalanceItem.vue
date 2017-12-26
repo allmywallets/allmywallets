@@ -19,19 +19,19 @@
       <div class="balance-provider">
         Data from {{ wallet.provider|camelcase }}
       </div>
-      <balance-tools :balance="balance"></balance-tools>
+      <balance-item-tools :balance="balance"></balance-item-tools>
     </footer>
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
-  import BalanceTools from './balance-tools.vue'
+  import BalanceItemTools from './BalanceItemTools.vue'
 
   export default {
-    name: 'balance',
+    name: 'balance-list-item',
     components: {
-      BalanceTools
+      BalanceItemTools
     },
     props: {
       id: {
@@ -41,10 +41,11 @@
     },
     computed: {
       ...mapGetters([
-        'wallets'
+        'wallets',
+        'balances'
       ]),
       balance () {
-        return this.$store.state.balances.find(balance => balance.id === this.id)
+        return this.balances.find(balance => balance.id === this.id)
       },
       wallet () {
         return this.wallets[this.balance.walletId]

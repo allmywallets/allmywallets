@@ -1,11 +1,11 @@
 {
   "extends": "standard",
-  "plugins": [
-    "import",
-    "html"
-  ],
+  "plugins": ["html"],
   "env": {
-    "browser": true,
-    "node": true
+    "browser": true
+  },
+  "globals": {
+    "opts": true,
+    "vue": true
   }
 }

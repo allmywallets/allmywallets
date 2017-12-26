@@ -2,9 +2,9 @@
   <div>
     <h3>Export configuration</h3>
     <p>
-      You can export your configuration to another device by following the next steps. Notice that sync won't be triggered
-      automatically, as your data is not saved on any external server. You will need to export configuration again on
-      your other devices to get your configuration updated everywhere.
+      You can export your configuration to another device. Notice that you will need to export your configuration each
+      time it is updated on a device to get your configuration updated everywhere, because your data is not saved on
+      an external server.
     </p>
     <template v-if="config.length < 2000">
       <p>
@@ -44,7 +44,7 @@
     },
     data () {
       return {
-        importUrl: `${window.location.origin}/config/import`
+        importUrl: window.location.href
       }
     }
   }

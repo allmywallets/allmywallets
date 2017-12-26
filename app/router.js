@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import PageHome from './components/page-home.vue'
-import PageAddWallet from './components/page-add-wallet.vue'
-import PageSettings from './components/page-settings.vue'
-import PageConfigImport from './components/page-config-import.vue'
+import PageHome from './components/PageHome.vue'
+import PageAddWallet from './components/PageAddWallet.vue'
+import PageSettings from './components/PageSettings.vue'
 
 Vue.use(Router)
 
@@ -31,14 +30,9 @@ export default new Router({
       component: PageSettings
     },
     {
-      path: '/config/import',
-      name: 'config-import',
-      component: PageConfigImport
-    },
-    {
-      path: '/config/import/:config',
-      name: 'config-import-config',
-      component: PageConfigImport
+      path: '/settings/:config',
+      name: 'settings-import',
+      component: PageSettings
     },
     {
       path: '/contribute',

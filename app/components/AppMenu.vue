@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="app-menu">
     <router-link :to="{ name: 'home' }">
         <icon icon="home"></icon> <span class="title">All My Wallets</span>
     </router-link>
@@ -24,7 +24,7 @@
 <style scoped lang="scss">
   @import '../scss/vars';
 
-  nav {
+  .app-menu {
     grid-area: menu;
     display: flex;
     justify-content: center;

@@ -9,10 +9,10 @@
 
 <script>
   import runtime from 'serviceworker-webpack-plugin/lib/runtime'
-  import Notification from '../../model/Notification'
+  import Notification from '../model/Notification'
 
   export default {
-    name: 'worker',
+    name: 'indicator-worker',
     data () {
       return {
         needsRefresh: this.$serviceWorker.controller === null

@@ -10,7 +10,7 @@ import VueQRCode from '@xkeshi/vue-qrcode'
 
 import router from './router'
 import store from './store'
-import AppMain from './components/app-main.vue'
+import App from './components/App.vue'
 
 Vue.use(VueFilter)
 Vue.use(VueFormGenerator)
@@ -27,5 +27,5 @@ Vue.prototype.$serviceWorker = navigator.serviceWorker
 new Vue({
   store,
   router,
-  render: h => h(AppMain)
-}).$mount('#app-main')
+  render: h => h(App)
+}).$mount('#app')

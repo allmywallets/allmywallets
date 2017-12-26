@@ -1,22 +1,22 @@
 <template>
-  <div class="indicators">
-    <worker class="indicator"></worker>
-    <online class="indicator"></online>
-    <notifications class="indicator"></notifications>
+  <div class="app-indicators">
+    <indicator-worker class="indicator"></indicator-worker>
+    <indicator-online class="indicator"></indicator-online>
+    <indicator-notifications class="indicator"></indicator-notifications>
   </div>
 </template>
 
 <script>
-  import Worker from './indicators/worker.vue'
-  import Online from './indicators/online.vue'
-  import Notifications from './indicators/notifications.vue'
+  import IndicatorWorker from './IndicatorWorker.vue'
+  import IndicatorOnline from './IndicatorOnline.vue'
+  import IndicatorNotifications from './IndicatorNotifications.vue'
 
   export default {
-    name: 'header-indicators',
+    name: 'app-indicators',
     components: {
-      Worker,
-      Online,
-      Notifications
+      IndicatorWorker,
+      IndicatorOnline,
+      IndicatorNotifications
     }
   }
 </script>
@@ -24,7 +24,7 @@
 <style scoped lang="scss">
   @import '../scss/vars';
 
-  .indicators {
+  .app-indicators {
     grid-area: indicators;
     display: flex;
     justify-content: center;

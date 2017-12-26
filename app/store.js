@@ -12,7 +12,8 @@ const state = {
 }
 
 const getters = {
-  wallets: state => state.config.profiles[0].wallets
+  wallets: state => state.config.profiles[0].wallets,
+  balances: state => state.balances
 }
 
 const mutations = {

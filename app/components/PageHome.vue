@@ -3,22 +3,25 @@
     <h2>All My Wallets</h2>
     <a href="#" @click.prevent="refreshBalances">refresh all</a> &bull;
     <router-link :to="{ name: 'add' }">add a wallet</router-link>
-    <balance-list></balance-list>
+    <article class="balance-list">
+      <balance-item v-for="balance, key in balances" :key="key" :id="balance.id"></balance-item>
+    </article>
   </div>
 </template>
 
 <script>
-  import BalanceList from './balance-list.vue'
+  import BalanceItem from './BalanceItem.vue'
   import { mapGetters } from 'vuex'
 
   export default {
     name: 'page-home',
     components: {
-      BalanceList
+      BalanceItem
     },
     computed: {
       ...mapGetters([
-        'wallets'
+        'wallets',
+        'balances'
       ])
     },
     methods: {
@@ -34,3 +37,14 @@
     }
   }
 </script>
+
+<style scoped lang="scss">
+  @import '../scss/vars';
+
+  .balance-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 -10px;
+  }
+</style>

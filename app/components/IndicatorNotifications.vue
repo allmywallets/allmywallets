@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    name: 'notifications',
+    name: 'indicator-notifications',
     data () {
       return {
         supported: 'Notification' in window,
@@ -46,7 +46,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import '../../scss/vars';
+  @import '../scss/vars';
 
   div {
     position: relative;

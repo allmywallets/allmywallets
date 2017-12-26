@@ -16,7 +16,7 @@
   import { mapGetters } from 'vuex'
 
   export default {
-    name: 'notification',
+    name: 'notification-item',
     props: {
       notification: {
         type: Notification,

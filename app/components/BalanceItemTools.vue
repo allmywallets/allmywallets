@@ -16,7 +16,7 @@
   import Balance from '../model/Balance'
 
   export default {
-    name: 'balance-tools',
+    name: 'balance-item-tools',
     props: {
       balance: {
         type: Balance,

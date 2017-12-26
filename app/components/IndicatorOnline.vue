@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'online',
+    name: 'indicator-online',
     data () {
       return {
         online: navigator.onLine
