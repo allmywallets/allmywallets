@@ -2,6 +2,7 @@
   "addresses": {
     "MockExplorer": "",
     "BitcoinBlockExplorer": "15jdxjFhXUsp2xuycmKnjw8yk1WsVon69c",
-    "EthereumEtherscan": "0xB13CE87F4f0519B54f768847Bda0389cEF0d479B"
+    "EthereumEtherscan": "0xB13CE87F4f0519B54f768847Bda0389cEF0d479B",
+    "IOTA": "VXVFLFCTLG9BHZEJHDUMIATTZGQSXUAPRHYMOALPKGICJPTMEJXWT9KHBKYFTLPQABOSGZUCUUZDWXPRZ"
   }
 }

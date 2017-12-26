@@ -6,7 +6,7 @@ module.exports = {
       case 'EthereumEtherscan':
         return require('./explorers/EthereumEtherscan')
       case 'IOTA':
-        return require('./explorers/EthereumEtherscan') // TODO
+        return require('./explorers/IotaNative')
       case 'MockExplorer':
         return require('./explorers/MockExplorer')
       default:
@@ -14,6 +14,6 @@ module.exports = {
     }
   },
   list: function () {
-    return ['MockExplorer', 'BitcoinBlockExplorer', 'EthereumEtherscan']
+    return ['MockExplorer', 'BitcoinBlockExplorer', 'EthereumEtherscan', 'IOTA']
   }
 }
