@@ -60,7 +60,7 @@ class Binance extends AbstractExplorer {
     this.selectedCurrencies = []
     wallet.balances = []
 
-    const res = await this.binanceApiRequest('account', {}, apiKey, secret)
+    const res = await this.binanceApiRequest('account', {recvWindow: 10000}, apiKey, secret)
 
     if (this.tickers.length === 0) {
       this._getAllNonZeroBalances(res, wallet)
