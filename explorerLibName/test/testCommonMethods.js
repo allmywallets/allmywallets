@@ -12,7 +12,10 @@ for (let i = 0; i < explorersName.length; i++) {
 for (let i = 0; i < explorers.length; i++) {
   const explorer = explorers[i]
   const explorerName = explorersName[i]
-  const address = testAddresses[explorerName]
+  let address = testAddresses[explorerName]
+  if (!address) {
+    address = require('./fixturesExchanges.json').addresses[explorerName]
+  }
 
   test(`[${explorerName}] attributes`, async t => {
     t.not(explorer.constructor.getDefaultTicker(), undefined)

@@ -50,7 +50,7 @@ class Binance extends AbstractExplorer {
     this.tickers.forEach(ticker => {
       res.balances.forEach(balance => {
         if (balance.asset === ticker) {
-          result.balances.push(balance.free)
+          result.balances.push(parseFloat(balance.free))
           return false
         }
       })

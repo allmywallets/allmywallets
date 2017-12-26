@@ -1,6 +1,8 @@
 module.exports = {
   explorer: function (explorerName) {
     switch (explorerName) {
+      case 'Binance':
+        return require('./explorers/Binance')
       case 'BitcoinBlockExplorer':
         return require('./explorers/BitcoinBlockExplorer')
       case 'EthereumEtherscan':
@@ -14,6 +16,6 @@ module.exports = {
     }
   },
   list: function () {
-    return ['MockExplorer', 'BitcoinBlockExplorer', 'EthereumEtherscan', 'IOTA']
+    return ['Binance', 'BitcoinBlockExplorer', 'EthereumEtherscan', 'IOTA', 'MockExplorer']
   }
 }
