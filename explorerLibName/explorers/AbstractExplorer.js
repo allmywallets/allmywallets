@@ -188,7 +188,8 @@ class AbstractExplorer {
 
   static async _fetchJson (url, options = {}) {
     // TODO : require('node-fetch')
-    return fetch(url, options).then((response) => response.json())
+    const response = await fetch(url, options)
+    return response.json()
   }
 }
 

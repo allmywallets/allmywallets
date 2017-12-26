@@ -64,6 +64,23 @@ class Binance extends AbstractExplorer {
   _sign (queryString, secret) {
     return crypto.createHmac('sha256', secret).update(queryString).digest('hex')
   }
+
+  static getAddressParam () {
+    return [{
+      type: 'input',
+      inputType: 'text',
+      label: 'Binance Api Key',
+      model: 'wallets.apiKey',
+      required: true
+    },
+    {
+      type: 'input',
+      inputType: 'text',
+      label: 'Binance secret',
+      model: 'wallets.secret',
+      required: true
+    }]
+  }
 }
 
 module.exports = Binance

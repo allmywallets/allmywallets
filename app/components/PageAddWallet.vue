@@ -37,7 +37,7 @@
     methods: {
       loadProvider (provider) {
         this.reset()
-        this.currentSchema = { fields: this.providers[provider].getSupportedParameters() }
+        this.currentSchema = { fields: Proxy.getProviderParams(provider) }
         this.currentParameters = VueFormGenerator.schema.createDefaultObject(this.currentSchema)
         this.currentProvider = provider
       },
@@ -51,8 +51,13 @@
 
         // Change string "address1,address2" to array [address1, address2]
         // TODO: Do it directly with vue-form-generator
-        const addresses = this.currentParameters.addresses.split(',')
-        this.currentParameters.addresses = addresses
+        if (this.currentParameters.addresses) {
+          const addresses = this.currentParameters.addresses.split(',')
+          this.currentParameters.addresses = addresses
+        }
+        if (this.currentParameters.wallets) {
+          this.currentParameters.wallets = [this.currentParameters.wallets]
+        }
 
         const provider = this.currentProvider.split('.')
         profile.wallets.push({

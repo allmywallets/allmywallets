@@ -6,7 +6,8 @@ const providers = {
   'bitcoin.blockexplorer': 'BitcoinBlockExplorer',
   'bitcoin.mockexplorer': 'MockExplorer',
   'ethereum.etherscan': 'EthereumEtherscan',
-  'iota.native': 'IOTA'
+  'iota.native': 'IOTA',
+  'exchange.binance': 'Binance'
 }
 
 export default class Proxy {
@@ -19,6 +20,10 @@ export default class Proxy {
 
     const Provider = getGenericProviderClass(providers[networkProvider])
     return new Provider(parameters)
+  }
+
+  static getProviderParams (provider) {
+    return getGenericProviderClass(providers[provider]).getSupportedParameters()
   }
 
   static getProvidersList () {
@@ -36,8 +41,12 @@ function getGenericProviderClass (explorerName) {
 
     async getWalletData (currencies = []) {
       this._selectCurrenciesToUpdate(this.explorer, currencies)
+      if (this.parameters.addresses) {
+        this.explorer.addresses(this.parameters.addresses)
+      } else {
+        this.explorer.wallets(this.parameters.wallets)
+      }
       const wallets = await this.explorer
-        .addresses(this.parameters.addresses)
         .fetch(['balances', 'transactions'])
         .exec()
 
