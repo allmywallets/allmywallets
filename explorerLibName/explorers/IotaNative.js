@@ -8,7 +8,7 @@ class IotaNative extends AbstractExplorer {
     super()
 
     this.params = params || {}
-    this.params.node = this.params.node || 'http://cryptoiota.win:14265'
+    this.params.node = this.params.node || 'https://potato.iotasalad.org:14265'
 
     this.headers = {
       'Content-Type': 'application/json',
@@ -53,6 +53,17 @@ class IotaNative extends AbstractExplorer {
     }))
     // TODO
     result.transactions = [[]]
+  }
+
+  static getExplorerParams () {
+    return [{
+      type: 'select',
+      label: 'Node',
+      model: 'node',
+      values: ['https://iota.thathost.net', 'https://potato.iotasalad.org:14265',
+        'https://durian.iotasalad.org:14265', 'https://peanut.iotasalad.org:14265', 'https://tuna.iotasalad.org:14265', 'https://turnip.iotasalad.org:14265'],
+      required: true
+    }]
   }
 }
 

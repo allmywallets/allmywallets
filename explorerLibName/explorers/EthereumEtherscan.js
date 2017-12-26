@@ -58,6 +58,15 @@ class EthereumEtherscan extends AbstractExplorer {
       result.transactions.push(transactions)
     })
   }
+
+  static getExplorerParams () {
+    return [{
+      type: 'input',
+      inputType: 'text',
+      label: 'Custom tokens (optional)',
+      model: 'customTokens'
+    }]
+  }
 }
 
 module.exports = EthereumEtherscan

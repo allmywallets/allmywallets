@@ -125,12 +125,7 @@ class AbstractExplorer {
    * @returns {object}
    */
   static getExplorerParams () {
-    return [{
-      type: 'input',
-      inputType: 'text',
-      label: 'API key (optional)',
-      model: 'apiKey'
-    }]
+    return []
   }
 
   /**
@@ -141,7 +136,7 @@ class AbstractExplorer {
     return [{
       type: 'input',
       inputType: 'text',
-      label: 'AbstractExplorer address',
+      label: `${this.getDefaultTicker()} address`,
       model: 'address',
       required: true
     }]
@@ -194,7 +189,7 @@ class AbstractExplorer {
 
   static async _fetchJson (url, options = {}) {
     // TODO : require('node-fetch')
-    return fetch(url, options).then((response) => response.json())
+    return require('node-fetch')(url, options).then((response) => response.json())
   }
 }
 

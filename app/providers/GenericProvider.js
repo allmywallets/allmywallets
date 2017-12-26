@@ -44,13 +44,11 @@ export default function getGenericProviderClass (explorerName) {
     }
 
     static getSupportedParameters () {
-      return [{
-        type: 'input',
-        inputType: 'text',
-        label: `${Explorer.getDefaultTicker()} address`,
-        model: 'address',
-        required: true
-      }]
+      const explorerParams = Explorer.getExplorerParams().map(param => {
+        param.model = `explorerSpecific.${param.model}`
+        return param
+      })
+      return explorerParams.concat(Explorer.getAddressParam())
     }
 }
 
