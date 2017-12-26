@@ -35,27 +35,27 @@ for (let i = 0; i < explorers.length; i++) {
           .fetch(['balances'])
           .exec(), OnlyEmptyBalancesFound)
     })
-  } else {
-    test(`[${explorerName}] fetch only balances`, async t => {
-      const explorer = new Explorer()
-      const res = await explorer
+  }
+  test(`[${explorerName}] fetch only balances`, async t => {
+    const explorer = new Explorer()
+    if (explorer.isExchange) { explorer.currency('BTC') }
+    const res = await explorer
         .address(address)
         .fetch(['balances'])
         .exec()
 
-      t.not(res, undefined)
+    t.not(res, undefined)
 
-      const firstCurrency = res[0]
+    const firstCurrency = res[0]
 
-      t.not(firstCurrency, undefined)
-      t.is(firstCurrency.transactions, undefined, 'We fetch only balances')
+    t.not(firstCurrency, undefined)
+    t.is(firstCurrency.transactions, undefined, 'We fetch only balances')
 
-      const balances = firstCurrency.balances
-      t.not(balances, undefined)
-      t.is(balances.length, 1)
-      t.is(typeof balances[0], 'number')
-    })
-  }
+    const balances = firstCurrency.balances
+    t.not(balances, undefined)
+    t.is(balances.length, 1)
+    t.is(typeof balances[0], 'number')
+  })
 
   test(`[${explorerName}] fetch only transactions`, async t => {
     const explorer = new Explorer()
