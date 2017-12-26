@@ -136,8 +136,8 @@ class AbstractExplorer {
     return [{
       type: 'input',
       inputType: 'text',
-      label: `${this.getDefaultTicker()} address`,
-      model: 'address',
+      label: `${this.getDefaultTicker()} addresses`,
+      model: 'addresses',
       required: true
     }]
   }

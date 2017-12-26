@@ -49,6 +49,11 @@
           profile.wallets = []
         }
 
+        // Change string "address1,address2" to array [address1, address2]
+        // TODO: Do it directly with vue-form-generator
+        const addresses = this.currentParameters.addresses.split(',')
+        this.currentParameters.addresses = addresses
+
         const provider = this.currentProvider.split('.')
         profile.wallets.push({
           network: provider[0],
