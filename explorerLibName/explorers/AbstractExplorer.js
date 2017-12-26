@@ -8,7 +8,6 @@ class AbstractExplorer {
     this.params = params
 
     this._addresses = []
-    this.wallets = []
 
     this.tickers = []
     this.elementsToFetch = []
@@ -31,7 +30,7 @@ class AbstractExplorer {
    * @param {object} wallet
    */
   wallet (wallet) {
-    this.wallets.push(wallet)
+    this._addresses.push(wallet)
     return this
   }
 
