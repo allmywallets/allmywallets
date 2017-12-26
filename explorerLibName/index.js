@@ -12,7 +12,7 @@ module.exports = {
       case 'MockExplorer':
         return require('./explorers/MockExplorer')
       default:
-        throw new Error(explorerName + ' does not exist')
+        throw new Error(explorerName + ' explorer does not exist')
     }
   },
   list: function () {

@@ -2,7 +2,8 @@ const AbstractExplorer = require('./AbstractExplorer')
 const crypto = require('crypto')
 const queryStringLib = require('querystring')
 
-const API_URL = 'https://api.binance.com/api/v3/'
+// TODO : Cors problem
+const API_URL = 'https://cors-anywhere.herokuapp.com/https://api.binance.com/api/v3/'
 
 /**
  * Binance exchange https://www.binance.com/
@@ -29,7 +30,10 @@ class Binance extends AbstractExplorer {
     }
 
     const headers = {
-      'X-MBX-APIKEY': apiKey
+      'X-MBX-APIKEY': apiKey,
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'origin': '.',
+      'x-requested-with': '.'
     }
 
     const res = await this.constructor._fetchJson(url, {
