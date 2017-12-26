@@ -1,4 +1,7 @@
 const AbstractExplorer = require('./AbstractExplorer')
+const NotSupportedCurrencyError = require('./errors/NotSupportedCurrencyError')
+const OnlyEmptyBalancesFound = require('./errors/OnlyEmptyBalancesFound')
+
 const crypto = require('crypto')
 const queryStringLib = require('querystring')
 
@@ -13,6 +16,7 @@ class Binance extends AbstractExplorer {
     super()
 
     this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
+    this.isExchange = true
   }
 
   static getDefaultTicker () {
@@ -47,22 +51,49 @@ class Binance extends AbstractExplorer {
     return res
   }
 
-  async _getBalances ({secret, apiKey}, result) {
+  async _getBalances ({secret, apiKey}, wallet) {
     const res = await this.binanceApiRequest('account', {}, apiKey, secret)
 
-    result.balances = []
-    this.tickers.forEach(ticker => {
-      res.balances.forEach(balance => {
-        if (balance.asset === ticker) {
-          result.balances.push(parseFloat(balance.free))
-          return false
-        }
-      })
-    })
+    wallet.balances = []
+
+    if (this.tickers.length === 0) {
+      this._getAllNonZeroBalances(res, wallet)
+    } else {
+      this._getSpecifiedBalances(res, wallet)
+    }
   }
 
   async _getTransactions (address, result) {
     result.transactions = [[]]
+  }
+
+  _getAllNonZeroBalances (res, wallet) {
+    res.balances.forEach(balance => {
+      let amount = parseFloat(balance.free)
+      if (amount > 0) {
+        wallet.balances.push(amount)
+      }
+    })
+    if (wallet.balances.length === 0) {
+      throw new OnlyEmptyBalancesFound()
+    }
+  }
+
+  _getSpecifiedBalances (res, wallet) {
+    this.tickers.forEach(ticker => {
+      let tickerFound = false
+      res.balances.forEach(balance => {
+        if (balance.asset === ticker) {
+          wallet.balances.push(parseFloat(balance.free))
+          tickerFound = true
+          return false
+        }
+      })
+
+      if (!tickerFound) {
+        throw new NotSupportedCurrencyError(`${ticker} is not supported`)
+      }
+    })
   }
 
   _sign (queryString, secret) {

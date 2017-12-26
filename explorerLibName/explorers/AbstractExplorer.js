@@ -8,6 +8,7 @@ class AbstractExplorer {
     this.params = params
 
     this._addresses = []
+    this.isExchange = false
 
     this.tickers = []
     this.elementsToFetch = []
@@ -24,8 +25,8 @@ class AbstractExplorer {
   }
 
   /**
-   * Used for special blockchain with multiple identifier for a wallet
-   * Example wallet object : {address1: '0x', address2: '0x'}
+   * Used for Exchange or special blockchain with multiple identifier for a wallet
+   * Example wallet object : {apikey: 'AAA', secret: 'BBB'}
    * Use the method address for classic blockchain @see AbtractExplorer.address
    * @param {object} wallet
    */
@@ -72,10 +73,12 @@ class AbstractExplorer {
 
   /**
    * Set the currency
+   * If no currency is set, the default Currency will be returned for a blockchain,
+   * the list of all not null balances for an exchange
    * @param {String} ticker
    */
   currency (ticker) {
-    if (!this.isTickerSupported(ticker)) {
+    if (!this.isTickerSupported(ticker) && !this.isExchange) { // For exchange there is the supportedCurrencies is not filled
       throw new NotSupportedCurrencyError(`${ticker} is not supported`)
     }
 
@@ -158,13 +161,14 @@ class AbstractExplorer {
 
   /**
    * Execute the request
+   * @throws {OnlyEmptyBalancesFound}
    * @returns {Promise<object>}
    */
   async exec () {
     let promises = []
     let wallets = []
 
-    if (this.tickers.length === 0) {
+    if (this.tickers.length === 0 && !this.isExchange) {
       this.tickers.push(this.supportedCurrencies[this.constructor.getDefaultTicker()].ticker)
     }
 
@@ -188,7 +192,7 @@ class AbstractExplorer {
 
   static async _fetchJson (url, options = {}) {
     // TODO : require('node-fetch')
-    const response = await fetch(url, options)
+    const response = await require('node-fetch')(url, options)
     return response.json()
   }
 }
