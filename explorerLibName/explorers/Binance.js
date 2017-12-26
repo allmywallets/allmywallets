@@ -17,10 +17,15 @@ class Binance extends AbstractExplorer {
 
     this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
     this.isExchange = true
+    this.selectedCurrencies = []
   }
 
   static getDefaultTicker () {
     return 'BTC'
+  }
+
+  getSelectedCurrencies () {
+    return this.selectedCurrencies
   }
 
   async binanceApiRequest (endpoint, queryObject, apiKey, secret) {
@@ -52,9 +57,11 @@ class Binance extends AbstractExplorer {
   }
 
   async _getBalances ({secret, apiKey}, wallet) {
-    const res = await this.binanceApiRequest('account', {}, apiKey, secret)
-
+    this.selectedCurrencies = []
+    wallet.transactions = []
     wallet.balances = []
+
+    const res = await this.binanceApiRequest('account', {}, apiKey, secret)
 
     if (this.tickers.length === 0) {
       this._getAllNonZeroBalances(res, wallet)
@@ -64,7 +71,7 @@ class Binance extends AbstractExplorer {
   }
 
   async _getTransactions (address, result) {
-    result.transactions = [[]]
+    // Filled in getBalances (cant know the 0 balance in advance) TODO: improve this ?
   }
 
   _getAllNonZeroBalances (res, wallet) {
@@ -72,6 +79,8 @@ class Binance extends AbstractExplorer {
       let amount = parseFloat(balance.free)
       if (amount > 0) {
         wallet.balances.push(amount)
+        this.selectedCurrencies.push({name: balance.asset, ticker: balance.asset})
+        wallet.transactions.push([])
       }
     })
     if (wallet.balances.length === 0) {
