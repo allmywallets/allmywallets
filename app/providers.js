@@ -1,11 +1,10 @@
 import GenericProvider from './providers/GenericProvider'
-import IOTA from './providers/IOTAProvider'
 
 const providers = {
   'bitcoin.blockexplorer': GenericProvider('BitcoinBlockExplorer'),
   'bitcoin.mockexplorer': GenericProvider('MockExplorer'),
   'ethereum.etherscan': GenericProvider('EthereumEtherscan'),
-  'iota.native': IOTA
+  'iota.native': GenericProvider('IOTA')
 }
 
 export default class Proxy {

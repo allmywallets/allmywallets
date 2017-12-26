@@ -8,10 +8,10 @@ class IotaNative extends AbstractExplorer {
     super()
 
     this.params = params || {}
-    this.params.node = this.params.node || 'https://potato.iotasalad.org:14265'
+    this.params.node = this.params.node || 'https://iri3-api.iota.fm:443'
 
     this.headers = {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
       'X-IOTA-API-Version': '1'
     }
 
@@ -23,7 +23,7 @@ class IotaNative extends AbstractExplorer {
   }
 
   async iotaApiRequest (body) {
-    const res = this.constructor._fetchJson(this.params.node, {
+    const res = await this.constructor._fetchJson(this.params.node, {
       method: 'POST',
       headers: this.headers,
       body
@@ -60,8 +60,7 @@ class IotaNative extends AbstractExplorer {
       type: 'select',
       label: 'Node',
       model: 'node',
-      values: ['https://iota.thathost.net', 'https://potato.iotasalad.org:14265',
-        'https://durian.iotasalad.org:14265', 'https://peanut.iotasalad.org:14265', 'https://tuna.iotasalad.org:14265', 'https://turnip.iotasalad.org:14265'],
+      values: ['https://iota.thathost.net', 'https://iri3-api.iota.fm:443'],
       required: true
     }]
   }
