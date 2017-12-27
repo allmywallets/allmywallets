@@ -1,3 +1,4 @@
+import DotEnv from 'dotenv'
 import '@fortawesome/fontawesome-free-solid'
 
 import Vue from 'vue'
@@ -11,6 +12,8 @@ import VueQRCode from '@xkeshi/vue-qrcode'
 import router from './router'
 import store from './store'
 import App from './components/App.vue'
+
+DotEnv.config()
 
 Vue.use(VueFilter)
 Vue.use(VueFormGenerator)

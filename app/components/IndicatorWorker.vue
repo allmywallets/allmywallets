@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a v-if="needsRefresh" href="#" @click.prevent="refreshPage" title="App restart required" ref="refresh" v-tippy>
+    <a v-if="needsRefresh" href="#" @click.prevent="refreshPage" title="App restart required" v-tippy="{ showOnLoad: needsRefresh }">
       <icon icon="sync-alt" class="text-danger"></icon>
     </a>
     <icon v-else icon="cogs" title="App working properly" v-tippy></icon>
@@ -39,10 +39,6 @@
       this.$serviceWorker.addEventListener('controllerchange', () => {
         this.needsRefresh = this.$serviceWorker.controller === null
       })
-
-      if (this.needsRefresh) {
-        this.$refs.refresh._tippy.show()
-      }
 
       this.$serviceWorker.addEventListener('message', this.handleMessage)
     }

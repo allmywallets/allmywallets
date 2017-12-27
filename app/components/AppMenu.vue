@@ -44,6 +44,7 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
+      font-weight: bold;
 
       .title {
         display: none;
@@ -64,7 +65,6 @@
 
       &.router-link-exact-active {
         color: white;
-        font-weight: bold;
       }
     }
   }

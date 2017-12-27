@@ -1,9 +1,9 @@
 {
   "name": "allmywallets",
   "description": "All My Wallets - All your crypto wallets in a single place!",
+  "repository": "https://github.com/allmywallets/allmywallets",
   "author": "Quentin de Longraye",
   "license": "MIT",
-  "repository": "https://github.com/allmywallets/allmywallets",
   "main": "app/main.js",
   "scripts": {
     "lint": "eslint '@(app|tests)/**/*.@(js|vue)'",
@@ -21,6 +21,7 @@
     "bootstrap-reboot": "^0.1.1",
     "clipboard": "^1.7.1",
     "cryptocoins-icons": "^2.7.0",
+    "dotenv": "^4.0.0",
     "idb": "^2.0.4",
     "idb-keyval": "^2.3.0",
     "jsonschema": "^1.2.2",

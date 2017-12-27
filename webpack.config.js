@@ -63,5 +63,8 @@ module.exports = {
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, 'app/service-worker.js')
     })
-  ]
+  ],
+  node: {
+    fs: 'empty'
+  }
 }

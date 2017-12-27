@@ -52,6 +52,12 @@ self.addEventListener('fetch', event => {
   }
 })
 
+self.addEventListener('push', event => {
+  event.waitUntil(
+    self.registration.showNotification('Just received a push notification!')
+  )
+})
+
 self.addEventListener('message', async event => {
   const clients = await self.clients.matchAll()
 

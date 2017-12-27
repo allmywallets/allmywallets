@@ -3,3 +3,4 @@
 build/
 !build/app.yaml
 node_modules/
+.env

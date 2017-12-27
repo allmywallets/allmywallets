@@ -1,6 +1,6 @@
 <template>
   <div>
-    <icon :icon="getIcon()" :class="{ 'text-warning': !online }" :title="getTitle()" ref="connectivity" v-tippy></icon>
+    <icon :icon="getIcon()" :class="{ 'text-warning': !online }" :title="getTitle()" v-tippy="{ showOnLoad: !this.online }"></icon>
   </div>
 </template>
 
@@ -21,17 +21,11 @@
       }
     },
     mounted () {
-      if (!this.online) {
-        this.$refs.connectivity._tippy.show()
-      }
-
       window.addEventListener('offline', () => {
         this.online = false
-        this.$refs.connectivity._tippy.show()
       })
       window.addEventListener('online', () => {
         this.online = true
-        this.$refs.connectivity._tippy.hide()
       })
     }
   }
