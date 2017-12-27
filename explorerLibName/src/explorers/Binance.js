@@ -1,7 +1,7 @@
 const AbstractExplorer = require('./AbstractExplorer')
-const NotSupportedCurrencyError = require('./errors/NotSupportedCurrencyError')
-const OnlyEmptyBalancesFound = require('./errors/OnlyEmptyBalancesFound')
-const ApiKeyPermissionError = require('./errors/ApiKeyPermissionError')
+const NotSupportedCurrencyError = require('../errors/NotSupportedCurrencyError')
+const OnlyEmptyBalancesFound = require('../errors/OnlyEmptyBalancesFound')
+const ApiKeyPermissionError = require('../errors/ApiKeyPermissionError')
 
 const crypto = require('crypto')
 const queryStringLib = require('querystring')

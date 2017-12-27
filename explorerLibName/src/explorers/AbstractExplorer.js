@@ -1,4 +1,4 @@
-const NotSupportedCurrencyError = require('./errors/NotSupportedCurrencyError')
+const NotSupportedCurrencyError = require('../errors/NotSupportedCurrencyError')
 
 /**
  * A block/DAGchain explorer

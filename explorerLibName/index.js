@@ -2,15 +2,15 @@ module.exports = {
   explorer: function (explorerName) {
     switch (explorerName) {
       case 'exchange.binance':
-        return require('./explorers/Binance')
+        return require('./src/explorers/Binance')
       case 'bitcoin.blockexplorer':
-        return require('./explorers/BitcoinBlockExplorer')
+        return require('./src/explorers/BitcoinBlockExplorer')
       case 'ethereum.etherscan':
-        return require('./explorers/EthereumEtherscan')
+        return require('./src/explorers/EthereumEtherscan')
       case 'iota.native':
-        return require('./explorers/IotaNative')
+        return require('./src/explorers/IotaNative')
       case 'bitcoin.mockexplorer':
-        return require('./explorers/MockExplorer')
+        return require('./src/explorers/MockExplorer')
       default:
         throw new Error(explorerName + ' explorer does not exist')
     }
