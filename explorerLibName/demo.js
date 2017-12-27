@@ -1,4 +1,4 @@
-const explorerName = 'EthereumEtherscan'
+const explorerName = 'ethereum.etherscan'
 const Explorer = require('./explorers/EthereumEtherscan')
 const explorer = new Explorer()
 

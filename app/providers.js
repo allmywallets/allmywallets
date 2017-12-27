@@ -2,32 +2,24 @@ import Balance from './model/Balance'
 import Transaction from './model/Transaction'
 import ExplorerLib from '../explorerLibName'
 
-const providers = {
-  'bitcoin.blockexplorer': 'BitcoinBlockExplorer',
-  'bitcoin.mockexplorer': 'MockExplorer',
-  'ethereum.etherscan': 'EthereumEtherscan',
-  'iota.native': 'IOTA',
-  'exchange.binance': 'Binance'
-}
-
 export default class Proxy {
   constructor (network, provider, parameters) {
     const networkProvider = `${network}.${provider}`
 
-    if (!Object.keys(providers).includes(networkProvider)) {
+    if (!ExplorerLib.list().includes(networkProvider)) {
       throw new Error(`Unsupported network provider: ${networkProvider}`)
     }
 
-    const Provider = getGenericProviderClass(providers[networkProvider])
+    const Provider = getGenericProviderClass(networkProvider)
     return new Provider(parameters)
   }
 
   static getProviderParams (provider) {
-    return getGenericProviderClass(providers[provider]).getSupportedParameters()
+    return getGenericProviderClass(provider).getSupportedParameters()
   }
 
   static getProvidersList () {
-    return providers
+    return ExplorerLib.list()
   }
 }
 

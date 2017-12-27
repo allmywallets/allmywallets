@@ -3,7 +3,7 @@ const libName = require('../')
 
 const testAddresses = require('./fixtures.json').addresses
 
-const explorerName = 'EthereumEtherscan'
+const explorerName = 'ethereum.etherscan'
 const Explorer = libName.explorer(explorerName)
 
 const address = testAddresses[explorerName]

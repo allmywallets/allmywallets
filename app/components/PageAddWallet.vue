@@ -2,8 +2,8 @@
   <div>
     <h2>Add a new wallet</h2>
     <ul>
-      <li v-for="key in Object.keys(providers)" :key="key">
-        <a href="#" @click.prevent="loadProvider(key)">{{ key }}</a>
+      <li v-for="provider in providers" :key="provider">
+        <a href="#" @click.prevent="loadProvider(provider)">{{ provider }}</a>
       </li>
     </ul>
     <template v-if="currentSchema !== null">
