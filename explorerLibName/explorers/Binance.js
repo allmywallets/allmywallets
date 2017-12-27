@@ -1,6 +1,7 @@
 const AbstractExplorer = require('./AbstractExplorer')
 const NotSupportedCurrencyError = require('./errors/NotSupportedCurrencyError')
 const OnlyEmptyBalancesFound = require('./errors/OnlyEmptyBalancesFound')
+const ApiKeyPermissionError = require('./errors/ApiKeyPermissionError')
 
 const crypto = require('crypto')
 const queryStringLib = require('querystring')
@@ -28,7 +29,7 @@ class Binance extends AbstractExplorer {
     return this.selectedCurrencies
   }
 
-  async binanceApiRequest (endpoint, queryObject, apiKey, secret) {
+  async binanceApiRequest (endpoint, queryObject, apiKey, secret, method = 'GET') {
     queryObject.timestamp = new Date().getTime()
     const queryString = queryStringLib.stringify(queryObject)
     let url = API_URL + endpoint
@@ -46,7 +47,7 @@ class Binance extends AbstractExplorer {
     }
 
     const res = await this.constructor._fetchJson(url, {
-      method: 'GET',
+      method,
       headers
     })
 
@@ -69,7 +70,14 @@ class Binance extends AbstractExplorer {
     }
   }
 
-  async _getTransactions (address, wallet) {
+  async _checkApiKeyPermission ({secret, apiKey}) {
+    const res = await this.binanceApiRequest('order', {recvWindow: 10000}, apiKey, secret, 'DELETE')
+    if (res.msg !== '"Invalid API-key, IP, or permissions for action."') {
+      throw new ApiKeyPermissionError()
+    }
+  }
+
+  async _getTransactions ({secret, apiKey}, wallet) {
     // Filled in getBalances (cant know the 0 balance in advance) TODO: improve this ?
     wallet.transactions = []
     if (this.tickers.length !== 0) {
