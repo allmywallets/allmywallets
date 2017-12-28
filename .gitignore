@@ -1,6 +1,6 @@
 *.log
 .DS_Store
+app.yaml
 build/
-!build/app.yaml
 node_modules/
 .env
