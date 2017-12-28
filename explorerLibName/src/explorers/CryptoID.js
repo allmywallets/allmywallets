@@ -47,7 +47,6 @@ class CryptoID extends AbstractExplorer {
       inputType: 'text',
       label: 'CryptoID api key, redeem it here https://chainz.cryptoid.info/api.key.dws',
       model: 'apiKey',
-      values: ['https://iota.thathost.net', 'https://iri3-api.iota.fm:443'],
       required: true
     }]
   }

@@ -203,7 +203,6 @@ class AbstractExplorer {
   static async _fetchJson (url, options = {}) {
     // TODO : require('node-fetch')
     const response = await fetch(url, options)
-    console.log(response)
     return response.json()
   }
 }
