@@ -57,7 +57,7 @@ export default class NotificationManager {
     return serviceWorker.ready.then(registration => {
       return registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: NotificationManager._urlBase64ToUint8Array('BMb_DJI8t5r2ModG7eXXHPQJCC6xn-gtZolzrybjO8tDIKprH2X4T-9Kg_5HGNwxcPZNZ_C6LjJlow7X83l4YVo')
+        applicationServerKey: NotificationManager._urlBase64ToUint8Array('BEtisxY__U2bGRrVSc_ukaqJ6gqaXiwxdh3lamdD2i4gqugmS65LvV9lagSm34lJcKiG0TEfImRnuxxH8_-imr0')
       }).then(function (subscription) {
         return fetch(`${process.env.SERVER_URL}/push/register`, {
           method: 'POST',
