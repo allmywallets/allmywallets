@@ -28,6 +28,7 @@
         this.$serviceWorker.getRegistrations().then((registrations) => {
           for (const registration of registrations) {
             registration.unregister()
+            // Todo: unregister from api
           }
         })
         location.reload()

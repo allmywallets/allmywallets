@@ -1,6 +1,6 @@
 <template>
   <div>
-    <icon icon="wifi" :class="{ 'text-warning': !online }" :title="getTitle()" v-tippy="{ showOnLoad: !this.online }"></icon>
+    <icon icon="wifi" :class="{ 'text-danger': !online }" :title="getTitle()" v-tippy="{ showOnLoad: !this.online }"></icon>
   </div>
 </template>
 
