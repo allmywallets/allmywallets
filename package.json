@@ -21,7 +21,6 @@
     "bootstrap-reboot": "^0.1.1",
     "clipboard": "^1.7.1",
     "cryptocoins-icons": "^2.7.0",
-    "dotenv": "^4.0.0",
     "idb": "^2.0.4",
     "idb-keyval": "^2.3.0",
     "jsonschema": "^1.2.2",

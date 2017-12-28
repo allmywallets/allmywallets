@@ -60,11 +60,13 @@ module.exports = {
         }
       }
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        SERVER_URL: '"http://localhost:3030"'
+      }
+    }),
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, 'app/service-worker.js')
     })
-  ],
-  node: {
-    fs: 'empty'
-  }
+  ]
 }

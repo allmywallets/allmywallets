@@ -28,7 +28,7 @@
           return
         }
 
-        this.state.action(this.$serviceWorker)
+        await this.state.action(this.$serviceWorker)
         this.state = await this.getNotificationState()
       },
       async getNotificationState () {

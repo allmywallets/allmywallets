@@ -1,5 +1,3 @@
-const publicKey = [4, 198, 255, 12, 146, 60, 183, 154, 246, 50, 135, 70, 237, 229, 215, 28, 244, 9, 8, 46, 177, 159, 232, 45, 102, 137, 115, 175, 38, 227, 59, 203, 67, 32, 170, 107, 31, 101, 248, 79, 239, 74, 131, 254, 71, 24, 220, 49, 112, 246, 77, 103, 240, 186, 46, 50, 101, 163, 14, 215, 243, 121, 120, 97, 90]
-
 export default class NotificationManager {
   static getNotificationState (isSupported, isSelected, isEnabled, isPushEnabled) {
     if (!isSupported) {
@@ -52,18 +50,18 @@ export default class NotificationManager {
   }
 
   static async enableNotifications () {
-    const result = await Notification.requestPermission()
-
-    return result === 'granted'
+    return Notification.requestPermission()
   }
 
-  static enablePushNotifications (serviceWorker) {
-    serviceWorker.ready.then((registration) => {
-      registration.pushManager.subscribe({
+  static async enablePushNotifications (serviceWorker) {
+    return serviceWorker.ready.then(registration => {
+      console.log(registration)
+      return registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: publicKey
+        applicationServerKey: NotificationManager._urlBase64ToUint8Array('BMb_DJI8t5r2ModG7eXXHPQJCC6xn-gtZolzrybjO8tDIKprH2X4T-9Kg_5HGNwxcPZNZ_C6LjJlow7X83l4YVo')
       }).then(function (subscription) {
-        fetch(`${process.env.SERVER_URL}/push/register`, {
+        console.log(subscription)
+        return fetch(`${process.env.SERVER_URL}/push/register`, {
           method: 'POST',
           body: JSON.stringify(subscription),
           headers: new Headers({
@@ -73,5 +71,20 @@ export default class NotificationManager {
           .catch(e => console.error(e))
       })
     })
+  }
+
+  static _urlBase64ToUint8Array (base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4)
+    const base64 = (base64String + padding)
+      .replace(/-/g, '+')
+      .replace(/_/g, '/')
+
+    const rawData = window.atob(base64)
+    const outputArray = new Uint8Array(rawData.length)
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i)
+    }
+    return outputArray
   }
 }

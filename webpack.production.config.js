@@ -48,7 +48,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',
-        VERSION: '"' + Math.floor(Math.random() * 1e20) + '"'
+        VERSION: '"' + Math.floor(Math.random() * 1e20) + '"',
+        SERVER_URL: '"https://api.allmywallets.io"'
       }
     }),
     new CopyWebpackPlugin([
