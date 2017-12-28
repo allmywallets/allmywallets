@@ -51,9 +51,6 @@ class Binance extends AbstractExplorer {
       headers
     })
 
-    if (res.code) {
-      throw new Error(JSON.stringify(res))
-    }
     return res
   }
 
@@ -70,9 +67,15 @@ class Binance extends AbstractExplorer {
     }
   }
 
+  async checkWallets (wallets) {
+    wallets.forEach(async wallet => {
+      await this._checkApiKeyPermission(wallet)
+    })
+  }
+
   async _checkApiKeyPermission ({secret, apiKey}) {
     const res = await this.binanceApiRequest('order', {recvWindow: 10000}, apiKey, secret, 'DELETE')
-    if (res.msg !== '"Invalid API-key, IP, or permissions for action."') {
+    if (res.code !== -2015) {
       throw new ApiKeyPermissionError()
     }
   }

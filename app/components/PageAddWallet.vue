@@ -67,7 +67,7 @@
           parameters: this.currentParameters
         })
 
-        Configurator.setConfig(config)
+        await Configurator.setConfig(config)
         this.reset()
       },
       reset () {

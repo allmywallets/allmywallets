@@ -31,6 +31,12 @@ function getGenericProviderClass (explorerName) {
       this.explorer = new Explorer(this.parameters.explorerSpecific)
     }
 
+    async checkArgs (parameters) {
+      await this.explorer.checkArgs()
+      await this.explorer.checkAddresses(parameters.addresses)
+      await this.explorer.checkWallets(parameters.wallets)
+    }
+
     async getWalletData (currencies = []) {
       this._selectCurrenciesToUpdate(this.explorer, currencies)
       if (this.parameters.addresses) {

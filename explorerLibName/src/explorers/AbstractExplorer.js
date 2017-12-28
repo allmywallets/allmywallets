@@ -24,6 +24,16 @@ class AbstractExplorer {
     return 'AEC'
   }
 
+  async checkAddresses (addresses) {
+
+  }
+  async checkWallets (wallets) {
+
+  }
+  async checkArgs () {
+
+  }
+
   /**
    * Used for Exchange or special blockchain with multiple identifier for a wallet
    * Example wallet object : {apikey: 'AAA', secret: 'BBB'}
