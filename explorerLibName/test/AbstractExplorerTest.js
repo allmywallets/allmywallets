@@ -1,6 +1,7 @@
 const test = require('ava')
 const libName = require('../')
 const testAddresses = require('./fixtures.json').addresses
+const testParameters = require('./fixtures.json').parameters
 const NotSupportedCurrencyError = require('../src/errors/NotSupportedCurrencyError')
 const OnlyEmptyBalancesFound = require('../src/errors/OnlyEmptyBalancesFound')
 
@@ -13,22 +14,23 @@ for (let i = 0; i < explorersName.length; i++) {
 
 for (let i = 0; i < explorers.length; i++) {
   const Explorer = explorers[i]
-  let explorer = new Explorer()
   const explorerName = explorersName[i]
   let address = testAddresses[explorerName]
+  let params = testParameters[explorerName]
   if (!address) {
     address = require('./fixturesExchanges.json').addresses[explorerName]
   }
 
   test(`[${explorerName}] attributes`, async t => {
-    const explorer = new Explorer()
+    const explorer = new Explorer(params)
     t.not(explorer.constructor.getDefaultTicker(), undefined)
     t.not(explorer.supportedCurrencies, undefined)
   })
 
+  let explorer = new Explorer(params)
   if (explorer.isExchange) {
     test(`[${explorerName}] Throws empty balances`, async t => {
-      const explorer = new Explorer()
+      const explorer = new Explorer(params)
       await t.throws(
         explorer
           .address(address)
@@ -37,7 +39,7 @@ for (let i = 0; i < explorers.length; i++) {
     })
   }
   test(`[${explorerName}] fetch only balances`, async t => {
-    const explorer = new Explorer()
+    const explorer = new Explorer(params)
     if (explorer.isExchange) { explorer.currency('BTC') }
     const res = await explorer
         .address(address)
@@ -58,7 +60,7 @@ for (let i = 0; i < explorers.length; i++) {
   })
 
   test(`[${explorerName}] fetch only transactions`, async t => {
-    const explorer = new Explorer()
+    const explorer = new Explorer(params)
 
     const res = await explorer
         .address(address)
@@ -87,7 +89,7 @@ for (let i = 0; i < explorers.length; i++) {
   })
 
   test(`[${explorerName}] Not supported currency`, async t => {
-    const explorer = new Explorer()
+    const explorer = new Explorer(params)
 
     const fakeTickerName = 'NOT SUPPORTED TICKER'
     let error
