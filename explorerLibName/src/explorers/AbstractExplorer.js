@@ -1,4 +1,4 @@
-const NotSupportedCurrencyError = require('./errors/NotSupportedCurrencyError')
+const NotSupportedCurrencyError = require('../errors/NotSupportedCurrencyError')
 
 /**
  * A block/DAGchain explorer
@@ -22,6 +22,16 @@ class AbstractExplorer {
    */
   static getDefaultTicker () {
     return 'AEC'
+  }
+
+  async checkAddresses (addresses) {
+
+  }
+  async checkWallets (wallets) {
+
+  }
+  async checkArgs () {
+
   }
 
   /**

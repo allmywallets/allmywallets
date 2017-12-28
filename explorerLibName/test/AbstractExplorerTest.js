@@ -1,8 +1,8 @@
 const test = require('ava')
 const libName = require('../')
 const testAddresses = require('./fixtures.json').addresses
-const NotSupportedCurrencyError = require('../explorers/errors/NotSupportedCurrencyError')
-const OnlyEmptyBalancesFound = require('../explorers/errors/OnlyEmptyBalancesFound')
+const NotSupportedCurrencyError = require('../src/errors/NotSupportedCurrencyError')
+const OnlyEmptyBalancesFound = require('../src/errors/OnlyEmptyBalancesFound')
 
 const explorersName = libName.list()
 let explorers = []
