@@ -4,7 +4,7 @@ export default class NotificationManager {
       return {
         icon: 'bell-slash',
         title: 'Browser notifications not supported',
-        state: 'warning',
+        state: 'danger',
         action: false,
         showOnLoad: false
       }

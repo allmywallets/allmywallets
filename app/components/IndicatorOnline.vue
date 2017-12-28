@@ -1,6 +1,6 @@
 <template>
   <div>
-    <icon :icon="getIcon()" :class="{ 'text-warning': !online }" :title="getTitle()" v-tippy="{ showOnLoad: !this.online }"></icon>
+    <icon icon="wifi" :class="{ 'text-warning': !online }" :title="getTitle()" v-tippy="{ showOnLoad: !this.online }"></icon>
   </div>
 </template>
 
@@ -13,9 +13,6 @@
       }
     },
     methods: {
-      getIcon () {
-        return this.online ? 'link' : 'unlink'
-      },
       getTitle () {
         return this.online ? 'The app is online' : 'The app is offline'
       }
