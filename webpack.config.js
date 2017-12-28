@@ -25,7 +25,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, 'app'),
+        include: [path.resolve(__dirname, 'app'), path.resolve(__dirname, 'explorerLibName')],
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
