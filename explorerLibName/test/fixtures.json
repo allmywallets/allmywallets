@@ -3,6 +3,11 @@
     "bitcoin.mockexplorer": "",
     "bitcoin.blockexplorer": "15jdxjFhXUsp2xuycmKnjw8yk1WsVon69c",
     "ethereum.etherscan": "0xB13CE87F4f0519B54f768847Bda0389cEF0d479B",
-    "iota.native": "VXVFLFCTLG9BHZEJHDUMIATTZGQSXUAPRHYMOALPKGICJPTMEJXWT9KHBKYFTLPQABOSGZUCUUZDWXPRZ"
+    "iota.native": "VXVFLFCTLG9BHZEJHDUMIATTZGQSXUAPRHYMOALPKGICJPTMEJXWT9KHBKYFTLPQABOSGZUCUUZDWXPRZ",
+    "explorers.cryptoid": "15jdxjFhXUsp2xuycmKnjw8yk1WsVon69c"
+  },
+
+  "parameters": {
+    "explorers.cryptoid": { "apiKey": "0b7e82ee86b4"}
   }
 }
