@@ -55,12 +55,10 @@ export default class NotificationManager {
 
   static async enablePushNotifications (serviceWorker) {
     return serviceWorker.ready.then(registration => {
-      console.log(registration)
       return registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: NotificationManager._urlBase64ToUint8Array('BMb_DJI8t5r2ModG7eXXHPQJCC6xn-gtZolzrybjO8tDIKprH2X4T-9Kg_5HGNwxcPZNZ_C6LjJlow7X83l4YVo')
       }).then(function (subscription) {
-        console.log(subscription)
         return fetch(`${process.env.SERVER_URL}/push/register`, {
           method: 'POST',
           body: JSON.stringify(subscription),

@@ -56,7 +56,7 @@
     }
 
     .notification-footer {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       margin-top: 5px;
 
       .notification-date {

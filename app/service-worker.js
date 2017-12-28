@@ -52,10 +52,44 @@ self.addEventListener('fetch', event => {
   }
 })
 
-self.addEventListener('push', event => {
-  event.waitUntil(
-    self.registration.showNotification('Just received a push notification!')
-  )
+self.addEventListener('push', async event => {
+  const clients = await self.clients.matchAll()
+
+  let error = false
+
+  let wallets = []
+  try {
+    wallets = await Configurator.getWallets()
+  } catch (e) {
+    clients.forEach(client => {
+      client.postMessage({ // Todo: error handling in notifications store
+        error: {_level: 'ERROR', _date: new Date(), _title: e.message, _content: e.stack}
+      })
+    })
+  }
+
+  for (const wallet of wallets) {
+    let balances = []
+    const walletId = wallets.indexOf(wallet) // Todo: store wallet id in config
+    error = false
+
+    try {
+      balances = await new Proxy(wallet.network, wallet.provider, wallet.parameters).getWalletData()
+      balances.forEach(balance => { balance.walletId = walletId })
+
+      await database.storeBalances(balances)
+    } catch (e) {
+      error = { _level: 'ERROR', _date: new Date(), _walletId: walletId, _title: e.message, _content: e.stack }
+    }
+
+    clients.forEach(client => {
+      client.postMessage({
+        walletId: walletId,
+        balanceIds: balances.map(balance => balance.id),
+        error: error
+      })
+    })
+  }
 })
 
 self.addEventListener('message', async event => {

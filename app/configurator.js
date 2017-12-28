@@ -11,10 +11,14 @@ export default class Configurator {
     return config
   }
 
-  static async getWallet (walletId) {
+  static async getWallets () {
     const config = await Configurator.getConfig()
 
-    const wallets = config.profiles[0].wallets
+    return config.profiles[0].wallets
+  }
+
+  static async getWallet (walletId) {
+    const wallets = Configurator.getWallets()
 
     if (walletId > wallets.length) {
       throw new Error(`Wallet ${walletId} is not defined`)
@@ -28,7 +32,6 @@ export default class Configurator {
       throw new Error('Config is not valid')
     }
 
-    // Validate apiKey
     await this.validateWalletsArgs(config)
 
     return idbKeyval.set('config', config)
