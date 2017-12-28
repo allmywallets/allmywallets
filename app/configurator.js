@@ -18,7 +18,7 @@ export default class Configurator {
   }
 
   static async getWallet (walletId) {
-    const wallets = Configurator.getWallets()
+    const wallets = await Configurator.getWallets()
 
     if (walletId > wallets.length) {
       throw new Error(`Wallet ${walletId} is not defined`)
