@@ -12,7 +12,7 @@
     <div class="balance-amount">
       <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
       <span class="balance-btc">
-        <i class="cc BTC-alt"></i>? (<span class="dollar">$</span>?)
+        <i class="cc BTC-alt"></i>{{ price.btc|toPrecision(4) }} (<span class="dollar">$</span>{{ price.usd|toPrecision(4) }})
       </span>
     </div>
     <footer class="balance-footer">
@@ -39,13 +39,35 @@
         required: true
       }
     },
+    data () {
+      return {
+        price: {
+          btc: 0,
+          usd: 0
+        }
+      }
+    },
     computed: {
       ...mapGetters([
         'wallets',
         'balances'
       ]),
       balance () {
-        return this.balances.find(balance => balance.id === this.id)
+        const balance = this.balances.find(balance => balance.id === this.id)
+
+        fetch(`https://api.coinmarketcap.com/v1/ticker/${balance.currency.toLowerCase().split(' ').join('-')}/`)
+          .then(response => response.json())
+          .then(json => { // Todo: move this in indexedDB
+            json = json[0]
+            this.price.btc = json.price_btc * balance.amount
+            this.price.usd = json.price_usd * balance.amount
+          })
+          .catch(() => {
+            this.price.btc = 0
+            this.price.usd = 0
+          })
+
+        return balance
       },
       wallet () {
         return this.wallets[this.balance.walletId]
