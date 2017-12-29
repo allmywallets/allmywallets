@@ -19,6 +19,21 @@ class CryptoID extends AbstractExplorer {
     this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
   }
 
+  static async getSupportedCurrencies () {
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'origin': '.',
+      'x-requested-with': '.'
+    }
+    const currencies = await AbstractExplorer._fetchJson(`${API_URL}/explorer/api.dws?q=summary`, {headers})
+    const newCurrencies = {}
+
+    for (let curr in currencies) {
+      newCurrencies[curr.toUpperCase()] = {name: currencies[curr].name, ticker: curr.toUpperCase()}
+    }
+    return newCurrencies
+  }
+
   static get dynamicSupportedCurrencies () {
     return true
   }
