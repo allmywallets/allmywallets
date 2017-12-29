@@ -8,6 +8,7 @@ const queryStringLib = require('querystring')
 
 // TODO : Cors problem
 const API_URL = 'https://cors-anywhere.herokuapp.com/https://api.binance.com/api/v3/'
+const PUBLIC_API_URL = 'https://cors-anywhere.herokuapp.com/https://api.binance.com/api/v1/'
 
 /**
  * Binance exchange https://www.binance.com/
@@ -18,6 +19,25 @@ class Binance extends AbstractExplorer {
 
     this.selectedCurrencies = []
     this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
+  }
+
+  static async getSupportedCurrencies () {
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'origin': '.',
+      'x-requested-with': '.'
+    }
+    const currencies = await AbstractExplorer._fetchJson(`${PUBLIC_API_URL}ticker/allPrices`, {headers})
+    const newCurrencies = {}
+
+    currencies.forEach(curr => {
+      const ticker = curr.symbol.replace('BTC', '').replace('ETH', '').replace('BNB', '').replace('USDT', '')
+      if (ticker.length === 0) { return }
+      if (newCurrencies[ticker]) { return }
+
+      newCurrencies[ticker] = {name: ticker, ticker}
+    })
+    return newCurrencies
   }
 
   static get isExchange () {
