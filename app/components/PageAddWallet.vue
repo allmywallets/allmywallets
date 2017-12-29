@@ -35,9 +35,9 @@
       }
     },
     methods: {
-      loadProvider (provider) {
+      async loadProvider (provider) {
         this.reset()
-        this.currentSchema = { fields: Proxy.getProviderParams(provider) }
+        this.currentSchema = { fields: await Proxy.getProviderParams(provider) }
         this.currentParameters = VueFormGenerator.schema.createDefaultObject(this.currentSchema)
         this.currentProvider = provider
       },

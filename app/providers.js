@@ -72,12 +72,26 @@ function getGenericProviderClass (explorerName) {
       }
     }
 
-    static getSupportedParameters () {
-      const explorerParams = Explorer.getExplorerParams().map(param => {
+    static async getSupportedParameters () {
+      let explorerParams = Explorer.getExplorerParams().map(param => {
         param.model = `explorerSpecific.${param.model}`
         return param
       })
-      return explorerParams.concat(Explorer.getAddressParam())
+
+      explorerParams = explorerParams.concat(Explorer.getAddressParam())
+
+      const currencies = await Explorer.getSupportedCurrencies()
+      explorerParams.push({
+        type: 'checklist',
+        label: 'Currencies',
+        model: 'currencies',
+        multi: true,
+        required: false,
+        multiSelect: true,
+        values: Object.keys(currencies)
+      })
+
+      return explorerParams
     }
 }
 
