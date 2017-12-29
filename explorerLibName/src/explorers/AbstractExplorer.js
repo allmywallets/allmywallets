@@ -8,13 +8,20 @@ class AbstractExplorer {
     this.params = params
 
     this._addresses = []
-    this.isExchange = false
-    this.dynamicSupportedCurrencies = false
-
     this.tickers = []
     this.elementsToFetch = []
 
-    this.supportedCurrencies = {AEC: {name: 'AbstractExplorerCoin', ticker: 'AEC'}}
+    if (!this.constructor.dynamicSupportedCurrencies) {
+      this.supportedCurrencies = this.constructor.getSupportedCurrencies()
+    }
+  }
+
+  /**
+   * Returns true if the class represents an Exchange otherwise false
+   * @returns {boolean}
+   */
+  static get isExchange () {
+    return false
   }
 
   /**
@@ -33,6 +40,18 @@ class AbstractExplorer {
   }
   async checkArgs () {
 
+  }
+
+  static get dynamicSupportedCurrencies () {
+    return false
+  }
+
+  /**
+   * Returns the supported currencies
+   * @returns {[object]}
+   */
+  static getSupportedCurrencies () {
+    return {AEC: {name: 'AbstractExplorerCoin', ticker: 'AEC'}}
   }
 
   /**
@@ -89,7 +108,7 @@ class AbstractExplorer {
    * @param {String} ticker
    */
   currency (ticker) {
-    if (!this.isTickerSupported(ticker) && !this.dynamicSupportedCurrencies) { // For exchange there is the supportedCurrencies is not filled
+    if (!this.constructor.dynamicSupportedCurrencies && !this.isTickerSupported(ticker)) { // For exchange there is the supportedCurrencies is not filled
       throw new NotSupportedCurrencyError(`${ticker} is not supported`)
     }
 
@@ -179,7 +198,7 @@ class AbstractExplorer {
     let promises = []
     let wallets = []
 
-    if (this.tickers.length === 0 && !this.isExchange) {
+    if (this.tickers.length === 0 && !this.constructor.isExchange) {
       this.tickers.push(this.supportedCurrencies[this.constructor.getDefaultTicker()].ticker)
     }
 

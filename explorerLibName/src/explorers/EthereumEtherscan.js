@@ -7,11 +7,14 @@ class EthereumEtherscan extends AbstractExplorer {
   constructor (params) {
     super()
 
-    this.supportedCurrencies = {ETH: {name: 'Ethereum', ticker: 'ETH', decimals: 18}}
-    this.supportedCurrencies = Object.assign(this.supportedCurrencies, ERC20Token)
     if (params && params.customTokens) {
       this.supportedCurrencies = Object.assign(this.supportedCurrencies, params.customTokens)
     }
+  }
+
+  static getSupportedCurrencies () {
+    const currencies = {ETH: {name: 'Ethereum', ticker: 'ETH', decimals: 18}}
+    return Object.assign(currencies, ERC20Token)
   }
 
   static getDefaultTicker () {

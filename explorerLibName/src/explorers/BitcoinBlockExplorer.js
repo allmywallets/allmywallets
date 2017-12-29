@@ -6,10 +6,8 @@ const API_URL = 'https://blockexplorer.com/api'
  * Bitcoin blockchain explorer for https://blockexplorer.com/
  */
 class BitcoinBlockExplorer extends AbstractExplorer {
-  constructor () {
-    super()
-
-    this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
+  static getSupportedCurrencies () {
+    return {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
   }
 
   static getDefaultTicker () {

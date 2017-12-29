@@ -27,8 +27,7 @@ for (let i = 0; i < explorers.length; i++) {
     t.not(explorer.supportedCurrencies, undefined)
   })
 
-  let explorer = new Explorer(params)
-  if (explorer.isExchange) {
+  if (Explorer.isExchange) {
     test(`[${explorerName}] Throws empty balances`, async t => {
       const explorer = new Explorer(params)
       await t.throws(
@@ -40,7 +39,7 @@ for (let i = 0; i < explorers.length; i++) {
   }
   test(`[${explorerName}] fetch only balances`, async t => {
     const explorer = new Explorer(params)
-    if (explorer.isExchange) { explorer.currency('BTC') }
+    if (Explorer.isExchange) { explorer.currency('BTC') }
     const res = await explorer
         .address(address)
         .fetch(['balances'])
@@ -93,7 +92,7 @@ for (let i = 0; i < explorers.length; i++) {
 
     const fakeTickerName = 'NOT SUPPORTED TICKER'
     let error
-    if (explorer.dynamicSupportedCurrencies) {
+    if (Explorer.dynamicSupportedCurrencies) {
       error = await t.throws(explorer
           .currency(fakeTickerName)
           .address(address)

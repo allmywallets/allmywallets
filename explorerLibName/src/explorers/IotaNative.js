@@ -14,8 +14,10 @@ class IotaNative extends AbstractExplorer {
       'Content-Type': 'application/x-www-form-urlencoded',
       'X-IOTA-API-Version': '1'
     }
+  }
 
-    this.supportedCurrencies = {IOTA: {name: 'Iota', ticker: 'IOTA'}}
+  static getSupportedCurrencies () {
+    return {IOTA: {name: 'Iota', ticker: 'IOTA'}}
   }
 
   static getDefaultTicker () {

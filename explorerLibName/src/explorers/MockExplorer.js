@@ -1,10 +1,8 @@
 const AbstractExplorer = require('./AbstractExplorer')
 
 class MockExplorer extends AbstractExplorer {
-  constructor () {
-    super()
-
-    this.supportedCurrencies = {MOC: {name: 'MockCoin', ticker: 'MOC'}}
+  static getSupportedCurrencies () {
+    return {MOC: {name: 'MockCoin', ticker: 'MOC'}}
   }
 
   static getDefaultTicker () {

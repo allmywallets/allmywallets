@@ -16,10 +16,16 @@ class Binance extends AbstractExplorer {
   constructor () {
     super()
 
-    this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
-    this.isExchange = true
-    this.dynamicSupportedCurrencies = true
     this.selectedCurrencies = []
+    this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
+  }
+
+  static get isExchange () {
+    return true
+  }
+
+  static get dynamicSupportedCurrencies () {
+    return true
   }
 
   static getDefaultTicker () {

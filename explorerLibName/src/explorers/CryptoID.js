@@ -16,8 +16,11 @@ class CryptoID extends AbstractExplorer {
       throw new Error('Api key is required for CryptoID, request it here https://chainz.cryptoid.info/api.key.dws')
     }
 
-    this.dynamicSupportedCurrencies = true
     this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
+  }
+
+  static get dynamicSupportedCurrencies () {
+    return true
   }
 
   static getDefaultTicker () {
