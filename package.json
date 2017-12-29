@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "babel-core": "latest",
-    "babel-eslint": "latest",
+    "babel-eslint": "^8.1.2",
     "babel-loader": "latest",
     "babel-plugin-transform-runtime": "latest",
     "babel-polyfill": "^6.26.0",
@@ -51,7 +51,7 @@
     "eslint-plugin-import": "^2.8.0",
     "extract-text-webpack-plugin": "^2.0.0",
     "file-loader": "^1.1.6",
-    "mocha": "^4.0.1",
+    "mocha": "^4.1.0",
     "node-sass": "^3.0.0",
     "resolve-url-loader": "^2.2.1",
     "sass-loader": "^2.0.0",
