@@ -93,7 +93,7 @@ for (let i = 0; i < explorers.length; i++) {
 
     const fakeTickerName = 'NOT SUPPORTED TICKER'
     let error
-    if (explorer.isExchange) {
+    if (explorer.dynamicSupportedCurrencies) {
       error = await t.throws(explorer
           .currency(fakeTickerName)
           .address(address)

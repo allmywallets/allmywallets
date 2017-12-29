@@ -1,4 +1,5 @@
 const AbstractExplorer = require('./AbstractExplorer')
+const NotSupportedCurrencyError = require('../errors/NotSupportedCurrencyError')
 
 // TODO : cors
 const API_URL = 'https://cors-anywhere.herokuapp.com/https://chainz.cryptoid.info/'
@@ -15,6 +16,7 @@ class CryptoID extends AbstractExplorer {
       throw new Error('Api key is required for CryptoID, request it here https://chainz.cryptoid.info/api.key.dws')
     }
 
+    this.dynamicSupportedCurrencies = true
     this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
   }
 
@@ -32,7 +34,8 @@ class CryptoID extends AbstractExplorer {
     wallet.balances = []
     const promises = []
     this.tickers.forEach(async ticker => {
-      promises.push(this.constructor._fetchJson(`${API_URL}/${ticker.toLowerCase()}/api.dws?q=getbalance&a=${address}&key=${this.params.apiKey}`, {headers}))
+      promises.push(this.constructor._fetchJson(`${API_URL}/${ticker.toLowerCase()}/api.dws?q=getbalance&a=${address}&key=${this.params.apiKey}`, {headers})
+                                    .catch(() => { throw new NotSupportedCurrencyError(`${ticker} is not supported`) }))
     })
     let balances = await Promise.all(promises)
     balances.forEach(balance => {

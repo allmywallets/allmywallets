@@ -18,6 +18,7 @@ class Binance extends AbstractExplorer {
 
     this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
     this.isExchange = true
+    this.dynamicSupportedCurrencies = true
     this.selectedCurrencies = []
   }
 

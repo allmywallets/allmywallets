@@ -9,6 +9,7 @@ class AbstractExplorer {
 
     this._addresses = []
     this.isExchange = false
+    this.dynamicSupportedCurrencies = false
 
     this.tickers = []
     this.elementsToFetch = []
@@ -88,7 +89,7 @@ class AbstractExplorer {
    * @param {String} ticker
    */
   currency (ticker) {
-    if (!this.isTickerSupported(ticker) && !this.isExchange) { // For exchange there is the supportedCurrencies is not filled
+    if (!this.isTickerSupported(ticker) && !this.dynamicSupportedCurrencies) { // For exchange there is the supportedCurrencies is not filled
       throw new NotSupportedCurrencyError(`${ticker} is not supported`)
     }
 
