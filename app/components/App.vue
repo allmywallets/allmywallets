@@ -25,7 +25,9 @@
       AppFooter
     },
     mounted () {
-      return this.$store.dispatch('initApplication')
+      const serviceWorker = this.$serviceWorker
+
+      return this.$store.dispatch('initApplication', { serviceWorker })
     }
   }
 </script>

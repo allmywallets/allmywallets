@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import database from './database'
 import Configurator from './configurator'
+import NotificationManager from './notification-manager'
 
 Vue.use(Vuex)
 
@@ -54,9 +55,19 @@ const mutations = {
 }
 
 const actions = {
-  initApplication: async ({ commit }) => {
+  initApplication: async ({ commit }, { serviceWorker }) => {
     const config = await Configurator.getConfig()
     const balances = await database.findAllBalances()
+
+    const registration = await serviceWorker.getRegistration()
+
+    if (registration) {
+      const subscription = await registration.pushManager.getSubscription()
+
+      if (subscription) {
+        await NotificationManager.enablePushNotifications(serviceWorker)
+      }
+    }
 
     commit('INIT_APPLICATION', { config: config, balances })
   },

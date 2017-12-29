@@ -1,5 +1,5 @@
 export default class NotificationManager {
-  static getNotificationState (isSupported, isSelected, isEnabled) {
+  static getNotificationState (isSupported, isSelected, isAllowed) {
     if (!isSupported) {
       return {
         icon: 'bell-slash',
@@ -20,7 +20,7 @@ export default class NotificationManager {
       }
     }
 
-    if (!isEnabled) {
+    if (!isAllowed) {
       return {
         icon: 'bell-slash',
         title: 'Browser notifications disabled',

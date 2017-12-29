@@ -35,10 +35,13 @@
         this.loading = false
       },
       async getNotificationState () {
+        const registration = await this.$serviceWorker.getRegistration()
+        const subscription = await registration.pushManager.getSubscription()
+
         return NotificationManager.getNotificationState(
           'Notification' in window,
-          ['granted', 'denied'].includes(Notification.permission),
-          Notification.permission === 'granted'
+          ['granted', 'denied'].includes(Notification.permission) && subscription,
+          Notification.permission !== 'denied'
         )
       }
     },
