@@ -14,7 +14,7 @@
     },
     methods: {
       getTitle () {
-        return this.online ? 'The app is online' : 'The app is offline'
+        return this.online ? 'App is online' : 'App is offline'
       }
     },
     mounted () {

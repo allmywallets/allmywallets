@@ -1,9 +1,9 @@
 export default class NotificationManager {
-  static getNotificationState (isSupported, isSelected, isEnabled, isPushEnabled) {
+  static getNotificationState (isSupported, isSelected, isEnabled) {
     if (!isSupported) {
       return {
         icon: 'bell-slash',
-        title: 'Browser notifications not supported',
+        title: 'Notifications not supported',
         state: 'danger',
         action: false,
         showOnLoad: false
@@ -13,26 +13,6 @@ export default class NotificationManager {
     if (!isSelected) {
       return {
         icon: 'bell-slash',
-        title: 'Click to enable browser notifications',
-        state: 'warning',
-        action: NotificationManager.enableNotifications,
-        showOnLoad: true
-      }
-    }
-
-    if (!isEnabled) {
-      return {
-        icon: 'bell-slash',
-        title: 'Browser notifications are disabled',
-        state: 'warning',
-        action: false,
-        showOnLoad: false
-      }
-    }
-
-    if (!isPushEnabled) {
-      return {
-        icon: 'bell',
         title: 'Click to enable push notifications',
         state: 'warning',
         action: NotificationManager.enablePushNotifications,
@@ -40,17 +20,23 @@ export default class NotificationManager {
       }
     }
 
+    if (!isEnabled) {
+      return {
+        icon: 'bell-slash',
+        title: 'Browser notifications disabled',
+        state: 'warning',
+        action: false,
+        showOnLoad: false
+      }
+    }
+
     return {
       icon: 'bell',
-      title: 'Push notifications are enabled',
+      title: 'Push notifications enabled',
       state: false,
       action: false,
       showOnLoad: false
     }
-  }
-
-  static async enableNotifications () {
-    return Notification.requestPermission()
   }
 
   static async enablePushNotifications (serviceWorker) {

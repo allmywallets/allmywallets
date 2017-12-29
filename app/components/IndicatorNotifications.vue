@@ -6,7 +6,7 @@
        :class="{ 'no-action': state.action === false }"
        v-tippy="{ showOnLoad: state.showOnLoad }"
     >
-      <icon :icon="state.icon" :class="`text-${state.state}`"></icon>
+      <icon :icon="this.loading ? 'spinner' : state.icon" :spin="this.loading" :class="`text-${state.state}`"></icon>
     </a>
     <div class="counter" v-if="countNotifications > 0">{{ countNotifications }}</div>
   </div>
@@ -19,7 +19,8 @@
     name: 'indicator-notifications',
     data () {
       return {
-        state: null
+        state: null,
+        loading: false
       }
     },
     methods: {
@@ -28,18 +29,16 @@
           return
         }
 
+        this.loading = true
         await this.state.action(this.$serviceWorker)
         this.state = await this.getNotificationState()
+        this.loading = false
       },
       async getNotificationState () {
-        const registration = await this.$serviceWorker.getRegistration()
-        const subscription = await registration.pushManager.getSubscription()
-
         return NotificationManager.getNotificationState(
           'Notification' in window,
           ['granted', 'denied'].includes(Notification.permission),
-          Notification.permission === 'granted',
-          subscription !== null
+          Notification.permission === 'granted'
         )
       }
     },
