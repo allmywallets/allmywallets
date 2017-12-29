@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>All My Wallets</h2>
+    <h2>AllMyWallets</h2>
     <a href="#" @click.prevent="refreshBalances">refresh all</a> &bull;
     <router-link :to="{ name: 'add' }">add a wallet</router-link>
     <article class="balance-list">

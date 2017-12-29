@@ -1,7 +1,7 @@
 <template>
   <nav class="app-menu">
     <router-link :to="{ name: 'home' }">
-        <icon icon="home"></icon> <span class="title">All My Wallets</span>
+        <icon icon="home"></icon> <span class="title">AllMyWallets</span>
     </router-link>
     <router-link :to="{ name: 'stats' }">
         <icon icon="chart-pie"></icon> <span class="title">Statistics</span>

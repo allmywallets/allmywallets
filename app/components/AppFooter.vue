@@ -1,5 +1,5 @@
 <template>
-  <footer class="app-footer">All My Wallets &bull; v0.0.1</footer>
+  <footer class="app-footer">AllMyWallets &bull; v0.0.1</footer>
 </template>
 
 <script>
