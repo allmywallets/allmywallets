@@ -1,11 +1,11 @@
 module.exports = {
   explorer: function (explorerName) {
     switch (explorerName) {
-      case 'exchange.binance':
+      case 'binance.binance':
         return require('./src/explorers/Binance')
       case 'bitcoin.blockexplorer':
         return require('./src/explorers/BitcoinBlockExplorer')
-      case 'explorers.cryptoid':
+      case 'cryptoid.cryptoid':
         return require('./src/explorers/CryptoID')
       case 'ethereum.etherscan':
         return require('./src/explorers/EthereumEtherscan')
@@ -18,6 +18,6 @@ module.exports = {
     }
   },
   list: function () {
-    return ['exchange.binance', 'bitcoin.blockexplorer', 'explorers.cryptoid', 'ethereum.etherscan', 'iota.native', 'bitcoin.mockexplorer']
+    return ['binance.binance', 'bitcoin.blockexplorer', 'cryptoid.cryptoid', 'ethereum.etherscan', 'iota.native', 'bitcoin.mockexplorer']
   }
 }
