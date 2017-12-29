@@ -1,6 +1,9 @@
 {
   "extends": "standard",
   "plugins": ["html"],
+  "rules": {
+    "no-new": "off"
+  },
   "env": {
     "browser": true
   },

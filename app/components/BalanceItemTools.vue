@@ -1,7 +1,13 @@
 <template>
   <div class="balance-tools">
-    <a href="#" title="Click to copy your public key" v-tippy><icon icon="copy"></icon></a>
-    <a href="#" title="View wallet transactions" v-tippy><icon icon="list"></icon></a>
+    <a href="#"
+       class="address"
+       title="Public key copied!"
+       v-for="address in wallet.parameters.addresses"
+       :data-clipboard-text="address"
+       v-tippy="{ trigger: 'click' }">
+      <icon icon="copy"></icon>
+    </a>
     <a href="#" @click.prevent="refresh" :title="`Updated ${lastUpdate}`" v-tippy>
       <icon icon="sync-alt" :spin="loading"></icon>
     </a>
@@ -12,6 +18,8 @@
 </template>
 
 <script>
+  import Clipboard from 'clipboard'
+  import { mapGetters } from 'vuex'
   import moment from 'moment'
   import Balance from '../model/Balance'
 
@@ -29,6 +37,12 @@
       }
     },
     computed: {
+      ...mapGetters([
+        'wallets'
+      ]),
+      wallet () {
+        return this.wallets[this.balance.walletId]
+      },
       status () {
         this.loading = false
 
@@ -52,6 +66,9 @@
           currencies: [this.balance.ticker]
         })
       }
+    },
+    mounted () {
+      new Clipboard('.address')
     }
   }
 </script>
@@ -61,5 +78,9 @@
     text-align: right;
     margin-right: 5px;
     letter-spacing: 0.3rem;
+  }
+
+  input {
+    display: none;
   }
 </style>
