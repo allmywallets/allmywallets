@@ -4,7 +4,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 
 module.exports = {
-  devtool: 'cheap-source-map',
   entry: {
     'main': ['babel-polyfill', path.resolve(__dirname, 'app/main.js')]
   },
@@ -29,7 +28,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            scss: 'vue-style-loader!css-loader!resolve-url-loader!sass-loader?sourceMap'
+            scss: 'vue-style-loader!css-loader!resolve-url-loader!sass-loader'
           }
         }
       },
