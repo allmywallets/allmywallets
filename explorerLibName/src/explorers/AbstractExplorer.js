@@ -202,7 +202,7 @@ class AbstractExplorer {
 
   static async _fetchJson (url, options = {}) {
     // TODO : require('node-fetch')
-    const response = await require('node-fetch')(url, options)
+    const response = await fetch(url, options)
     return response.json().catch(() => {
       throw new Error(`Failed to parse JSON: ${response.status} ${response.statusText}`)
     })
