@@ -23,10 +23,16 @@ class CryptoID extends AbstractExplorer {
   }
 
   async _getBalances (address, wallet) {
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'origin': '.',
+      'x-requested-with': '.'
+    }
+
     wallet.balances = []
     const promises = []
     this.tickers.forEach(async ticker => {
-      promises.push(this.constructor._fetchJson(`${API_URL}/${ticker.toLowerCase()}/api.dws?q=getbalance&a=${address}&key=${this.params.apiKey}`))
+      promises.push(this.constructor._fetchJson(`${API_URL}/${ticker.toLowerCase()}/api.dws?q=getbalance&a=${address}&key=${this.params.apiKey}`, {headers}))
     })
     let balances = await Promise.all(promises)
     balances.forEach(balance => {
