@@ -14,13 +14,13 @@
       <div class="balance-amount">
         <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
         <span class="balance-btc">
-        <template v-if="price.btc !== 0">
-          <i class="cc BTC-alt"></i>{{ price.btc|toPrecision(4) }}
-        </template>
-        <template v-if="price.usd !== 0">
-          (<span class="dollar">$</span>{{ price.usd|toPrecision(4) }})
-        </template>
-      </span>
+          <template v-if="price.btc !== 0">
+            <i class="cc BTC-alt"></i>{{ price.btc|toPrecision(4) }}
+          </template>
+          <template v-if="price.usd !== 0">
+            (<span class="dollar">$</span>{{ price.usd|toPrecision(4) }})
+          </template>
+        </span>
       </div>
       <footer class="balance-footer">
         <div class="balance-provider">
@@ -165,16 +165,24 @@
       text-align: center;
       padding: 20px 10px 25px;
       line-height: 1.4rem;
-      text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+
+      .balance-amount-value {
+        text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+      }
 
       small {
         font-size: 0.4em;
+      }
+
+      small, .balance-btc {
+        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
       }
 
       .balance-btc {
         display: inline-block;
         font-size: 0.8rem;
         vertical-align: middle;
+
 
         .cc {
           font-size: 0.8em;
