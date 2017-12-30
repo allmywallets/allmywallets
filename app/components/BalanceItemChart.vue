@@ -16,7 +16,7 @@
       }
     },
     mounted () {
-      const NB_DAYS = 14 // Todo: allow customization
+      const NB_DAYS = 10 // Todo: allow customization
 
       return fetch(`https://min-api.cryptocompare.com/data/histoday?fsym=${this.ticker}&tsym=USD&limit=${NB_DAYS}&aggregate=1`)
         .then(response => response.json())
@@ -29,7 +29,7 @@
               labels: [...Array(NB_DAYS).keys()],
               datasets: [{
                 data: data,
-                backgroundColor: data[0] > data[NB_DAYS - 1] ? '#F4EBE9' : '#EAF6ED',
+                backgroundColor: data[0] > data[NB_DAYS - 1] ? '#fbf2f0' : '#ebf7ee',
                 borderColor: '#fafafa'
               }]
             },
