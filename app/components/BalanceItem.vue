@@ -165,6 +165,7 @@
       text-align: center;
       padding: 20px 10px 25px;
       line-height: 1.4rem;
+      text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
 
       small {
         font-size: 0.4em;
