@@ -89,7 +89,7 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   @import '../scss/vars';
 
   .balance {
@@ -109,6 +109,15 @@
       z-index: 1;
       border-radius: 5px;
       overflow: hidden;
+
+      canvas {
+        opacity: 0.3;
+        transition: opacity .3s;
+      }
+    }
+
+    &:hover .balance-background canvas {
+      opacity: 0.6;
     }
 
     .balance-content {

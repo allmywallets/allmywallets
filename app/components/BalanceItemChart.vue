@@ -29,7 +29,7 @@
               labels: [...Array(NB_DAYS).keys()],
               datasets: [{
                 data: data,
-                backgroundColor: data[0] > data[NB_DAYS - 1] ? '#fbf2f0' : '#ebf7ee',
+                backgroundColor: data[0] > data[NB_DAYS - 1] ? '#EAD1CB' : '#CBF0D6',
                 borderColor: '#fafafa'
               }]
             },
