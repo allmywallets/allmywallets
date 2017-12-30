@@ -1,0 +1,63 @@
+<template>
+  <div>
+    <canvas ref="plot"></canvas>
+  </div>
+</template>
+
+<script>
+  import Chart from 'chart.js'
+
+  export default {
+    name: 'balance-item-chart',
+    props: {
+      ticker: {
+        type: String,
+        required: true
+      }
+    },
+    mounted () {
+      return fetch(`https://min-api.cryptocompare.com/data/histoday?fsym=${this.ticker}&tsym=USD&limit=7&aggregate=1`)
+        .then(response => response.json())
+        .then(json => {
+          const data = json.Data.map(d => d.close)
+
+          new Chart(this.$refs.plot.getContext('2d'), {
+            type: 'line',
+            data: {
+              labels: [0, 1, 2, 3, 4, 5, 6],
+              datasets: [{
+                data: data,
+                backgroundColor: data[0] > data[6] ? '#ac3215' : '#17ca4c'
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              legend: {
+                display: false
+              },
+              scales: {
+                yAxes: [{
+                  display: false,
+                  padding: 0
+                }],
+                xAxes: [{
+                  display: false,
+                  padding: 0
+                }]
+              },
+              elements: {
+                point: { radius: 0 }
+              }
+            }
+          })
+        })
+    }
+  }
+</script>
+
+<style scoped lang="scss">
+  canvas {
+    opacity: 0.07;
+  }
+</style>

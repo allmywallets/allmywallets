@@ -1,17 +1,19 @@
 <template>
   <div class="balance">
-    <header class="balance-header">
+    <balance-item-chart class="balance-background" :ticker="balance.ticker"></balance-item-chart>
+    <div class="balance-content">
+      <header class="balance-header">
       <span class="balance-logo">
         <i :class="`cc ${balance.ticker}-alt`"></i>
       </span>
-      <h4 class="balance-name">
-        {{ wallet.name }}<br />
-        <small class="balance-network">{{ wallet.network|camelcase }}</small>
-      </h4>
-    </header>
-    <div class="balance-amount">
-      <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
-      <span class="balance-btc">
+        <h4 class="balance-name">
+          {{ wallet.name }}<br />
+          <small class="balance-network">{{ wallet.network|camelcase }}</small>
+        </h4>
+      </header>
+      <div class="balance-amount">
+        <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
+        <span class="balance-btc">
         <template v-if="price.btc !== 0">
           <i class="cc BTC-alt"></i>{{ price.btc|toPrecision(4) }}
         </template>
@@ -19,23 +21,26 @@
           (<span class="dollar">$</span>{{ price.usd|toPrecision(4) }})
         </template>
       </span>
-    </div>
-    <footer class="balance-footer">
-      <div class="balance-provider">
-        Data from {{ wallet.provider|camelcase }}
       </div>
-      <balance-item-tools :balance="balance"></balance-item-tools>
-    </footer>
+      <footer class="balance-footer">
+        <div class="balance-provider">
+          Data from {{ wallet.provider|camelcase }}
+        </div>
+        <balance-item-tools :balance="balance"></balance-item-tools>
+      </footer>
+    </div>
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
+  import BalanceItemChart from './BalanceItemChart.vue'
   import BalanceItemTools from './BalanceItemTools.vue'
 
   export default {
     name: 'balance-list-item',
     components: {
+      BalanceItemChart,
       BalanceItemTools
     },
     props: {
@@ -88,17 +93,32 @@
   @import '../scss/vars';
 
   .balance {
-    width: 100%;
-    margin: 0 10px 20px;
-    background: #fafafa;
-    border-radius: 5px;
-    padding: 3px 15px;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 50px 1fr 25px;
     flex-grow: 1;
     flex-basis: 0;
+    margin: 0 10px 20px;
     cursor: default;
+    position: relative;
+    background: #fafafa;
+    border-radius: 5px;
+
+    .balance-background {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .balance-content {
+      position: relative;
+      z-index: 100;
+      padding: 3px 15px;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 50px 1fr 25px;
+    }
 
     @media screen and (min-width: $breakpoint-medium) {
       width: auto;
