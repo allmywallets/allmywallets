@@ -16,7 +16,7 @@
       }
     },
     mounted () {
-      const NB_DAYS = 14 //Todo: allow customization
+      const NB_DAYS = 14 // Todo: allow customization
 
       return fetch(`https://min-api.cryptocompare.com/data/histoday?fsym=${this.ticker}&tsym=USD&limit=${NB_DAYS}&aggregate=1`)
         .then(response => response.json())
