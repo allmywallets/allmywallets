@@ -55,8 +55,9 @@
     
     .content {
       grid-area: content;
-      padding: 10px 20px;
-      overflow: auto;
+      padding: 10px 10px 10px 20px;
+      overflow-y: scroll;
+      overflow-x: auto;
     }
   }
 </style>
