@@ -16,7 +16,9 @@
       }
     },
     mounted () {
-      return fetch(`https://min-api.cryptocompare.com/data/histoday?fsym=${this.ticker}&tsym=USD&limit=7&aggregate=1`)
+      const NB_DAYS = 14 //Todo: allow customization
+
+      return fetch(`https://min-api.cryptocompare.com/data/histoday?fsym=${this.ticker}&tsym=USD&limit=${NB_DAYS}&aggregate=1`)
         .then(response => response.json())
         .then(json => {
           const data = json.Data.map(d => d.close)
@@ -24,10 +26,11 @@
           new Chart(this.$refs.plot.getContext('2d'), {
             type: 'line',
             data: {
-              labels: [0, 1, 2, 3, 4, 5, 6],
+              labels: [...Array(NB_DAYS).keys()],
               datasets: [{
                 data: data,
-                backgroundColor: data[0] > data[6] ? '#ac3215' : '#17ca4c'
+                backgroundColor: data[0] > data[NB_DAYS - 1] ? '#F4EBE9' : '#EAF6ED',
+                borderColor: '#fafafa'
               }]
             },
             options: {
@@ -55,9 +58,3 @@
     }
   }
 </script>
-
-<style scoped lang="scss">
-  canvas {
-    opacity: 0.07;
-  }
-</style>
