@@ -32,7 +32,7 @@ class IotaNative extends AbstractExplorer {
     })
 
     if (res.error) {
-      throw new Error(res.error)
+      throw new Error(body + ' ' + res.error)
     }
     return res
   }
