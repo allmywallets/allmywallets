@@ -18,7 +18,7 @@
     mounted () {
       const NB_DAYS = 10 // Todo: allow customization
 
-      return fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${this.ticker}&tsym=USD&limit=${NB_DAYS * 24 / 3}&aggregate=3&e=CCCAGG`)
+      return fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${this.ticker}&tsym=USD&limit=${NB_DAYS * 24 / 6}&aggregate=6&e=CCCAGG`)
         .then(response => response.json())
         .then(json => {
           const data = json.Data.map(d => d.close)
@@ -26,10 +26,10 @@
           new Chart(this.$refs.plot.getContext('2d'), {
             type: 'line',
             data: {
-              labels: [...Array(NB_DAYS * 24 / 3).keys()],
+              labels: [...Array(NB_DAYS * 24 / 6).keys()],
               datasets: [{
                 data: data,
-                backgroundColor: data[0] > data[NB_DAYS * 24 / 3 - 1] ? '#EAD1CB' : '#CBF0D6',
+                backgroundColor: data[0] > data[NB_DAYS * 24 / 6 - 1] ? '#EAD1CB' : '#CBF0D6',
                 borderColor: '#fafafa'
               }]
             },
