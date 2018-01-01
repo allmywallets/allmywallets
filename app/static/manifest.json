@@ -1,8 +1,8 @@
 {
   "name": "AllMyWallets",
-  "short_name": "AMW",
+  "short_name": "MyWallets",
   "start_url": "/",
-  "display": "fullscreen",
+  "display": "standalone",
   "background_color": "#f2f2f2",
   "theme_color": "#545454",
   "icons": [
