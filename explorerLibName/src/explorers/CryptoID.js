@@ -38,10 +38,6 @@ class CryptoID extends AbstractExplorer {
     return true
   }
 
-  static getDefaultTicker () {
-    return 'BTC'
-  }
-
   async _getBalances (address, wallet) {
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',

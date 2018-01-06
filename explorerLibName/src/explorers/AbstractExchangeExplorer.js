@@ -25,7 +25,7 @@ class AbstractExchangeExplorer extends AbstractExplorer {
   }
 
   static getDefaultTicker () {
-    return 'BTC'
+    return 'DEFAULT_TICKER'
   }
 
   getSelectedCurrencies () {
@@ -51,17 +51,17 @@ class AbstractExchangeExplorer extends AbstractExplorer {
     this.selectedCurrencies = []
     wallet.balances = []
 
-    if (this.tickers.length === 0) {
+    if (this.tickers[0] === 'DEFAULT_TICKER') {
       return this._getAllNonZeroBalances(walletIdentifier, wallet)
     }
     return this._getSpecifiedBalances(walletIdentifier, wallet)
   }
 
-  _getAllNonZeroBalances (walletIdentifier, wallet) {
+  async _getAllNonZeroBalances (walletIdentifier, wallet) {
     throw new Error('This method should be implemented by child class')
   }
 
-  _getSpecifiedBalances (walletIdentifier, wallet) {
+  async _getSpecifiedBalances (walletIdentifier, wallet) {
     throw new Error('This method should be implemented by child class')
   }
 }

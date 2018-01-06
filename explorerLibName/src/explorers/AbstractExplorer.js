@@ -29,7 +29,7 @@ class AbstractExplorer {
    * @returns {String}
    */
   static getDefaultTicker () {
-    return 'AEC'
+    return 'BTC'
   }
 
   async checkAddresses (addresses) {
@@ -51,7 +51,7 @@ class AbstractExplorer {
    * @returns {[object]}
    */
   static getSupportedCurrencies () {
-    return {AEC: {name: 'AbstractExplorerCoin', ticker: 'AEC'}}
+    return {BTC: {name: 'AbstractExplorerCoin', ticker: 'BTC'}}
   }
 
   /**
@@ -198,8 +198,8 @@ class AbstractExplorer {
     let promises = []
     let wallets = []
 
-    if (this.tickers.length === 0 && !this.constructor.isExchange) {
-      this.tickers.push(this.supportedCurrencies[this.constructor.getDefaultTicker()].ticker)
+    if (this.tickers.length === 0) {
+      this.tickers.push(this.constructor.getDefaultTicker())
     }
 
     this._addresses.forEach(address => {
@@ -222,7 +222,7 @@ class AbstractExplorer {
 
   static async _fetchJson (url, options = {}) {
     // TODO : require('node-fetch')
-    const response = await fetch(url, options)
+    const response = await require('node-fetch')(url, options)
     return response.json().catch(() => {
       throw new Error(`Failed to parse JSON: ${response.status} ${response.statusText}`)
     })
