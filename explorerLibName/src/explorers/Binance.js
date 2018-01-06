@@ -1,7 +1,6 @@
-const AbstractExplorer = require('./AbstractExplorer')
+const AbstractExchangeExplorer = require('./AbstractExchangeExplorer')
 const NotSupportedCurrencyError = require('../errors/NotSupportedCurrencyError')
 const OnlyEmptyBalancesFound = require('../errors/OnlyEmptyBalancesFound')
-const ApiKeyPermissionError = require('../errors/ApiKeyPermissionError')
 
 const crypto = require('crypto')
 const queryStringLib = require('querystring')
@@ -13,7 +12,7 @@ const PUBLIC_API_URL = 'https://cors-anywhere.herokuapp.com/https://api.binance.
 /**
  * Binance exchange https://www.binance.com/
  */
-class Binance extends AbstractExplorer {
+class Binance extends AbstractExchangeExplorer {
   constructor () {
     super()
 
@@ -27,7 +26,7 @@ class Binance extends AbstractExplorer {
       'origin': '.',
       'x-requested-with': '.'
     }
-    const currencies = await AbstractExplorer._fetchJson(`${PUBLIC_API_URL}ticker/allPrices`, {headers})
+    const currencies = await AbstractExchangeExplorer._fetchJson(`${PUBLIC_API_URL}ticker/allPrices`, {headers})
     const newCurrencies = {}
 
     currencies.forEach(curr => {
@@ -40,23 +39,7 @@ class Binance extends AbstractExplorer {
     return newCurrencies
   }
 
-  static get isExchange () {
-    return true
-  }
-
-  static get dynamicSupportedCurrencies () {
-    return true
-  }
-
-  static getDefaultTicker () {
-    return 'BTC'
-  }
-
-  getSelectedCurrencies () {
-    return this.selectedCurrencies
-  }
-
-  async binanceApiRequest (endpoint, queryObject, apiKey, secret, method = 'GET') {
+  async _binanceApiRequest (endpoint, queryObject, apiKey, secret, method = 'GET') {
     queryObject.timestamp = new Date().getTime()
     const queryString = queryStringLib.stringify(queryObject)
     let url = API_URL + endpoint
@@ -81,30 +64,9 @@ class Binance extends AbstractExplorer {
     return res
   }
 
-  async _getBalances ({secret, apiKey}, wallet) {
-    this.selectedCurrencies = []
-    wallet.balances = []
-
-    const res = await this.binanceApiRequest('account', {recvWindow: 10000}, apiKey, secret)
-
-    if (this.tickers.length === 0) {
-      this._getAllNonZeroBalances(res, wallet)
-    } else {
-      this._getSpecifiedBalances(res, wallet)
-    }
-  }
-
-  async checkWallets (wallets) {
-    wallets.forEach(async wallet => {
-      await this._checkApiKeyPermission(wallet)
-    })
-  }
-
   async _checkApiKeyPermission ({secret, apiKey}) {
-    const res = await this.binanceApiRequest('order', {recvWindow: 10000}, apiKey, secret, 'DELETE')
-    if (res.code !== -2015) {
-      throw new ApiKeyPermissionError()
-    }
+    const res = await this._binanceApiRequest('order', {recvWindow: 10000}, apiKey, secret, 'DELETE')
+    return res.code === -2015
   }
 
   async _getTransactions ({secret, apiKey}, wallet) {
@@ -119,7 +81,9 @@ class Binance extends AbstractExplorer {
     }
   }
 
-  _getAllNonZeroBalances (res, wallet) {
+  async _getAllNonZeroBalances ({secret, apiKey}, wallet) {
+    const res = await this._binanceApiRequest('account', {recvWindow: 10000}, apiKey, secret)
+
     res.balances.forEach(balance => {
       let amount = parseFloat(balance.free)
       if (amount > 0) {
@@ -137,7 +101,9 @@ class Binance extends AbstractExplorer {
     }
   }
 
-  _getSpecifiedBalances (res, wallet) {
+  async _getSpecifiedBalances ({secret, apiKey}, wallet) {
+    const res = await this._binanceApiRequest('account', {recvWindow: 10000}, apiKey, secret)
+
     this.tickers.forEach(ticker => {
       let tickerFound = false
       res.balances.forEach(balance => {
