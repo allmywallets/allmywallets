@@ -1,5 +1,5 @@
 import BrowserNotification from '../model/BrowserNotification'
-import { format } from '../helpers/string'
+import { format } from '../helper/string'
 
 export const shouldNotify = (oldBalance, newBalance) => {
   return oldBalance !== undefined && newBalance !== undefined && oldBalance.amount !== newBalance.amount
