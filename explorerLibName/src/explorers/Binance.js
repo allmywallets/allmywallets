@@ -13,13 +13,6 @@ const PUBLIC_API_URL = 'https://cors-anywhere.herokuapp.com/https://api.binance.
  * Binance exchange https://www.binance.com/
  */
 class Binance extends AbstractExchangeExplorer {
-  constructor () {
-    super()
-
-    this.selectedCurrencies = []
-    this.supportedCurrencies = {BTC: {name: 'Bitcoin', ticker: 'BTC'}}
-  }
-
   static async getSupportedCurrencies () {
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
