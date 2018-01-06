@@ -1,5 +1,5 @@
 <template>
-  <nav class="app-menu">
+  <nav class="app-menu" role="navigation">
     <router-link :to="{ name: 'home' }">
         <icon icon="home"></icon> <span class="title">AllMyWallets</span>
     </router-link>

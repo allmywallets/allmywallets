@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PageHome from './components/PageHome.vue'
 import PageAddWallet from './components/PageAddWallet.vue'
+import PageStatistics from './components/PageStatistics.vue'
 import PageSettings from './components/PageSettings.vue'
+import PageContribute from './components/PageContribute.vue'
 
 Vue.use(Router)
 
@@ -22,7 +24,7 @@ export default new Router({
     {
       path: '/stats',
       name: 'stats',
-      component: PageHome
+      component: PageStatistics
     },
     {
       path: '/settings',
@@ -37,7 +39,7 @@ export default new Router({
     {
       path: '/contribute',
       name: 'contribute',
-      component: PageHome
+      component: PageContribute
     }
   ]
 })
