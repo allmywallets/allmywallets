@@ -1,4 +1,4 @@
-export default class NotificationManager {
+export default class NotificationSubscription {
   static getNotificationState (isSupported, isSelected, isAllowed) {
     if (!isSupported) {
       return {
@@ -15,7 +15,7 @@ export default class NotificationManager {
         icon: 'bell-slash',
         title: 'Click to enable push notifications',
         state: 'warning',
-        action: NotificationManager.enablePushNotifications,
+        action: NotificationSubscription.enablePushNotifications,
         showOnLoad: true
       }
     }
@@ -43,7 +43,7 @@ export default class NotificationManager {
     return serviceWorker.ready.then(registration => {
       return registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: NotificationManager._urlBase64ToUint8Array('BEtisxY__U2bGRrVSc_ukaqJ6gqaXiwxdh3lamdD2i4gqugmS65LvV9lagSm34lJcKiG0TEfImRnuxxH8_-imr0')
+        applicationServerKey: NotificationSubscription._urlBase64ToUint8Array('BEtisxY__U2bGRrVSc_ukaqJ6gqaXiwxdh3lamdD2i4gqugmS65LvV9lagSm34lJcKiG0TEfImRnuxxH8_-imr0')
       }).then(function (subscription) {
         return fetch(`${process.env.SERVER_URL}/push/register`, {
           method: 'POST',

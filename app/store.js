@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import database from './database'
 import Configurator from './configurator'
-import NotificationManager from './notification-manager'
+import NotificationSubscription from './notification/NotificationSubscription'
 
 Vue.use(Vuex)
 
@@ -65,7 +65,7 @@ const actions = {
       const subscription = await registration.pushManager.getSubscription()
 
       if (subscription) {
-        await NotificationManager.enablePushNotifications(serviceWorker)
+        await NotificationSubscription.enablePushNotifications(serviceWorker)
       }
     }
 

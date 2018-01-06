@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import NotificationManager from '../notification-manager'
+  import NotificationSubscription from '../notification/NotificationSubscription'
 
   export default {
     name: 'indicator-notifications',
@@ -38,7 +38,7 @@
         const registration = await this.$serviceWorker.getRegistration()
         const subscription = await registration.pushManager.getSubscription()
 
-        return NotificationManager.getNotificationState(
+        return NotificationSubscription.getNotificationState(
           'Notification' in window,
           ['granted', 'denied'].includes(Notification.permission) && subscription,
           Notification.permission !== 'denied'
