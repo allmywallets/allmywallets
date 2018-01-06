@@ -2,7 +2,9 @@ import 'babel-polyfill'
 import database from './database'
 import Configurator from './configurator'
 import Proxy from './providers'
-import NotificationNotifier from './notification/NotificationNotifier'
+import { getNotification, shouldNotify } from './notification/balance-notifier'
+import { getNotification as getBackgroundNotification } from './notification/background-notifier'
+import { sendNotification } from './notification/notify'
 
 const PRECACHE = 'precache-' + process.env.VERSION
 const RUNTIME = 'runtime'
@@ -70,7 +72,6 @@ self.addEventListener('push', async event => {
     })
   }
 
-  const notifier = new NotificationNotifier(self.registration)
   for (const wallet of wallets) {
     let balances = []
     const walletId = wallets.indexOf(wallet) // Todo: store wallet id in config
@@ -82,10 +83,10 @@ self.addEventListener('push', async event => {
         balance.walletId = walletId
 
         const oldBalance = await database.findBalance(balance.id)
-        if (NotificationNotifier.shouldNotify(oldBalance, balance)) {
+        if (shouldNotify(oldBalance, balance)) {
 
-          const notification = NotificationNotifier.getBalanceNotification(oldBalance, balance, wallets[walletId].name)
-          notifier.sendBalanceNotification(notification)
+          const notification = getNotification(oldBalance, balance, wallets[walletId].name)
+          sendNotification(notification, self.registration)
           sentNotification = true
         }
       })
@@ -105,7 +106,8 @@ self.addEventListener('push', async event => {
   }
 
   if (!sentNotification) {
-    notifier.sendBackgroundNotification()
+    const notification = getBackgroundNotification()
+    sendNotification(notification, self.registration)
   }
 })
 

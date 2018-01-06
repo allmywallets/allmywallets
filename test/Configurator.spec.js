@@ -2,8 +2,8 @@ import { describe, it } from 'mocha'
 import { assert } from 'chai'
 import Configurator from '../app/configurator.js'
 
-describe('Configurator', () => {
-  describe('#validateConfig()', () => {
+describe('Configurator.js', () => {
+  describe('.validateConfig()', () => {
     it('validates a valid config', () => {
       assert.isTrue(Configurator.validateConfig(
         {
