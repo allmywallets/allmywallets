@@ -103,4 +103,14 @@ for (let i = 0; i < explorers.length; i++) {
     }
     t.is(error.message, `${fakeTickerName} is not supported`)
   })
+
+  test(`[${explorerName}] Supported currencies`, async t => {
+    const supportedCurrencies = await Explorer.getSupportedCurrencies()
+    t.not(supportedCurrencies, undefined)
+    for (const currency in supportedCurrencies) {
+      t.not(supportedCurrencies[currency], undefined)
+      t.not(supportedCurrencies[currency].name, undefined)
+      t.not(supportedCurrencies[currency].ticker, undefined)
+    }
+  })
 }
