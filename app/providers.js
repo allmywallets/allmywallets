@@ -1,5 +1,4 @@
 import Balance from './model/Balance'
-import Transaction from './model/Transaction'
 import ExplorerLib from '../explorerLibName'
 
 export default class Proxy {
