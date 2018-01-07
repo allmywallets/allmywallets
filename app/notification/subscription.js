@@ -21,7 +21,7 @@ export const enablePushNotifications = async (serviceWorker) => {
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(PUBLIC_KEY)
     }).then(function (subscription) {
-      return fetch(`${process.env.SERVER_URL}/push/register`, {
+      return fetch(`${process.env.APP_SERVER_URL}/push/register`, {
         method: 'POST',
         body: JSON.stringify(subscription),
         headers: new Headers({

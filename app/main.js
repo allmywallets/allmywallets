@@ -15,8 +15,9 @@ import App from './components/App.vue'
 Vue.use(VueFilter)
 Vue.use(VueFormGenerator)
 Vue.use(VueTippy, {
-  animation: 'fade',
-  arrow: true
+  animation: 'shift-away',
+  arrow: true,
+  inertia: true
 })
 Vue.use(VueMoment)
 Vue.component('icon', VueFontAwesome)

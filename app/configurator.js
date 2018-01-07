@@ -110,4 +110,15 @@ export default class Configurator {
 
     return validator.validate(config, configSchema).valid && Configurator.validateWalletIds(config)
   }
+
+  static async getVersion () {
+    return fetch('https://api.github.com/repos/allmywallets/allmywallets/releases')
+      .then(response => response.json())
+      .then(data => {
+        return {
+          current: process.env.APP_VERSION,
+          upstream: data[0].tag_name
+        }
+      })
+  }
 }
