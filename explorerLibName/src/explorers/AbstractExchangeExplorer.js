@@ -49,8 +49,6 @@ class AbstractExchangeExplorer extends AbstractExplorer {
   }
 
   async _getTransactions ({secret, apiKey}, nonZeroBalanceTickers) {
-    // Filled in getBalances (cant know the 0 balance in advance) TODO: improve this ?
-
     const transactions = []
 
     if (this.tickers.length !== 0) {

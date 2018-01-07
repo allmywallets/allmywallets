@@ -9,7 +9,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "^1.7.3"
+    "node-fetch": "^1.7.3",
+    "nonce": "^1.0.4",
+    "url-search-params": "^0.10.0"
   },
   "devDependencies": {
     "ava": "^0.24.0"
