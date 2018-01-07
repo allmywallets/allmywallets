@@ -38,7 +38,7 @@ class AbstractExplorer {
   async checkWallets (wallets) {
 
   }
-  async checkArgs () {
+  async checkParameters () {
 
   }
 

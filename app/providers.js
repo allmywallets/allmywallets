@@ -30,8 +30,8 @@ function getGenericProviderClass (explorerName) {
       this.explorer = new Explorer(this.parameters.explorerSpecific)
     }
 
-    async checkArgs (parameters) {
-      await this.explorer.checkArgs()
+    async checkParameters (parameters) {
+      await this.explorer.checkParameters()
       await this.explorer.checkAddresses(parameters.addresses)
       await this.explorer.checkWallets(parameters.wallets)
     }
