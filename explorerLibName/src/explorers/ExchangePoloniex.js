@@ -6,7 +6,8 @@ const queryStringLib = require('querystring')
 const nonce = require('nonce')()
 const URLSearchParams = require('url-search-params')
 
-const PRIVATE_API = 'https://poloniex.com/tradingApi'
+// TODO : CORS
+const PRIVATE_API = 'https://cors-anywhere.herokuapp.com/https://poloniex.com/tradingApi'
 const RETURN_TICKER_API = 'https://poloniex.com/public?command=returnTicker'
 
 /**
@@ -32,7 +33,9 @@ class ExchangePoloniex extends AbstractExchangeExplorer {
     const headers = {
       'Key': apiKey,
       'Sign': this._sign(queryString, secret),
-      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+      'origin': '.',
+      'x-requested-with': '.'
     }
     return this.constructor._fetchJson(PRIVATE_API, {
       method,
