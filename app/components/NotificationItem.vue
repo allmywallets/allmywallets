@@ -28,7 +28,7 @@
         'wallets'
       ]),
       wallet () {
-        return this.wallets.find((wallet, key) => key === this.notification.walletId)
+        return this.wallets.find(wallet => wallet.id === this.notification.walletId)
       }
     }
   }

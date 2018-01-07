@@ -5,6 +5,7 @@ import Proxy from './providers'
 import { getNotification, shouldNotify } from './notification/balance-notifier'
 import { getNotification as getBackgroundNotification } from './notification/background-notifier'
 import { sendNotification } from './notification/notify'
+import { syncBalances } from './manager/balance-manager'
 
 const PRECACHE = 'precache-' + process.env.VERSION
 const RUNTIME = 'runtime'
@@ -55,59 +56,54 @@ self.addEventListener('fetch', event => {
   }
 })
 
-self.addEventListener('push', async event => {
+self.addEventListener('push', async () => {
   const clients = await self.clients.matchAll()
-
-  let error = false
   let sentNotification = false
-
   let wallets = []
+
   try {
     wallets = await Configurator.getWallets()
   } catch (e) {
-    clients.forEach(client => {
+    return clients.forEach(client => {
       client.postMessage({ // Todo: error handling in notifications store
         error: {_level: 'ERROR', _date: new Date(), _title: e.message, _content: e.stack}
       })
     })
   }
 
-  for (const wallet of wallets) {
-    let balances = []
-    const walletId = wallets.indexOf(wallet) // Todo: store wallet id in config
-    error = false
+  for (const walletKey in wallets) {
+    let diffs = []
+    let error = false
+    const wallet = wallets[walletKey]
 
     try {
-      balances = await new Proxy(wallet.network, wallet.provider, wallet.parameters).getWalletData()
-      balances.forEach(async balance => {
-        balance.walletId = walletId
+      diffs = await syncBalances(wallet)
 
-        const oldBalance = await database.findBalance(balance.id)
-        if (shouldNotify(oldBalance, balance)) {
-
-          const notification = getNotification(oldBalance, balance, wallets[walletId].name)
-          sendNotification(notification, self.registration)
-          sentNotification = true
+      for (const diffKey in diffs) {
+        const diff = diffs[diffKey]
+        if (diff.amount === 0) {
+          continue
         }
-      })
 
-      await database.storeBalances(balances)
+        const notification = getNotification(diff, wallet.name)
+        sendNotification(notification, self.registration)
+        sentNotification = true
+      }
     } catch (e) {
-      error = { _level: 'ERROR', _date: new Date(), _walletId: walletId, _title: e.message, _content: e.stack }
+      error = { _level: 'ERROR', _date: new Date(), _walletId: wallet.id, _title: e.message, _content: e.stack }
     }
 
     clients.forEach(client => {
       client.postMessage({
-        walletId: walletId,
-        balanceIds: balances.map(balance => balance.id),
+        walletId: wallet.id,
+        balanceIds: diffs.map(diff => diff.balance.id),
         error: error
       })
     })
   }
 
   if (!sentNotification) {
-    const notification = getBackgroundNotification()
-    sendNotification(notification, self.registration)
+    sendNotification(getBackgroundNotification(), self.registration)
   }
 })
 

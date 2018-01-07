@@ -26,10 +26,10 @@
     },
     methods: {
       refreshBalances () {
-        this.wallets.forEach((wallet, walletId) => { // Todo: replace wallet Id with conf value
+        this.wallets.forEach(wallet => {
           this.$serviceWorker.controller.postMessage({ // Todo: move this in store and add loading wallets in vuex state
             action: 'balance-refresh',
-            walletId: walletId,
+            walletId: wallet.id,
             currencies: []
           })
         })

@@ -53,8 +53,8 @@ function getGenericProviderClass (explorerName) {
         let i = 0
         this.explorer.getSelectedCurrencies().forEach(selectedCurrency => {
           const amount = wallet.balances[i]
-          const transactions = wallet.transactions[i].map(tx => new Transaction(tx.type, tx.from, tx.to, tx.amount))
-          const balance = new Balance(selectedCurrency.name, selectedCurrency.ticker, amount, new Date(), transactions)
+          const transactions = wallet.transactions[i].map(tx => new Transaction('0x01', tx.from, tx.to, tx.amount))
+          const balance = new Balance('0x0', selectedCurrency.name, selectedCurrency.ticker, amount, new Date())
           balances.push(balance)
           ++i
         })

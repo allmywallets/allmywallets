@@ -10,6 +10,7 @@
 {
   "profiles": [{
     "wallets": [{
+        "id": "random id (20 chars)",
         "network": "bitcoin",
         "provider": "blockexplorer",
         "name": "My Bitcoin wallet",
@@ -20,6 +21,7 @@
         }
       },
       {
+        "id": "random id (20 chars)",
         "network": "ethereum",
         "provider": "etherscan",
         "name": "My Ethereum wallet",
@@ -45,6 +47,7 @@
         }
       },
       {
+        "id": "random id (20 chars)",
         "network": "iota",
         "provider": "native",
         "name": "My IOTA wallet",
@@ -59,14 +62,15 @@
   </pre>
     <p>Current (editable) config:</p>
     <strong>{{ error }} <br />
-    <span v-if="needsUpdate">Configuration needs to be updated!</span>
-    </strong>
+    <span v-if="needsUpdate">Configuration needs to be updated!<br /></span>    </strong>
+    Some ids to help you: <template v-for="n in 5"><span class="badge">{{ generateId() }}</span>&nbsp;</template>
     <textarea @input="updateConfig" title="Edit your configuration">{{ config }}</textarea>
   </div>
 </template>
 
 <script>
   import Configurator from '../configurator'
+  import { generateId } from '../helper/string'
 
   export default {
     name: 'config-expert',
@@ -96,6 +100,9 @@
             this.error = e.message
           }
         }, 500)
+      },
+      generateId () {
+        return generateId(20)
       }
     }
   }

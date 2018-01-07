@@ -20,11 +20,13 @@ export default class Configurator {
   static async getWallet (walletId) {
     const wallets = await Configurator.getWallets()
 
-    if (walletId > wallets.length) {
+    const wallet = wallets.find(wallet => wallet.id === walletId)
+
+    if (!wallet) {
       throw new Error(`Wallet ${walletId} is not defined`)
     }
 
-    return wallets[walletId]
+    return wallet
   }
 
   static async setConfig (config) {
@@ -43,17 +45,40 @@ export default class Configurator {
     })
   }
 
+  static validateWalletIds (config) {
+    if (config.profiles.length === 0) {
+      return true
+    }
+
+    const ids = []
+    const wallets = config.profiles[0].wallets
+    for (const key in wallets) {
+      if (ids.includes(wallets[key].id)) {
+        throw new Error('Config has duplicated ids')
+      }
+
+      ids.push(wallets[key].id)
+    }
+
+    return true
+  }
+
   static validateConfig (config) {
     const walletSchema = {
       'id': '/Wallet',
       'type': 'object',
       'properties': {
+        'id': {
+          'type': 'string',
+          'minLength': 20,
+          'maxLength': 20
+        },
         'name': { 'type': 'string' },
         'network': { 'type': 'string' },
         'provider': { 'type': 'string' },
         'parameters': { 'type': 'object' }
       },
-      'required': ['name', 'network', 'provider', 'parameters']
+      'required': ['id', 'name', 'network', 'provider', 'parameters']
     }
 
     const configSchema = {
@@ -83,6 +108,6 @@ export default class Configurator {
 
     validator.addSchema(walletSchema, '/Wallet')
 
-    return validator.validate(config, configSchema).valid
+    return validator.validate(config, configSchema).valid && Configurator.validateWalletIds(config)
   }
 }

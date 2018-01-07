@@ -22,6 +22,7 @@
   import VueFormGenerator from 'vue-form-generator'
   import Proxy from '../providers'
   import Configurator from '../configurator'
+  import { generateId } from '../helper/string'
 
   export default {
     name: 'page-add-wallet',
@@ -61,6 +62,7 @@
 
         const provider = this.currentProvider.split('.')
         profile.wallets.push({
+          id: generateId(20),
           network: provider[0],
           provider: provider[1],
           name: this.currentName,
