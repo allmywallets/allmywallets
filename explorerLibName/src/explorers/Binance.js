@@ -62,21 +62,10 @@ class Binance extends AbstractExchangeExplorer {
     return res.code === -2015
   }
 
-  async _getTransactions ({secret, apiKey}, wallet) {
-    // Filled in getBalances (cant know the 0 balance in advance) TODO: improve this ?
-    wallet.transactions = []
-    if (this.tickers.length !== 0) {
-      this.tickers.forEach(ticker => {
-        wallet.transactions.push([])
-      })
-    } else if (this.elementsToFetch.includes('transactions') && !this.elementsToFetch.includes('balances')) {
-      wallet.transactions = [[]]
-    }
-  }
-
   async _getAllNonZeroBalances ({secret, apiKey}, wallet) {
     const res = await this._binanceApiRequest('account', {recvWindow: 10000}, apiKey, secret)
 
+    wallet.balances = []
     res.balances.forEach(balance => {
       let amount = parseFloat(balance.free)
       if (amount > 0) {
@@ -97,6 +86,7 @@ class Binance extends AbstractExchangeExplorer {
   async _getSpecifiedBalances ({secret, apiKey}, wallet) {
     const res = await this._binanceApiRequest('account', {recvWindow: 10000}, apiKey, secret)
 
+    wallet.balances = []
     this.tickers.forEach(ticker => {
       let tickerFound = false
       res.balances.forEach(balance => {

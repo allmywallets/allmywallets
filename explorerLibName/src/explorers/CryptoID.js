@@ -38,30 +38,34 @@ class CryptoID extends AbstractExplorer {
     return true
   }
 
-  async _getBalances (address, wallet) {
+  async _getBalances (address) {
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       'origin': '.',
       'x-requested-with': '.'
     }
 
-    wallet.balances = []
+    const balances = []
     const promises = []
     this.tickers.forEach(async ticker => {
       promises.push(this.constructor._fetchJson(`${API_URL}/${ticker.toLowerCase()}/api.dws?q=getbalance&a=${address}&key=${this.params.apiKey}`, {headers})
                                     .catch(() => { throw new NotSupportedCurrencyError(`${ticker} is not supported`) }))
     })
-    let balances = await Promise.all(promises)
-    balances.forEach(balance => {
-      wallet.balances.push(balance)
+    let apiBalances = await Promise.all(promises)
+    apiBalances.forEach(balance => {
+      balances.push(balance)
     })
+
+    return balances
   }
 
-  async _getTransactions (address, wallet) {
-    wallet.transactions = []
+  async _getTransactions (address) {
+    const transactions = []
     this.tickers.forEach(ticker => {
-      wallet.transactions.push([])
+      transactions.push([])
     })
+
+    return transactions
   }
 
   static getExplorerParams () {

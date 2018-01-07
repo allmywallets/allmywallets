@@ -182,11 +182,18 @@ class AbstractExplorer {
     return this.tickers.map(ticker => this.supportedCurrencies[ticker])
   }
 
-  async _getBalances (address, result) {
+  async _getBalances (address) {
     throw new Error('This method should be implemented by child class')
   }
-  async _getTransactions (address, result) {
+  async _getTransactions (address) {
     throw new Error('This method should be implemented by child class')
+  }
+
+  async _setResultBalances (address, result) {
+    result.balances = await this._getBalances(address)
+  }
+  async _setResultTransactions (address, result) {
+    result.transactions = await this._getTransactions(address)
   }
 
   /**
@@ -205,11 +212,11 @@ class AbstractExplorer {
     this._addresses.forEach(address => {
       const wallet = {}
       if (this.elementsToFetch.includes('balances')) {
-        promises.push(this._getBalances(address, wallet))
+        promises.push(this._setResultBalances(address, wallet))
       }
 
       if (this.elementsToFetch.includes('transactions')) {
-        promises.push(this._getTransactions(address, wallet))
+        promises.push(this._setResultTransactions(address, wallet))
       }
 
       wallets.push(wallet)

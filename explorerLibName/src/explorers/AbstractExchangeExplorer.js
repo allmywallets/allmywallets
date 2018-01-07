@@ -47,11 +47,22 @@ class AbstractExchangeExplorer extends AbstractExplorer {
     throw new Error('This method should be implemented by child class')
   }
 
-  async _getBalances (walletIdentifier, wallet) {
-    this.selectedCurrencies = []
-    wallet.balances = []
+  async _getTransactions ({secret, apiKey}) {
+    // Filled in getBalances (cant know the 0 balance in advance) TODO: improve this ?
+    const transactions = []
+    if (this.tickers.length !== 0) {
+      this.tickers.forEach(ticker => {
+        transactions.push([])
+      })
+      return transactions
+    }
+    return [[]]
+  }
 
+  async _setResultBalances (walletIdentifier, wallet) {
     if (this.tickers[0] === 'DEFAULT_TICKER') {
+      this.selectedCurrencies = []
+
       return this._getAllNonZeroBalances(walletIdentifier, wallet)
     }
     return this._getSpecifiedBalances(walletIdentifier, wallet)

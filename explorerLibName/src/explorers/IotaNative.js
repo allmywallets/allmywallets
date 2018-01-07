@@ -37,24 +37,24 @@ class IotaNative extends AbstractExplorer {
     return res
   }
 
-  async _getBalances (address, result) {
+  async _getBalances (address) {
     const res = await this.iotaApiRequest(JSON.stringify({
       addresses: [address],
       command: 'getBalances',
       threshold: 100
     }))
 
-    result.balances = [parseInt(res.balances[0])]
+    return [parseInt(res.balances[0])]
   }
 
-  async _getTransactions (address, result) {
+  async _getTransactions (address) {
     const res = await this.iotaApiRequest(JSON.stringify({
       addresses: [address],
       command: 'findTransactions',
       threshold: 100
     }))
     // TODO
-    result.transactions = [[]]
+    return [[]]
   }
 
   static getExplorerParams () {

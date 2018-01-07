@@ -21,7 +21,7 @@ class EthereumEtherscan extends AbstractExplorer {
     return 'ETH'
   }
 
-  async _getBalances (address, result) {
+  async _getBalances (address) {
     const promises = []
     this.tickers.forEach(ticker => {
       if (ticker === this.constructor.getDefaultTicker()) { // ETH
@@ -33,19 +33,21 @@ class EthereumEtherscan extends AbstractExplorer {
 
     const results = await Promise.all(promises)
 
-    result.balances = []
+    const balances = []
     for (let i = 0; i < this.tickers.length; i++) {
       let ticker = this.tickers[i]
       let decimals = this.supportedCurrencies[ticker].decimals || 18
-      result.balances.push(results[i].result / Math.pow(10, decimals))
+      balances.push(results[i].result / Math.pow(10, decimals))
     }
+
+    return balances
   }
 
-  async _getTransactions (address, result) {
+  async _getTransactions (address) {
     const res = await this.constructor._fetchJson(`${API_URL}?module=account&action=txlist&address=${address}&sort=desc&tag=latest`)
-    const transactions = res.result
+    const apiResTransactions = res.result
 
-    transactions.forEach(tx => {
+    apiResTransactions.forEach(tx => {
       tx.type = tx.from === this.address ? 'out' : 'in'
 
       tx.id = tx.hash
@@ -56,10 +58,12 @@ class EthereumEtherscan extends AbstractExplorer {
     })
 
     // TODO : Retrieve correct transactions for tokens
-    result.transactions = []
+    const transactions = []
     this.tickers.forEach(ticker => {
-      result.transactions.push(transactions)
+      transactions.push(apiResTransactions)
     })
+
+    return transactions
   }
 
   static getExplorerParams () {
