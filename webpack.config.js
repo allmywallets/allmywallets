@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 
-module.exports = {
+module.exports = env => ({
   devServer: {
     historyApiFallback: true,
     hot: true,
@@ -62,11 +62,12 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        SERVER_URL: '"http://localhost:3030"'
+        APP_SERVER_URL: '"http://localhost:3030"',
+        APP_VERSION: `"${env.APP_VERSION}"`
       }
     }),
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, 'app/service-worker.js')
     })
   ]
-}
+})

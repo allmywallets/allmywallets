@@ -7,7 +7,7 @@ import { getNotification as getBackgroundNotification } from './notification/bac
 import { sendNotification } from './notification/notify'
 import { syncBalances } from './manager/balance-manager'
 
-const PRECACHE = 'precache-' + process.env.VERSION
+const PRECACHE = 'precache-' + process.env.APP_VERSION
 const RUNTIME = 'runtime'
 
 const PRECACHE_URLS = [

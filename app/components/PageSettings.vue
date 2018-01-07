@@ -7,11 +7,13 @@
     <config-import></config-import>
     <config-expert></config-expert>
     <h2>Danger zone</h2>
-    <a href="#" @click.prevent="forceUpdate">Force app update</a>
+    <template v-if="needsUpgrade">An upgrade is available!</template>
+    <a href="#" @click.prevent="forceUpgrade">Force app upgrade</a>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import ConfigExpert from './ConfigExpert.vue'
   import ConfigExport from './ConfigExport.vue'
   import ConfigImport from './ConfigImport.vue'
@@ -23,8 +25,13 @@
       ConfigExpert,
       ConfigImport
     },
+    computed: {
+      ...mapGetters([
+        'needsUpgrade'
+      ])
+    },
     methods: {
-      forceUpdate () {
+      forceUpgrade () {
         this.$serviceWorker.getRegistrations().then((registrations) => {
           for (const registration of registrations) {
             registration.unregister()

@@ -8,8 +8,8 @@
   "scripts": {
     "lint": "eslint '@(app|tests)/**/*.@(js|vue)'",
     "lint:fix": "eslint --fix '@(app|tests)/**/*.@(js|vue)'",
-    "start": "webpack-dev-server --host 0.0.0.0 --devtool eval --progress --hot --content-base app",
-    "build": "NODE_ENV=production webpack --config webpack.production.config.js",
+    "start": "webpack-dev-server --env.APP_VERSION=$(git describe --tags) --host 0.0.0.0 --devtool eval --progress --hot --content-base app",
+    "build": "webpack --env.production --env.APP_VERSION=$(git describe --tags) --config webpack.production.config.js",
     "test": "npm run test:unit && npm run test:functional",
     "test:unit": "mocha --require babel-register --require babel-polyfill --recursive",
     "test:functional": "npm run build && concurrently 'http-server build/ -p 1337 -s' 'nightwatch -c features/conf/default.conf.js' --success first --kill-others"

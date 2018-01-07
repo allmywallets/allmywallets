@@ -9,18 +9,22 @@ Vue.use(Vuex)
 const state = {
   balances: [],
   config: { profiles: [{ wallets: [] }] },
-  notifications: []
+  notifications: [],
+  version: { current: 'unknown', upstream: 'unknown' }
 }
 
 const getters = {
   wallets: state => state.config.profiles[0].wallets,
-  balances: state => state.balances
+  balances: state => state.balances,
+  needsUpgrade: state => state.version.current !== state.version.upstream,
+  currentVersion: state => state.version.current
 }
 
 const mutations = {
-  INIT_APPLICATION (state, { config, balances }) {
+  INIT_APPLICATION (state, { config, balances, version }) {
     state.config = config
     state.balances = balances
+    state.version = version
   },
   ADD_WALLET (state, wallet) {
     state.config.profiles[0].wallets.push(wallet)
@@ -58,6 +62,7 @@ const actions = {
   initApplication: async ({ commit }, { serviceWorker }) => {
     const config = await Configurator.getConfig()
     const balances = await database.findAllBalances()
+    const version = await Configurator.getVersion()
 
     const registration = await serviceWorker.getRegistration()
 
@@ -69,7 +74,7 @@ const actions = {
       }
     }
 
-    commit('INIT_APPLICATION', { config: config, balances })
+    commit('INIT_APPLICATION', { config, balances, version })
   },
   addWallet: ({ commit }) => { // Todo
     commit('ADD_WALLET')
