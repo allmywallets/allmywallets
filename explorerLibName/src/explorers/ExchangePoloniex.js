@@ -11,7 +11,7 @@ const PRIVATE_API = 'https://poloniex.com/tradingApi'
 /**
  * Poloniex exchange https://poloniex.com/
  */
-class Poloniex extends AbstractExchangeExplorer {
+class ExchangePoloniex extends AbstractExchangeExplorer {
   async _poloniexPrivateApiRequest (command, queryObject, apiKey, secret, method = 'POST') {
     queryObject.command = command
     queryObject.nonce = nonce()
@@ -33,8 +33,9 @@ class Poloniex extends AbstractExchangeExplorer {
   }
 
   async _checkApiKeyPermission ({secret, apiKey}) {
-    const resTrade = await this._poloniexPrivateApiRequest('buy', {currencyPair: 'BTC_ETH', rate: '1', amount: '1'}, apiKey, secret)
-    const tradePermission = resTrade.error !== 'This API key does not have permission to trade.'
+    // const resTrade = await this._poloniexPrivateApiRequest('sell', {currencyPair: 'BTC_ETH', rate: 5000, amount: 0.000001}, apiKey, secret)
+    // const tradePermission = resTrade.error !== 'This API key does not have permission to trade.'
+    const tradePermission = false
 
     const resWithdraw = await this._poloniexPrivateApiRequest('withdraw', {}, apiKey, secret)
     const withdrawPermission = resWithdraw.error !== 'Permission to withdraw denied.'
@@ -65,7 +66,7 @@ class Poloniex extends AbstractExchangeExplorer {
     return crypto.createHmac('sha512', secret).update(queryString).digest('hex')
   }
 
-  static getAddressParam () {
+  static getWalletIdentifierParameters () {
     return [{
       type: 'input',
       inputType: 'text',
@@ -83,4 +84,4 @@ class Poloniex extends AbstractExchangeExplorer {
   }
 }
 
-module.exports = Poloniex
+module.exports = ExchangePoloniex

@@ -4,11 +4,11 @@ const AbstractExplorer = require('./AbstractExplorer')
  * IotaNative
  */
 class IotaNative extends AbstractExplorer {
-  constructor (params) {
+  constructor (parameters) {
     super()
 
-    this.params = params || {}
-    this.params.node = this.params.node || 'https://iri3-api.iota.fm:443'
+    this.parameters = parameters || {}
+    this.parameters.node = this.parameters.node || 'https://iri3-api.iota.fm:443'
 
     this.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -25,7 +25,7 @@ class IotaNative extends AbstractExplorer {
   }
 
   async iotaApiRequest (body) {
-    const res = await this.constructor._fetchJson(this.params.node, {
+    const res = await this.constructor._fetchJson(this.parameters.node, {
       method: 'POST',
       headers: this.headers,
       body
@@ -57,7 +57,7 @@ class IotaNative extends AbstractExplorer {
     return [[]]
   }
 
-  static getExplorerParams () {
+  static getExplorerParameters () {
     return [{
       type: 'select',
       label: 'Node',

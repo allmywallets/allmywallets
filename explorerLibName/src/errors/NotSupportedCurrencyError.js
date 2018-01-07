@@ -3,8 +3,8 @@
  * is not supported by the Explorer
  */
 class NotSupportedCurrencyError extends Error {
-  constructor (...params) {
-    super(...params)
+  constructor (...parameters) {
+    super(...parameters)
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, NotSupportedCurrencyError)

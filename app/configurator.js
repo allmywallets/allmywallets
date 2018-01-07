@@ -41,7 +41,7 @@ export default class Configurator {
 
   static async validateWalletsArgs (config) {
     config.profiles[0].wallets.forEach(async wallet => {
-      await new Proxy(wallet.network, wallet.provider, wallet.parameters).checkArgs(wallet.parameters)
+      await new Proxy(wallet.network, wallet.provider, wallet.parameters).checkParameters(wallet.parameters)
     })
   }
 

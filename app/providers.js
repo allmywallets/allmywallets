@@ -13,7 +13,7 @@ export default class Proxy {
     return new Provider(parameters)
   }
 
-  static getProviderParams (provider) {
+  static getProviderParameters (provider) {
     return getGenericProviderClass(provider).getSupportedParameters()
   }
 
@@ -30,8 +30,8 @@ function getGenericProviderClass (explorerName) {
       this.explorer = new Explorer(this.parameters.explorerSpecific)
     }
 
-    async checkArgs (parameters) {
-      await this.explorer.checkArgs()
+    async checkParameters (parameters) {
+      await this.explorer.checkParameters()
       await this.explorer.checkAddresses(parameters.addresses)
       await this.explorer.checkWallets(parameters.wallets)
     }
@@ -53,7 +53,8 @@ function getGenericProviderClass (explorerName) {
         let i = 0
         this.explorer.getSelectedCurrencies().forEach(selectedCurrency => {
           const amount = wallet.balances[i]
-          const balance = new Balance(this.parameters.addresses[walletIndex], selectedCurrency.name, selectedCurrency.ticker, amount, new Date())
+          const address = this.parameters.addresses ? this.parameters.addresses[walletIndex] : 'exchangeDepositAddressWIP'
+          const balance = new Balance(address, selectedCurrency.name, selectedCurrency.ticker, amount, new Date())
           balances.push(balance)
           ++i
         })
@@ -73,15 +74,15 @@ function getGenericProviderClass (explorerName) {
     }
 
     static async getSupportedParameters () {
-      let explorerParams = Explorer.getExplorerParams().map(param => {
+      let explorerParameters = Explorer.getExplorerParameters().map(param => {
         param.model = `explorerSpecific.${param.model}`
         return param
       })
 
-      explorerParams = explorerParams.concat(Explorer.getAddressParam())
+      explorerParameters = explorerParameters.concat(Explorer.getWalletIdentifierParameters())
 
       const currencies = await Explorer.getSupportedCurrencies()
-      explorerParams.push({
+      explorerParameters.push({
         type: 'checklist',
         label: 'Currencies',
         model: 'currencies',
@@ -91,7 +92,7 @@ function getGenericProviderClass (explorerName) {
         values: Object.keys(currencies)
       })
 
-      return explorerParams
+      return explorerParameters
     }
 }
 

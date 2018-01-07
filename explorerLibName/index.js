@@ -2,7 +2,7 @@ module.exports = {
   explorer: function (explorerName) {
     switch (explorerName) {
       case 'binance.binance':
-        return require('./src/explorers/Binance')
+        return require('./src/explorers/ExchangeBinance')
       case 'bitcoin.blockexplorer':
         return require('./src/explorers/BitcoinBlockExplorer')
       case 'cryptoid.cryptoid':
