@@ -36,7 +36,7 @@ class AbstractExchangeExplorer extends AbstractExplorer {
   async checkWallets (wallets) {
     wallets.forEach(async wallet => {
       const correctPermission = await this._checkApiKeyPermission(wallet)
-      if (!correctPermission) { throw new ApiKeyPermissionError() }
+      if (!correctPermission) { throw new ApiKeyPermissionError('API Key permission error') }
     })
   }
 
@@ -79,7 +79,7 @@ class AbstractExchangeExplorer extends AbstractExplorer {
     const {balances, nonZeroBalanceTickers} = await this._getAllNonZeroBalances(walletIdentifier)
 
     if (balances.length === 0) {
-      throw new OnlyEmptyBalancesFound()
+      throw new OnlyEmptyBalancesFound('Only empty balances found')
     }
 
     nonZeroBalanceTickers.forEach(ticker => {
