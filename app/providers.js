@@ -1,5 +1,4 @@
 import Balance from './model/Balance'
-import Transaction from './model/Transaction'
 import ExplorerLib from '../explorerLibName'
 
 export default class Proxy {
@@ -49,14 +48,16 @@ function getGenericProviderClass (explorerName) {
         .exec()
 
       const balances = []
+      let walletIndex = 0
       wallets.forEach(wallet => {
         let i = 0
         this.explorer.getSelectedCurrencies().forEach(selectedCurrency => {
           const amount = wallet.balances[i]
-          const balance = new Balance('0x0', selectedCurrency.name, selectedCurrency.ticker, amount, new Date())
+          const balance = new Balance(this.parameters.addresses[walletIndex], selectedCurrency.name, selectedCurrency.ticker, amount, new Date())
           balances.push(balance)
           ++i
         })
+        ++walletIndex
       })
       return balances
     }
