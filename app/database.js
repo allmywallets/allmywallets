@@ -32,7 +32,7 @@ class Database {
     const balance = await db.transaction('balance').objectStore('balance').get(id)
 
     if (balance === undefined) {
-      throw new Error(`No such balance (${id})`)
+      return null
     }
 
     return Balance.fromObject(balance)
@@ -45,7 +45,7 @@ class Database {
       balancePromises.push(this.findBalance(id))
     })
 
-    return Promise.all(balancePromises)
+    return Promise.all(balancePromises).then(balances => balances.filter(balance => balance !== null))
   }
 
   async findAllBalances () {

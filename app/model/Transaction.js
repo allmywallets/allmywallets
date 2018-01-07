@@ -6,20 +6,20 @@ export default class Transaction {
   /**
    * Creates a new transaction.
    *
-   * @param {string} type
+   * @param {string} id
    * @param {string} from
    * @param {string} to
    * @param {number} amount
    */
-  constructor (type, from, to, amount) {
-    this._type = type
+  constructor (id, from, to, amount) {
+    this._id = id
     this._from = from
     this._to = to
     this._amount = amount
   }
 
-  get type () {
-    return this._type
+  get id () {
+    return this._id
   }
 
   get from () {
@@ -36,7 +36,7 @@ export default class Transaction {
 
   static fromObject (object) {
     return new Transaction(
-      object._type,
+      object._id,
       object._from,
       object._to,
       object._amount

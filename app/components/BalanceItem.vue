@@ -80,7 +80,7 @@
         return balance
       },
       wallet () {
-        return this.wallets[this.balance.walletId]
+        return this.wallets.find(wallet => wallet.id === this.balance.walletId)
       }
     },
     async mounted () {

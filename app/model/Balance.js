@@ -1,5 +1,3 @@
-import Transaction from './Transaction'
-
 /**
  * A balance represents the amount of coins in
  * a specific currency.
@@ -8,18 +6,22 @@ export default class Balance {
   /**
    * Creates a new Balance
    *
+   * @param {string} address
    * @param {string} currency
    * @param {string} ticker
    * @param {number} amount
    * @param {Date} lastUpdate
-   * @param {array<Transaction>} transactions
    */
-  constructor (currency, ticker, amount, lastUpdate, transactions) {
+  constructor (address, currency, ticker, amount, lastUpdate) {
+    this._address = address
     this._currency = currency
     this._ticker = ticker
     this._amount = amount
     this._lastUpdate = lastUpdate
-    this._transactions = transactions
+  }
+
+  get address () {
+    return this._address
   }
 
   get currency () {
@@ -32,10 +34,6 @@ export default class Balance {
 
   get amount () {
     return this._amount
-  }
-
-  get transactions () {
-    return this._transactions
   }
 
   get lastUpdate () {
@@ -66,11 +64,11 @@ export default class Balance {
 
   static fromObject (object) {
     const balance = new Balance(
+      object._address,
       object._currency,
       object._ticker,
       object._amount,
-      object._lastUpdate,
-      object._transactions.map(transaction => Transaction.fromObject(transaction))
+      object._lastUpdate
     )
 
     balance.walletId = object._walletId

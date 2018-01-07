@@ -3,8 +3,7 @@
     <a href="#"
        class="address"
        title="Public key copied!"
-       v-for="address in wallet.parameters.addresses"
-       :data-clipboard-text="address"
+       :data-clipboard-text="balance.address"
        v-tippy="{ trigger: 'click' }">
       <icon icon="copy"></icon>
     </a>
@@ -19,7 +18,6 @@
 
 <script>
   import Clipboard from 'clipboard'
-  import { mapGetters } from 'vuex'
   import moment from 'moment'
   import Balance from '../model/Balance'
 
@@ -37,12 +35,6 @@
       }
     },
     computed: {
-      ...mapGetters([
-        'wallets'
-      ]),
-      wallet () {
-        return this.wallets[this.balance.walletId]
-      },
       status () {
         this.loading = false
 
