@@ -8,5 +8,6 @@ before_script:
   - sleep 3
 
 script:
+  - cd explorerLibName && npm i && cd ..
   - npm run test
   - npm run lint
