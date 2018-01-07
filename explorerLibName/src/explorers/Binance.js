@@ -1,6 +1,5 @@
 const AbstractExchangeExplorer = require('./AbstractExchangeExplorer')
 const NotSupportedCurrencyError = require('../errors/NotSupportedCurrencyError')
-const OnlyEmptyBalancesFound = require('../errors/OnlyEmptyBalancesFound')
 
 const crypto = require('crypto')
 const queryStringLib = require('querystring')
@@ -62,36 +61,31 @@ class Binance extends AbstractExchangeExplorer {
     return res.code === -2015
   }
 
-  async _getAllNonZeroBalances ({secret, apiKey}, wallet) {
+  async _getAllNonZeroBalances ({secret, apiKey}) {
     const res = await this._binanceApiRequest('account', {recvWindow: 10000}, apiKey, secret)
 
-    wallet.balances = []
+    const nonZeroBalanceTickers = []
+    const balances = []
     res.balances.forEach(balance => {
       let amount = parseFloat(balance.free)
       if (amount > 0) {
-        wallet.balances.push(amount)
-        this.selectedCurrencies.push({name: balance.asset, ticker: balance.asset})
-
-        if (this.elementsToFetch.includes('transactions')) {
-          if (!wallet.transactions) { wallet.transactions = [] }
-          wallet.transactions.push([])
-        }
+        balances.push(amount)
+        nonZeroBalanceTickers.push(balance.asset)
       }
     })
-    if (wallet.balances.length === 0) {
-      throw new OnlyEmptyBalancesFound()
-    }
+
+    return {balances, nonZeroBalanceTickers}
   }
 
-  async _getSpecifiedBalances ({secret, apiKey}, wallet) {
+  async _getBalances ({secret, apiKey}) {
     const res = await this._binanceApiRequest('account', {recvWindow: 10000}, apiKey, secret)
 
-    wallet.balances = []
+    const balances = []
     this.tickers.forEach(ticker => {
       let tickerFound = false
       res.balances.forEach(balance => {
         if (balance.asset === ticker) {
-          wallet.balances.push(parseFloat(balance.free))
+          balances.push(parseFloat(balance.free))
           this.selectedCurrencies.push({name: balance.asset, ticker: balance.asset})
           tickerFound = true
           return false
@@ -102,6 +96,8 @@ class Binance extends AbstractExchangeExplorer {
         throw new NotSupportedCurrencyError(`${ticker} is not supported`)
       }
     })
+
+    return balances
   }
 
   _sign (queryString, secret) {

@@ -1,5 +1,6 @@
 const AbstractExplorer = require('./AbstractExplorer')
 const ApiKeyPermissionError = require('../errors/ApiKeyPermissionError')
+const OnlyEmptyBalancesFound = require('../errors/OnlyEmptyBalancesFound')
 
 /**
  * AbstractExchangeExplorer
@@ -47,25 +48,25 @@ class AbstractExchangeExplorer extends AbstractExplorer {
     throw new Error('This method should be implemented by child class')
   }
 
-  async _getTransactions ({secret, apiKey}) {
+  async _getTransactions ({secret, apiKey}, nonZeroBalanceTickers) {
     // Filled in getBalances (cant know the 0 balance in advance) TODO: improve this ?
+
     const transactions = []
+
     if (this.tickers.length !== 0) {
       this.tickers.forEach(ticker => {
         transactions.push([])
       })
       return transactions
     }
-    return [[]]
-  }
 
-  async _setResultBalances (walletIdentifier, wallet) {
-    if (this.tickers[0] === 'DEFAULT_TICKER') {
-      this.selectedCurrencies = []
-
-      return this._getAllNonZeroBalances(walletIdentifier, wallet)
+    if (nonZeroBalanceTickers) {
+      nonZeroBalanceTickers.forEach(ticker => {
+        transactions.push([])
+      })
+      return transactions
     }
-    return this._getSpecifiedBalances(walletIdentifier, wallet)
+    return [[]]
   }
 
   async _getAllNonZeroBalances (walletIdentifier, wallet) {
@@ -74,6 +75,42 @@ class AbstractExchangeExplorer extends AbstractExplorer {
 
   async _getSpecifiedBalances (walletIdentifier, wallet) {
     throw new Error('This method should be implemented by child class')
+  }
+
+  async _setAllNonZeroBalancesTransactionsWallet (walletIdentifier, wallet) {
+    const {balances, nonZeroBalanceTickers} = await this._getAllNonZeroBalances(walletIdentifier)
+
+    if (balances.length === 0) {
+      throw new OnlyEmptyBalancesFound()
+    }
+
+    nonZeroBalanceTickers.forEach(ticker => {
+      this.selectedCurrencies.push({name: ticker, ticker})
+    })
+    wallet.balances = balances
+
+    if (this.elementsToFetch.includes('transactions')) {
+      const transactions = await this._getTransactions(walletIdentifier, nonZeroBalanceTickers)
+      wallet.transactions = transactions
+    }
+  }
+
+  async exec () {
+    if (this.tickers.length === 0) {
+      let promises = []
+      let wallets = []
+      this._addresses.forEach(walletIdentifier => {
+        const wallet = {}
+        promises.push(this._setAllNonZeroBalancesTransactionsWallet(walletIdentifier, wallet))
+        wallets.push(wallet)
+      })
+
+      await Promise.all(promises)
+
+      return wallets
+    }
+
+    return super.exec()
   }
 }
 

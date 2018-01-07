@@ -60,7 +60,7 @@ for (let i = 0; i < explorers.length; i++) {
 
   test(`[${explorerName}] fetch only transactions`, async t => {
     const explorer = new Explorer(params)
-
+    if (Explorer.isExchange) { explorer.currency('BTC') }
     const res = await explorer
         .address(address)
         .fetch(['transactions'])
