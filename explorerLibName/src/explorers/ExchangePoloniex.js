@@ -97,6 +97,7 @@ class ExchangePoloniex extends AbstractExchangeExplorer {
       inputType: 'text',
       label: 'Poloniex Api Key',
       model: 'wallets.apiKey',
+      autocomplete: 'off',
       required: true
     },
     {
@@ -104,6 +105,7 @@ class ExchangePoloniex extends AbstractExchangeExplorer {
       inputType: 'text',
       label: 'Poloniex secret',
       model: 'wallets.secret',
+      autocomplete: 'off',
       required: true
     }]
   }

@@ -110,6 +110,7 @@ class ExchangeBinance extends AbstractExchangeExplorer {
       inputType: 'text',
       label: 'Binance Api Key',
       model: 'wallets.apiKey',
+      autocomplete: 'off',
       required: true
     },
     {
@@ -117,6 +118,7 @@ class ExchangeBinance extends AbstractExchangeExplorer {
       inputType: 'text',
       label: 'Binance secret',
       model: 'wallets.secret',
+      autocomplete: 'off',
       required: true
     }]
   }
