@@ -104,7 +104,7 @@ class Binance extends AbstractExchangeExplorer {
     return crypto.createHmac('sha256', secret).update(queryString).digest('hex')
   }
 
-  static getAddressParam () {
+  static getWalletIdentifierParameters () {
     return [{
       type: 'input',
       inputType: 'text',

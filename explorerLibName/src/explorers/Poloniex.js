@@ -66,7 +66,7 @@ class Poloniex extends AbstractExchangeExplorer {
     return crypto.createHmac('sha512', secret).update(queryString).digest('hex')
   }
 
-  static getAddressParam () {
+  static getWalletIdentifierParameters () {
     return [{
       type: 'input',
       inputType: 'text',

@@ -4,8 +4,8 @@ const NotSupportedCurrencyError = require('../errors/NotSupportedCurrencyError')
  * A block/DAGchain explorer
  */
 class AbstractExplorer {
-  constructor (params) {
-    this.params = params
+  constructor (parameters) {
+    this.parameters = parameters
 
     this._addresses = []
     this.tickers = []
@@ -153,10 +153,10 @@ class AbstractExplorer {
   }
 
   /**
-   * Return the params needed for the constructor
+   * Return the parameters needed for the constructor
    * @returns {object}
    */
-  static getExplorerParams () {
+  static getExplorerParameters () {
     return []
   }
 
@@ -164,7 +164,7 @@ class AbstractExplorer {
    * Get the information needed to identify an account
    * @returns {object}
    */
-  static getAddressParam () {
+  static getWalletIdentifierParameters () {
     return [{
       type: 'input',
       inputType: 'text',

@@ -8,11 +8,11 @@ const API_URL = 'https://cors-anywhere.herokuapp.com/https://chainz.cryptoid.inf
  *  CryptoID blockchain explorers https://chainz.cryptoid.info/
  */
 class CryptoID extends AbstractExplorer {
-  constructor (params) {
+  constructor (parameters) {
     super()
 
-    this.params = params || {}
-    if (!this.params.apiKey) {
+    this.parameters = parameters || {}
+    if (!this.parameters.apiKey) {
       throw new Error('Api key is required for CryptoID, request it here https://chainz.cryptoid.info/api.key.dws')
     }
 
@@ -48,7 +48,7 @@ class CryptoID extends AbstractExplorer {
     const balances = []
     const promises = []
     this.tickers.forEach(async ticker => {
-      promises.push(this.constructor._fetchJson(`${API_URL}/${ticker.toLowerCase()}/api.dws?q=getbalance&a=${address}&key=${this.params.apiKey}`, {headers})
+      promises.push(this.constructor._fetchJson(`${API_URL}/${ticker.toLowerCase()}/api.dws?q=getbalance&a=${address}&key=${this.parameters.apiKey}`, {headers})
                                     .catch(() => { throw new NotSupportedCurrencyError(`${ticker} is not supported`) }))
     })
     let apiBalances = await Promise.all(promises)
@@ -68,7 +68,7 @@ class CryptoID extends AbstractExplorer {
     return transactions
   }
 
-  static getExplorerParams () {
+  static getExplorerParameters () {
     return [{
       type: 'input',
       inputType: 'text',

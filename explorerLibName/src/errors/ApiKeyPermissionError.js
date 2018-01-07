@@ -4,8 +4,8 @@
  * trade and withdrawal permission.
  */
 class ApiKeyPermissionError extends Error {
-  constructor (...params) {
-    super(...params)
+  constructor (...parameters) {
+    super(...parameters)
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, ApiKeyPermissionError)

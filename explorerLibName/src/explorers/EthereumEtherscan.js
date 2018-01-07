@@ -4,11 +4,11 @@ const ERC20Token = require('./ERC20Tokens.json')
 const API_URL = 'https://api.etherscan.io/api'
 
 class EthereumEtherscan extends AbstractExplorer {
-  constructor (params) {
+  constructor (parameters) {
     super()
 
-    if (params && params.customTokens) {
-      this.supportedCurrencies = Object.assign(this.supportedCurrencies, params.customTokens)
+    if (parameters && parameters.customTokens) {
+      this.supportedCurrencies = Object.assign(this.supportedCurrencies, parameters.customTokens)
     }
   }
 
@@ -66,7 +66,7 @@ class EthereumEtherscan extends AbstractExplorer {
     return transactions
   }
 
-  static getExplorerParams () {
+  static getExplorerParameters () {
     return [{
       type: 'input',
       inputType: 'text',

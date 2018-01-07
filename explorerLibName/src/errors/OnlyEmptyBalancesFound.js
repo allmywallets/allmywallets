@@ -3,8 +3,8 @@
  * zero for the Exchange requested account
  */
 class OnlyEmptyBalancesFound extends Error {
-  constructor (...params) {
-    super(...params)
+  constructor (...parameters) {
+    super(...parameters)
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, OnlyEmptyBalancesFound)

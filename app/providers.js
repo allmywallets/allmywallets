@@ -73,15 +73,15 @@ function getGenericProviderClass (explorerName) {
     }
 
     static async getSupportedParameters () {
-      let explorerParams = Explorer.getExplorerParams().map(param => {
+      let explorerParameters = Explorer.getExplorerParameters().map(param => {
         param.model = `explorerSpecific.${param.model}`
         return param
       })
 
-      explorerParams = explorerParams.concat(Explorer.getAddressParam())
+      explorerParameters = explorerParameters.concat(Explorer.getWalletIdentifierParameters())
 
       const currencies = await Explorer.getSupportedCurrencies()
-      explorerParams.push({
+      explorerParameters.push({
         type: 'checklist',
         label: 'Currencies',
         model: 'currencies',
@@ -91,7 +91,7 @@ function getGenericProviderClass (explorerName) {
         values: Object.keys(currencies)
       })
 
-      return explorerParams
+      return explorerParameters
     }
 }
 
