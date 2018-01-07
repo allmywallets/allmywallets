@@ -33,6 +33,13 @@ class Poloniex extends AbstractExchangeExplorer {
   }
 
   async _checkApiKeyPermission ({secret, apiKey}) {
+    const resTrade = await this._poloniexPrivateApiRequest('buy', {currencyPair: 'BTC_ETH', rate: '1', amount: '1'}, apiKey, secret)
+    const tradePermission = resTrade.error !== 'This API key does not have permission to trade.'
+
+    const resWithdraw = await this._poloniexPrivateApiRequest('withdraw', {}, apiKey, secret)
+    const withdrawPermission = resWithdraw.error !== 'Permission to withdraw denied.'
+
+    return !tradePermission && !withdrawPermission
   }
 
   async _getAllNonZeroBalances ({secret, apiKey}) {
