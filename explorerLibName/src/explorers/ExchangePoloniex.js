@@ -7,11 +7,24 @@ const nonce = require('nonce')()
 const URLSearchParams = require('url-search-params')
 
 const PRIVATE_API = 'https://poloniex.com/tradingApi'
+const RETURN_TICKER_API = 'https://poloniex.com/public?command=returnTicker'
 
 /**
  * Poloniex exchange https://poloniex.com/
  */
 class ExchangePoloniex extends AbstractExchangeExplorer {
+  static async getSupportedCurrencies () {
+    const currencies = {}
+    const res = await AbstractExchangeExplorer._fetchJson(RETURN_TICKER_API)
+    Object.keys(res).forEach(pair => {
+      pair.split('_').forEach(ticker => {
+        currencies[ticker] = {name: ticker, ticker}
+      })
+    })
+
+    return currencies
+  }
+
   async _poloniexPrivateApiRequest (command, queryObject, apiKey, secret, method = 'POST') {
     queryObject.command = command
     queryObject.nonce = nonce()
@@ -21,15 +34,11 @@ class ExchangePoloniex extends AbstractExchangeExplorer {
       'Sign': this._sign(queryString, secret),
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
     }
-    const res = await this.constructor._fetchJson(PRIVATE_API, {
+    return this.constructor._fetchJson(PRIVATE_API, {
       method,
       headers,
       body: new URLSearchParams(queryString)
     })
-    return res
-  }
-
-  static async getSupportedCurrencies () {
   }
 
   async _checkApiKeyPermission ({secret, apiKey}) {
@@ -51,7 +60,7 @@ class ExchangePoloniex extends AbstractExchangeExplorer {
     Object.keys(resBalances).forEach(ticker => {
       const amount = resBalances[ticker]
       if (amount > 0) {
-        balances.push(amount)
+        balances.push(parseFloat(amount))
         nonZeroBalanceTickers.push(ticker)
       }
     })
@@ -60,6 +69,19 @@ class ExchangePoloniex extends AbstractExchangeExplorer {
   }
 
   async _getBalances ({secret, apiKey}) {
+    const resBalances = await this._poloniexPrivateApiRequest('returnBalances', {}, apiKey, secret)
+    const balances = []
+    this.tickers.forEach(ticker => {
+      const amount = resBalances[ticker]
+      if (!amount) {
+        throw new NotSupportedCurrencyError(`${ticker} is not supported`)
+      }
+
+      balances.push(parseFloat(amount))
+      this.selectedCurrencies.push({name: ticker, ticker})
+    })
+
+    return balances
   }
 
   _sign (queryString, secret) {

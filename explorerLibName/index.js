@@ -11,6 +11,8 @@ module.exports = {
         return require('./src/explorers/EthereumEtherscan')
       case 'iota.native':
         return require('./src/explorers/IotaNative')
+      case 'poloniex.poloniex':
+        return require('./src/explorers/ExchangePoloniex')
       case 'bitcoin.mockexplorer':
         return require('./src/explorers/MockExplorer')
       default:
@@ -18,6 +20,6 @@ module.exports = {
     }
   },
   list: function () {
-    return ['binance.binance', 'bitcoin.blockexplorer', 'cryptoid.cryptoid', 'ethereum.etherscan', 'iota.native', 'bitcoin.mockexplorer']
+    return ['binance.binance', 'bitcoin.blockexplorer', 'cryptoid.cryptoid', 'ethereum.etherscan', 'iota.native', 'poloniex.poloniex', 'bitcoin.mockexplorer']
   }
 }
