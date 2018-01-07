@@ -13,7 +13,7 @@ export default class Proxy {
     return new Provider(parameters)
   }
 
-  static getProviderParams (provider) {
+  static getProviderParameters (provider) {
     return getGenericProviderClass(provider).getSupportedParameters()
   }
 

@@ -1,5 +1,5 @@
 const AbstractExplorer = require('./AbstractExplorer')
-const ERC20Token = require('./ERC20Tokens.json')
+const ERC20Token = require('./resources/ERC20Tokens.json')
 
 const API_URL = 'https://api.etherscan.io/api'
 

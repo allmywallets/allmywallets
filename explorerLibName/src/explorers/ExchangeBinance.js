@@ -11,7 +11,7 @@ const PUBLIC_API_URL = 'https://cors-anywhere.herokuapp.com/https://api.binance.
 /**
  * Binance exchange https://www.binance.com/
  */
-class Binance extends AbstractExchangeExplorer {
+class ExchangeBinance extends AbstractExchangeExplorer {
   static async getSupportedCurrencies () {
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -122,4 +122,4 @@ class Binance extends AbstractExchangeExplorer {
   }
 }
 
-module.exports = Binance
+module.exports = ExchangeBinance

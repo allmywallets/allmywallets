@@ -11,7 +11,7 @@ const PRIVATE_API = 'https://poloniex.com/tradingApi'
 /**
  * Poloniex exchange https://poloniex.com/
  */
-class Poloniex extends AbstractExchangeExplorer {
+class ExchangePoloniex extends AbstractExchangeExplorer {
   async _poloniexPrivateApiRequest (command, queryObject, apiKey, secret, method = 'POST') {
     queryObject.command = command
     queryObject.nonce = nonce()
@@ -84,4 +84,4 @@ class Poloniex extends AbstractExchangeExplorer {
   }
 }
 
-module.exports = Poloniex
+module.exports = ExchangePoloniex
