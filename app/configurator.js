@@ -120,5 +120,11 @@ export default class Configurator {
           upstream: data[0].tag_name
         }
       })
+      .catch(() => {
+        return {
+          current: 'unknown',
+          upstream: 'unknown'
+        }
+      })
   }
 }

@@ -1,5 +1,12 @@
 <template>
   <div>
+    <template v-if="needsUpgrade">
+      <h2>App upgrade</h2>
+      <p>
+        An upgrade is available!
+        <a href="#" @click.prevent="forceUpgrade">Upgrade</a>
+      </p>
+    </template>
     <h2>Application settings</h2>
     <h3>Customization</h3>
     <p>TBD</p>
@@ -7,7 +14,6 @@
     <config-import></config-import>
     <config-expert></config-expert>
     <h2>Danger zone</h2>
-    <template v-if="needsUpgrade">An upgrade is available!</template>
     <a href="#" @click.prevent="forceUpgrade">Force app upgrade</a>
   </div>
 </template>
