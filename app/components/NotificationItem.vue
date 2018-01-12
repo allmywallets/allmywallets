@@ -5,7 +5,7 @@
     <footer class="notification-footer">
       <span class="badge" v-if="wallet">{{ wallet.name }} ({{ wallet.network|camelcase }})</span>
       <time class="notification-date" :datetime="notification.date" :title="notification.date">
-        <icon icon="clock"></icon> {{ notification.date|moment('from', 'now') }}
+        <fa-icon icon="clock" /> {{ notification.date|moment('from', 'now') }}
       </time>
     </footer>
   </article>
@@ -39,10 +39,10 @@
 
   article {
     font-size: 0.9rem;
-    background: lighten($color-section-notifications, 3);
+    background: white;
+    box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.05);
     margin: 5px;
     padding: 5px;
-    border-radius: 5px;
 
     .notification-title {
       font-weight: bold;

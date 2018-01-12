@@ -1,16 +1,14 @@
 <template>
   <aside class="app-notifications">
-    <p class="overall" v-if="notifications.length === 0">You don't have any notification.</p>
+    <p class="overall" v-if="notifications.length === 0">
+      <fa-icon icon="magic" /> <br /> You don't have any notifications.
+    </p>
     <div class="notifications">
-      <notification-item
-        v-for="notification, key in notifications"
-        :key="key"
-        :notification="notification"
-      ></notification-item>
+      <notification-item v-for="notification, key in notifications" :key="key" :notification="notification" />
     </div>
     <footer v-if="notifications.length > 0">
       <a href="#" @click.prevent="clearAllNotifications">
-        <icon icon="trash"></icon> Clear all notifications
+        <fa-icon icon="trash" /> Clear all notifications
       </a>
     </footer>
   </aside>
@@ -42,19 +40,26 @@
 
   .app-notifications {
     grid-area: notifications;
-    color: white;
     background: $color-section-notifications;
     display: none;
     position: relative;
+    border-left: 2px solid white;
 
     @media screen and (min-width: $breakpoint-medium) {
       display: block;
     }
 
     .overall {
-      font-size: 0.85rem;
+      font-size: 1.1rem;
+      line-height: 1.2rem;
       text-align: center;
-      margin: 5px 0;
+      margin: 20px;
+      color: $color-primary;
+
+      svg {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+      }
     }
 
     .notifications {

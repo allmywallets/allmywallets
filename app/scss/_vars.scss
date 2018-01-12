@@ -1,15 +1,18 @@
 $font-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 $font-title: GeosansLight, Roboto, Aria, Helvetica, sans-serif;
 
-$breakpoint-medium: 700px;
+$breakpoint-medium: 750px;
+$breakpoint-large: 990px;
+$breakpoint-larger: 1200px;
 
 $grid-header-height: 50px;
 $grid-notifications-width: 250px;
 
-$color-primary: #17ca4c;
+$color-primary: #7381bb;
+$color-secondary: #bfc5d1;
 $color-info: #007bff;
-$color-warning: #ffc107;
+$color-warning: #eb7f00;
 $color-danger: #dc3545;
-$color-section-menu: $color-primary;
-$color-section-notifications: #545454;
-$color-section-content: #f2f2f2;
+$color-section-menu: #ffffff;
+$color-section-notifications: #dee2ed;
+$color-background: #f5f6fa;

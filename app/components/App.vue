@@ -1,11 +1,11 @@
 <template>
   <main>
-    <app-menu></app-menu>
-    <app-indicators></app-indicators>
-    <app-notifications></app-notifications>
+    <app-menu />
+    <app-indicators />
+    <app-notifications />
     <section class="content">
-      <router-view></router-view>
-      <app-footer></app-footer>
+      <router-view />
+      <app-footer />
     </section>
   </main>
 </template>
@@ -24,7 +24,7 @@
       AppNotifications,
       AppFooter
     },
-    mounted () {
+    async mounted () {
       const serviceWorker = this.$serviceWorker
 
       return this.$store.dispatch('initApplication', { serviceWorker })

@@ -20,7 +20,7 @@ Vue.use(VueTippy, {
   inertia: true
 })
 Vue.use(VueMoment)
-Vue.component('icon', VueFontAwesome)
+Vue.component('fa-icon', VueFontAwesome)
 Vue.component('qrcode', VueQRCode)
 
 Vue.prototype.$serviceWorker = navigator.serviceWorker

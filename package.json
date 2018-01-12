@@ -29,7 +29,7 @@
     "jsonschema": "^1.2.2",
     "lz-string": "^1.4.4",
     "moment": "^2.20.1",
-    "tippy.js": "^2.0.8",
+    "tippy.js": "^2.0.9",
     "vue": "^2.5",
     "vue-filter": "^0.2.3",
     "vue-form-generator": "^2.1.1",
@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "babel-core": "latest",
-    "babel-eslint": "^8.1.2",
+    "babel-eslint": "^8.2.1",
     "babel-loader": "latest",
     "babel-plugin-transform-runtime": "latest",
     "babel-polyfill": "^6.26.0",
@@ -61,7 +61,7 @@
     "http-server": "^0.10.0",
     "mocha": "^4.1.0",
     "nightwatch": "^0.9.19",
-    "nightwatch-cucumber": "^8.2.13",
+    "nightwatch-cucumber": "^8.2.14",
     "node-sass": "^3.0.0",
     "resolve-url-loader": "^2.2.1",
     "sass-loader": "^2.0.0",
@@ -70,10 +70,10 @@
     "standard": "^10.0.3",
     "style-loader": "^0.13.1",
     "url-loader": "^0.6.2",
-    "vue-loader": "^13.6.2",
+    "vue-loader": "^13.7.0",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.10.0",
+    "webpack-dev-server": "^2.10.1",
     "workbox-webpack-plugin": "^2.1.2"
   }
 }

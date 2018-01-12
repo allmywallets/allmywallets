@@ -1,9 +1,9 @@
 <template>
   <div>
     <a v-if="needsRefresh" href="#" @click.prevent="refreshPage" title="App restart required" v-tippy="{ showOnLoad: needsRefresh }">
-      <icon icon="sync-alt" class="text-danger"></icon>
+      <fa-icon icon="sync-alt" class="text-danger" />
     </a>
-    <icon v-else icon="check" title="App working properly" v-tippy></icon>
+    <fa-icon v-else icon="check" title="App working properly" v-tippy />
   </div>
 </template>
 

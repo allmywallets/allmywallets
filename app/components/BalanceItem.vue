@@ -1,6 +1,6 @@
 <template>
   <div class="balance">
-    <balance-item-chart class="balance-background" :ticker="balance.ticker"></balance-item-chart>
+    <balance-item-chart class="balance-background" :ticker="balance.ticker" />
     <div class="balance-content">
       <header class="balance-header">
       <span class="balance-logo">
@@ -26,7 +26,7 @@
         <div class="balance-provider">
           Data from {{ wallet.provider|camelcase }}
         </div>
-        <balance-item-tools :balance="balance"></balance-item-tools>
+        <balance-item-tools :balance="balance" />
       </footer>
     </div>
   </div>
@@ -38,7 +38,7 @@
   import BalanceItemTools from './BalanceItemTools.vue'
 
   export default {
-    name: 'balance-list-item',
+    name: 'balance-item',
     components: {
       BalanceItemChart,
       BalanceItemTools
@@ -93,31 +93,41 @@
   @import '../scss/vars';
 
   .balance {
-    flex-grow: 1;
-    flex-basis: 0;
     margin: 0 10px 20px;
     cursor: default;
     position: relative;
-    background: #fafafa;
-    border-radius: 5px;
+    background: white;
+    box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.05);
+    width: 100%;
+
+    @media screen and (min-width: $breakpoint-medium) {
+      width: calc(50% - 20px);
+    }
+
+    @media screen and (min-width: $breakpoint-large) {
+      width: calc(33.33% - 20px);
+    }
+
+    @media screen and (min-width: $breakpoint-larger) {
+      width: calc(25% - 20px);
+    }
 
     .balance-background {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 1;
-      border-radius: 5px;
+      z-index: -1;
       overflow: hidden;
 
       canvas {
-        opacity: 0.3;
+        opacity: 0;
         transition: opacity .3s;
       }
     }
 
     &:hover .balance-background canvas {
-      opacity: 0.6;
+      opacity: 0; // Todo: display on option toggle
     }
 
     .balance-content {
@@ -127,10 +137,6 @@
       display: grid;
       grid-template-columns: 1fr;
       grid-template-rows: 50px 1fr 25px;
-    }
-
-    @media screen and (min-width: $breakpoint-medium) {
-      width: auto;
     }
 
     .balance-header {

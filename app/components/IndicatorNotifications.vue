@@ -6,7 +6,7 @@
        :class="{ 'no-action': state.action === false }"
        v-tippy="{ showOnLoad: state.showOnLoad }"
     >
-      <icon :icon="this.loading ? 'spinner' : state.icon" :spin="this.loading" :class="`text-${state.state}`"></icon>
+      <fa-icon :icon="this.loading ? 'spinner' : state.icon" :spin="this.loading" :class="`text-${state.state}`" />
     </a>
     <div class="counter" v-if="countNotifications > 0">{{ countNotifications }}</div>
   </div>
@@ -62,12 +62,8 @@
   div {
     position: relative;
 
-    a {
-      color: $color-section-notifications;
-
-      &.no-action {
-        cursor: default;
-      }
+    a.no-action {
+      cursor: default;
     }
 
     .counter {
@@ -75,7 +71,8 @@
       right: 1.1rem;
       top: 0.8rem;
       border-radius: 1em;
-      background: $color-info;
+      background: $color-warning;
+      font-weight: bold;
       font-size: 0.7rem;
       width: 15px;
       color: white;

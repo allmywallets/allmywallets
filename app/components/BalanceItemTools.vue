@@ -5,13 +5,13 @@
        title="Public key copied!"
        :data-clipboard-text="balance.address"
        v-tippy="{ trigger: 'click' }">
-      <icon icon="copy"></icon>
+      <fa-icon icon="copy" />
     </a>
     <a href="#" @click.prevent="refresh" :title="`Updated ${lastUpdate}`" v-tippy>
-      <icon icon="sync-alt" :spin="loading"></icon>
+      <fa-icon icon="sync-alt" :spin="loading" />
     </a>
     <a href="#" v-if="status" :title="`Wallet update failed: ${status.title}`" class="text-warning" v-tippy>
-      <icon icon="exclamation-triangle"></icon>
+      <fa-icon icon="exclamation-triangle" />
     </a>
   </div>
 </template>

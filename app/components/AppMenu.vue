@@ -1,16 +1,16 @@
 <template>
   <nav class="app-menu" role="navigation">
     <router-link :to="{ name: 'home' }">
-        <icon icon="home"></icon> <span class="title">AllMyWallets</span>
+      <fa-icon icon="home" /> <span class="title">AllMyWallets</span>
     </router-link>
     <router-link :to="{ name: 'stats' }">
-        <icon icon="chart-pie"></icon> <span class="title">Statistics</span>
+      <fa-icon icon="chart-pie" /> <span class="title">Statistics</span>
     </router-link>
     <router-link :to="{ name: 'settings' }">
-        <icon icon="cog"></icon> <span class="title">Settings</span>
+      <fa-icon icon="cog" /> <span class="title">Settings</span>
     </router-link>
     <router-link :to="{ name: 'contribute' }">
-        <icon icon="heart"></icon> <span class="title">Contribute</span>
+      <fa-icon icon="heart" /> <span class="title">Contribute</span>
     </router-link>
   </nav>
 </template>
@@ -28,7 +28,7 @@
     grid-area: menu;
     display: flex;
     justify-content: center;
-    box-shadow: 0 0 3px rgba(#000000, .3);
+    box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.15);
     background: $color-section-menu;
     z-index: 1000;
 
@@ -40,11 +40,10 @@
     a {
       padding: 0 1.5rem;
       font-size: 1.5rem;
-      color: $color-section-notifications;
+      color: $color-secondary;
       display: flex;
       justify-content: center;
       flex-direction: column;
-      font-weight: bold;
 
       .title {
         display: none;
@@ -55,16 +54,17 @@
       }
 
       @media screen and (min-width: $breakpoint-medium) {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
+        font-weight: bold;
 
         svg {
-          margin: 0 auto 3px;
-          font-size: 1.4rem;
+          margin: 2px auto;
+          font-size: 1.5rem;
         }
       }
 
       &.router-link-exact-active {
-        color: white;
+        color: $color-primary;
       }
     }
   }

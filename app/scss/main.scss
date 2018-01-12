@@ -11,7 +11,7 @@
 }
 
 body {
-  background: $color-section-content;
+  background: $color-background;
   font-family: $font-default;
 }
 
@@ -37,7 +37,7 @@ a, a:hover {
 }
 
 .text-warning, .text-warning:hover {
-  color: #ffc107;
+  color: $color-warning;
 }
 
 .text-danger, .text-danger:hover {
@@ -70,13 +70,13 @@ a, a:hover {
 
 ::-webkit-scrollbar-thumb
 {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: $color-section-notifications;
   border-radius: 5px;
   border: 3px solid transparent;
   background-clip: padding-box;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: darken($color-section-notifications, 2);
   }
 }
 
