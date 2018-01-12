@@ -5,7 +5,7 @@ Feature: Navigate through the application
 
   Scenario: Launching the application
 
-    Then I should see "AllMyWallets" in the "h2" element
+    Then I should see "Retrieving your holdings"
 
   Scenario: Going to the statistics page
 
