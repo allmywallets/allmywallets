@@ -21,8 +21,7 @@
   @import '../scss/vars';
 
   .holdings {
-    margin-bottom: 10px;
-    border-bottom: 2px solid white;
+    margin-bottom: 12px;
     position: relative;
     height: 300px;
   }
