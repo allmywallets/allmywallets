@@ -13,7 +13,7 @@ const state = {
 const getters = {
   wallets: state => state.config.profiles[0].wallets,
   needsUpgrade: state => state.version.current !== state.version.upstream,
-  currentVersion: state => state.version.current,
+  currentVersion: state => state.version.current
 }
 
 const mutations = {
