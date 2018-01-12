@@ -17,6 +17,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import Clipboard from 'clipboard'
   import moment from 'moment'
   import Balance from '../model/Balance'
@@ -35,10 +36,13 @@
       }
     },
     computed: {
+      ...mapGetters([
+        'notifications'
+      ]),
       status () {
         this.loading = false
 
-        return this.$store.state.notifications.find(notification => {
+        return this.notifications.find(notification => {
           return notification.level === 'ERROR' && notification.walletId === this.balance.walletId
         })
       },

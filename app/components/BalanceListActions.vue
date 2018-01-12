@@ -5,7 +5,7 @@
         <fa-icon icon="compress" />
       </a><!--
       --><a href="#" @click.prevent="refreshBalances" title="Refresh all balances" v-tippy>
-        <fa-icon icon="sync-alt" :spin="loading.balances" />
+        <fa-icon icon="sync-alt" :spin="loading" />
       </a>
     </div>
     <div class="actions-right">
@@ -23,9 +23,11 @@
     name: 'balance-list-action',
     computed: {
       ...mapGetters([
-        'wallets',
-        'loading'
-      ])
+        'wallets'
+      ]),
+      loading () {
+        return this.$store.state.balances.loading.balances
+      }
     },
     methods: {
       async refreshBalances () {

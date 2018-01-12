@@ -1,11 +1,11 @@
 <template>
   <div class="holdings-value">
     <span class="holdings-amount">
-      <template v-if="!loading.holdings">${{ totalHoldings.usd|toPrecision(6) }}</template>
+      <template v-if="!loading">${{ totalHoldings.usd|toPrecision(6) }}</template>
       <template v-else>Retrieving your holdings</template>
     </span><br />
     <span class="holdings-secondary-amount">
-      <template v-if="!loading.holdings"><span class="ticker">BTC</span>{{ totalHoldings.btc|toPrecision(3) }}</template>
+      <template v-if="!loading"><span class="ticker">BTC</span>{{ totalHoldings.btc|toPrecision(3) }}</template>
       <template v-else>Please wait <fa-icon icon="sync-alt" spin /></template>
     </span>
   </div>
@@ -18,9 +18,11 @@
     name: 'holdings-value',
     computed: {
       ...mapGetters([
-        'holdings',
-        'loading'
+        'holdings'
       ]),
+      loading () {
+        return this.$store.state.balances.loading.holdings
+      },
       totalHoldings () {
         return this.holdings.reduce((sum, holding) => {
           sum.usd += holding.usd // Todo: replace btc/usd with primary/secondary

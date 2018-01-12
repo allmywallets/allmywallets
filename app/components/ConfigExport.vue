@@ -10,7 +10,7 @@
       <p>
         You can scan the below QRCode:
       </p>
-      <qrcode :value="url"></qrcode>
+      <qrcode :value="url" />
       <p>
         You can also copy the following url and access it on the target device:
       </p>
@@ -20,7 +20,7 @@
       <p>
         You can scan the below QRCode and copy the code that will be shown by your device at <a :href="importUrl">{{ importUrl }}</a>:
       </p>
-      <qrcode :value="url"></qrcode>
+      <qrcode :value="url" />
       <p>
         You can also copy the following code and paste it on the target device at <a :href="importUrl">{{ importUrl }}</a>:
       </p>

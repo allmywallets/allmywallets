@@ -15,6 +15,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import NotificationItem from './NotificationItem.vue'
 
   export default {
@@ -23,9 +24,9 @@
       NotificationItem
     },
     computed: {
-      notifications () {
-        return this.$store.state.notifications
-      }
+      ...mapGetters([
+        'notifications'
+      ])
     },
     methods: {
       clearAllNotifications () {

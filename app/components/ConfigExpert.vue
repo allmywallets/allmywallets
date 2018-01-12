@@ -82,10 +82,10 @@
     },
     computed: {
       config () {
-        return JSON.stringify(this.$store.state.config, null, 2)
+        return JSON.stringify(this.$store.state.config.config, null, 2)
       },
       needsUpdate () {
-        return !Configurator.validateConfig(this.$store.state.config)
+        return !Configurator.validateConfig(this.$store.state.config.config)
       }
     },
     methods: {
