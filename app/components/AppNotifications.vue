@@ -1,7 +1,7 @@
 <template>
   <aside class="app-notifications">
     <p class="overall" v-if="notifications.length === 0">
-      <fa-icon icon="magic" /> <br /> You don't have any notifications.
+      <fa-icon icon="inbox" /> <br /> You don't have any notifications.
     </p>
     <div class="notifications">
       <notification-item v-for="notification, key in notifications" :key="key" :notification="notification" />
@@ -59,7 +59,7 @@
 
       svg {
         font-size: 1.6rem;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
       }
     }
 
