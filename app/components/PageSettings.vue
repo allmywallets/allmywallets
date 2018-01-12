@@ -10,9 +10,9 @@
     <h2>Application settings</h2>
     <h3>Customization</h3>
     <p>TBD</p>
-    <config-export></config-export>
-    <config-import></config-import>
-    <config-expert></config-expert>
+    <config-export />
+    <config-import />
+    <config-expert />
     <h2>Danger zone</h2>
     <a href="#" @click.prevent="forceUpgrade">Force app upgrade</a>
   </div>

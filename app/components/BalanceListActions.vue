@@ -1,11 +1,14 @@
 <template>
   <div class="actions">
     <div class="actions-left">
-      <a href="#" title="Collapse balances" v-tippy>
-        <fa-icon icon="compress" />
-      </a><!--
-      --><a href="#" @click.prevent="refreshBalances" title="Refresh all balances" v-tippy>
+      <a href="#" @click.prevent="refreshBalances" title="Refresh all balances" v-tippy>
         <fa-icon icon="sync-alt" :spin="loading" />
+      </a><!--
+      --><a href="#" title="Show charts" v-tippy>
+        <fa-icon icon="chart-area" />
+      </a><!--
+      --><a href="#" title="Collapse balances" v-tippy>
+        <fa-icon icon="compress" />
       </a>
     </div>
     <div class="actions-right">
@@ -55,18 +58,18 @@
 
       &:first-child {
         padding-left: 12px;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
       }
 
       &:last-child {
         padding-right: 12px;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
       }
 
       &:not(:last-child) {
-        margin-right: 2px;
+        margin-right: 1px;
       }
     }
 

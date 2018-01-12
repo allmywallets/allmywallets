@@ -178,6 +178,7 @@
 
       small {
         font-size: 0.4em;
+        margin-right: 2px;
       }
 
       small, .balance-btc {

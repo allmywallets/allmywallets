@@ -24,5 +24,7 @@
     margin-bottom: 12px;
     position: relative;
     height: 300px;
+    border-radius: 0 0 15px 15px;
+    overflow: hidden;
   }
 </style>
