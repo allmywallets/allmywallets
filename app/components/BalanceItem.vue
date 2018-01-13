@@ -100,6 +100,10 @@
     box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.05);
     width: 100%;
 
+    h4 {
+      color: black;
+    }
+
     @media screen and (min-width: $breakpoint-medium) {
       width: calc(50% - 20px);
     }

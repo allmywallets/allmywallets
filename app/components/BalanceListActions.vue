@@ -4,7 +4,7 @@
       <a href="#" @click.prevent="refreshBalances" title="Refresh all balances" v-tippy>
         <fa-icon icon="sync-alt" :spin="loading" />
       </a><!--
-      --><a href="#" title="Show charts" v-tippy>
+      --><a href="#" title="Show balances charts" v-tippy>
         <fa-icon icon="chart-area" />
       </a><!--
       --><a href="#" title="Collapse balances" v-tippy>

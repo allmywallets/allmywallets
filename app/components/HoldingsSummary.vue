@@ -1,11 +1,12 @@
 <template>
   <div class="holdings">
-    <holdings-value />
+    <holdings-value :total-holdings="currentHoldings" />
     <holdings-chart />
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import HoldingsValue from './HoldingsValue.vue'
   import HoldingsChart from './HoldingsChart.vue'
 
@@ -13,6 +14,14 @@
     components: {
       HoldingsValue,
       HoldingsChart
+    },
+    computed: {
+      ...mapGetters([
+        'totalHoldings'
+      ]),
+      currentHoldings () {
+        return this.totalHoldings[this.totalHoldings.length - 1]
+      }
     }
   }
 </script>

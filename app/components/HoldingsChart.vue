@@ -5,24 +5,32 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import Chart from 'chart.js'
-
-  const NB_DAYS = 45
+  import { sumHoldingsHistories } from '../manager/holdings-manager'
 
   export default {
     name: 'holdings-chart',
+    computed: {
+      ...mapGetters([
+        'totalHoldings'
+      ])
+    },
     async mounted () {
-      return fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=BTC&tsym=USD&limit=${NB_DAYS * 24 / 6}&aggregate=6&e=CCCAGG`)
-        .then(response => response.json())
-        .then(json => {
-          const data = json.Data.map(d => d.close)
+      this.$store.watch( // Todo: rewrite this properly
+        state => {
+          const histories = sumHoldingsHistories(state.balances.holdings)
+
+          if (histories.length === 0) {
+            return
+          }
 
           new Chart(this.$refs.plot.getContext('2d'), {
             type: 'line',
             data: {
-              labels: [...Array(NB_DAYS * 24 / 6).keys()],
+              labels: [...Array(histories.length).keys()],
               datasets: [{
-                data: data,
+                data: histories,
                 backgroundColor: '#dee2ed',
                 borderColor: '#dee2ed'
               }]
@@ -49,7 +57,8 @@
               }
             }
           })
-        })
+        }
+      )
     }
   }
 </script>

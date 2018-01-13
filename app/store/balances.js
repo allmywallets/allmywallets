@@ -1,5 +1,5 @@
 import database from '../database'
-import { computeHoldings } from '../manager/holdings-manager'
+import * as HoldingsManager from '../manager/holdings-manager'
 import Balance from '../model/Balance'
 import Wallet from '../model/Wallet'
 
@@ -9,12 +9,12 @@ const state = {
     holdings: true
   },
   balances: [],
-  holdings: [] // Todo: holdings should be cached in database
+  holdings: {} // Todo: holdings should be cached in database
 }
 
 const getters = {
   balances: state => state.balances,
-  collapsedBalances: state => {
+  collapsedBalances: state => { // Todo: extract this in balance manager
     const collapsed = {}
 
     state.balances.forEach(balance => {
@@ -33,7 +33,8 @@ const getters = {
       }
     })
   },
-  holdings: state => state.holdings
+  holdings: state => state.holdings,
+  totalHoldings: state => HoldingsManager.sumHoldingsHistories(state.holdings)
 }
 
 const mutations = {
@@ -98,7 +99,17 @@ const actions = {
    */
   refreshHoldings: async ({ commit }) => {
     const balances = await database.findAllBalances()
-    const holdings = await computeHoldings(balances)
+    const amounts = HoldingsManager.getSummedAmounts(balances)
+
+    const priceHistories = {}
+    for (const ticker in amounts) {
+      priceHistories[ticker] = await HoldingsManager.getPeriodPriceHistory(ticker) // Todo: commit UPDATE EXCHANGE VALUES
+    }
+
+    const holdings = {}
+    for (const ticker in priceHistories) {
+      holdings[ticker] = HoldingsManager.computeHoldingsHistory(priceHistories[ticker], [...new Array(priceHistories[ticker].length).keys()].map(() => amounts[ticker]))
+    }
 
     commit('UPDATE_HOLDINGS', { holdings })
   }
