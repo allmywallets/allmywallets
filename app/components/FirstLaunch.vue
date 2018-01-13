@@ -13,7 +13,7 @@
         <span class="more">AMW can retrieve your balances from cryptocurrency explorers to exchanges.</span>
       </li>
       <li class="feature">
-        <fa-icon icon="crosshairs" /><br />
+        <fa-icon icon="lock" /><br />
         <strong>Your cryptocurrencies never at risk</strong><br />
         <span class="more">AMW only uses public keys and read-only API keys to display your balances.</span>
       </li>
