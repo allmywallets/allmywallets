@@ -1,5 +1,6 @@
 <template>
   <main>
+    <img src="/static/logo.png" alt="AMW" class="main-logo" height="40" />
     <app-menu />
     <app-indicators />
     <app-notifications />
@@ -58,6 +59,13 @@
       padding: 10px 10px 10px 20px;
       overflow-y: scroll;
       overflow-x: auto;
+    }
+
+    .main-logo {
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      z-index: 10000;
     }
   }
 </style>
