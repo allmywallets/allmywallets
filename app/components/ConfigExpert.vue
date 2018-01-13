@@ -57,7 +57,10 @@
         }
       }
     ]
-  }]
+  }],
+  "application": {
+    "version": "X.X.X"
+  }
 }
   </pre>
     <p>Current (editable) config:</p>

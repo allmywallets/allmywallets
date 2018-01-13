@@ -5,6 +5,7 @@
     <article class="balance-list">
       <balance-item v-for="balance, key in balances" :key="key" :id="balance.id" />
     </article>
+    <modal-upgrade v-if="$route.name === 'home-upgraded'" />
   </div>
 </template>
 
@@ -13,13 +14,15 @@
   import BalanceItem from './BalanceItem.vue'
   import HoldingsSummary from './HoldingsSummary.vue'
   import BalanceListActions from './BalanceListActions.vue'
+  import ModalUpgrade from './ModalUpgrade.vue'
 
   export default {
     name: 'page-home',
     components: {
       HoldingsSummary,
       BalanceListActions,
-      BalanceItem
+      BalanceItem,
+      ModalUpgrade
     },
     computed: {
       ...mapGetters([

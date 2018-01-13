@@ -17,8 +17,13 @@ export default new Router({
       component: PageHome
     },
     {
+      path: '/upgraded',
+      name: 'home-upgraded',
+      component: PageHome
+    },
+    {
       path: '/add',
-      name: 'add',
+      name: 'home-add',
       component: PageAddWallet
     },
     {

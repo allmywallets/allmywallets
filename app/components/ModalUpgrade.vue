@@ -1,0 +1,42 @@
+<template>
+  <sweet-modal :title="`Upgraded to version ${version}!`" ref="modalUpgrade">
+    <button slot="box-action" class="button" @click="openGithub">
+      <fa-icon :icon="['fab', 'github']" />
+      See on GitHub
+    </button>
+    <article v-html="content"></article>
+    <button slot="button" class="button" @click="closeModal">Close</button>
+  </sweet-modal>
+</template>
+
+<script>
+  import Showdown from 'showdown'
+  import Configurator from '../configurator'
+
+  export default {
+    name: 'modal-upgrade',
+    data () {
+      return {
+        version: '',
+        content: ''
+      }
+    },
+    methods: {
+      closeModal () {
+        this.$router.push('/')
+      },
+      openGithub () {
+        window.open('https://github.com/allmywallets/allmywallets/releases', '_blank')
+      }
+    },
+    async mounted () {
+      const converter = new Showdown.Converter()
+      const version = await Configurator.getVersion()
+
+      this.version = version.current
+      this.content = converter.makeHtml(version.releaseNotes)
+
+      this.$refs.modalUpgrade.open()
+    }
+  }
+</script>

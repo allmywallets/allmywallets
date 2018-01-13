@@ -14,7 +14,7 @@
     <config-import />
     <config-expert />
     <h2>Danger zone</h2>
-    <a href="#" @click.prevent="forceUpgrade">Force app upgrade</a>
+    <a href="#" @click.prevent="forceUpgrade">Force app upgrade</a> (app will be reinstalled but data should be preserved)
   </div>
 </template>
 
@@ -44,7 +44,7 @@
             // Todo: unregister from api
           }
         })
-        location.reload()
+        window.location.href = '/upgraded'
       }
     }
   }

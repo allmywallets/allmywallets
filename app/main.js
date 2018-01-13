@@ -1,10 +1,11 @@
-import '@fortawesome/fontawesome-free-solid'
-
 import Vue from 'vue'
 import VueFilter from 'vue-filter'
 import VueFormGenerator from 'vue-form-generator'
 import VueTippy from 'vue-tippy'
 import VueMoment from 'vue-moment'
+import SweetModal from 'sweet-modal-vue/src/plugin'
+import '@fortawesome/fontawesome-free-brands'
+import '@fortawesome/fontawesome-free-solid'
 import VueFontAwesome from '@fortawesome/vue-fontawesome'
 import VueQRCode from '@xkeshi/vue-qrcode'
 
@@ -20,6 +21,7 @@ Vue.use(VueTippy, {
   inertia: true
 })
 Vue.use(VueMoment)
+Vue.use(SweetModal)
 Vue.component('fa-icon', VueFontAwesome)
 Vue.component('qrcode', VueQRCode)
 

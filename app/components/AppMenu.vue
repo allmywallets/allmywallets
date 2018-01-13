@@ -1,6 +1,6 @@
 <template>
   <nav class="app-menu" role="navigation">
-    <router-link :to="{ name: 'home' }">
+    <router-link :to="{ name: 'home' }" :class="{ 'router-link-exact-active': $route.name && $route.name.startsWith('home') }">
       <fa-icon icon="home" /> <span class="title">AllMyWallets</span>
     </router-link>
     <router-link :to="{ name: 'stats' }">

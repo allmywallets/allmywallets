@@ -57,6 +57,37 @@ a, a:hover {
   background-color: #434343;
 }
 
+.button {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  color: white;
+  background: $color-primary;
+  padding: .5rem;
+  border: 0;
+  border-radius: 3px;
+
+  &:hover {
+    background: darken($color-primary, 5);
+  }
+
+  &:focus,
+  &.focus {
+    outline: 0;
+  }
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.3;
+  }
+
+  &:not([disabled]):not(.disabled) {
+    cursor: pointer;
+  }
+}
+
 ::-webkit-scrollbar-track
 {
   background: transparent;
@@ -82,4 +113,31 @@ a, a:hover {
 
 ::-webkit-scrollbar-corner {
   background: rgba(0, 0, 0, 0);
+}
+
+.sweet-modal-overlay {
+  z-index: 99999 !important;
+
+  .sweet-modal {
+    .sweet-box-actions .sweet-action-close:hover {
+      background: none;
+
+      svg {
+        color: $color-primary;
+      }
+    }
+
+    .sweet-title {
+      border: none;
+    }
+
+    .sweet-content {
+      border: none;
+      background: $color-background;
+    }
+
+    .sweet-content + .sweet-buttons {
+      border: none;
+    }
+  }
 }

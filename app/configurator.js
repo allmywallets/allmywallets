@@ -6,7 +6,7 @@ export default class Configurator {
   static async getConfig () {
     let config = await idbKeyval.get('config')
 
-    config = config || { profiles: [ { wallets: [ ] } ] }
+    config = config || { profiles: [ { wallets: [ ] } ], application: { version: Configurator.getVersion().current } }
 
     return config
   }
@@ -65,39 +65,47 @@ export default class Configurator {
 
   static validateConfig (config) {
     const walletSchema = {
-      'id': '/Wallet',
-      'type': 'object',
-      'properties': {
+      id: '/Wallet',
+      type: 'object',
+      properties: {
         'id': {
-          'type': 'string',
-          'minLength': 20,
-          'maxLength': 20
+          type: 'string',
+          minLength: 20,
+          maxLength: 20
         },
-        'name': { 'type': 'string' },
-        'network': { 'type': 'string' },
-        'provider': { 'type': 'string' },
-        'parameters': { 'type': 'object' }
+        'name': { type: 'string' },
+        'network': { type: 'string' },
+        'provider': { type: 'string' },
+        'parameters': { type: 'object' }
       },
-      'required': ['id', 'name', 'network', 'provider', 'parameters']
+      required: ['id', 'name', 'network', 'provider', 'parameters']
     }
 
     const configSchema = {
-      'id': '/Config',
-      'type': 'object',
-      'properties': {
+      id: '/Config',
+      type: 'object',
+      properties: {
         'profiles': {
-          'type': 'array',
-          'items': {
-            'type': 'object',
-            'properties': {
+          type: 'array',
+          required: true,
+          items: {
+            type: 'object',
+            properties: {
               'wallets': {
-                'type': 'array',
-                'items': {
-                  '$ref': '/Wallet'
+                type: 'array',
+                required: true,
+                items: {
+                  $ref: '/Wallet'
                 }
               }
             },
-            'required': ['wallets']
+            required: ['wallets']
+          }
+        },
+        'application': {
+          type: 'object',
+          properties: {
+            'version': { type: 'string', required: true }
           }
         }
       },
@@ -117,12 +125,14 @@ export default class Configurator {
       .then(data => {
         return {
           current: process.env.APP_VERSION,
+          releaseNotes: data[0].body,
           upstream: data[0].tag_name
         }
       })
       .catch(() => {
         return {
           current: 'unknown',
+          releaseNotes: '',
           upstream: 'unknown'
         }
       })
