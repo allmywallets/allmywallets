@@ -23,7 +23,7 @@ export default new Router({
     },
     {
       path: '/add',
-      name: 'home-add',
+      name: 'home-add-wallet',
       component: PageAddWallet
     },
     {
