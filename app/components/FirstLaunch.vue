@@ -41,7 +41,7 @@
   }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
   @import '../scss/vars';
 
   article {
@@ -61,7 +61,7 @@
     }
 
     .features {
-      margin: 30px 0;
+      margin: 20px 0;
       padding: 0;
       display: flex;
       flex-flow: wrap;
@@ -70,7 +70,7 @@
         flex-grow: 1;
         flex-basis: 0;
         list-style-type: none;
-        margin: 0 20px;
+        margin: 10px 20px;
 
         .more {
           margin-top: 10px;
