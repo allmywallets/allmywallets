@@ -70,13 +70,13 @@ a, a:hover {
 
 ::-webkit-scrollbar-thumb
 {
-  background-color: $color-section-notifications;
+  background-color: #d0d0d0;
   border-radius: 5px;
   border: 3px solid transparent;
   background-clip: padding-box;
 
   &:hover {
-    background-color: darken($color-section-notifications, 2);
+    background-color: darken(#d0d0d0, 7);
   }
 }
 
