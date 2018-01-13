@@ -9,7 +9,7 @@ read-only API keys to display your balances, so your money is never at risk.<br 
 🔔 **Be notified** when you receive or send cryptocurrencies. AMW uses push notifications so you can receive notifications
 on your smartphone even when you're not using the app.<br />
 🔑 **Decentralized and privacy-first**, data is stored in your browser and stays in your browser. AMW only sends refresh
-messages regularly to your computer so it can verify if your balances changed. 
+messages regularly to your computer so your balances can be synced. 
 
 AMW is a work in progress but is already usable on Chrome, on Android and Desktop.
 

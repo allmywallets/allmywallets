@@ -1,16 +1,23 @@
 <template>
   <div>
-    <holdings-summary />
-    <balance-list-actions />
-    <article class="balance-list">
-      <balance-item v-for="balance, key in balances" :key="key" :id="balance.id" />
-    </article>
+    <template v-if="wallets.length > 0">
+      <holdings-summary />
+      <balance-list-actions />
+      <article class="balance-list" v-if="balances.length > 0">
+        <balance-item v-for="balance, key in balances" :key="key" :id="balance.id" />
+      </article>
+      <article v-else>
+        <h2>No balances loaded yet</h2>
+      </article>
+    </template>
+    <first-launch v-else-if="!$store.state.balances.loading.balances" />
     <modal-upgrade v-if="$route.name === 'home-upgraded'" />
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
+  import FirstLaunch from './FirstLaunch.vue'
   import BalanceItem from './BalanceItem.vue'
   import HoldingsSummary from './HoldingsSummary.vue'
   import BalanceListActions from './BalanceListActions.vue'
@@ -19,6 +26,7 @@
   export default {
     name: 'page-home',
     components: {
+      FirstLaunch,
       HoldingsSummary,
       BalanceListActions,
       BalanceItem,
@@ -26,7 +34,8 @@
     },
     computed: {
       ...mapGetters([
-        'balances'
+        'balances',
+        'wallets'
       ])
     }
   }

@@ -20,6 +20,7 @@ body {
     font-weight: normal;
     font-family: $font-title;
     font-size: #{2.4 - ($i - 1)*0.3}em;
+    color: $color-primary;
   }
 }
 
