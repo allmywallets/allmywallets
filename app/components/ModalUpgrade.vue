@@ -1,5 +1,5 @@
 <template>
-  <sweet-modal :title="`Upgraded to version ${version}!`" ref="modalUpgrade">
+  <sweet-modal :title="`Upgraded to version ${version}!`" ref="modalUpgrade" @close="closeModal">
     <button slot="box-action" class="button" @click="openGithub">
       <fa-icon :icon="['fab', 'github']" />
       See on GitHub
