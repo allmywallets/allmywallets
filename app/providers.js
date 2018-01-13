@@ -1,5 +1,6 @@
 import Balance from './model/Balance'
 import ExplorerLib from '../explorerLibName'
+import Wallet from "./model/Wallet";
 
 export default class Proxy {
   constructor (network, provider, parameters) {
@@ -54,7 +55,15 @@ function getGenericProviderClass (explorerName) {
         this.explorer.getSelectedCurrencies().forEach(selectedCurrency => {
           const amount = wallet.balances[i]
           const address = this.parameters.addresses ? this.parameters.addresses[walletIndex] : 'exchangeDepositAddressWIP'
-          const balance = new Balance(address, selectedCurrency.name, selectedCurrency.ticker, amount, new Date())
+          const balance = new Balance(
+            // Todo: need to retrieve the following values
+            new Wallet('id', 'name', 'network', 'provider'),
+            address,
+            selectedCurrency.name,
+            selectedCurrency.ticker,
+            amount,
+            new Date()
+          )
           balances.push(balance)
           ++i
         })

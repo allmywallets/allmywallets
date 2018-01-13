@@ -7,8 +7,8 @@
         <i :class="`cc ${balance.ticker}-alt`"></i>
       </span>
         <h4 class="balance-name">
-          {{ wallet.name }}<br />
-          <small class="balance-network">{{ wallet.network|camelcase }}</small>
+          {{ balance.wallet.name }}<br />
+          <small class="balance-network">{{ balance.wallet.network|camelcase }}</small>
         </h4>
       </header>
       <div class="balance-amount">
@@ -24,7 +24,7 @@
       </div>
       <footer class="balance-footer">
         <div class="balance-provider">
-          Data from {{ wallet.provider|camelcase }}
+          Data from {{ balance.wallet.provider|camelcase }}
         </div>
         <balance-item-tools :balance="balance" />
       </footer>
@@ -59,11 +59,14 @@
     },
     computed: {
       ...mapGetters([
-        'wallets',
         'balances'
       ]),
       balance () {
         const balance = this.balances.find(balance => balance.id === this.id)
+
+        if (balance === null) {
+          throw new Error(`Cannot find balance with id ${this.id}`)
+        }
 
         fetch(`https://api.coinmarketcap.com/v1/ticker/${balance.currency.toLowerCase().split(' ').join('-')}/`)
           .then(response => response.json())
@@ -78,9 +81,6 @@
           })
 
         return balance
-      },
-      wallet () {
-        return this.wallets.find(wallet => wallet.id === this.balance.walletId)
       }
     },
     async mounted () {

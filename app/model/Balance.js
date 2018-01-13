@@ -1,3 +1,5 @@
+import Wallet from './Wallet'
+
 /**
  * A balance represents the amount of coins in
  * a specific currency.
@@ -6,13 +8,15 @@ export default class Balance {
   /**
    * Creates a new Balance
    *
+   * @param {Wallet} wallet
    * @param {string} address
    * @param {string} currency
    * @param {string} ticker
    * @param {number} amount
    * @param {Date} lastUpdate
    */
-  constructor (address, currency, ticker, amount, lastUpdate) {
+  constructor (wallet, address, currency, ticker, amount, lastUpdate) {
+    this._wallet = wallet
     this._address = address
     this._currency = currency
     this._ticker = ticker
@@ -36,16 +40,20 @@ export default class Balance {
     return this._amount
   }
 
+  increaseAmount (amount) {
+    this._amount += amount
+  }
+
   get lastUpdate () {
     return this._lastUpdate
   }
 
-  set walletId (walletId) {
-    this._walletId = walletId
+  set lastUpdate (lastUpdate) {
+    this._lastUpdate = lastUpdate
   }
 
-  get walletId () {
-    return this._walletId
+  get wallet () {
+    return this._wallet
   }
 
   /**
@@ -55,24 +63,21 @@ export default class Balance {
    * @returns {boolean}
    */
   equals (balance) {
-    return this.walletId === balance.walletId && this.ticker === balance.ticker
+    return this.ticker === balance.ticker && this.wallet.id === balance.wallet.id
   }
 
   get id () {
-    return `${this._walletId}.${this._ticker}`
+    return `${this.wallet.id}.${this.ticker}`
   }
 
   static fromObject (object) {
-    const balance = new Balance(
+    return new Balance(
+      Wallet.fromObject(object._wallet),
       object._address,
       object._currency,
       object._ticker,
       object._amount,
       object._lastUpdate
     )
-
-    balance.walletId = object._walletId
-
-    return balance
   }
 }

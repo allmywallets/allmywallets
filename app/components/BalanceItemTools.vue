@@ -43,7 +43,7 @@
         this.loading = false
 
         return this.notifications.find(notification => {
-          return notification.level === 'ERROR' && notification.walletId === this.balance.walletId
+          return notification.level === 'ERROR' && notification.walletId === this.balance.wallet.id
         })
       },
       lastUpdate () {
@@ -58,7 +58,7 @@
 
         return this.$serviceWorker.controller.postMessage({
           action: 'balance-refresh',
-          walletId: this.balance.walletId,
+          walletId: this.balance.wallet.id,
           currencies: [this.balance.ticker]
         })
       }
