@@ -1,7 +1,7 @@
 import BrowserNotification from '../model/BrowserNotification'
 import { format } from '../helper/string'
 
-export const getNotification = (diff, walletName) => {
+export const getNotification = (diff) => {
   const title = 'You {action} {amount} {ticker}'
   const description = ' {direction} your wallet {walletName}.'
 
@@ -11,7 +11,7 @@ export const getNotification = (diff, walletName) => {
     amount: Math.abs(diff.amount),
     ticker: diff.balance.ticker,
     direction: received ? 'to' : 'from',
-    walletName: walletName
+    walletName: diff.balance.wallet.name
   }
 
   return new BrowserNotification(

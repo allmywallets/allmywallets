@@ -5,7 +5,8 @@ Feature: Navigate through the application
 
   Scenario: Launching the application
 
-    Then I should see "Retrieving your holdings"
+    And I wait 1 second
+    Then I should see "$0.00000"
 
   Scenario: Going to the statistics page
 

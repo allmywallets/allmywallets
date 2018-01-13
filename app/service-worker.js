@@ -85,7 +85,7 @@ self.addEventListener('push', async () => {
           continue
         }
 
-        const notification = getNotification(diff, wallet.name)
+        const notification = getNotification(diff)
         sendNotification(notification, self.registration)
         sentNotification = true
       }

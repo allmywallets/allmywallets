@@ -1,5 +1,7 @@
 import database from '../database'
 import { computeHoldings } from '../manager/holdings-manager'
+import Balance from '../model/Balance'
+import Wallet from '../model/Wallet'
 
 const state = {
   loading: {
@@ -12,6 +14,25 @@ const state = {
 
 const getters = {
   balances: state => state.balances,
+  collapsedBalances: state => {
+    const collapsed = {}
+
+    state.balances.forEach(balance => {
+      if (balance.currency in collapsed) {
+        const existingBalance = collapsed[balance.currency]
+
+        existingBalance.increaseAmount(balance.amount)
+        existingBalance.lastUpdate = balance.lastUpdate < existingBalance.lastUpdate ? balance.lastUpdate : existingBalance.lastUpdate
+        let nbWallets = existingBalance.wallet.name.replace(/.*\D/g, '')
+        existingBalance.wallet.name = `${++nbWallets} wallets`
+        existingBalance.wallet.network = existingBalance.wallet.network === balance.wallet.network ? balance.wallet.network : 'Multiple networks'
+        existingBalance.wallet.provider = existingBalance.wallet.provider === balance.wallet.provider ? balance.wallet.provider : 'multiple providers'
+      } else {
+        const aggregateWallet = new Wallet(balance.currency, '1 wallet', balance.wallet.network, balance.wallet.provider)
+        collapsed[balance.currency] = new Balance(aggregateWallet, '', balance.currency, balance.ticker, balance.amount, balance.lastUpdate)
+      }
+    })
+  },
   holdings: state => state.holdings
 }
 
