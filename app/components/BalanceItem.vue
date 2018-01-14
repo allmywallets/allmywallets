@@ -4,7 +4,7 @@
     <div class="balance-content">
       <header class="balance-header">
       <span class="balance-logo">
-        <i :class="`cc ${balance.ticker}-alt`"></i>
+        <img height="40" :src="`/static/icons/${balance.ticker.toLowerCase()}%402x.png`" @error="removeLogo" :alt="balance.ticker" />
       </span>
         <h4 class="balance-name">
           {{ balance.wallet.name }}<br />
@@ -81,6 +81,11 @@
           })
 
         return balance
+      }
+    },
+    methods: {
+      removeLogo (event) {
+        event.target.remove()
       }
     },
     async mounted () {

@@ -30,7 +30,14 @@ module.exports = env => ({
           }
         }
       },
-      { test: /\.(png|jpe?g|gif|svg|ttf|woff2?|eot|ico)(\?.*)?$/, loader: 'url-loader', query: { limit: 10000, name: 'assets/[name].[ext]' } }
+      {
+        test: /\.(png|jpe?g|gif|svg|ttf|woff2?|eot|ico)(\?.*)?$/,
+        loader: 'url-loader',
+        query: {
+          limit: 10000,
+          name: 'assets/[name].[ext]'
+        }
+      }
     ]
   },
   resolve: {
@@ -51,7 +58,8 @@ module.exports = env => ({
     }),
     new CopyWebpackPlugin([
       { from: './app/index.html', to: 'index.html' },
-      { from: './app/static', to: 'static' }
+      { from: './app/static', to: 'static' },
+      { from: './node_modules/cryptocurrency-icons/32@2x/icon', to: 'static/icons' }
     ]),
     new webpack.LoaderOptionsPlugin({
       options: {

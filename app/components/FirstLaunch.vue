@@ -33,11 +33,16 @@
       <router-link :to="{ name: 'home-add-wallet' }" class="button">Add a first wallet</router-link><br />
       AMW can be used on any modern devices, including your smartphone using Chrome, Chromium or Brave.
     </p>
+    <hr />
+    <providers-credits />
   </article>
 </template>
 
 <script>
+  import ProvidersCredits from './ProvidersCredits'
+
   export default {
+    components: {ProvidersCredits},
     name: 'first-launch'
   }
 </script>
@@ -73,8 +78,10 @@
         list-style-type: none;
         padding: 10px 20px;
 
-        &:not(:last-child) {
-          border-right: 1px solid $color-section-notifications;
+        @media screen and (min-width: $breakpoint-medium) {
+          &:not(:last-child) {
+            border-right: 1px solid $color-section-notifications;
+          }
         }
 
         .more {

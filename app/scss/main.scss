@@ -1,6 +1,5 @@
 @import '~bootstrap-reboot/bootstrap-reboot.scss';
 @import '~@fortawesome/fontawesome/styles.css';
-@import '~cryptocoins-icons/webfont/cryptocoins.css';
 @import '~vue-form-generator/dist/vfg.css';
 
 @import 'vars';
@@ -88,6 +87,14 @@ a, a:hover {
   &:not([disabled]):not(.disabled) {
     cursor: pointer;
   }
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px solid $color-section-notifications;
+  height: 1px;
+  margin: 20px auto;
+  width: 80%;
 }
 
 ::-webkit-scrollbar-track

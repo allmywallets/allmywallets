@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = env => ({
   devServer: {
@@ -38,7 +39,14 @@ module.exports = env => ({
           }
         }
       },
-      { test: /\.(png|jpe?g|gif|svg|ttf|woff2?|eot|ico)(\?.*)?$/, loader: 'url-loader', query: { limit: 10000, name: 'assets/[name].[ext]' } }
+      {
+        test: /\.(png|jpe?g|gif|svg|ttf|woff2?|eot|ico)(\?.*)?$/,
+        loader: 'url-loader',
+        query: {
+          limit: 10000,
+          name: 'static/assets/[name].[ext]'
+        }
+      }
     ]
   },
   resolve: {
@@ -57,6 +65,9 @@ module.exports = env => ({
         }
       }
     }),
+    new CopyWebpackPlugin([
+      { from: './node_modules/cryptocurrency-icons/32@2x/icon', to: 'static/icons' }
+    ]),
     new webpack.DefinePlugin({
       'process.env': {
         APP_SERVER_URL: '"http://localhost:3030"',
