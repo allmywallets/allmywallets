@@ -64,7 +64,7 @@
     .main-logo {
       position: absolute;
       top: 5px;
-      left: 10px;
+      left: 20px;
       z-index: 10000;
     }
   }
