@@ -71,7 +71,11 @@
         flex-grow: 1;
         flex-basis: 0;
         list-style-type: none;
-        margin: 10px 20px;
+        padding: 10px 20px;
+
+        &:not(:last-child) {
+          border-right: 1px solid $color-section-notifications;
+        }
 
         .more {
           margin-top: 10px;
