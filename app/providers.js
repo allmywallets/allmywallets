@@ -31,14 +31,14 @@ function getGenericProviderClass (explorerName) {
   class GenericProvider {
     constructor (parameters, wallet) {
       this.parameters = parameters
-      this.explorer = new Explorer(this.parameters.explorerSpecific)
+      this.explorer = new Explorer(this.parameters)
       this.wallet = wallet
     }
 
-    async checkParameters (parameters) {
+    async checkParameters () {
       await this.explorer.checkParameters()
-      await this.explorer.checkAddresses(parameters.addresses)
-      await this.explorer.checkWallets(parameters.wallets)
+      await this.explorer.checkAddresses(this.parameters.addresses)
+      await this.explorer.checkWallets(this.parameters.wallets)
     }
 
     async getWalletData (currencies = []) {
