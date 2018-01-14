@@ -5,7 +5,8 @@ Feature: Navigate through the application
 
   Scenario: Launching the application
 
-    Then I should see "Welcome to AllMyWallets!"
+    And I wait 1 second
+    Then I should see "Welcome to AllMyWallets!" in the "h2" element
 
   Scenario: Going to the statistics page
 
