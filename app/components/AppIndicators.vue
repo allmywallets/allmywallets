@@ -1,8 +1,8 @@
 <template>
   <div class="app-indicators">
-    <indicator-worker class="indicator"></indicator-worker>
-    <indicator-online class="indicator"></indicator-online>
-    <indicator-notifications class="indicator"></indicator-notifications>
+    <indicator-worker class="indicator" />
+    <indicator-online class="indicator" />
+    <indicator-notifications class="indicator" />
   </div>
 </template>
 

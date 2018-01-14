@@ -38,7 +38,7 @@
     },
     methods: {
       forceUpgrade () {
-        this.$serviceWorker.getRegistrations().then((registrations) => {
+        this.$serviceWorker.getRegistrations().then((registrations) => { // Todo: rework this and put it elsewhere
           for (const registration of registrations) {
             registration.unregister()
             // Todo: unregister from api
