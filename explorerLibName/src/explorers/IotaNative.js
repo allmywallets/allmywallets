@@ -32,8 +32,15 @@ class IotaNative extends AbstractExplorer {
     })
 
     if (res.error) {
-      throw new Error(body + ' ' + res.error)
+      switch (res.error) {
+        case 'Invalid addresses input':
+          console.log(JSON.parse(body).addresses)
+          throw new Error(`Addresses starting with ${JSON.parse(body).addresses.map(add => `"${add.substring(0, 5)}"`)} are invalid or not attached to the Tangle`)
+        default:
+          throw new Error(body + ' ' + res.error)
+      }
     }
+
     return res
   }
 
