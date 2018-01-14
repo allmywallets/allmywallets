@@ -1,6 +1,6 @@
 import Balance from './model/Balance'
 import ExplorerLib from '../explorerLibName'
-import Wallet from "./model/Wallet";
+import Wallet from './model/Wallet'
 
 export default class Proxy {
   constructor (network, provider, parameters) {
