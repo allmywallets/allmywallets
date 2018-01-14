@@ -11,7 +11,7 @@
     "start": "webpack-dev-server --env.APP_VERSION=$(git describe --tags) --host 0.0.0.0 --devtool eval --progress --hot --content-base app",
     "build": "webpack --env.production --env.APP_VERSION=$(git describe --tags) --config webpack.production.config.js",
     "test": "npm run test:unit && npm run test:functional",
-    "test:unit": "mocha --require babel-register --require babel-polyfill --recursive",
+    "test:unit": "mocha --require @babel/register --require @babel/polyfill --recursive",
     "test:functional": "npm run build && concurrently 'http-server build/ -p 1337 -s' 'nightwatch -c features/conf/default.conf.js' --success first --kill-others"
   },
   "dependencies": {
@@ -42,13 +42,12 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "babel-core": "latest",
-    "babel-eslint": "^8.2.1",
-    "babel-loader": "latest",
-    "babel-plugin-transform-runtime": "latest",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
+    "@babel/core": "^7.0.0-beta.37",
+    "@babel/polyfill": "^7.0.0-beta.37",
+    "@babel/preset-env": "^7.0.0-beta.37",
+    "@babel/preset-stage-2": "^7.0.0-beta.37",
+    "@babel/register": "^7.0.0-beta.37",
+    "babel-loader": "^8.0.0-beta.0",
     "chai": "^4.1.2",
     "chromedriver": "^2.34.1",
     "concurrently": "^3.5.1",
@@ -72,6 +71,7 @@
     "serviceworker-webpack-plugin": "^0.2.3",
     "standard": "^10.0.3",
     "style-loader": "^0.13.1",
+    "uglifyjs-webpack-plugin": "^1.1.6",
     "url-loader": "^0.6.2",
     "vue-loader": "^13.7.0",
     "vue-template-compiler": "^2.5.13",

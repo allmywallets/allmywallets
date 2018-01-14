@@ -14,7 +14,7 @@ module.exports = env => ({
   devtool: 'source-map',
   entry: {
     'webpack': 'webpack-dev-server/client?http://localhost:8080',
-    'main': ['babel-polyfill', path.resolve(__dirname, 'app/main.js')]
+    'main': ['@babel/polyfill', path.resolve(__dirname, 'app/main.js')]
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -27,10 +27,7 @@ module.exports = env => ({
         test: /\.js$/,
         include: [path.resolve(__dirname, 'app'), path.resolve(__dirname, 'explorerLibName')],
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'stage-2']
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.vue$/,
@@ -45,7 +42,7 @@ module.exports = env => ({
     ]
   },
   resolve: {
-    extensions: ['.vue', '.js'],
+    extensions: ['.js', '.vue'],
     alias: {
       vue: 'vue/dist/vue'
     }
