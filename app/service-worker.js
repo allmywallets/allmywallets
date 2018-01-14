@@ -116,7 +116,7 @@ self.addEventListener('message', async event => {
   let balances = []
   try {
     const wallet = await Configurator.getWallet(walletId)
-    balances = await new Proxy(wallet.network, wallet.provider, wallet.parameters).getWalletData(currencies)
+    balances = await new Proxy(wallet).getWalletData(currencies)
 
     await database.storeBalances(balances)
   } catch (e) {

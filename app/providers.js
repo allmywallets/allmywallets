@@ -3,7 +3,10 @@ import ExplorerLib from '../explorerLibName'
 import Wallet from './model/Wallet'
 
 export default class Proxy {
-  constructor (network, provider, parameters) {
+  constructor (wallet) {
+    const walletObject = new Wallet(wallet.id, wallet.name, wallet.network, wallet.provider)
+    const network = wallet.network
+    const provider = wallet.provider
     const networkProvider = `${network}.${provider}`
 
     if (!ExplorerLib.list().includes(networkProvider)) {
@@ -11,7 +14,7 @@ export default class Proxy {
     }
 
     const Provider = getGenericProviderClass(networkProvider)
-    return new Provider(parameters)
+    return new Provider(wallet.parameters, walletObject)
   }
 
   static getProviderParameters (provider) {
@@ -26,9 +29,10 @@ export default class Proxy {
 function getGenericProviderClass (explorerName) {
   const Explorer = ExplorerLib.explorer(explorerName)
   class GenericProvider {
-    constructor (parameters) {
+    constructor (parameters, wallet) {
       this.parameters = parameters
       this.explorer = new Explorer(this.parameters.explorerSpecific)
+      this.wallet = wallet
     }
 
     async checkParameters (parameters) {
@@ -56,8 +60,7 @@ function getGenericProviderClass (explorerName) {
           const amount = wallet.balances[i]
           const address = this.parameters.addresses ? this.parameters.addresses[walletIndex] : 'exchangeDepositAddressWIP'
           const balance = new Balance(
-            // Todo: need to retrieve the following values
-            new Wallet('id', 'name', 'network', 'provider'),
+            this.wallet,
             address,
             selectedCurrency.name,
             selectedCurrency.ticker,
