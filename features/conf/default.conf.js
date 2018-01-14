@@ -24,7 +24,12 @@ module.exports = {
         url: 'http://localhost:1337'
       },
       desiredCapabilities: {
-        browserName: 'chrome'
+        browserName: 'chrome',
+        chromeOptions: {
+          args: [
+            '--headless'
+          ]
+        }
       }
     }
   }
