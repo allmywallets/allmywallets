@@ -5,8 +5,7 @@ Feature: Navigate through the application
 
   Scenario: Launching the application
 
-    And I wait 1 second
-    Then I should see "$0.00000"
+    Then I should see "Welcome to AllMyWallets!"
 
   Scenario: Going to the statistics page
 
