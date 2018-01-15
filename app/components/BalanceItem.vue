@@ -8,7 +8,7 @@
       </span>
         <h4 class="balance-name">
           {{ balance.wallet.name }}<br />
-          <small class="balance-network">{{ balance.wallet.network|camelcase }}</small>
+          <small class="balance-currency">{{ balance.currency }}</small>
         </h4>
       </header>
       <div class="balance-amount">
@@ -167,7 +167,7 @@
         margin-top: 13px;
         white-space: nowrap;
 
-        .balance-network {
+        .balance-currency {
           font-style: italic;
           font-size: 0.9rem;
         }
