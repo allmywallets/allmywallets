@@ -1,7 +1,7 @@
 const NotSupportedCurrencyError = require('../errors/NotSupportedCurrencyError')
 
 const isNode = (typeof window === 'undefined') && !(typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope)
-const fetchImplementation = isNode ? require('node-fetch') : fetch
+const fetchImplementation = isNode ? eval('require')('node-fetch') : fetch
 
 /**
  * A block/DAGchain explorer
