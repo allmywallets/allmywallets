@@ -1,5 +1,8 @@
 const NotSupportedCurrencyError = require('../errors/NotSupportedCurrencyError')
 
+const isNode = (typeof window === 'undefined') && !(typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope)
+const fetchImplementation = isNode ? require('node-fetch') : fetch
+
 /**
  * A block/DAGchain explorer
  */
@@ -228,8 +231,7 @@ class AbstractExplorer {
   }
 
   static async _fetchJson (url, options = {}) {
-    // TODO : require('node-fetch')
-    const response = await fetch(url, options)
+    const response = await fetchImplementation(url, options)
     return response.json().catch(() => {
       throw new Error(`Failed to parse JSON: ${response.status} ${response.statusText}`)
     })
