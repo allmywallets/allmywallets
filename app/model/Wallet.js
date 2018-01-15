@@ -34,8 +34,16 @@ export default class Wallet {
     return this._network
   }
 
+  set network (network) {
+    this._network = network
+  }
+
   get provider () {
     return this._provider
+  }
+
+  set provider (provider) {
+    this._provider = provider
   }
 
   static fromObject (object) {
