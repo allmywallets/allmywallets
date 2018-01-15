@@ -34,16 +34,33 @@
       AMW can be used on any modern devices, including your smartphone using Chrome, Chromium or Brave.
     </p>
     <hr />
+    <template v-if="missingCapabilities">
+      <system-check />
+      <hr />
+    </template>
     <providers-credits />
   </article>
 </template>
 
 <script>
   import ProvidersCredits from './ProvidersCredits'
+  import SystemCheck from './SystemCheck'
+  import { missingCapabilities } from '../manager/system-manager'
 
   export default {
-    components: {ProvidersCredits},
-    name: 'first-launch'
+    components: {
+      SystemCheck,
+      ProvidersCredits
+    },
+    name: 'first-launch',
+    data () {
+      return {
+        missingCapabilities: false
+      }
+    },
+    mounted () {
+      this.missingCapabilities = missingCapabilities()
+    }
   }
 </script>
 
@@ -71,6 +88,7 @@
       padding: 0;
       display: flex;
       flex-flow: wrap;
+      text-align: center;
 
       .feature {
         flex-grow: 1;

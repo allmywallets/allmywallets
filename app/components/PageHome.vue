@@ -26,10 +26,10 @@
   export default {
     name: 'page-home',
     components: {
-      FirstLaunch,
       HoldingsSummary,
       BalanceListActions,
       BalanceItem,
+      FirstLaunch,
       ModalUpgrade
     },
     computed: {

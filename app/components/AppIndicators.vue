@@ -1,20 +1,20 @@
 <template>
   <div class="app-indicators">
-    <indicator-worker class="indicator" />
+    <indicator-system class="indicator" />
     <indicator-online class="indicator" />
     <indicator-notifications class="indicator" />
   </div>
 </template>
 
 <script>
-  import IndicatorWorker from './IndicatorWorker.vue'
+  import IndicatorSystem from './IndicatorSystem.vue'
   import IndicatorOnline from './IndicatorOnline.vue'
   import IndicatorNotifications from './IndicatorNotifications.vue'
 
   export default {
     name: 'app-indicators',
     components: {
-      IndicatorWorker,
+      IndicatorSystem,
       IndicatorOnline,
       IndicatorNotifications
     }

@@ -7,6 +7,7 @@
         <a href="#" @click.prevent="forceUpgrade">Upgrade</a>
       </p>
     </template>
+    <system-check />
     <h2>Application settings</h2>
     <h3>Customization</h3>
     <p>TBD</p>
@@ -23,10 +24,12 @@
   import ConfigExpert from './ConfigExpert.vue'
   import ConfigExport from './ConfigExport.vue'
   import ConfigImport from './ConfigImport.vue'
+  import SystemCheck from './SystemCheck.vue'
 
   export default {
     name: 'page-settings',
     components: {
+      SystemCheck,
       ConfigExport,
       ConfigExpert,
       ConfigImport

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <a v-if="needsRefresh" href="#" @click.prevent="refreshPage" title="App restart required" v-tippy="{ showOnLoad: needsRefresh }">
+    <router-link v-if="missingCapabilities" :to="{ name: 'settings' }" title="Missing capabilities" v-tippy="{ showOnLoad: missingCapabilities }">
+      <fa-icon icon="times" class="text-danger" />
+    </router-link>
+    <a v-else-if="needsRefresh" href="#" @click.prevent="refreshPage" title="App restart required" v-tippy="{ showOnLoad: needsRefresh }">
       <fa-icon icon="sync-alt" class="text-danger" />
     </a>
     <a v-else-if="needsUpgrade" href="#" @click.prevent="forceUpgrade" title="Click to upgrade" v-tippy="{ showOnLoad: needsUpgrade }">
@@ -14,9 +17,10 @@
   import { mapGetters } from 'vuex'
   import runtime from 'serviceworker-webpack-plugin/lib/runtime'
   import Notification from '../model/Notification'
+  import { missingCapabilities } from '../manager/system-manager'
 
   export default {
-    name: 'indicator-worker',
+    name: 'indicator-system',
     data () {
       return {
         needsRefresh: this.$serviceWorker.controller === null
@@ -25,7 +29,10 @@
     computed: {
       ...mapGetters([
         'needsUpgrade'
-      ])
+      ]),
+      missingCapabilities () {
+        return missingCapabilities()
+      }
     },
     methods: {
       refreshPage () {

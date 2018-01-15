@@ -32,6 +32,10 @@ a, a:hover {
   text-decoration: none;
 }
 
+.text-success, .text-success:hover {
+  color: $color-success;
+}
+
 .text-info, .text-info:hover {
   color: $color-info;
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Credits</h3>
+    <h2>Credits</h2>
     <p>This app uses awesome tools from the cryptocurrencies space!</p>
     <ul class="providers">
       <li>
