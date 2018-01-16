@@ -14,3 +14,7 @@ messages regularly to your computer so your balances can be synced.
 AMW is a work in progress but is already usable on Chrome, on Android and Desktop.
 
 Stay tuned, more to follow!
+
+## Contribute
+
+Fork the repository and you're good to go!

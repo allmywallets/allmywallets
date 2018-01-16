@@ -7,13 +7,19 @@ const state = {
     wallets: false // Wallets changes
   },
   config: { profiles: [{ wallets: [] }] },
-  version: { current: 'unknown', upstream: 'unknown' }
+  version: { current: 'unknown', upstream: 'unknown' },
+  display: {
+    balances: {
+      charts: false // Todo: move this in config
+    }
+  }
 }
 
 const getters = {
   wallets: state => state.config.profiles[0].wallets,
   needsUpgrade: state => state.version.current !== state.version.upstream,
-  currentVersion: state => state.version.current
+  currentVersion: state => state.version.current,
+  display: state => state.display
 }
 
 const mutations = {
@@ -30,6 +36,9 @@ const mutations = {
   },
   UPDATE_CONFIG (state, { config }) {
     state.config = config
+  },
+  UPDATE_DISPLAY (state, { display }) {
+    state.display = display
   }
 }
 
@@ -51,7 +60,7 @@ const actions = {
 
     dispatch('checkForUpdates')
     dispatch('reloadAllBalances').then(() => {
-      dispatch('refreshHoldings')
+      dispatch('refreshPriceHistories')
     })
   },
   checkForUpdates: async ({ commit }) => {
@@ -66,6 +75,9 @@ const actions = {
     await Configurator.setConfig(config) // Todo: reset all balances and re-init app
 
     commit('UPDATE_CONFIG', { config })
+  },
+  updateDisplay: async ({ commit }, { display }) => {
+    commit('UPDATE_DISPLAY', { display })
   }
 }
 
