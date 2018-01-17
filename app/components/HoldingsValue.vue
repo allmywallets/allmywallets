@@ -1,7 +1,7 @@
 <template>
   <div class="holdings-value">
     <span class="holdings-amount">
-      ${{ currentHoldings|toPrecision(6) }}
+      ${{ currentHoldings|toFixed(2) }}
     </span><br />
     <span class="holdings-secondary-amount">
       <span class="ticker">BTC</span>0
@@ -31,6 +31,9 @@
     padding-top: 100px;
     color: $color-primary;
     line-height: 2rem;
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
 
     .holdings-amount {
       font-size: 5rem;

@@ -1,7 +1,7 @@
 <template>
   <div class="holdings">
-    <holdings-value />
     <holdings-chart :options="chartOptions" :chartData="chartData" class="holdings-chart" />
+    <holdings-value />
   </div>
 </template>
 
@@ -37,6 +37,20 @@
           elements: {
             point: { radius: 0 },
             line: { tension: 0 }
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+            yAlign: 'top',
+            callbacks: {
+              title: () => {
+                return ''
+              },
+              label: (tooltipItem, data) => {
+                return '$' + data['datasets'][0]['data'][tooltipItem['index']].toFixed(2)
+              }
+            },
+            displayColors: false
           }
         }
       }
@@ -71,17 +85,17 @@
     border-radius: 0 0 15px 15px;
     overflow: hidden;
 
-    canvas {
-      height: 300px;
-    }
-
     .holdings-chart {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: -1;
+      z-index: 1;
       overflow: hidden;
+
+      canvas {
+        height: 300px;
+      }
     }
   }
 </style>
