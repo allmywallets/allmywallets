@@ -30,7 +30,7 @@
     justify-content: center;
     text-align: center;
     box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.15);
-    background: $color-section-menu;
+    background: $color-section-indicators;
 
     @media screen and (min-width: $breakpoint-medium) {
       z-index: 2000;
@@ -47,7 +47,7 @@
       justify-content: center;
       flex-direction: column;
       padding: 0 1.5rem;
-      color: $color-primary;
+      color: white;
     }
   }
 </style>

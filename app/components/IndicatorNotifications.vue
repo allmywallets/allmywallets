@@ -72,6 +72,10 @@
   div {
     position: relative;
 
+    a {
+      color: white;
+    }
+
     @media screen and(min-width: $breakpoint-medium) {
       a.no-action {
         cursor: default;
