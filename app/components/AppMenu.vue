@@ -35,6 +35,7 @@
     @media screen and (min-width: $breakpoint-medium) {
       justify-content: center;
       padding-right: $grid-notifications-width;
+      background: $color-section-indicators;
     }
 
     a {
@@ -45,17 +46,17 @@
       justify-content: center;
       flex-direction: column;
 
-      .title {
-        display: none;
-
-        @media screen and (min-width: $breakpoint-medium) {
-          display: inline-block;
-        }
+      &.router-link-exact-active {
+        color: $color-primary;
       }
 
       @media screen and (min-width: $breakpoint-medium) {
         font-size: 0.8rem;
         font-weight: bold;
+
+        &.router-link-exact-active {
+          color: white;
+        }
 
         svg {
           margin: 2px auto;
@@ -63,8 +64,12 @@
         }
       }
 
-      &.router-link-exact-active {
-        color: $color-primary;
+      .title {
+        display: none;
+
+        @media screen and (min-width: $breakpoint-medium) {
+          display: inline-block;
+        }
       }
     }
   }
