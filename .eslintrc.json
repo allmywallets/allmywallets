@@ -9,6 +9,7 @@
   },
   "globals": {
     "opts": true,
-    "vue": true
+    "vue": true,
+    "WorkerGlobalScope": true
   }
 }
