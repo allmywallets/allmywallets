@@ -29,6 +29,8 @@
     display: flex;
     justify-content: center;
     text-align: center;
+    box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.15);
+    background: $color-section-menu;
 
     @media screen and (min-width: $breakpoint-medium) {
       z-index: 2000;
@@ -36,6 +38,7 @@
       width: $grid-notifications-width;
       height: $grid-header-height;
       right: 0;
+      box-shadow: none;
     }
 
     .indicator {

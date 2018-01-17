@@ -45,7 +45,9 @@
             "indicators"
             "content"
             "menu";
-    
+    overflow: hidden;
+    position: relative;
+
     @media screen and (min-width: $breakpoint-medium) {
       grid-template-columns: 1fr $grid-notifications-width 0;
       grid-template-rows: $grid-header-height 1fr;

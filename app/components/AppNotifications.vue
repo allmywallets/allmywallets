@@ -75,7 +75,7 @@
     header {
       text-align: right;
       height: 35px;
-      padding: 5px 0;
+      padding: 5px 10px;
     }
 
     .overall {

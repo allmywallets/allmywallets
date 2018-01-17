@@ -7,7 +7,8 @@
         <balance-item v-for="balance, key in balances" :key="key" :id="balance.id" />
       </article>
       <article v-else>
-        <h2>No balances loaded yet</h2>
+        <p>No balance has been loaded yet. Click on the button below to refresh your wallets.</p>
+        <p><a href="#" @click.prevent="refreshBalances" class="button">Refresh wallets balances</a></p>
       </article>
     </template>
     <first-launch v-else-if="!$store.state.balances.loading.balances" />
@@ -31,6 +32,11 @@
       BalanceItem,
       FirstLaunch,
       ModalUpgrade
+    },
+    methods: {
+      async refreshBalances () {
+        return this.$store.dispatch('refreshBalances', { wallets: this.wallets, serviceWorker: this.$serviceWorker })
+      }
     },
     computed: {
       ...mapGetters([
