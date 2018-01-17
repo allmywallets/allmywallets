@@ -105,7 +105,7 @@
           priceHistory = []
         }
 
-        return priceHistory.slice(Math.max(priceHistory.length - 21, 1))
+        return priceHistory
       },
       chartData () {
         return {
