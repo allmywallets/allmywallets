@@ -96,7 +96,7 @@
         return this.display.balances.charts
       },
       currentPrice () {
-        return this.priceHistory[this.priceHistory.length - 1]
+        return this.priceHistory[this.priceHistory.length - 1] * this.balance.amount
       },
       priceHistory () {
         let priceHistory = this.priceHistories[this.balance.ticker]
