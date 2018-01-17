@@ -1,6 +1,6 @@
 <template>
   <footer class="app-footer">
-    AllMyWallets &bull; v{{ currentVersion }}
+    AllMyWallets &bull; v{{ currentVersion }} &bull; <router-link :to="{ name: 'home-upgraded' }">Release notes</router-link>
     <template v-if="needsUpgrade">
       &bull; <router-link to="settings">An upgrade is available!</router-link>
     </template>
