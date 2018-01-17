@@ -15,6 +15,8 @@ for (let i = 0; i < explorersName.length; i++) {
 for (let i = 0; i < explorers.length; i++) {
   const Explorer = explorers[i]
   const explorerName = explorersName[i]
+  if (Explorer.isExchange && explorerName !== 'exchange.poloniex') continue // Not necessary to test for all ccxt exchange
+
   let address = testAddresses[explorerName]
   let parameters = testParameters[explorerName]
   if (!address) {
