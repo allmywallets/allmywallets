@@ -1,16 +1,15 @@
 <template>
-  <aside class="app-notifications">
+  <aside :class="{ 'app-notifications': true, 'show-panel': display.notifications.panel }">
+    <header class="actions">
+      <a href="#" @click.prevent="clearAllNotifications" v-if="notifications.length > 0"><fa-icon icon="trash" /></a>
+      <a href="#" @click.prevent="togglePanel" class="close-panel"><fa-icon icon="times" /></a>
+    </header>
     <p class="overall" v-if="notifications.length === 0">
       <fa-icon icon="inbox" /> <br /> You don't have any notifications.
     </p>
     <div class="notifications">
       <notification-item v-for="notification, key in notifications" :key="key" :notification="notification" />
     </div>
-    <footer v-if="notifications.length > 0">
-      <a href="#" @click.prevent="clearAllNotifications">
-        <fa-icon icon="trash" /> Clear all notifications
-      </a>
-    </footer>
   </aside>
 </template>
 
@@ -25,10 +24,17 @@
     },
     computed: {
       ...mapGetters([
-        'notifications'
+        'notifications',
+        'display'
       ])
     },
     methods: {
+      togglePanel () {
+        const display = this.display
+        display.notifications.panel = !display.notifications.panel
+
+        return this.$store.dispatch('updateDisplay', { display })
+      },
       clearAllNotifications () {
         return this.$store.dispatch('clearAllNotifications')
       }
@@ -42,12 +48,34 @@
   .app-notifications {
     grid-area: notifications;
     background: $color-section-notifications;
-    display: none;
-    position: relative;
     border-left: 2px solid white;
+    position: absolute;
+    z-index: 10000;
+    width: $grid-notifications-width;
+    height: 100%;
+    box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.15);
+    right: -$grid-notifications-width;
+    transition: right .3s;
+
+    &.show-panel {
+      right: 0;
+    }
 
     @media screen and (min-width: $breakpoint-medium) {
-      display: block;
+      position: relative;
+      box-shadow: none;
+      z-index: 0;
+      right: 0;
+
+      .close-panel {
+        display: none;
+      }
+    }
+
+    header {
+      text-align: right;
+      height: 35px;
+      padding: 5px 0;
     }
 
     .overall {
@@ -69,16 +97,6 @@
       position: absolute;
       padding-bottom: 35px;
       width: 100%;
-    }
-
-    footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-      font-size: 0.85rem;
-      padding: 7px 0 7px;
-      background: $color-section-notifications;
     }
   }
 </style>

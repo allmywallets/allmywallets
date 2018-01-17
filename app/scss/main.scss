@@ -12,6 +12,7 @@
 body {
   background: $color-background;
   font-family: $font-default;
+  overflow: hidden;
 }
 
 @for $i from 1 through 6 {

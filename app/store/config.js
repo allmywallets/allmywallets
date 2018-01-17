@@ -11,6 +11,9 @@ const state = {
   display: {
     balances: {
       charts: false // Todo: move this in config
+    },
+    notifications: {
+      panel: false
     }
   }
 }

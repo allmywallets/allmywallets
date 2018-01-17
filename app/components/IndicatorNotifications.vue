@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import * as Subscription from '../notification/subscription'
 
   export default {
@@ -24,9 +25,15 @@
       }
     },
     methods: {
+      togglePanel () {
+        const display = this.display
+        display.notifications.panel = !display.notifications.panel
+
+        return this.$store.dispatch('updateDisplay', { display })
+      },
       async updateNotificationState () {
         if (!this.state.action) {
-          return
+          return this.togglePanel()
         }
 
         this.loading = true
@@ -46,6 +53,9 @@
       }
     },
     computed: {
+      ...mapGetters([
+        'display'
+      ]),
       countNotifications () {
         return this.$store.state.notifications.length
       }
@@ -62,8 +72,10 @@
   div {
     position: relative;
 
-    a.no-action {
-      cursor: default;
+    @media screen and(min-width: $breakpoint-medium) {
+      a.no-action {
+        cursor: default;
+      }
     }
 
     .counter {
