@@ -8,6 +8,24 @@ export const computeHoldingsHistory = (priceHistory, balanceHistory) => {
   return holdings
 }
 
+export const computeAllHoldingsHistories = (priceHistories, balances) => { // Todo: change this to take balance history into account instead of balances
+  const summedAmounts = getSummedAmounts(balances)
+
+  const holdingHistories = {}
+  for (const ticker in summedAmounts) {
+    if (!summedAmounts.hasOwnProperty(ticker) || !priceHistories.hasOwnProperty(ticker)) {
+      continue
+    }
+
+    holdingHistories[ticker] = computeHoldingsHistory(
+      priceHistories[ticker],
+      [...new Array(priceHistories[ticker].length).keys()].map(() => summedAmounts[ticker]) // Todo: replace this with balanceHistories[ticker]
+    )
+  }
+
+  return holdingHistories
+}
+
 export const sumHoldingsHistories = holdings => {
   if (Object.keys(holdings).length === 0) {
     return []

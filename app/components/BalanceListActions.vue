@@ -4,7 +4,7 @@
       <a href="#" @click.prevent="refreshBalances" title="Refresh all balances" v-tippy>
         <fa-icon icon="sync-alt" :spin="loading" />
       </a><!--
-      --><a href="#" title="Show balances charts" v-tippy>
+      --><a href="#" @click.prevent="toggleCharts" title="Show balances charts" v-tippy>
         <fa-icon icon="chart-area" />
       </a><!--
       --><a href="#" title="Collapse balances" v-tippy>
@@ -26,7 +26,8 @@
     name: 'balance-list-action',
     computed: {
       ...mapGetters([
-        'wallets'
+        'wallets',
+        'display'
       ]),
       loading () {
         return this.$store.state.balances.loading.balances
@@ -35,6 +36,12 @@
     methods: {
       async refreshBalances () {
         return this.$store.dispatch('refreshBalances', { wallets: this.wallets, serviceWorker: this.$serviceWorker })
+      },
+      toggleCharts () {
+        const display = this.display
+        display.balances.charts = !display.balances.charts
+
+        return this.$store.dispatch('updateDisplay', { display })
       }
     }
   }

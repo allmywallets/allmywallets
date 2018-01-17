@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import database from '../database'
 import * as HoldingsManager from '../manager/holdings-manager'
 import Balance from '../model/Balance'
@@ -5,11 +6,10 @@ import Wallet from '../model/Wallet'
 
 const state = {
   loading: {
-    balances: true,
-    holdings: true
+    balances: true
   },
   balances: [],
-  holdings: {} // Todo: holdings should be cached in database
+  priceHistories: {} // Todo: holdings should be cached in database
 }
 
 const getters = {
@@ -33,8 +33,17 @@ const getters = {
       }
     })
   },
-  holdings: state => state.holdings,
-  totalHoldings: state => HoldingsManager.sumHoldingsHistories(state.holdings)
+  priceHistories: state => state.priceHistories,
+  holdingsHistory: state => HoldingsManager.computeAllHoldingsHistories(state.priceHistories, state.balances),
+  currentHoldings: state => {
+    const holdingsHistory = HoldingsManager.sumHoldingsHistories(getters.holdingsHistory(state))
+
+    if (holdingsHistory.length === 0) {
+      return 0
+    }
+
+    return holdingsHistory[holdingsHistory.length - 1]
+  }
 }
 
 const mutations = {
@@ -54,9 +63,9 @@ const mutations = {
   BALANCES_LOADING (state) {
     state.loading.balances = true
   },
-  UPDATE_HOLDINGS (state, { holdings }) {
-    state.holdings = holdings
-    state.loading.holdings = false
+  UPDATE_PRICE_HISTORY (state, { ticker, priceHistory }) {
+    Vue.set(state.priceHistories, ticker, priceHistory)
+    state.loading.priceHistories = false
   }
 }
 
@@ -95,23 +104,21 @@ const actions = {
   },
 
   /**
-   * Refreshes all the holdings from balances in database
+   * Refreshes all the price histories
    */
-  refreshHoldings: async ({ commit }) => {
+  refreshPriceHistories: async ({ commit }) => {
     const balances = await database.findAllBalances()
     const amounts = HoldingsManager.getSummedAmounts(balances)
 
-    const priceHistories = {}
     for (const ticker in amounts) {
-      priceHistories[ticker] = await HoldingsManager.getPeriodPriceHistory(ticker) // Todo: commit UPDATE EXCHANGE VALUES
-    }
+      if (!amounts.hasOwnProperty(ticker)) {
+        continue
+      }
 
-    const holdings = {}
-    for (const ticker in priceHistories) {
-      holdings[ticker] = HoldingsManager.computeHoldingsHistory(priceHistories[ticker], [...new Array(priceHistories[ticker].length).keys()].map(() => amounts[ticker]))
-    }
+      const priceHistory = await HoldingsManager.getPeriodPriceHistory(ticker) // Todo: commit UPDATE EXCHANGE VALUES
 
-    commit('UPDATE_HOLDINGS', { holdings })
+      commit('UPDATE_PRICE_HISTORY', { ticker, priceHistory })
+    }
   }
 }
 

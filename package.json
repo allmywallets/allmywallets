@@ -33,6 +33,7 @@
     "sweet-modal-vue": "^2.0.0",
     "tippy.js": "^2.0.9",
     "vue": "^2.5",
+    "vue-chartjs": "^3.1.0",
     "vue-filter": "^0.2.3",
     "vue-form-generator": "^2.1.1",
     "vue-moment": "^3.1.0",

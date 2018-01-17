@@ -1,6 +1,6 @@
 <template>
   <div class="balance">
-    <balance-item-chart class="balance-background" :ticker="balance.ticker" />
+    <holdings-chart :class="{ 'balance-background': true, 'showed': showCharts }" :options="chartOptions" :chartData="chartData" />
     <div class="balance-content">
       <header class="balance-header">
       <span class="balance-logo">
@@ -15,7 +15,7 @@
         <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
         <span class="balance-btc">
           <template v-if="price.usd !== 0">
-            <span class="dollar">$</span>{{ price.usd|toPrecision(4) }}
+            <span class="dollar">$</span>{{ currentPrice|toPrecision(4) }}
           </template>
           <template v-if="price.btc !== 0">
             (BTC {{ price.btc|toPrecision(4) }})
@@ -34,13 +34,13 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import BalanceItemChart from './BalanceItemChart.vue'
+  import HoldingsChart from './HoldingsChart.vue'
   import BalanceItemTools from './BalanceItemTools.vue'
 
   export default {
     name: 'balance-item',
     components: {
-      BalanceItemChart,
+      HoldingsChart,
       BalanceItemTools
     },
     props: {
@@ -52,14 +52,36 @@
     data () {
       return {
         price: {
-          btc: 0,
-          usd: 0
+          btc: 0
+        },
+        chartOptions: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [{
+              display: false,
+              padding: 0
+            }],
+            xAxes: [{
+              display: false,
+              padding: 0
+            }]
+          },
+          elements: {
+            point: { radius: 0 },
+            line: { tension: 0 }
+          }
         }
       }
     },
     computed: {
       ...mapGetters([
-        'balances'
+        'balances',
+        'priceHistories',
+        'display'
       ]),
       balance () {
         const balance = this.balances.find(balance => balance.id === this.id)
@@ -68,19 +90,32 @@
           throw new Error(`Cannot find balance with id ${this.id}`)
         }
 
-        fetch(`https://api.coinmarketcap.com/v1/ticker/${balance.currency.toLowerCase().split(' ').join('-')}/`)
-          .then(response => response.json())
-          .then(json => { // Todo: move this in indexedDB
-            json = json[0]
-            this.price.btc = json.price_btc * balance.amount
-            this.price.usd = json.price_usd * balance.amount
-          })
-          .catch(() => {
-            this.price.btc = 0
-            this.price.usd = 0
-          })
-
         return balance
+      },
+      showCharts () {
+        return this.display.balances.charts
+      },
+      currentPrice () {
+        return this.priceHistory[this.priceHistory.length - 1] * this.balance.amount
+      },
+      priceHistory () {
+        let priceHistory = this.priceHistories[this.balance.ticker]
+
+        if (priceHistory === undefined) {
+          priceHistory = []
+        }
+
+        return priceHistory
+      },
+      chartData () {
+        return {
+          labels: this.priceHistory,
+          datasets: [{
+            data: this.priceHistory,
+            backgroundColor: '#dee2ed',
+            borderColor: '#dee2ed'
+          }]
+        }
       }
     },
     methods: {
@@ -126,17 +161,17 @@
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: -1;
       overflow: hidden;
+      opacity: 0;
+      transition: opacity .3s;
+
+      &.showed {
+        opacity: 1;
+      }
 
       canvas {
-        opacity: 0;
-        transition: opacity .3s;
+        height: 120px;
       }
-    }
-
-    &:hover .balance-background canvas {
-      opacity: 0; // Todo: display on option toggle
     }
 
     .balance-content {
