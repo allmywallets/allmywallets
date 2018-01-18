@@ -19,19 +19,30 @@ const ExchangeFactory = {
 
       constructor (parameters) {
         super(parameters)
-        this.exchange = new ccxt[exchangeName]()
-        if (!this.exchange.hasCORS) {
-          this.exchange.proxy = 'https://cors-anywhere.herokuapp.com/'
-        }
+        this.exchange = ExchangeCCXT._instantiateCCXT()
       }
 
-      static setExchangeCredentials (exchange, {secret, apiKey}) {
+      static _setExchangeCredentials (exchange, {secret, apiKey}) {
         exchange.apiKey = apiKey
         exchange.secret = secret
       }
 
+      static _instantiateCCXT () {
+        const exchange = new ccxt[ExchangeCCXT.exchangeName]()
+
+        // TODO
+        // if (!exchange.hasCORS) {
+        //   exchange.proxy = 'https://cors-anywhere.herokuapp.com/'
+        // }
+
+        exchange.proxy = 'https://cors-anywhere.herokuapp.com/'
+
+        return exchange
+      }
+
       static async getSupportedCurrencies () {
-        const exchange = new ccxt[exchangeName]()
+        const exchange = ExchangeCCXT._instantiateCCXT()
+
         const currenciesRes = await exchange.fetchMarkets()
         const currencies = {}
         currenciesRes.forEach(market => {
@@ -47,7 +58,7 @@ const ExchangeFactory = {
       }
 
       async _getAllNonZeroBalances (walletIdentifier) {
-        this.constructor.setExchangeCredentials(this.exchange, walletIdentifier)
+        ExchangeCCXT._setExchangeCredentials(this.exchange, walletIdentifier)
         const balancesRes = await this.exchange.fetchBalance()
         const balances = []
         const nonZeroBalanceTickers = []
@@ -62,7 +73,7 @@ const ExchangeFactory = {
       }
 
       async _getBalances (walletIdentifier) {
-        this.constructor.setExchangeCredentials(this.exchange, walletIdentifier)
+        ExchangeCCXT._setExchangeCredentials(this.exchange, walletIdentifier)
         const balancesRes = await this.exchange.fetchBalance()
         const balances = []
         this.tickers.forEach(ticker => {
