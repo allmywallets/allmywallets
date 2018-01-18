@@ -41,7 +41,7 @@ function getGenericProviderClass (explorerName) {
       await this.explorer.checkWallets(this.parameters.wallets)
     }
 
-    async getWalletData (currencies = []) {
+    async getBalances (currencies = []) {
       this._selectCurrenciesToUpdate(this.explorer, currencies)
       if (this.parameters.addresses) {
         this.explorer.addresses(this.parameters.addresses)
@@ -49,7 +49,7 @@ function getGenericProviderClass (explorerName) {
         this.explorer.wallets(this.parameters.wallets)
       }
       const wallets = await this.explorer
-        .fetch(['balances', 'transactions'])
+        .fetch(['balances'])
         .exec()
 
       const balances = []

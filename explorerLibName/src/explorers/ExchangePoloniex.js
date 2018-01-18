@@ -76,7 +76,7 @@ class ExchangePoloniex extends AbstractExchangeExplorer {
     const balances = []
     this.tickers.forEach(ticker => {
       const amount = resBalances[ticker]
-      if (!amount) {
+      if (typeof amount === 'undefined') {
         throw new NotSupportedCurrencyError(`${ticker} is not supported`)
       }
 
