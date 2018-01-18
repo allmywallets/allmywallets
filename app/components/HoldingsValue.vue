@@ -1,7 +1,6 @@
 <template>
   <div class="holdings-value">
-    <span class="holdings-amount">${{ currentHoldings|toFixed(2) }}</span>
-    <span class="holdings-secondary-amount"><span class="ticker">BTC</span>0</span><br />
+    <span class="holdings-amount">${{ currentHoldings|toFixed(2) }}</span><br />
     <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span>
   </div>
 </template>
@@ -20,6 +19,10 @@
       lastMovement () {
         const holdingsSum = sumHoldingsHistories(this.holdingsHistory)
 
+        if (holdingsSum.length === 0) {
+          return 0
+        }
+
         return holdingsSum[holdingsSum.length - 1] / holdingsSum[holdingsSum.length - 2] * 100 - 100
       }
     }
@@ -34,7 +37,7 @@
     text-align: center;
     padding-top: 100px;
     color: $color-primary;
-    line-height: 1rem;
+    line-height: 2rem;
     position: relative;
     z-index: 1;
     pointer-events: none;
@@ -63,7 +66,6 @@
 
     .holdings-secondary-amount {
       font-size: 2rem;
-      line-height: 2.4rem;
 
       svg {
         font-size: 1rem;
