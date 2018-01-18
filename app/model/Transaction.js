@@ -18,6 +18,18 @@ export default class Transaction {
     this._amount = amount
   }
 
+  hasTrade () {
+    return !!this._trade
+  }
+
+  set trade (trade) {
+    this._trade = trade
+  }
+
+  get trade () {
+    return this._trade
+  }
+
   get id () {
     return this._id
   }
