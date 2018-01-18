@@ -71,10 +71,6 @@ class AbstractExchangeExplorer extends AbstractExplorer {
     throw new Error('This method should be implemented by child class')
   }
 
-  async _getSpecifiedBalances (walletIdentifier, wallet) {
-    throw new Error('This method should be implemented by child class')
-  }
-
   async _setAllNonZeroBalancesTransactionsWallet (walletIdentifier, wallet) {
     const {balances, nonZeroBalanceTickers} = await this._getAllNonZeroBalances(walletIdentifier)
 
@@ -108,6 +104,7 @@ class AbstractExchangeExplorer extends AbstractExplorer {
       return wallets
     }
 
+    this.selectedCurrencies = this.tickers.map(ticker => { return { name: ticker, ticker } })
     return super.exec()
   }
 }
