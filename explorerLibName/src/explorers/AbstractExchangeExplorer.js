@@ -44,27 +44,29 @@ class AbstractExchangeExplorer extends AbstractExplorer {
    * Return true if the permission is correct false otherwise
    * @returns {boolean}
    */
-  async _checkApiKeyPermission ({secret, apiKey}) {
+  async _checkApiKeyPermission (walletIdentifier) {
     throw new Error('This method should be implemented by child class')
   }
 
-  async _getTransactions ({secret, apiKey}, nonZeroBalanceTickers) {
-    const transactions = []
-
+  async _getTransactions (walletIdentifier, nonZeroBalanceTickers) {
     if (this.tickers.length !== 0) {
-      this.tickers.forEach(ticker => {
-        transactions.push([])
-      })
-      return transactions
+      return this._fetchTransactions(walletIdentifier, this.tickers)
     }
 
     if (nonZeroBalanceTickers) {
-      nonZeroBalanceTickers.forEach(ticker => {
-        transactions.push([])
-      })
-      return transactions
+      return this._fetchTransactions(walletIdentifier, nonZeroBalanceTickers)
     }
+
     return [[]]
+  }
+
+  async _fetchTransactions (walletIdentifier, tickers) {
+    const transactions = []
+    tickers.forEach(ticker => {
+      transactions.push([])
+    })
+
+    return transactions
   }
 
   async _getAllNonZeroBalances (walletIdentifier, wallet) {
