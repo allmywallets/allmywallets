@@ -2,7 +2,7 @@
   <div class="holdings-value">
     <span class="holdings-amount">${{ currentHoldings|toFixed(2) }}</span>
     <span class="holdings-secondary-amount"><span class="ticker">BTC</span>0</span><br />
-    <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(1) }}%</span>
+    <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span>
   </div>
 </template>
 
@@ -50,7 +50,6 @@
 
       &:before {
         content: '▲';
-        vertical-align: 1px;
       }
 
       &.decrease {
