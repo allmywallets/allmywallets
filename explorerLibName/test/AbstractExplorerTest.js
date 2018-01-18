@@ -58,6 +58,11 @@ for (let i = 0; i < explorers.length; i++) {
     t.not(balances, undefined)
     t.is(balances.length, 1)
     t.is(typeof balances[0], 'number')
+
+    t.is(explorer.getSelectedCurrencies() instanceof Array, true)
+    t.is(explorer.getSelectedCurrencies().length, 1)
+    t.not(explorer.getSelectedCurrencies()[0].ticker, undefined)
+    t.not(explorer.getSelectedCurrencies()[0].name, undefined)
   })
 
   test(`[${explorerName}] fetch only transactions`, async t => {
