@@ -22,9 +22,10 @@ const ExchangeFactory = {
         this.exchange = ExchangeCCXT._instantiateCCXT()
       }
 
-      static _setExchangeCredentials (exchange, {secret, apiKey}) {
-        exchange.apiKey = apiKey
-        exchange.secret = secret
+      static _setExchangeCredentials (exchange, walletIdentifier) {
+        Object.keys(walletIdentifier).forEach(key => {
+          exchange[key] = walletIdentifier[key]
+        })
       }
 
       static _instantiateCCXT () {
@@ -52,8 +53,10 @@ const ExchangeFactory = {
         return currencies
       }
 
-      async _checkApiKeyPermission ({secret, apiKey}) {
+      async _checkApiKeyPermission (walletIdentifier) {
         // TODO
+        ExchangeCCXT._setExchangeCredentials(this.exchange, walletIdentifier)
+        console.log(await this.exchange.cancelOrder('1234567890'))
         return true
       }
 
@@ -88,22 +91,26 @@ const ExchangeFactory = {
       }
 
       static getWalletIdentifierParameters () {
-        return [{
-          type: 'input',
-          inputType: 'text',
-          label: 'Poloniex Api Key',
-          model: 'wallets.apiKey',
-          autocomplete: 'off',
-          required: true
-        },
-        {
-          type: 'input',
-          inputType: 'text',
-          label: 'Poloniex secret',
-          model: 'wallets.secret',
-          autocomplete: 'off',
-          required: true
-        }]
+        const parameters = []
+
+        const exchange = ExchangeCCXT._instantiateCCXT()
+        Object.keys(exchange.requiredCredentials).forEach(credential => {
+          const isRequired = exchange.requiredCredentials[credential]
+          if (isRequired) {
+            parameters.push(
+              {
+                type: 'input',
+                inputType: 'text',
+                label: `${ExchangeCCXT.exchangeName} ${credential}`,
+                model: `wallets.${credential}`,
+                autocomplete: 'off',
+                required: true
+              }
+            )
+          }
+        })
+
+        return parameters
       }
     }
     return ExchangeCCXT
