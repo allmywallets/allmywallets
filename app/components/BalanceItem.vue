@@ -13,12 +13,10 @@
       </header>
       <div class="balance-amount">
         <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
-        <span class="balance-btc">
-          <template v-if="price.usd !== 0">
-            <span class="dollar">$</span>{{ currentPrice|toPrecision(4) }}
-          </template>
-          <template v-if="price.btc !== 0">
-            (BTC {{ price.btc|toPrecision(4) }})
+        <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span><br />
+        <span class="balance-price">
+          <template v-if="currentPrice !== 0">
+            <span class="dollar">$</span>{{ currentPrice|toFixed(2) }}
           </template>
         </span>
       </div>
@@ -51,9 +49,6 @@
     },
     data () {
       return {
-        price: {
-          btc: 0
-        },
         chartOptions: {
           responsive: true,
           maintainAspectRatio: false,
@@ -96,6 +91,10 @@
         return this.display.balances.charts
       },
       currentPrice () {
+        if (this.priceHistory.length === 0) {
+          return 0
+        }
+
         return this.priceHistory[this.priceHistory.length - 1] * this.balance.amount
       },
       priceHistory () {
@@ -106,6 +105,13 @@
         }
 
         return priceHistory
+      },
+      lastMovement () {
+        if (this.priceHistory.length === 0) {
+          return 0
+        }
+
+        return this.priceHistory[this.priceHistory.length - 1] / this.priceHistory[this.priceHistory.length - 2] * 100 - 100
       },
       chartData () {
         return {
@@ -213,11 +219,30 @@
       grid-row: 2;
       font-size: 2rem;
       text-align: center;
-      padding: 20px 10px 25px;
-      line-height: 1.4rem;
+      padding: 30px 10px 35px;
+      line-height: 0;
 
       .balance-amount-value {
         text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+      }
+
+      .movement {
+        font-size: 0.8rem;
+        color: $color-success;
+        font-family: $font-default;
+        line-height: 3rem;
+
+        &:before {
+          content: '▲';
+        }
+
+        &.decrease {
+          color: $color-danger;
+
+          &:before {
+            content: '▼';
+          }
+        }
       }
 
       small {
@@ -225,11 +250,11 @@
         margin-right: 2px;
       }
 
-      small, .balance-btc {
+      small, .balance-price {
         text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
       }
 
-      .balance-btc {
+      .balance-price {
         display: inline-block;
         font-size: 0.8rem;
         vertical-align: middle;
