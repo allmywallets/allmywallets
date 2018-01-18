@@ -13,10 +13,10 @@
       </header>
       <div class="balance-amount">
         <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
-        <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span><br />
         <span class="balance-price">
+          <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span>
           <template v-if="currentPrice !== 0">
-            <span class="dollar">$</span>{{ currentPrice|toFixed(2) }}
+            &middot; <span class="dollar">$</span>{{ currentPrice|toFixed(2) }}
           </template>
         </span>
       </div>
@@ -111,7 +111,7 @@
           return 0
         }
 
-        return this.priceHistory[this.priceHistory.length - 1] / this.priceHistory[this.priceHistory.length - 2] * 100 - 100
+        return this.priceHistory[this.priceHistory.length - 1] / this.priceHistory[this.priceHistory.length - 3] * 100 - 100
       },
       chartData () {
         return {
@@ -219,30 +219,11 @@
       grid-row: 2;
       font-size: 2rem;
       text-align: center;
-      padding: 30px 10px 35px;
-      line-height: 0;
+      padding: 35px 10px 40px;
+      line-height: 1rem;
 
       .balance-amount-value {
         text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
-      }
-
-      .movement {
-        font-size: 0.8rem;
-        color: $color-success;
-        font-family: $font-default;
-        line-height: 3rem;
-
-        &:before {
-          content: '▲';
-        }
-
-        &.decrease {
-          color: $color-danger;
-
-          &:before {
-            content: '▼';
-          }
-        }
       }
 
       small {
@@ -258,9 +239,26 @@
         display: inline-block;
         font-size: 0.8rem;
         vertical-align: middle;
+        font-family: $font-default;
 
         .dollar {
           font-weight: bold;
+        }
+
+        .movement {
+          color: $color-success;
+
+          &:before {
+            content: '▲';
+          }
+
+          &.decrease {
+            color: $color-danger;
+
+            &:before {
+              content: '▼';
+            }
+          }
         }
       }
     }

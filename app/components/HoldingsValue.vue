@@ -1,7 +1,10 @@
 <template>
   <div class="holdings-value">
     <span class="holdings-amount">${{ currentHoldings|toFixed(2) }}</span><br />
-    <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span>
+    <span class="holdings-secondary-amount">
+      <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span> &middot;
+      BTC 0
+    </span>
   </div>
 </template>
 
@@ -23,7 +26,7 @@
           return 0
         }
 
-        return holdingsSum[holdingsSum.length - 1] / holdingsSum[holdingsSum.length - 2] * 100 - 100
+        return holdingsSum[holdingsSum.length - 1] / holdingsSum[holdingsSum.length - 3] * 100 - 100
       }
     }
   }
@@ -46,34 +49,24 @@
       font-size: 5rem;
     }
 
-    .movement {
+    .holdings-secondary-amount {
       font-size: 1.2rem;
-      color: $color-success;
       font-family: $font-default;
 
-      &:before {
-        content: '▲';
-      }
-
-      &.decrease {
-        color: $color-danger;
+      .movement {
+        color: $color-success;
 
         &:before {
-          content: '▼';
+          content: '▲';
         }
-      }
-    }
 
-    .holdings-secondary-amount {
-      font-size: 2rem;
+        &.decrease {
+          color: $color-danger;
 
-      svg {
-        font-size: 1rem;
-      }
-
-      .ticker {
-        font-size: 1rem;
-        margin-right: 5px;
+          &:before {
+            content: '▼';
+          }
+        }
       }
     }
   }
