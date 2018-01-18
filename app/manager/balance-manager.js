@@ -58,7 +58,7 @@ export const compareBalances = (oldBalances, newBalances) => {
 }
 
 export const syncBalances = async (wallet) => {
-  const newBalances = await new Proxy(wallet).getWalletData()
+  const newBalances = await new Proxy(wallet).getBalances()
   const oldBalances = await database.findBalances(newBalances.map(balance => balance.id))
 
   const diffs = compareBalances(oldBalances, newBalances)
