@@ -134,7 +134,7 @@ const ExchangeFactory = {
         return transactions
       }
 
-      async _getAddresses (walletIdentifier, nonZeroBalanceTickers) {
+      async _fetchAddresses (walletIdentifier, nonZeroBalanceTickers) {
         ExchangeCCXT._setExchangeCredentials(this.exchange, walletIdentifier)
         const promises = []
         nonZeroBalanceTickers.forEach(ticker => {

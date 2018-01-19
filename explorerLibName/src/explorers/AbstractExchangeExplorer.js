@@ -60,6 +60,18 @@ class AbstractExchangeExplorer extends AbstractExplorer {
     return [[]]
   }
 
+  async _getAddresses (walletIdentifier, nonZeroBalanceTickers) {
+    if (this.tickers.length !== 0) {
+      return this._fetchAddresses(walletIdentifier, this.tickers)
+    }
+
+    if (nonZeroBalanceTickers) {
+      return this._fetchAddresses(walletIdentifier, nonZeroBalanceTickers)
+    }
+
+    return [[]]
+  }
+
   async _fetchTransactions (walletIdentifier, tickers) {
     const transactions = []
     tickers.forEach(ticker => {
@@ -67,6 +79,10 @@ class AbstractExchangeExplorer extends AbstractExplorer {
     })
 
     return transactions
+  }
+
+  async _fetchAddresses (walletIdentifier, tickers) {
+    throw new Error('This method should be implemented by child class')
   }
 
   async _getAllNonZeroBalances (walletIdentifier, wallet) {

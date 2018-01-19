@@ -120,4 +120,35 @@ for (let i = 0; i < explorers.length; i++) {
       t.not(supportedCurrencies[currency].ticker, undefined)
     }
   })
+
+  test(`[${explorerName}] fetch only balances and addresses`, async t => {
+    const explorer = new Explorer(parameters)
+    if (Explorer.isExchange) { explorer.currency('BTC') }
+    const res = await explorer
+        .address(address)
+        .fetch(['balances', 'addresses'])
+        .exec()
+
+    t.not(res, undefined)
+
+    const firstCurrency = res[0]
+
+    t.not(firstCurrency, undefined)
+    t.is(firstCurrency.transactions, undefined, 'We fetch only balances')
+
+    const balances = firstCurrency.balances
+    t.not(balances, undefined)
+    t.is(balances.length, 1)
+    t.is(typeof balances[0], 'number')
+
+    t.is(explorer.getSelectedCurrencies() instanceof Array, true)
+    t.is(explorer.getSelectedCurrencies().length, 1)
+    t.not(explorer.getSelectedCurrencies()[0].ticker, undefined)
+    t.not(explorer.getSelectedCurrencies()[0].name, undefined)
+
+    const addresses = firstCurrency.addresses
+    t.not(addresses, undefined)
+    t.is(addresses.length, 1)
+    t.is(typeof addresses[0], 'string')
+  })
 }

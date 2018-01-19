@@ -193,7 +193,8 @@ class AbstractExplorer {
     throw new Error('This method should be implemented by child class')
   }
   async _getAddresses (address) {
-    throw new Error('This method should be implemented by child class')
+    console.log(address)
+    return this.tickers.map(ticker => address)
   }
 
   async _setResultBalances (address, result) {
@@ -203,7 +204,7 @@ class AbstractExplorer {
     result.transactions = await this._getTransactions(address)
   }
   async _setResultAddresses (address, result) {
-    result.addresses = this.tickers.map(ticker => address)
+    result.addresses = await this._getAddresses(address)
   }
 
   /**
