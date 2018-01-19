@@ -18,3 +18,7 @@ Stay tuned, more to follow!
 ## Contribute
 
 Fork the repository and you're good to go!
+
+## Translate
+
+AllMyWallets can be translated. If you want to help, please read [these instructions](https://github.com/allmywallets/allmywallets/tree/master/app/translations).
