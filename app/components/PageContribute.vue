@@ -13,7 +13,7 @@
     <ul>
       <li v-for="language of languages">{{ language }}</li>
     </ul>
-    <p>
+    <p v-translate>
       You can <a href="https://github.com/allmywallets/allmywallets/tree/master/app/translations">contribute to translate
       the app</a>!
     </p>

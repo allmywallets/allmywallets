@@ -2,10 +2,10 @@
   <sweet-modal :title="`Upgraded to version ${version}!`" ref="modalUpgrade" @close="closeModal">
     <button slot="box-action" class="button" @click="openGithub">
       <fa-icon :icon="['fab', 'github']" />
-      See on GitHub
+      <translate>See on GitHub</translate>
     </button>
     <article v-html="content"></article>
-    <button slot="button" class="button" @click="closeModal">Close</button>
+    <button slot="button" class="button" @click="closeModal" v-translate>Close</button>
   </sweet-modal>
 </template>
 

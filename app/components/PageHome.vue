@@ -7,8 +7,8 @@
         <balance-item v-for="balance, key in balances" :key="key" :id="balance.id" />
       </article>
       <article v-else>
-        <p>No balance has been loaded yet. Click on the button below to refresh your wallets.</p>
-        <p><a href="#" @click.prevent="refreshBalances" class="button">Refresh wallets balances</a></p>
+        <p v-translate>No balance has been loaded yet. Click on the button below to refresh your wallets.</p>
+        <p><a href="#" @click.prevent="refreshBalances" class="button" v-translate>Refresh wallets balances</a></p>
       </article>
     </template>
     <first-launch v-else-if="!$store.state.balances.loading.balances" />

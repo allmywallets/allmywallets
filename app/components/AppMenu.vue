@@ -4,13 +4,13 @@
       <fa-icon icon="home" /> <span class="title">AllMyWallets</span>
     </router-link>
     <router-link :to="{ name: 'stats' }">
-      <fa-icon icon="chart-pie" /> <span class="title">Statistics</span>
+      <fa-icon icon="chart-pie" /> <span class="title" v-translate>Statistics</span>
     </router-link>
     <router-link :to="{ name: 'settings' }">
-      <fa-icon icon="cog" /> <span class="title">Settings</span>
+      <fa-icon icon="cog" /> <span class="title" v-translate>Settings</span>
     </router-link>
     <router-link :to="{ name: 'contribute' }">
-      <fa-icon icon="heart" /> <span class="title">Contribute</span>
+      <fa-icon icon="heart" /> <span class="title" v-translate>Contribute</span>
     </router-link>
   </nav>
 </template>
