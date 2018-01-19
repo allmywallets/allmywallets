@@ -15,8 +15,6 @@ import router from './router'
 import store from './store'
 import App from './components/App.vue'
 
-console.log(getAvailableLanguages())
-
 Vue.use(VueFilter)
 Vue.use(VueFormGenerator)
 Vue.use(VueTippy, {
