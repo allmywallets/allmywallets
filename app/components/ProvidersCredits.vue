@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h2>Credits</h2>
-    <p>This app uses awesome tools from the cryptocurrencies space!</p>
+    <h2 v-translate>Credits</h2>
+    <p v-translate>This app uses awesome tools from the cryptocurrencies space!</p>
     <ul class="providers">
       <li>
-        <a href="https://www.cryptocompare.com/">Cryptocompare</a> - For price history
+        <a href="https://www.cryptocompare.com/">Cryptocompare</a> - <translate>For price history</translate>
       </li>
       <li>
-        <a href="https://github.com/cjdowner/cryptocurrency-icons">Cryptocurrency Icons, by cjdowner</a> - For balance icons
+        <a href="https://github.com/cjdowner/cryptocurrency-icons">Cryptocurrency Icons, by cjdowner</a> - <translate>For balance icons</translate>
       </li>
     </ul>
   </div>

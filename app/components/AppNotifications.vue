@@ -5,7 +5,7 @@
       <a href="#" @click.prevent="togglePanel" class="close-panel"><fa-icon icon="times" /></a>
     </header>
     <p class="overall" v-if="notifications.length === 0">
-      <fa-icon icon="inbox" /> <br /> You don't have any notifications.
+      <fa-icon icon="inbox" /> <br /> <translate>You don't have any notifications.</translate>
     </p>
     <div class="notifications">
       <notification-item v-for="notification, key in notifications" :key="key" :notification="notification" />
