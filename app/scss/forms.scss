@@ -1,0 +1,17 @@
+@import 'vars';
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+select {
+  border: none;
+  background: $color-section-notifications;
+  color: $color-primary;
+  border-radius: 3px;
+  padding: 4px;
+}
+
+select {
+  cursor: pointer;
+}

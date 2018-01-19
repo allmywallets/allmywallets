@@ -4,14 +4,20 @@
     <template v-if="needsUpgrade">
       &bull; <router-link to="settings" v-translate>An upgrade is available!</router-link>
     </template>
+    &bull;
+    <language-switcher />
   </footer>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
+  import LanguageSwitcher from './LanguageSwitcher'
 
   export default {
     name: 'app-footer',
+    components: {
+      LanguageSwitcher
+    },
     computed: {
       ...mapGetters([
         'currentVersion',
