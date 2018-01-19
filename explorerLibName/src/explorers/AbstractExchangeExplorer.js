@@ -89,6 +89,11 @@ class AbstractExchangeExplorer extends AbstractExplorer {
       const transactions = await this._getTransactions(walletIdentifier, nonZeroBalanceTickers)
       wallet.transactions = transactions
     }
+
+    if (this.elementsToFetch.includes('addresses')) {
+      const addresses = await this._getAddresses(walletIdentifier, nonZeroBalanceTickers)
+      wallet.addresses = addresses
+    }
   }
 
   async exec () {
