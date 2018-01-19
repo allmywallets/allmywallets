@@ -8,8 +8,8 @@
     <p class="text-danger">
       Press <span class="badge">Replace configuration</span> to update your configuration.
     </p>
-    <input type="text" v-model="config" title="Configuration exported code" />
-    <button @click.prevent="updateConfig">Replace configuration</button>
+    <input type="text" v-model="config" title="Configuration exported code" placeholder="Copy paste configuration here" /> <br />
+    <button @click.prevent="updateConfig" class="button">Replace configuration</button>
   </div>
 </template>
 

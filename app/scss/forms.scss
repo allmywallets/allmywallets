@@ -1,10 +1,6 @@
 @import 'vars';
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="search"],
-select {
+@mixin input {
   border: none;
   background: $color-section-notifications;
   color: $color-primary;
@@ -12,6 +8,15 @@ select {
   padding: 4px;
 }
 
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="search"] {
+  @include input();
+  border-bottom: 2px solid white;
+}
+
 select {
+  @include input();
   cursor: pointer;
 }
