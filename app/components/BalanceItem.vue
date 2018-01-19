@@ -3,8 +3,8 @@
     <holdings-chart :class="{ 'balance-background': true, 'showed': showCharts }" :options="chartOptions" :chartData="chartData" />
     <div class="balance-content">
       <header class="balance-header">
-      <span class="balance-logo">
-        <img height="40" :src="`/static/icons/${balance.ticker.toLowerCase()}%402x.png`" @error="removeLogo" :alt="balance.ticker" />
+      <span class="balance-logo" v-if="logo">
+        <img height="40" :src="`/static/icons/${logo}%402x.png`" @error="removeLogo" :alt="balance.ticker" />
       </span>
         <h4 class="balance-name">
           {{ balance.wallet.name }}<br />
@@ -32,6 +32,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import icons from 'cryptocurrency-icons/manifest.json'
   import HoldingsChart from './HoldingsChart.vue'
   import BalanceItemTools from './BalanceItemTools.vue'
 
@@ -86,6 +87,15 @@
         }
 
         return balance
+      },
+      logo () {
+        const ticker = this.balance.ticker.toLowerCase()
+
+        if (Object.keys(icons.icons).includes(ticker)) {
+          return icons.icons[ticker]
+        }
+
+        return false
       },
       showCharts () {
         return this.display.balances.charts
