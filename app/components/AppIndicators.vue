@@ -27,7 +27,7 @@
   .app-indicators {
     grid-area: indicators;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     text-align: center;
     box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.15);
     background: $color-section-indicators;
@@ -39,6 +39,7 @@
       height: $grid-header-height;
       right: 0;
       box-shadow: none;
+      justify-content: center;
     }
 
     .indicator {

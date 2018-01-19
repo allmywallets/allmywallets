@@ -1,0 +1,31 @@
+{
+  "home": {
+    "first_launch": {
+      "title": "Welcome to AllMyWallets!",
+      "introduction": "AMW is the first decentralized privacy-focused app to see all your wallets at a glance, and receive push notifications whenever your balances change.",
+      "add_first_wallet": "Add a first wallet",
+      "features": {
+        "aggregates": {
+          "title": "All your wallet balances in the same place",
+          "description": "AMW can retrieve your balances from cryptocurrency explorers to exchanges."
+        },
+        "safe": {
+          "title": "Your cryptocurrencies never at risk",
+          "description": "AMW only uses public keys and read-only API keys to display your balances."
+        },
+        "notifications": {
+          "title": "Be notified when your money is on the move",
+          "description": "AMW sends push notifications so you can receive notifications on your smartphone without using the app."
+        },
+        "decentralized": {
+          "title": "Decentralized and privacy-first",
+          "description": "AMW data is stored in your browser and stays in your browser."
+        }
+      },
+      "requirements": "AMW can be used on any modern devices, including your smartphone using Chrome, Chromium or Brave."
+    }
+  },
+  "actions": {
+    "import_configuration": "Import configuration"
+  }
+}
