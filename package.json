@@ -36,7 +36,7 @@
     "vue-chartjs": "^3.1.0",
     "vue-filter": "^0.2.3",
     "vue-form-generator": "^2.1.1",
-    "vue-i18n": "^7.4.0",
+    "vue-gettext": "^2.0.25",
     "vue-moment": "^3.1.0",
     "vue-router": "^3.0.1",
     "vue-tippy": "^2.0.5",

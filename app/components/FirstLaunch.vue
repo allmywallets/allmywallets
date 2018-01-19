@@ -1,36 +1,37 @@
 <template>
   <article>
-    <h2>{{ $t('home.first_launch.title') }}</h2>
+    <h2>Welcome to AllMyWallets!</h2>
     <p class="intro">
-      {{ $t('home.first_launch.introduction') }}<br />
-      <router-link :to="{ name: 'home-add-wallet' }" class="button">{{ $t('home.first_launch.add_first_wallet') }}</router-link>
-      <router-link :to="{ name: 'settings' }" class="button">{{ $t('actions.import_configuration') }}</router-link>
+      AMW is the first decentralized privacy-focused app to see all your wallets at a glance, and receive push notifications
+      whenever your balances change.<br />
+      <router-link :to="{ name: 'home-add-wallet' }" class="button" v-translate>Add a first wallet</router-link>
+      <router-link :to="{ name: 'settings' }" class="button">Import configuration</router-link>
     </p>
     <ul class="features">
       <li class="feature">
         <fa-icon icon="money-bill-alt" /><br />
-        <strong>{{ $t('home.first_launch.features.aggregates.title') }}</strong><br />
-        <span class="more">{{ $t('home.first_launch.features.aggregates.description') }}</span>
+        <strong>All your wallet balances in the same place</strong><br />
+        <span class="more">AMW can retrieve your balances from cryptocurrency explorers to exchanges.</span>
       </li>
       <li class="feature">
         <fa-icon icon="lock" /><br />
-        <strong>{{ $t('home.first_launch.features.safe.title') }}</strong><br />
-        <span class="more">{{ $t('home.first_launch.features.safe.description') }}</span>
+        <strong>Your cryptocurrencies never at risk</strong><br />
+        <span class="more">AMW only uses public keys and read-only API keys to display your balances.</span>
       </li>
       <li class="feature">
         <fa-icon icon="bell" /><br />
-        <strong>{{ $t('home.first_launch.features.notifications.title') }}</strong>
-        <span class="more">{{ $t('home.first_launch.features.notifications.description') }}</span>
+        <strong>Be notified when your money is on the move</strong>
+        <span class="more">AMW sends push notifications so you can receive notifications on your smartphone without using the app.</span>
       </li>
       <li class="feature">
         <fa-icon icon="key" /><br />
-        <strong>{{ $t('home.first_launch.features.decentralized.title') }}</strong>
-        <span class="more">{{ $t('home.first_launch.features.decentralized.description') }}</span>
+        <strong>Decentralized and privacy-first</strong>
+        <span class="more">AMW data is stored in your browser and stays in your browser.</span>
       </li>
     </ul>
     <p class="intro">
-      <router-link :to="{ name: 'home-add-wallet' }" class="button">{{ $t('home.first_launch.add_first_wallet') }}</router-link><br />
-      {{ $t('home.first_launch.requirements') }}
+      <router-link :to="{ name: 'home-add-wallet' }" class="button">Add a first wallet</router-link><br />
+      AMW can be used on any modern devices, including your smartphone using Chrome, Chromium or Brave.
     </p>
     <hr />
     <template v-if="missingCapabilities">
