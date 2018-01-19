@@ -90,6 +90,50 @@ const ExchangeFactory = {
         return balances
       }
 
+      _parseTransactions (transactionsRes) {
+        return transactionsRes.map(tx => {
+          delete tx.info
+          tx.type = tx.side
+          delete tx.side
+          return tx
+        })
+      }
+
+      async _fetchTransactions (walletIdentifier, tickers) {
+        ExchangeCCXT._setExchangeCredentials(this.exchange, walletIdentifier)
+        await this.exchange.loadMarkets()
+
+        const transactions = []
+        for (let i = 0; i < tickers.length; i++) {
+          transactions[i] = []
+        }
+
+        const promises = []
+
+        this.exchange.symbols.forEach(symbol => {
+          const split = symbol.split('/')
+          const ticker1 = split[0]
+          const ticker2 = split[1]
+
+          if (tickers.includes(ticker1) && tickers.includes(ticker2)) {
+            promises.push((async () => {
+              let marketTransactionsRes = await this.exchange.fetchMyTrades(symbol)
+              let marketTransactions = this._parseTransactions(marketTransactionsRes)
+
+              const index1 = tickers.indexOf(ticker1)
+              transactions[index1] = transactions[index1].concat(marketTransactions)
+
+              const index2 = tickers.indexOf(ticker2)
+              transactions[index2] = transactions[index2].concat(marketTransactions)
+            })())
+          }
+        })
+
+        await Promise.all(promises)
+
+        return transactions
+      }
+
       static getWalletIdentifierParameters () {
         const parameters = []
 
