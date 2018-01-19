@@ -143,7 +143,7 @@ const ExchangeFactory = {
 
         const depositAddressesRes = await Promise.all(promises)
 
-        return depositAddressesRes.map(res => res.address)
+        return depositAddressesRes.map(res => res.address || res.currency)
       }
 
       static getWalletIdentifierParameters () {

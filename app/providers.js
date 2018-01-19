@@ -49,16 +49,15 @@ function getGenericProviderClass (explorerName) {
         this.explorer.wallets(this.parameters.wallets)
       }
       const wallets = await this.explorer
-        .fetch(['balances'])
+        .fetch(['balances', 'addresses'])
         .exec()
 
       const balances = []
-      let walletIndex = 0
       wallets.forEach(wallet => {
         let i = 0
         this.explorer.getSelectedCurrencies().forEach(selectedCurrency => {
           const amount = wallet.balances[i]
-          const address = this.parameters.addresses ? this.parameters.addresses[walletIndex] : 'exchangeDepositAddressWIP'
+          const address = wallet.addresses[i]
           const balance = new Balance(
             this.wallet,
             address,
@@ -70,7 +69,6 @@ function getGenericProviderClass (explorerName) {
           balances.push(balance)
           ++i
         })
-        ++walletIndex
       })
       return balances
     }
