@@ -27,6 +27,7 @@
     "idb": "^2.0.4",
     "idb-keyval": "^2.3.0",
     "jsonschema": "^1.2.2",
+    "langs": "^2.0.0",
     "lz-string": "^1.4.4",
     "moment": "^2.20.1",
     "showdown": "^1.8.6",

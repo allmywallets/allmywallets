@@ -10,10 +10,12 @@ import '@fortawesome/fontawesome-free-solid'
 import VueFontAwesome from '@fortawesome/vue-fontawesome'
 import VueQRCode from '@xkeshi/vue-qrcode'
 
-import { locale, translations, available } from './translator'
+import { locale, translations, getAvailableLanguages } from './translator'
 import router from './router'
 import store from './store'
 import App from './components/App.vue'
+
+console.log(getAvailableLanguages())
 
 Vue.use(VueFilter)
 Vue.use(VueFormGenerator)
@@ -25,7 +27,7 @@ Vue.use(VueTippy, {
 Vue.use(VueMoment)
 Vue.use(SweetModal)
 Vue.use(VueGetText, {
-  availableLanguages: available,
+  availableLanguages: getAvailableLanguages(),
   defaultLanguage: locale(),
   translations: translations,
   silent: true
