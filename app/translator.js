@@ -1,4 +1,5 @@
 import langs from 'langs'
+import Configurator from './configurator'
 
 export const locale = () => {
   for (let language of navigator.languages) {
@@ -8,6 +9,16 @@ export const locale = () => {
   }
 
   return 'en-US'
+}
+
+export const checkLocale = async () => {
+  const config = await Configurator.getConfig()
+
+  if (Object(config.application).hasOwnProperty('language')) {
+    return config.application.language
+  }
+
+  return false
 }
 
 export const getAvailableLanguages = () => {

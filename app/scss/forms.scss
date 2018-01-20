@@ -11,7 +11,8 @@
 input[type="text"],
 input[type="password"],
 input[type="email"],
-input[type="search"] {
+input[type="search"],
+textarea {
   @include input();
   border-bottom: 2px solid white;
 }

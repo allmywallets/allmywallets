@@ -1,14 +1,31 @@
 <template>
   <span>
-    <select name="language" v-model="$language.current" title="Change language">
+    <select name="language" @input="changeLanguage" title="Change language">
       <option v-for="(language, key) in $language.available" :value="key">{{ language }}</option>
     </select>
   </span>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
-    name: 'language-switcher'
+    name: 'language-switcher',
+    computed: {
+      ...mapGetters([
+        'config'
+      ])
+    },
+    methods: {
+      changeLanguage (event) {
+        this.$language.current = event.target.value
+
+        const config = this.config
+        config.application.language = this.$language.current
+
+        return this.$store.dispatch('updateConfig', { config })
+      }
+    }
   }
 </script>
 

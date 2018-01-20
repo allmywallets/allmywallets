@@ -13,8 +13,7 @@ describe('Configurator.js', () => {
             }
           ],
           application: {
-            version: '0.1',
-            language: 'en-US'
+            version: '0.1'
           }
         }
       ))
@@ -25,8 +24,7 @@ describe('Configurator.js', () => {
         {
           profiles: [],
           application: {
-            version: '0.1',
-            language: 'en-US'
+            version: '0.1'
           }
         }
       ))
@@ -49,8 +47,7 @@ describe('Configurator.js', () => {
             }
           ],
           application: {
-            version: '0.1',
-            language: 'en-US'
+            version: '0.1'
           }
         }
       ))
@@ -65,8 +62,7 @@ describe('Configurator.js', () => {
         {
           profiles: [{}],
           application: {
-            version: '0.1',
-            language: 'en-US'
+            version: '0.1'
           }
         }
       ))
@@ -77,8 +73,7 @@ describe('Configurator.js', () => {
         {
           profiles: 'invalid',
           application: {
-            version: '0.1',
-            language: 'en-US'
+            version: '0.1'
           }
         }
       ))
@@ -97,8 +92,7 @@ describe('Configurator.js', () => {
             }
           ],
           application: {
-            version: '0.1',
-            language: 'en-US'
+            version: '0.1'
           }
         }
       ))

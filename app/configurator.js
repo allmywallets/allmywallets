@@ -107,7 +107,7 @@ export default class Configurator {
             'version': { type: 'string' },
             'language': { type: 'string' }
           },
-          required: ['version', 'language']
+          required: ['version']
         }
       },
       required: ['profiles', 'application']
