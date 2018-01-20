@@ -1,5 +1,5 @@
 <template>
-  <collapsible-section icon="user-md">
+  <collapsible-section icon="user-md" :class="{ 'warning': needsUpdate }">
     <translate slot="title">Expert mode</translate>
     <p v-translate slot="intro">
       Expert mode allows you to update your raw configuration directly.

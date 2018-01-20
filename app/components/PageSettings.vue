@@ -3,7 +3,7 @@
     <h2 v-translate>Settings and configuration</h2>
     <p v-translate>You can use this page to customize AMW, or import/export your configuration.</p>
     <div class="sections">
-      <collapsible-section v-if="needsUpgrade" class="warning" icon="alt-circle-up">
+      <collapsible-section v-if="needsUpgrade" class="warning" icon="arrow-alt-circle-up">
         <translate slot="title">Application upgrade</translate>
         <p slot="intro">
           <strong v-translate>An upgrade is available!</strong> It is strongly recommended to update to benefit from bug and security
