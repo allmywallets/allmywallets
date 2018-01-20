@@ -60,7 +60,8 @@
     ]
   }],
   "application": {
-    "version": "X.X.X"
+    "version": "X.X.X",
+    "language": "en-US"
   }
 }
   </pre>

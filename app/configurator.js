@@ -6,7 +6,7 @@ export default class Configurator {
   static async getConfig () {
     let config = await idbKeyval.get('config')
 
-    config = config || { profiles: [ { wallets: [ ] } ], application: { version: Configurator.getVersion().current } }
+    config = config || Configurator.getDefaultConfiguration()
 
     return config
   }
@@ -87,13 +87,12 @@ export default class Configurator {
       properties: {
         'profiles': {
           type: 'array',
-          required: true,
+          minItems: 1,
           items: {
             type: 'object',
             properties: {
               'wallets': {
                 type: 'array',
-                required: true,
                 items: {
                   $ref: '/Wallet'
                 }
@@ -105,11 +104,13 @@ export default class Configurator {
         'application': {
           type: 'object',
           properties: {
-            'version': { type: 'string', required: true }
-          }
+            'version': { type: 'string' },
+            'language': { type: 'string' }
+          },
+          required: ['version', 'language']
         }
       },
-      'required': ['profiles']
+      required: ['profiles', 'application']
     }
 
     const validator = new Validator()
@@ -117,6 +118,16 @@ export default class Configurator {
     validator.addSchema(walletSchema, '/Wallet')
 
     return validator.validate(config, configSchema).valid && Configurator.validateWalletIds(config)
+  }
+
+  static getDefaultConfiguration () {
+    return {
+      profiles: [ { wallets: [ ] } ],
+      application: {
+        version: Configurator.getVersion().current,
+        language: 'en-US'
+      }
+    }
   }
 
   static async getVersion () {

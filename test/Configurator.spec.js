@@ -11,15 +11,23 @@ describe('Configurator.js', () => {
             {
               wallets: []
             }
-          ]
+          ],
+          application: {
+            version: '0.1',
+            language: 'en-US'
+          }
         }
       ))
     })
 
-    it('validates an empty config', () => {
-      assert.isTrue(Configurator.validateConfig(
+    it('invalidates empty profiles', () => {
+      assert.isFalse(Configurator.validateConfig(
         {
-          profiles: []
+          profiles: [],
+          application: {
+            version: '0.1',
+            language: 'en-US'
+          }
         }
       ))
     })
@@ -39,7 +47,11 @@ describe('Configurator.js', () => {
                 }
               ]
             }
-          ]
+          ],
+          application: {
+            version: '0.1',
+            language: 'en-US'
+          }
         }
       ))
     })
@@ -51,7 +63,11 @@ describe('Configurator.js', () => {
     it('invalidates a void profile', () => {
       assert.isFalse(Configurator.validateConfig(
         {
-          profiles: [{}]
+          profiles: [{}],
+          application: {
+            version: '0.1',
+            language: 'en-US'
+          }
         }
       ))
     })
@@ -59,7 +75,11 @@ describe('Configurator.js', () => {
     it('invalidates an invalid profiles config', () => {
       assert.isFalse(Configurator.validateConfig(
         {
-          profiles: 'invalid'
+          profiles: 'invalid',
+          application: {
+            version: '0.1',
+            language: 'en-US'
+          }
         }
       ))
     })
@@ -75,7 +95,11 @@ describe('Configurator.js', () => {
                 }
               ]
             }
-          ]
+          ],
+          application: {
+            version: '0.1',
+            language: 'en-US'
+          }
         }
       ))
     })
