@@ -53,7 +53,7 @@
       }
 
       .icon {
-        width: 50px;
+        width: 40px;
       }
     }
 
