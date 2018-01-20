@@ -1,5 +1,5 @@
 import Balance from './model/Balance'
-import ExplorerLib from '../explorerLibName'
+import Providers from '@allmywallets/providers'
 import Wallet from './model/Wallet'
 
 export default class Proxy {
@@ -9,7 +9,7 @@ export default class Proxy {
     const provider = wallet.provider
     const networkProvider = `${network}.${provider}`
 
-    if (!ExplorerLib.list().includes(networkProvider)) {
+    if (!Providers.list().includes(networkProvider)) {
       throw new Error(`Unsupported network provider: ${networkProvider}`)
     }
 
@@ -22,12 +22,12 @@ export default class Proxy {
   }
 
   static getProvidersList () {
-    return ExplorerLib.list()
+    return Providers.list()
   }
 }
 
 function getGenericProviderClass (explorerName) {
-  const Explorer = ExplorerLib.explorer(explorerName)
+  const Explorer = Providers.explorer(explorerName)
   class GenericProvider {
     constructor (parameters, wallet) {
       this.parameters = parameters
