@@ -21,8 +21,8 @@
         </span>
       </div>
       <footer class="balance-footer">
-        <div class="balance-provider">
-          Data from {{ balance.wallet.provider|camelcase }}
+        <div class="balance-provider" v-translate="{ provider: balance.wallet.provider.charAt(0).toUpperCase() + balance.wallet.provider.slice(1) }">
+          Data from %{provider}
         </div>
         <balance-item-tools :balance="balance" />
       </footer>
