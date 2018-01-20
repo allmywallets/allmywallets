@@ -2,9 +2,9 @@
   <section :class="{ 'collapsible': true, 'expanded': expanded }">
     <header class="collapsible-header">
       <h3 class="collapsible-title">
+        <fa-icon :icon="icon" v-if="icon" class="icon" />
         <slot name="title" />
         <a class="button button-small" @click.prevent="expanded = !expanded" href="#" v-if="this.$slots.default">
-          <fa-icon :icon="expanded ? 'compress' : 'expand'" />
           <translate v-if="expanded">Collapse</translate>
           <translate v-else>Expand</translate>
         </a>
@@ -20,6 +20,12 @@
 <script>
   export default {
     name: 'collapsible-section',
+    props: {
+      icon: {
+        type: String,
+        required: false
+      }
+    },
     data () {
       return {
         expanded: false
@@ -35,8 +41,14 @@
     padding: 5px 15px 0;
     margin-bottom: 10px;
 
-    .collapsible-header p:last-child {
-      margin-bottom: 0;
+    .collapsible-header {
+      p:last-child {
+        margin-bottom: 0;
+      }
+
+      .icon {
+        width: 50px;
+      }
     }
 
     .collapsible-content {

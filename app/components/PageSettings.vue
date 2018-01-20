@@ -11,14 +11,14 @@
       </p>
     </collapsible-section>
     <system-check class="collapsible" />
-    <collapsible-section>
+    <collapsible-section icon="desktop">
       <translate slot="title">Display customization</translate>
       <template slot="intro">Coming soon!</template>
     </collapsible-section>
     <config-export />
     <config-import />
     <config-expert />
-    <collapsible-section>
+    <collapsible-section icon="bomb">
       <translate slot="title">Danger zone</translate>
       <p v-translate slot="intro">Some dangerous actions you can do with the application.</p>
       <ul>

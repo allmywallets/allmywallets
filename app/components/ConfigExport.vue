@@ -1,5 +1,5 @@
 <template>
-  <collapsible-section>
+  <collapsible-section icon="upload">
     <translate slot="title">Export configuration</translate>
     <p v-translate slot="intro">
       You can export your configuration to another device. Notice that you will need to export your configuration each

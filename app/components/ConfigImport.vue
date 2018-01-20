@@ -1,5 +1,5 @@
 <template>
-  <collapsible-section>
+  <collapsible-section icon="download">
     <translate slot="title">Import configuration</translate>
     <p slot="intro" v-translate>
       You've exported your configuration from another device?

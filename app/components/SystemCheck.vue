@@ -1,6 +1,6 @@
 <template>
-  <collapsible-section>
-    <template slot="title">System check</template>
+  <collapsible-section icon="cogs">
+    <translate slot="title">System checks</translate>
     <template slot="intro">
       <p v-if="!missing" v-translate>Your browser is compatible with AllMyWallets!</p>
       <p v-else v-translate>

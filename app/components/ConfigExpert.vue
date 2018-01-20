@@ -1,5 +1,5 @@
 <template>
-  <collapsible-section>
+  <collapsible-section icon="user-md">
     <translate slot="title">Expert mode</translate>
     <p v-translate slot="intro">
       Expert mode allows you to update your raw configuration directly.
@@ -78,7 +78,9 @@
   import CollapsibleSection from './CollapsibleSection.vue'
 
   export default {
-    components: {CollapsibleSection},
+    components: {
+      CollapsibleSection
+    },
     name: 'config-expert',
     data () {
       return {
