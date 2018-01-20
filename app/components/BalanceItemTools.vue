@@ -4,6 +4,7 @@
        class="address"
        title="Public key copied!"
        :data-clipboard-text="balance.address"
+       v-if="balance.address !== ''"
        v-tippy="{ trigger: 'click' }">
       <fa-icon icon="copy" />
     </a>
