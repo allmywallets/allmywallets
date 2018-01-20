@@ -1,11 +1,14 @@
 <template>
-  <div>
-    <h3>Expert mode</h3>
-    <p>
-      Expert mode allows you to update your raw configuration directly. Beware! Editing this configuration may break the
-      application. Be sure to know what you are doing...
+  <collapsible-section>
+    <translate slot="title">Expert mode</translate>
+    <p v-translate slot="intro">
+      Expert mode allows you to update your raw configuration directly.
     </p>
-    <p>Example:</p>
+    <p>
+      <strong v-translate>Beware! Editing this configuration may break the application.</strong>
+      <translate>Be sure to know what you are doing...</translate>
+    </p>
+    <p v-translate>Example:</p>
     <pre>
 {
   "profiles": [{
@@ -66,14 +69,16 @@
     <span v-if="needsUpdate">Configuration needs to be updated!<br /></span>    </strong>
     Some ids to help you: <template v-for="n in 5"><span class="badge">{{ generateId() }}</span>&nbsp;</template>
     <textarea @input="updateConfig" title="Edit your configuration">{{ config }}</textarea>
-  </div>
+  </collapsible-section>
 </template>
 
 <script>
   import Configurator from '../configurator'
   import { generateId } from '../helper/string'
+  import CollapsibleSection from './CollapsibleSection.vue'
 
   export default {
+    components: {CollapsibleSection},
     name: 'config-expert',
     data () {
       return {

@@ -91,6 +91,11 @@ a, a:hover {
   &:not([disabled]):not(.disabled) {
     cursor: pointer;
   }
+
+  &.button-small {
+    font-size: 0.8rem;
+    padding: .2rem .4rem;
+  }
 }
 
 hr {

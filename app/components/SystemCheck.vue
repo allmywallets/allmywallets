@@ -1,12 +1,15 @@
 <template>
-  <div>
-    <h2>System check</h2>
-    <p v-if="!missing">Your browser is compatible with AllMyWallets!</p>
-    <p v-else>
-      Some critical requirements are missing to get all the features of AllMyWallets.<br />Please consider upgrading to the
-      last version of <a href="https://www.google.com/chrome/">Chrome</a>, <a href="https://www.chromium.org/getting-involved/download-chromium">Chromium</a>,
-      <a href="https://brave.com/download">Brave</a> or <a href="https://www.mozilla.org/firefox/">Firefox</a>.
-    </p>
+  <collapsible-section>
+    <template slot="title">System check</template>
+    <template slot="intro">
+      <p v-if="!missing" v-translate>Your browser is compatible with AllMyWallets!</p>
+      <p v-else v-translate>
+        Some critical requirements are missing to get all the features of AllMyWallets.
+        <br />Please consider upgrading to the last version of <a href="https://www.google.com/chrome/">Chrome</a>,
+        <a href="https://www.chromium.org/getting-involved/download-chromium">Chromium</a>,
+        <a href="https://brave.com/download">Brave</a> or <a href="https://www.mozilla.org/firefox/">Firefox</a>.
+      </p>
+    </template>
     <ul class="capabilities">
       <li v-for="capability in capabilities">
         <fa-icon
@@ -15,14 +18,18 @@
         {{ capability.name }}
       </li>
     </ul>
-  </div>
+  </collapsible-section>
 </template>
 
 <script>
   import { missingCapabilities, getCapabilities } from '../manager/system-manager'
+  import CollapsibleSection from './CollapsibleSection.vue'
 
   export default {
     name: 'system-check',
+    components: {
+      CollapsibleSection
+    },
     data () {
       return {
         capabilities: {},
