@@ -1,7 +1,7 @@
 <template>
   <span>
     <select name="language" @input="changeLanguage" title="Change language">
-      <option v-for="(language, key) in $language.available" :value="key">{{ language }}</option>
+      <option v-for="(language, key) in $language.available" :value="key" :selected="key === $language.current">{{ language }}</option>
     </select>
   </span>
 </template>
