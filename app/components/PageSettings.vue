@@ -2,35 +2,37 @@
   <div>
     <h2 v-translate>Settings and configuration</h2>
     <p v-translate>You can use this page to customize AMW, or import/export your configuration.</p>
-    <collapsible-section v-if="needsUpgrade">
-      <translate slot="title">Application upgrade</translate>
-      <p slot="intro">
-        <strong v-translate>An upgrade is available!</strong> It is strongly recommended to update to benefit from bug and security
-        fixes as well as new features.
-        <a href="#" @click.prevent="forceUpgrade" v-translate>Click here to upgrade.</a>
-      </p>
-    </collapsible-section>
-    <system-check class="collapsible" />
-    <collapsible-section icon="desktop">
-      <translate slot="title">Display customization</translate>
-      <template slot="intro">Coming soon!</template>
-    </collapsible-section>
-    <config-export />
-    <config-import />
-    <config-expert />
-    <collapsible-section icon="bomb">
-      <translate slot="title">Danger zone</translate>
-      <p v-translate slot="intro">Some dangerous actions you can do with the application.</p>
-      <ul>
-        <li>
-          <a href="#" @click.prevent="forceUpgrade" v-translate>Force app upgrade:</a>
-          <translate>
-            The app will be entirely reinstalled, but data should be preserved. You may also want to remove and add back
-            the application icon on your home screen to refresh the splash screen.
-          </translate>
-        </li>
-      </ul>
-    </collapsible-section>
+    <div class="sections">
+      <collapsible-section v-if="needsUpgrade" class="warning" icon="alt-circle-up">
+        <translate slot="title">Application upgrade</translate>
+        <p slot="intro">
+          <strong v-translate>An upgrade is available!</strong> It is strongly recommended to update to benefit from bug and security
+          fixes as well as new features.
+          <a href="#" @click.prevent="forceUpgrade" v-translate>Click here to upgrade.</a>
+        </p>
+      </collapsible-section>
+      <system-check class="collapsible" />
+      <collapsible-section icon="desktop">
+        <translate slot="title">Display customization</translate>
+        <template slot="intro">Coming soon!</template>
+      </collapsible-section>
+      <config-export />
+      <config-import />
+      <config-expert />
+      <collapsible-section icon="bomb">
+        <translate slot="title">Danger zone</translate>
+        <p v-translate slot="intro">Some dangerous actions you can do with the application.</p>
+        <ul>
+          <li>
+            <a href="#" @click.prevent="forceUpgrade" v-translate>Force app upgrade:</a>
+            <translate>
+              The app will be entirely reinstalled, but data should be preserved. You may also want to remove and add back
+              the application icon on your home screen to refresh the splash screen.
+            </translate>
+          </li>
+        </ul>
+      </collapsible-section>
+    </div>
   </div>
 </template>
 

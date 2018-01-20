@@ -1,5 +1,5 @@
 <template>
-  <collapsible-section icon="cogs">
+  <collapsible-section icon="cogs" :class="{ 'warning': missing }">
     <translate slot="title">System checks</translate>
     <template slot="intro">
       <p v-if="!missing" v-translate>Your browser is compatible with AllMyWallets!</p>

@@ -35,11 +35,17 @@
 </script>
 
 <style scoped lang="scss">
+  @import '../scss/vars';
+
   .collapsible {
     background: white;
     border-radius: 3px;
     padding: 5px 15px 0;
     margin-bottom: 10px;
+
+    &.warning {
+      background: lighten($color-warning, 35);
+    }
 
     .collapsible-header {
       p:last-child {
