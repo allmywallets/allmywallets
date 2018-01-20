@@ -7,9 +7,7 @@
       <a href="https://github.com/allmywallets/allmywallets" target="_blank">GitHub</a> repository.
     </p>
     <h3 v-translate>Translations</h3>
-    <p>
-      <translate>AllMyWallets is currently available in the following languages:</translate>
-    </p>
+    <p v-translate>AllMyWallets is currently available in the following languages:</p>
     <ul>
       <li v-for="language of languages">{{ language }}</li>
     </ul>
