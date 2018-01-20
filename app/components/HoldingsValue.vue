@@ -1,9 +1,9 @@
 <template>
   <div class="holdings-value">
-    <span class="holdings-amount">${{ currentHoldings|toFixed(2) }}</span><br />
+    <span class="holdings-amount">{{ currentHoldings|currency(currencies.primary) }}</span><br />
     <span class="holdings-secondary-amount">
       <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span> &middot;
-      BTC 0
+      {{ 0|currency(currencies.secondary) }}
     </span>
   </div>
 </template>
@@ -17,7 +17,8 @@
     computed: {
       ...mapGetters([
         'currentHoldings',
-        'holdingsHistory'
+        'holdingsHistory',
+        'currencies'
       ]),
       lastMovement () {
         const holdingsSum = sumHoldingsHistories(this.holdingsHistory)

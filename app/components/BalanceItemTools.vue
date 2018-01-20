@@ -8,7 +8,7 @@
        v-tippy="{ trigger: 'click' }">
       <fa-icon icon="copy" />
     </a>
-    <a href="#" @click.prevent="refresh" :title="`Updated ${lastUpdate}`" v-tippy>
+    <a href="#" v-if="!display.balances.collapsed" @click.prevent="refresh" :title="`Updated ${lastUpdate}`" v-tippy>
       <fa-icon icon="sync-alt" :spin="loading" />
     </a>
     <a href="#" v-if="status" :title="`Wallet update failed: ${status.title}`" class="text-warning" v-tippy>
@@ -38,7 +38,8 @@
     },
     computed: {
       ...mapGetters([
-        'notifications'
+        'notifications',
+        'display'
       ]),
       status () {
         this.loading = false

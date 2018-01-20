@@ -13,12 +13,7 @@
       </header>
       <div class="balance-amount">
         <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
-        <span class="balance-price">
-          <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span>
-          <template v-if="currentPrice !== 0">
-            &middot; <span class="dollar">$</span>{{ currentPrice|toFixed(2) }}
-          </template>
-        </span>
+        <balance-item-prices :ticker="balance.ticker" :amount="balance.amount" />
       </div>
       <footer class="balance-footer">
         <div class="balance-provider" v-translate="{ provider: balance.wallet.provider.charAt(0).toUpperCase() + balance.wallet.provider.slice(1) }">
@@ -34,12 +29,14 @@
   import { mapGetters } from 'vuex'
   import icons from 'cryptocurrency-icons/manifest.json'
   import HoldingsChart from './HoldingsChart.vue'
+  import BalanceItemPrices from './BalanceItemPrices.vue'
   import BalanceItemTools from './BalanceItemTools.vue'
 
   export default {
     name: 'balance-item',
     components: {
       HoldingsChart,
+      BalanceItemPrices,
       BalanceItemTools
     },
     props: {
@@ -76,7 +73,7 @@
     computed: {
       ...mapGetters([
         'balances',
-        'priceHistories',
+        'pricesHistories',
         'display'
       ]),
       balance () {
@@ -100,34 +97,18 @@
       showCharts () {
         return this.display.balances.charts
       },
-      currentPrice () {
-        if (this.priceHistory.length === 0) {
-          return 0
-        }
-
-        return this.priceHistory[this.priceHistory.length - 1] * this.balance.amount
-      },
-      priceHistory () {
-        let priceHistory = this.priceHistories[this.balance.ticker]
-
-        if (priceHistory === undefined) {
-          priceHistory = []
-        }
-
-        return priceHistory
-      },
-      lastMovement () {
-        if (this.priceHistory.length === 0) {
-          return 0
-        }
-
-        return this.priceHistory[this.priceHistory.length - 1] / this.priceHistory[this.priceHistory.length - 3] * 100 - 100
-      },
       chartData () {
+        const history = this.pricesHistories.find(history => history.ticker === this.balance.ticker)
+
+        let prices = []
+        if (history) {
+          prices = history.getPrices('primary')
+        }
+
         return {
-          labels: this.priceHistory,
+          labels: prices,
           datasets: [{
-            data: this.priceHistory,
+            data: prices,
             backgroundColor: '#dee2ed',
             borderColor: '#dee2ed'
           }]
@@ -239,37 +220,6 @@
       small {
         font-size: 0.4em;
         margin-right: 2px;
-      }
-
-      small, .balance-price {
-        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-      }
-
-      .balance-price {
-        display: inline-block;
-        font-size: 0.8rem;
-        vertical-align: middle;
-        font-family: $font-default;
-
-        .dollar {
-          font-weight: bold;
-        }
-
-        .movement {
-          color: $color-success;
-
-          &:before {
-            content: '▲';
-          }
-
-          &.decrease {
-            color: $color-danger;
-
-            &:before {
-              content: '▼';
-            }
-          }
-        }
       }
     }
 

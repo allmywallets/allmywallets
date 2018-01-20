@@ -13,6 +13,7 @@ import VueQRCode from '@xkeshi/vue-qrcode'
 import { locale, checkLocale, translations, getAvailableLanguages } from './translator'
 import router from './router'
 import store from './store'
+import './filters'
 import App from './components/App.vue'
 
 Vue.use(VueFilter)
