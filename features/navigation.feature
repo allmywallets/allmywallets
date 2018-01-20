@@ -16,7 +16,7 @@ Feature: Navigate through the application
   Scenario: Going to the settings page
 
     When I follow "Settings"
-    Then I should see "Application settings" in the "h2" element
+    Then I should see "Settings and configuration" in the "h2" element
 
   Scenario: Going to the contribute page
 

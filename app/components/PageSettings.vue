@@ -6,8 +6,8 @@
       <collapsible-section v-if="needsUpgrade" class="warning" icon="arrow-alt-circle-up">
         <translate slot="title">Application upgrade</translate>
         <p slot="intro">
-          <strong v-translate>An upgrade is available!</strong> It is strongly recommended to update to benefit from bug and security
-          fixes as well as new features.
+          <strong v-translate>An upgrade is available!</strong>
+          <translate>It is strongly recommended to update to benefit from bug and security fixes as well as new features.</translate>
           <a href="#" @click.prevent="forceUpgrade" v-translate>Click here to upgrade.</a>
         </p>
       </collapsible-section>
