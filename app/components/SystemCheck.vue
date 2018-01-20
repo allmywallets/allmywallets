@@ -3,11 +3,13 @@
     <translate slot="title">System checks</translate>
     <template slot="intro">
       <p v-if="!missing" v-translate>Your browser is compatible with AllMyWallets!</p>
-      <p v-else v-translate>
-        Some critical requirements are missing to get all the features of AllMyWallets.
-        <br />Please consider upgrading to the last version of <a href="https://www.google.com/chrome/">Chrome</a>,
+      <p v-else>
+        <translate>Some critical requirements are missing to get all the features of AllMyWallets.</translate><br />
+        <translate>Please consider upgrading to the last version of one of the following browsers:</translate>
+        <a href="https://www.google.com/chrome/">Chrome</a>,
         <a href="https://www.chromium.org/getting-involved/download-chromium">Chromium</a>,
-        <a href="https://brave.com/download">Brave</a> or <a href="https://www.mozilla.org/firefox/">Firefox</a>.
+        <a href="https://brave.com/download">Brave</a>,
+        <a href="https://www.mozilla.org/firefox/">Firefox</a>
       </p>
     </template>
     <ul class="capabilities">

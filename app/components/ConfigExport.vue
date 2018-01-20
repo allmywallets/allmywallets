@@ -17,12 +17,12 @@
       <div class="url">{{ url }}</div>
     </template>
     <template v-else>
-      <p v-translate>
-        You can scan the below QRCode and copy the code that will be shown by your device at <a :href="importUrl">{{ importUrl }}</a>:
+      <p>
+        <translate>You can scan the below QRCode and copy the code that will be shown by your device at the address</translate> <a :href="importUrl">{{ importUrl }}</a>:
       </p>
       <qrcode :value="url" />
-      <p v-translate>
-        You can also copy the following code and paste it on the target device at <a :href="importUrl">{{ importUrl }}</a>:
+      <p>
+        <translate>You can also copy the following code and paste it on the target device at the address</translate> <a :href="importUrl">{{ importUrl }}</a>:
       </p>
       <div class="url">{{ config }}</div>
     </template>
