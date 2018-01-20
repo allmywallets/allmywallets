@@ -9,6 +9,9 @@
       <li>
         <a href="https://github.com/cjdowner/cryptocurrency-icons">Cryptocurrency Icons, by cjdowner</a> - <translate>For balance icons</translate>
       </li>
+      <li>
+        <a href="https://github.com/ccxt/ccxt">CCXT – CryptoCurrency eXchange Trading Library</a> - <translate>For exchanges balances data</translate>
+      </li>
     </ul>
   </div>
 </template>
