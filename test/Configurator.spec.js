@@ -13,7 +13,11 @@ describe('Configurator.js', () => {
             }
           ],
           application: {
-            version: '0.1'
+            version: '0.1',
+            currencies: {
+              primary: 'USD',
+              secondary: 'BTC'
+            }
           }
         }
       ))
@@ -24,7 +28,11 @@ describe('Configurator.js', () => {
         {
           profiles: [],
           application: {
-            version: '0.1'
+            version: '0.1',
+            currencies: {
+              primary: 'USD',
+              secondary: 'BTC'
+            }
           }
         }
       ))
@@ -47,7 +55,11 @@ describe('Configurator.js', () => {
             }
           ],
           application: {
-            version: '0.1'
+            version: '0.1',
+            currencies: {
+              primary: 'USD',
+              secondary: 'BTC'
+            }
           }
         }
       ))
@@ -62,7 +74,11 @@ describe('Configurator.js', () => {
         {
           profiles: [{}],
           application: {
-            version: '0.1'
+            version: '0.1',
+            currencies: {
+              primary: 'USD',
+              secondary: 'BTC'
+            }
           }
         }
       ))
@@ -73,7 +89,11 @@ describe('Configurator.js', () => {
         {
           profiles: 'invalid',
           application: {
-            version: '0.1'
+            version: '0.1',
+            currencies: {
+              primary: 'USD',
+              secondary: 'BTC'
+            }
           }
         }
       ))
@@ -92,7 +112,11 @@ describe('Configurator.js', () => {
             }
           ],
           application: {
-            version: '0.1'
+            version: '0.1',
+            currencies: {
+              primary: 'USD',
+              secondary: 'BTC'
+            }
           }
         }
       ))

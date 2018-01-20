@@ -105,9 +105,17 @@ export default class Configurator {
           type: 'object',
           properties: {
             'version': { type: 'string' },
-            'language': { type: 'string' }
+            'language': { type: 'string' },
+            'currencies': {
+              type: 'object',
+              properties: {
+                'primary': { type: 'string' },
+                'secondary': { type: 'string' }
+              },
+              required: ['primary', 'secondary']
+            }
           },
-          required: ['version']
+          required: ['version', 'currencies']
         }
       },
       required: ['profiles', 'application']
@@ -125,7 +133,10 @@ export default class Configurator {
       profiles: [ { wallets: [ ] } ],
       application: {
         version: Configurator.getVersion().current,
-        language: 'en-US'
+        currencies: {
+          primary: 'USD',
+          secondary: 'BTC'
+        }
       }
     }
   }

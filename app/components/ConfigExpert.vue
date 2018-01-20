@@ -1,8 +1,9 @@
 <template>
   <collapsible-section icon="user-md" :class="{ 'warning': needsUpdate }">
     <translate slot="title">Expert mode</translate>
-    <p v-translate slot="intro">
-      Expert mode allows you to update your raw configuration directly.
+    <p slot="intro">
+      <translate>Expert mode allows you to update your raw configuration directly.</translate>
+      <strong v-if="needsUpdate" v-translate>Configuration needs to be updated!</strong>
     </p>
     <p>
       <strong v-translate>Beware! Editing this configuration may break the application.</strong>
@@ -60,13 +61,17 @@
     ]
   }],
   "application": {
-    "version": "X.X.X"
+    "version": "X.X.X",
+    "language": "fr",
+    "currencies": {
+      "primary": "USD",
+      "secondary": "BTC"
+    }
   }
 }
   </pre>
     <p>Current (editable) config:</p>
-    <strong>{{ error }} <br />
-    <span v-if="needsUpdate">Configuration needs to be updated!<br /></span>    </strong>
+    <strong>{{ error }}</strong>
     Some ids to help you: <template v-for="n in 5"><span class="badge">{{ generateId() }}</span>&nbsp;</template>
     <textarea @input="updateConfig" title="Edit your configuration">{{ config }}</textarea>
   </collapsible-section>
