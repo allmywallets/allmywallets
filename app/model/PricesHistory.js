@@ -9,7 +9,7 @@ export default class PricesHistory {
   }
 
   getPrices (category) {
-    return this._prices[category].values
+    return this._prices[category]
   }
 
   getLastMovement (category) {
@@ -23,14 +23,8 @@ export default class PricesHistory {
     const secondary = this.getPrices('secondary')
 
     const prices = {}
-    prices.primary = {
-      ticker: this._prices.primary.ticker,
-      price: primary[primary.length - 1]
-    }
-    prices.secondary = {
-      ticker: this._prices.secondary.ticker,
-      price: secondary[secondary.length - 1]
-    }
+    prices.primary = primary[primary.length - 1]
+    prices.secondary = secondary[secondary.length - 1]
 
     return prices
   }
@@ -38,8 +32,8 @@ export default class PricesHistory {
   getCurrentValues (amount) {
     const currentPrices = this.getCurrentPrices()
 
-    currentPrices.primary.value = currentPrices.primary.price * amount
-    currentPrices.secondary.value = currentPrices.secondary.price * amount
+    currentPrices.primary = currentPrices.primary * amount
+    currentPrices.secondary = currentPrices.secondary * amount
 
     return currentPrices
   }

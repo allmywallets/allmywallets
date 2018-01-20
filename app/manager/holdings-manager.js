@@ -55,31 +55,25 @@ export const sumHoldingsHistories = holdings => {
 
 export const getPeriodPriceHistory = async (ticker, primary, secondary, nbDays = 45) => {
   const empty = [...new Array(nbDays * 24 / 6 + 1).keys()].map(() => 0)
-  const prices = {
-    primary: {
-      ticker: primary,
-      values: empty
-    },
-    secondary: {
-      ticker: secondary,
-      values: empty
-    }
-  }
+  const currencies = { primary: primary, secondary: secondary }
+  const prices = { primary: empty, secondary: empty }
 
   try {
-    for (const category of ['primary', 'secondary']) {
-      if (ticker === prices[category].ticker) {
+    for (const category in currencies) {
+      if (currencies[category] === ticker) {
         continue
       }
 
-      const response = await fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${ticker}&tsym=${prices[category].ticker}&limit=${nbDays * 24 / 6}&aggregate=6`)
+      const response = await fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${ticker}&tsym=${currencies[category]}&limit=${nbDays * 24 / 6}&aggregate=6`)
       const json = await response.json()
 
       if (json['Data'].length >= nbDays * 24 / 6) {
-        prices[category].values = json['Data'].map(data => data.close)
+        prices[category] = json['Data'].map(data => data.close)
       }
     }
   } catch (e) {
+    console.error(e)
+
     return new PricesHistory(ticker, prices)
   }
 

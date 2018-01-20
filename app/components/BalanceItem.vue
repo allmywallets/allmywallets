@@ -12,7 +12,7 @@
         </h4>
       </header>
       <div class="balance-amount">
-        <small>{{ balance.ticker }}</small><span class="balance-amount-value" :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
+        <small>{{ balance.ticker }}</small><span :title="balance.amount" v-tippy>{{ balance.amount|toPrecision(4) }}</span><br />
         <balance-item-prices :ticker="balance.ticker" :amount="balance.amount" />
       </div>
       <footer class="balance-footer">
@@ -212,10 +212,6 @@
       text-align: center;
       padding: 35px 10px 40px;
       line-height: 1rem;
-
-      .balance-amount-value {
-        text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
-      }
 
       small {
         font-size: 0.4em;

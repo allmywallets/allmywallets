@@ -133,7 +133,7 @@ export default class Configurator {
       profiles: [ { wallets: [ ] } ],
       application: {
         version: Configurator.getVersion().current,
-        currencies: {
+        currencies: { // Todo: move this in profiles
           primary: 'USD',
           secondary: 'BTC'
         }
