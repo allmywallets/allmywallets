@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import database from '../database'
 import * as HoldingsManager from '../manager/holdings-manager'
-import Balance from '../model/Balance'
-import Wallet from '../model/Wallet'
+import { collapseBalances } from '../manager/balance-manager'
 
 const state = {
   loading: {
@@ -13,26 +12,7 @@ const state = {
 }
 
 const getters = {
-  balances: state => state.balances,
-  collapsedBalances: state => { // Todo: extract this in balance manager
-    const collapsed = {}
-
-    state.balances.forEach(balance => {
-      if (balance.currency in collapsed) {
-        const existingBalance = collapsed[balance.currency]
-
-        existingBalance.increaseAmount(balance.amount)
-        existingBalance.lastUpdate = balance.lastUpdate < existingBalance.lastUpdate ? balance.lastUpdate : existingBalance.lastUpdate
-        let nbWallets = existingBalance.wallet.name.replace(/.*\D/g, '')
-        existingBalance.wallet.name = `${++nbWallets} wallets`
-        existingBalance.wallet.network = existingBalance.wallet.network === balance.wallet.network ? balance.wallet.network : 'Multiple networks'
-        existingBalance.wallet.provider = existingBalance.wallet.provider === balance.wallet.provider ? balance.wallet.provider : 'multiple providers'
-      } else {
-        const aggregateWallet = new Wallet(balance.currency, '1 wallet', balance.wallet.network, balance.wallet.provider)
-        collapsed[balance.currency] = new Balance(aggregateWallet, '', balance.currency, balance.ticker, balance.amount, balance.lastUpdate)
-      }
-    })
-  },
+  balances: (state, getters, rootState) => rootState.config.display.balances.collapsed ? collapseBalances(state.balances) : state.balances,
   priceHistories: state => state.priceHistories,
   holdingsHistory: state => HoldingsManager.computeAllHoldingsHistories(state.priceHistories, state.balances),
   currentHoldings: state => {

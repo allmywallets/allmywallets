@@ -4,11 +4,11 @@
       <a href="#" @click.prevent="refreshBalances" title="Refresh all balances" v-tippy>
         <fa-icon icon="sync-alt" :spin="loading" />
       </a><!--
-      --><a href="#" @click.prevent="toggleCharts" title="Show balances charts" v-tippy>
+      --><a href="#" @click.prevent="toggleCharts" title="Toggle balances charts" v-tippy>
         <fa-icon icon="chart-area" />
       </a><!--
-      --><a href="#" title="Collapse balances" v-tippy>
-        <fa-icon icon="compress" />
+      --><a href="#" @click.prevent="collapseBalances" title="Toggle balances collapsing" v-tippy>
+        <fa-icon :icon="display.balances.collapsed ? 'th' : 'th-large'" />
       </a>
     </div>
     <div class="actions-right">
@@ -40,6 +40,12 @@
       toggleCharts () {
         const display = this.display
         display.balances.charts = !display.balances.charts
+
+        return this.$store.dispatch('updateDisplay', { display })
+      },
+      collapseBalances () {
+        const display = this.display
+        display.balances.collapsed = !display.balances.collapsed
 
         return this.$store.dispatch('updateDisplay', { display })
       }

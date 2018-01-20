@@ -1,6 +1,8 @@
 import Proxy from '../providers'
 import database from '../database'
 import Transaction from '../model/Transaction'
+import Wallet from '../model/Wallet'
+import Balance from '../model/Balance'
 
 export const getBalanceDiff = (oldBalance, newBalance) => {
   if (!oldBalance) {
@@ -66,4 +68,26 @@ export const syncBalances = async (wallet) => {
   await database.storeBalances(newBalances)
 
   return diffs
+}
+
+export const collapseBalances = (balances) => {
+  const collapsed = {}
+
+  balances.forEach(balance => {
+    if (balance.currency in collapsed) {
+      const existingBalance = collapsed[balance.currency]
+
+      existingBalance.increaseAmount(balance.amount)
+      existingBalance.lastUpdate = balance.lastUpdate < existingBalance.lastUpdate ? balance.lastUpdate : existingBalance.lastUpdate
+      let nbWallets = existingBalance.wallet.name.replace(/\D/g, '')
+      existingBalance.wallet.name = `${++nbWallets} wallets`
+      existingBalance.wallet.network = existingBalance.wallet.network === balance.wallet.network ? balance.wallet.network : 'Multiple networks'
+      existingBalance.wallet.provider = existingBalance.wallet.provider === balance.wallet.provider ? balance.wallet.provider : 'multiple providers'
+    } else {
+      const aggregateWallet = new Wallet(balance.currency, '1 wallet', balance.wallet.network, balance.wallet.provider)
+      collapsed[balance.currency] = new Balance(aggregateWallet, '', balance.currency, balance.ticker, balance.amount, balance.lastUpdate)
+    }
+  })
+
+  return Object.keys(collapsed).map((k) => collapsed[k])
 }

@@ -10,7 +10,8 @@ const state = {
   version: { current: 'unknown', upstream: 'unknown' },
   display: {
     balances: {
-      charts: false // Todo: move this in config
+      charts: false,
+      collapsed: false
     },
     notifications: {
       panel: false
