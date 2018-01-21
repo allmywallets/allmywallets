@@ -56,7 +56,7 @@ export const getPeriodPriceHistory = async (ticker, primary, secondary) => {
   try {
     for (const category in currencies) {
       if (currencies[category] === ticker) {
-        continue
+        prices[category] = [...new Array(getHistoryLength(45)).keys()].map(() => 1)
       }
 
       const response = await fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${ticker}&tsym=${currencies[category]}&limit=${getHistoryLength(45) - 1}&aggregate=6`)

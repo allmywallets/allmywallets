@@ -1,13 +1,13 @@
 <template>
   <span class="balance-price">
     <template v-if="pricesHistory && amount > 0">
-      <template v-if="currentValues.primary > 0">
+      <template v-if="currencies.primary !== ticker">
         <span :class="{ 'movement': true, 'decrease': pricesHistory.getLastMovement('primary') < 0 }">
           {{ pricesHistory.getLastMovement('primary')|toFixed(2) }}%
         </span>
         &middot; {{ currentValues.primary|currency(currencies.primary) }}
       </template>
-      <template v-if="currentValues.secondary > 0">
+      <template v-if="currencies.secondary !== ticker">
         ({{ currentValues.secondary|currency(currencies.secondary) }})
       </template>
     </template>
