@@ -12,6 +12,16 @@ export default class PricesHistory {
     return this._prices[category]
   }
 
+  getValues (category, amountHistory) {
+    const prices = this.getPrices(category)
+
+    if (prices.length !== amountHistory.length) {
+      throw new Error('Amount history should have the same length than prices history')
+    }
+
+    return prices.map((price, key) => price * amountHistory[key])
+  }
+
   getLastMovement (category) {
     const prices = this.getPrices(category)
 

@@ -13,16 +13,7 @@ const state = {
 const getters = {
   balances: (state, getters, rootState) => rootState.config.display.balances.collapsed ? collapseBalances(state.balances) : state.balances,
   pricesHistories: state => state.pricesHistories,
-  holdingsHistory: state => HoldingsManager.computeAllHoldingsHistories(state.pricesHistories, state.balances),
-  currentHoldings: state => {
-    const holdingsHistory = HoldingsManager.sumHoldingsHistories(getters.holdingsHistory(state))
-
-    if (holdingsHistory.length === 0) {
-      return 0
-    }
-
-    return holdingsHistory[holdingsHistory.length - 1]
-  }
+  globalHoldingsHistory: state => HoldingsManager.sumHoldingsHistories(HoldingsManager.computeAllHoldingsHistories(state.pricesHistories, state.balances)),
 }
 
 const mutations = {

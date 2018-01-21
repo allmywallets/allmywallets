@@ -1,9 +1,9 @@
 <template>
   <div class="holdings-value">
-    <span class="holdings-amount">{{ currentHoldings|currency(currencies.primary) }}</span><br />
+    <span class="holdings-amount">{{ currentHoldings.primary|currency(currencies.primary) }}</span><br />
     <span class="holdings-secondary-amount">
       <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span> &middot;
-      {{ 0|currency(currencies.secondary) }}
+      {{ currentHoldings.secondary|currency(currencies.secondary) }}
     </span>
   </div>
 </template>
@@ -16,12 +16,20 @@
     name: 'holdings-value',
     computed: {
       ...mapGetters([
-        'currentHoldings',
+        'globalHoldingsHistory',
         'holdingsHistory',
         'currencies'
       ]),
+      currentHoldings () {
+        const { primary, secondary } = this.globalHoldingsHistory
+
+        return {
+          primary: primary[primary.length - 1],
+          secondary: secondary[secondary.length - 1]
+        }
+      },
       lastMovement () {
-        const holdingsSum = sumHoldingsHistories(this.holdingsHistory)
+        const holdingsSum = this.globalHoldingsHistory.primary
 
         if (holdingsSum.length === 0) {
           return 0

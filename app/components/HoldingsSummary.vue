@@ -57,10 +57,10 @@
     },
     computed: {
       ...mapGetters([
-        'holdingsHistory'
+        'globalHoldingsHistory'
       ]),
       chartData () {
-        const holdingsHistory = sumHoldingsHistories(this.holdingsHistory)
+        const holdingsHistory = this.globalHoldingsHistory.primary
 
         return {
           labels: [...Array(holdingsHistory.length).keys()],

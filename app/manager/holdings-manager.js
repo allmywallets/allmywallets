@@ -1,14 +1,14 @@
 import PricesHistory from '../model/PricesHistory'
 
-export const computeHoldingsHistory = (pricesHistory, balanceHistory) => {
-  const holdings = []
-  const prices = pricesHistory.getPrices('primary')
+const getHistoryLength = (nbDays) => {
+  return nbDays * 24 / 6 + 1
+}
 
-  for (let i = 0; i < prices.length; ++i) {
-    holdings.push(prices[i] * balanceHistory[i])
+export const computeHoldingsHistory = (pricesHistory, amountHistory) => {
+  return {
+    primary: pricesHistory.getValues('primary', amountHistory),
+    secondary: pricesHistory.getValues('secondary', amountHistory)
   }
-
-  return holdings
 }
 
 export const computeAllHoldingsHistories = (priceHistories, balances) => { // Todo: change this to take balance history into account instead of balances
@@ -21,40 +21,35 @@ export const computeAllHoldingsHistories = (priceHistories, balances) => { // To
       continue
     }
 
-    holdingHistories[ticker] = computeHoldingsHistory(
-      pricesHistory,
-      [...new Array(pricesHistory.getPrices('primary').length).keys()].map(() => summedAmounts[ticker]) // Todo: replace this with balanceHistories[ticker]
-    )
+    const balanceHistory = [...new Array(getHistoryLength(45)).keys()].map(() => summedAmounts[ticker]) // Todo: replace this with balanceHistories[ticker]
+    holdingHistories[ticker] = computeHoldingsHistory(pricesHistory, balanceHistory)
   }
 
   return holdingHistories
 }
 
 export const sumHoldingsHistories = holdings => {
+  const summedHoldings = { primary: [], secondary: [] }
+
   if (Object.keys(holdings).length === 0) {
-    return []
+    return summedHoldings
   }
 
-  const periodLength = holdings[Object.keys(holdings)[0]].length
-  for (const ticker in holdings) {
-    if (periodLength !== holdings[ticker].length) {
-      throw new Error('Holdings history periods should have the same length')
-    }
-  }
+  for (let i = 0; i < getHistoryLength(45); ++i) {
+    summedHoldings.primary[i] = 0
+    summedHoldings.secondary[i] = 0
 
-  const summedValues = []
-  for (let i = 0; i < periodLength; ++i) {
-    summedValues[i] = 0
     for (const ticker in holdings) {
-      summedValues[i] += holdings[ticker][i]
+      summedHoldings.primary[i] += holdings[ticker].primary[i]
+      summedHoldings.secondary[i] += holdings[ticker].secondary[i]
     }
   }
 
-  return summedValues
+  return summedHoldings
 }
 
-export const getPeriodPriceHistory = async (ticker, primary, secondary, nbDays = 45) => {
-  const empty = [...new Array(nbDays * 24 / 6 + 1).keys()].map(() => 0)
+export const getPeriodPriceHistory = async (ticker, primary, secondary) => {
+  const empty = [...new Array(getHistoryLength(45)).keys()].map(() => 0) // Todo: hardcoded 45 values to be changed
   const currencies = { primary: primary, secondary: secondary }
   const prices = { primary: empty, secondary: empty }
 
@@ -64,10 +59,10 @@ export const getPeriodPriceHistory = async (ticker, primary, secondary, nbDays =
         continue
       }
 
-      const response = await fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${ticker}&tsym=${currencies[category]}&limit=${nbDays * 24 / 6}&aggregate=6`)
+      const response = await fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${ticker}&tsym=${currencies[category]}&limit=${getHistoryLength(45) - 1}&aggregate=6`)
       const json = await response.json()
 
-      if (json['Data'].length >= nbDays * 24 / 6) {
+      if (json['Data'].length >= getHistoryLength(45)) {
         prices[category] = json['Data'].map(data => data.close)
       }
     }
