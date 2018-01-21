@@ -7,9 +7,9 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { sumHoldingsHistories } from '../manager/holdings-manager'
   import HoldingsValue from './HoldingsValue.vue'
   import HoldingsChart from './HoldingsChart.vue'
+  import { formatCurrency } from '../manager/holdings-manager'
 
   export default {
     components: {
@@ -47,7 +47,7 @@
                 return ''
               },
               label: (tooltipItem, data) => {
-                return '$' + data['datasets'][0]['data'][tooltipItem['index']].toFixed(2)
+                return formatCurrency(data['datasets'][0]['data'][tooltipItem['index']], this.currencies.primary)
               }
             },
             displayColors: false
@@ -57,7 +57,8 @@
     },
     computed: {
       ...mapGetters([
-        'globalHoldingsHistory'
+        'globalHoldingsHistory',
+        'currencies'
       ]),
       chartData () {
         const holdingsHistory = this.globalHoldingsHistory.primary

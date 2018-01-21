@@ -1,7 +1,22 @@
 import PricesHistory from '../model/PricesHistory'
+import CurrencyFormatter from 'currency-formatter'
 
 const getHistoryLength = (nbDays) => {
   return nbDays * 24 / 6 + 1
+}
+
+const precisionRound = (number, precision) => {
+  const factor = Math.pow(10, precision)
+
+  return Math.round(number * factor) / factor
+}
+
+export const formatCurrency = (value, ticker) => {
+  if (!CurrencyFormatter.currencies.find(currency => currency.code === ticker)) {
+    return `${ticker} ${precisionRound(value, 4)}`
+  }
+
+  return CurrencyFormatter.format(value, { code: ticker })
 }
 
 export const computeHoldingsHistory = (pricesHistory, amountHistory) => {
