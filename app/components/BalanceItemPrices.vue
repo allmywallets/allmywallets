@@ -5,7 +5,7 @@
         <span :class="{ 'movement': true, 'decrease': pricesHistory.getLastMovement('primary') < 0 }">
           {{ pricesHistory.getLastMovement('primary')|toFixed(2) }}%
         </span>
-        &middot; {{ currentValues.primary|currency(currencies.primary) }}
+        │ {{ currentValues.primary|currency(currencies.primary) }}
       </template>
       <template v-if="currencies.secondary !== ticker">
         ({{ currentValues.secondary|currency(currencies.secondary) }})
