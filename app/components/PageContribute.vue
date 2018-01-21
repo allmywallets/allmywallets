@@ -14,14 +14,19 @@
     <p>
       <a href="https://github.com/allmywallets/allmywallets/tree/master/app/translations" v-translate>Contribute to translate the app!</a>
     </p>
+    <providers-credits />
   </div>
 </template>
 
 <script>
   import { getAvailableLanguages } from '../translator'
+  import ProvidersCredits from './ProvidersCredits.vue'
 
   export default {
     name: 'page-contribute',
+    components: {
+      ProvidersCredits
+    },
     computed: {
       languages () {
         return getAvailableLanguages()

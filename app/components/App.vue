@@ -1,6 +1,6 @@
 <template>
   <main>
-    <img src="/static/logo.png" alt="AMW" class="main-logo" height="40" />
+    <router-link :to="{ name: 'home' }"><img src="/static/logo.png" alt="AMW" class="main-logo" height="40" /></router-link>
     <app-menu />
     <app-indicators />
     <app-notifications />
@@ -55,7 +55,7 @@
               "menu menu indicators"
               "content notifications notifications";
     }
-    
+
     .content {
       grid-area: content;
       padding: 10px 10px 10px 20px;
