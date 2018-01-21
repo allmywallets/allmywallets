@@ -1,9 +1,11 @@
 <template>
   <div class="holdings-value">
     <span class="holdings-amount">{{ currentHoldings.primary|currency(currencies.primary) }}</span><br />
+    <span :class="{ 'evolution': true, 'decrease': lastMovement < 0 }">{{ lastChange|abs|currency(currencies.primary) }}
+      ({{ lastMovement|toFixed(2) }}%)
+    </span>
     <span class="holdings-secondary-amount">
-      <span :class="{ 'movement': true, 'decrease': lastMovement < 0 }">{{ lastMovement|toFixed(2) }}%</span> &middot;
-      {{ currentHoldings.secondary|currency(currencies.secondary) }}
+      │ {{ currentHoldings.secondary|currency(currencies.secondary) }}
     </span>
   </div>
 </template>
@@ -21,7 +23,14 @@
         'currencies'
       ]),
       currentHoldings () {
-        const { primary, secondary } = this.globalHoldingsHistory
+        const {primary, secondary} = this.globalHoldingsHistory
+
+        if (primary.length === 0) {
+          return {
+            primary: 0,
+            secondary: 0
+          }
+        }
 
         return {
           primary: primary[primary.length - 1],
@@ -36,6 +45,14 @@
         }
 
         return holdingsSum[holdingsSum.length - 1] / holdingsSum[holdingsSum.length - 3] * 100 - 100
+      },
+      lastChange () {
+        const holdingsSum = this.globalHoldingsHistory.primary
+
+        if (holdingsSum.length === 0) {
+          return 0
+        }
+        return holdingsSum[holdingsSum.length - 1] - holdingsSum[holdingsSum.length - 3]
       }
     }
   }
@@ -49,7 +66,7 @@
     text-align: center;
     padding-top: 100px;
     color: $color-primary;
-    line-height: 2rem;
+    line-height: 1.5rem;
     position: relative;
     z-index: 1;
     pointer-events: none;
@@ -58,23 +75,23 @@
       font-size: 5rem;
     }
 
-    .holdings-secondary-amount {
+    .holdings-secondary-amount, .evolution {
       font-size: 1.2rem;
       font-family: $font-default;
+    }
 
-      .movement {
-        color: $color-success;
+    .evolution {
+      color: $color-success;
+
+      &:before {
+        content: '▲ +';
+      }
+
+      &.decrease {
+        color: $color-danger;
 
         &:before {
-          content: '▲';
-        }
-
-        &.decrease {
-          color: $color-danger;
-
-          &:before {
-            content: '▼';
-          }
+          content: '▼ -';
         }
       }
     }
