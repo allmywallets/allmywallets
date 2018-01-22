@@ -1,6 +1,11 @@
-import Vue from 'vue'
 import { formatCurrency } from './manager/holdings-manager'
 
-Vue.filter('currency', (value, ticker) => {
-  return formatCurrency(value, ticker)
-})
+const filters = {
+  install (Vue) {
+    Vue.filter('currency', (value, ticker) => {
+      return formatCurrency(value, ticker)
+    })
+  }
+}
+
+export default filters
