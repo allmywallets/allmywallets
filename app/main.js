@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueFilter from 'vue-filter'
+import Vue2Filters from 'vue2-filters'
 import VueFormGenerator from 'vue-form-generator'
 import VueTippy from 'vue-tippy'
 import VueMoment from 'vue-moment'
@@ -17,6 +18,7 @@ import './filters'
 import App from './components/App.vue'
 
 Vue.use(VueFilter)
+Vue.use(Vue2Filters)
 Vue.use(VueFormGenerator)
 Vue.use(VueTippy, {
   animation: 'shift-away',

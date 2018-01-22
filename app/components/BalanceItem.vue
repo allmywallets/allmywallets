@@ -138,7 +138,7 @@
     width: 100%;
 
     h4 {
-      color: black;
+      color: $color-text;
     }
 
     @media screen and (min-width: $breakpoint-medium) {

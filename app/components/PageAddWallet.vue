@@ -1,17 +1,28 @@
 <template>
   <div>
-    <h2>Add a new wallet</h2>
-    <ul>
-      <li v-for="provider in providers" :key="provider">
-        <a href="#" @click.prevent="loadProvider(provider)">{{ provider }}</a>
+    <h2 v-translate>Add a new wallet</h2>
+    <p>
+      <translate>You can add a new wallet by selecting a provider on the list below.</translate>
+      <translate>A wallet is a set of balances which will be displayed on the homepage of AMW.</translate>
+    </p>
+    <label for="wallet-filter" v-translate>Filter:</label> <input type="search" id="wallet-filter" />
+    <ul :class="{ 'selected': currentProvider !== '' }">
+      <li v-for="provider in providers" :key="provider" :class="{ 'selected': currentProvider === provider }">
+        <a href="#" @click.prevent="loadProvider(provider)">
+          <span class="network">{{ provider.split('.')[0]|capitalize }}</span><br />
+          <span class="provider">{{ provider.split('.')[1]|capitalize }}</span><br />
+          <img src="https://www.weusecoins.com/images/company/kraken.png" alt="" />
+        </a>
       </li>
     </ul>
-    <template v-if="currentSchema !== null">
-      <p>Adding a {{ currentProvider }}</p>
+    <template v-if="currentProvider !== ''">
+      <h3 v-translate="{ provider: currentProvider.split('.')[1].charAt(0).toUpperCase() + currentProvider.split('.')[1].slice(1) }">
+        Adding %{provider} wallet
+      </h3>
       <form>
         <label for="name">Name</label>
         <input type="text" v-model="currentName" id="name" />
-        <vue-form-generator :schema="currentSchema" :model="currentParameters"></vue-form-generator>
+        <vue-form-generator :schema="currentSchema" :model="currentParameters" />
         <button @click.prevent="save">Save</button>
       </form>
     </template>
@@ -83,3 +94,69 @@
     }
   }
 </script>
+
+<style scoped lang="scss">
+  @import '../scss/vars';
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    background: white;
+    box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.05);
+
+    &.selected {
+      li:not(.selected) {
+        display: none;
+      }
+    }
+
+    li {
+      width: 50%;
+      border-right: 1px solid #efefef;
+      border-bottom: 1px solid #efefef;
+
+      @media screen and(min-width: $breakpoint-medium) {
+        width: 25%;
+      }
+
+      @media screen and(min-width: $breakpoint-large) {
+        width: 20%;
+      }
+
+      @media screen and(min-width: $breakpoint-larger) {
+        width: 14.285714286%;
+      }
+
+      &.selected {
+        width: 100%;
+      }
+
+      a {
+        color: $color-text;
+        display: block;
+        line-height: 1rem;
+        text-align: center;
+        padding: 10px 0;
+
+        &:hover {
+          background: darken(white, 2);
+        }
+
+        .network {
+          font-style: italic;
+        }
+
+        .provider {
+          font-weight: bold;
+        }
+
+        img {
+          max-width: 50px;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+</style>
