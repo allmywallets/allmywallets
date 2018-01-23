@@ -17,7 +17,7 @@
     </ul>
     <template v-if="currentProvider !== ''">
       <h3 v-translate="{ provider: currentProvider.split('.')[1].charAt(0).toUpperCase() + currentProvider.split('.')[1].slice(1) }">
-        Adding %{provider} wallet
+        New %{provider} wallet
       </h3>
       <form>
         <label for="name">Name</label>
@@ -103,8 +103,7 @@
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    background: white;
-    box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.05);
+    @include card();
 
     &.selected {
       li:not(.selected) {

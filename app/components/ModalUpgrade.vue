@@ -1,9 +1,9 @@
 <template>
   <sweet-modal :title="`Upgraded to version ${version}!`" ref="modalUpgrade" @close="closeModal">
-    <button slot="box-action" class="button" @click="openGithub">
+    <a slot="box-action" class="button button-small" href="https://github.com/allmywallets/allmywallets/releases" target="_blank">
       <fa-icon :icon="['fab', 'github']" />
       <translate>See on GitHub</translate>
-    </button>
+    </a>
     <article v-html="content"></article>
     <button slot="button" class="button" @click="closeModal" v-translate>Close</button>
   </sweet-modal>
@@ -24,9 +24,6 @@
     methods: {
       closeModal () {
         this.$router.push('/')
-      },
-      openGithub () {
-        window.open('https://github.com/allmywallets/allmywallets/releases', '_blank')
       }
     },
     async mounted () {

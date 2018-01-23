@@ -19,3 +19,8 @@ $color-section-indicators: #7381bb;
 $color-section-menu: #ffffff;
 $color-section-notifications: #dee2ed;
 $color-background: #f5f6fa;
+
+@mixin card {
+  background: white;
+  box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.05);
+}

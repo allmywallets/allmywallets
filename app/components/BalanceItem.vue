@@ -133,9 +133,8 @@
     margin: 0 10px 20px;
     cursor: default;
     position: relative;
-    background: white;
-    box-shadow: 2px 3px 10px 0 rgba(0, 0, 0, 0.05);
     width: 100%;
+    @include card();
 
     h4 {
       color: $color-text;
