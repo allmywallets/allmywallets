@@ -21,7 +21,7 @@ const state = {
 
 const getters = {
   config: state => state.config,
-  currencies: state => state.config.application.currencies,
+  currencies: state => state.config.profiles[0].application.currencies,
   wallets: state => state.config.profiles[0].wallets,
   needsUpgrade: state => state.version.current !== state.version.upstream,
   currentVersion: state => state.version.current,

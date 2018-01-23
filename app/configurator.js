@@ -96,26 +96,32 @@ export default class Configurator {
                 items: {
                   $ref: '/Wallet'
                 }
+              },
+              'application': {
+                type: 'object',
+                properties: {
+                  'currencies': {
+                    type: 'object',
+                    properties: {
+                      'primary': { type: 'string', minLength: 3, pattern: '^[A-Z]+$' },
+                      'secondary': { type: 'string', minItems: 3, pattern: '^[A-Z]+$' }
+                    },
+                    required: ['primary', 'secondary']
+                  }
+                },
+                required: ['currencies']
               }
             },
-            required: ['wallets']
+            required: ['wallets', 'application']
           }
         },
         'application': {
           type: 'object',
           properties: {
             'version': { type: 'string' },
-            'language': { type: 'string' },
-            'currencies': {
-              type: 'object',
-              properties: {
-                'primary': { type: 'string' },
-                'secondary': { type: 'string' }
-              },
-              required: ['primary', 'secondary']
-            }
+            'language': { type: 'string' }
           },
-          required: ['version', 'currencies']
+          required: ['version']
         }
       },
       required: ['profiles', 'application']
@@ -130,13 +136,17 @@ export default class Configurator {
 
   static getDefaultConfiguration () {
     return {
-      profiles: [ { wallets: [ ] } ],
-      application: {
-        version: Configurator.getVersion().current,
-        currencies: { // Todo: move this in profiles
-          primary: 'USD',
-          secondary: 'BTC'
+      profiles: [{
+        wallets: [],
+        application: {
+          currencies: {
+            primary: 'USD',
+            secondary: 'BTC'
+          }
         }
+      }],
+      application: {
+        version: 'unknown'
       }
     }
   }

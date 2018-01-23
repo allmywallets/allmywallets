@@ -87,7 +87,7 @@ const actions = {
     const balances = await database.findAllBalances()
     const tickers = [...new Set(balances.map(balance => balance.ticker))]
 
-    const { primary, secondary } = rootState.config.config.application.currencies
+    const { primary, secondary } = rootState.config.config.profiles[0].application.currencies
     for (const ticker of tickers) {
       const pricesHistory = await HoldingsManager.getPeriodPriceHistory(ticker, primary, secondary)
 

@@ -58,15 +58,17 @@
           "node": "https://iota.thathost.net"
         }
       }
-    ]
+    ],
+    "application": {
+      "currencies": {
+        "primary": "USD",
+        "secondary": "BTC"
+      }
+    }
   }],
   "application": {
     "version": "X.X.X",
-    "language": "fr",
-    "currencies": {
-      "primary": "USD",
-      "secondary": "BTC"
-    }
+    "language": "fr"
   }
 }
   </pre>
