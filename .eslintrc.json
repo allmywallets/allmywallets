@@ -1,5 +1,5 @@
 {
-  "extends": "standard",
+  "extends": ["standard", "plugin:vue/recommended"],
   "plugins": ["html"],
   "rules": {
     "no-new": "off"
@@ -11,5 +11,8 @@
     "opts": true,
     "vue": true,
     "WorkerGlobalScope": true
+  },
+  "parserOptions": {
+    "parser": "babel-eslint"
   }
 }
