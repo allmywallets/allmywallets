@@ -1,4 +1,14 @@
+/**
+ * A PricesHistory is a set of primary and secondary prices stored into
+ * an object for a specific ticker.
+ */
 export default class PricesHistory {
+  /**
+   * Creates a PricesHistory.
+   *
+   * @param ticker for which the history is stored
+   * @param prices stored in an object with two keys primary/secondary
+   */
   constructor (ticker, prices) {
     this._ticker = ticker
     this._prices = prices
