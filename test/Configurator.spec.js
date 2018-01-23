@@ -9,15 +9,17 @@ describe('Configurator.js', () => {
         {
           profiles: [
             {
-              wallets: []
+              wallets: [],
+              application: {
+                currencies: {
+                  primary: 'USD',
+                  secondary: 'BTC'
+                }
+              }
             }
           ],
           application: {
-            version: '0.1',
-            currencies: {
-              primary: 'USD',
-              secondary: 'BTC'
-            }
+            version: '0.1'
           }
         }
       ))
@@ -28,11 +30,7 @@ describe('Configurator.js', () => {
         {
           profiles: [],
           application: {
-            version: '0.1',
-            currencies: {
-              primary: 'USD',
-              secondary: 'BTC'
-            }
+            version: '0.1'
           }
         }
       ))
@@ -51,15 +49,17 @@ describe('Configurator.js', () => {
                   name: 'Name',
                   parameters: { address: 'XABCDEFG' }
                 }
-              ]
+              ],
+              application: {
+                currencies: {
+                  primary: 'USD',
+                  secondary: 'BTC'
+                }
+              }
             }
           ],
           application: {
-            version: '0.1',
-            currencies: {
-              primary: 'USD',
-              secondary: 'BTC'
-            }
+            version: '0.1'
           }
         }
       ))
@@ -74,11 +74,7 @@ describe('Configurator.js', () => {
         {
           profiles: [{}],
           application: {
-            version: '0.1',
-            currencies: {
-              primary: 'USD',
-              secondary: 'BTC'
-            }
+            version: '0.1'
           }
         }
       ))
@@ -89,11 +85,7 @@ describe('Configurator.js', () => {
         {
           profiles: 'invalid',
           application: {
-            version: '0.1',
-            currencies: {
-              primary: 'USD',
-              secondary: 'BTC'
-            }
+            version: '0.1'
           }
         }
       ))
@@ -108,15 +100,17 @@ describe('Configurator.js', () => {
                 {
                   provider: 'Provider'
                 }
-              ]
+              ],
+              application: {
+                currencies: {
+                  primary: 'USD',
+                  secondary: 'BTC'
+                }
+              }
             }
           ],
           application: {
-            version: '0.1',
-            currencies: {
-              primary: 'USD',
-              secondary: 'BTC'
-            }
+            version: '0.1'
           }
         }
       ))

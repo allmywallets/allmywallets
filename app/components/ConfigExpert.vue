@@ -72,9 +72,15 @@
   }
 }
   </pre>
-    <p>Current (editable) config:</p>
-    <strong>{{ error }}</strong>
-    Some ids to help you: <template v-for="n in 5"><span class="badge">{{ generateId() }}</span>&nbsp;</template>
+    <p>
+      <translate>
+        The configuration require unique ids of 20 characters for each wallet to be generated. You can use the following
+        ones if you are not inspired:
+      </translate>
+      <template v-for="n in 3">{{ generateId() }}&nbsp;</template>
+    </p>
+    <p v-translate>Current editable configuration:</p>
+    <p class="error" v-if="error !== ''">{{ error }}</p>
     <textarea @input="updateConfig" title="Edit your configuration">{{ config }}</textarea>
   </collapsible-section>
 </template>
