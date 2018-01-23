@@ -12,7 +12,6 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { sumHoldingsHistories } from '../manager/holdings-manager'
 
   export default {
     name: 'holdings-value',
