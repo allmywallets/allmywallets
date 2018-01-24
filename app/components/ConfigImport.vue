@@ -29,10 +29,13 @@
       }
     },
     methods: {
-      updateConfig () {
+      async updateConfig () {
         const config = JSON.parse(LZString.decompressFromEncodedURIComponent(this.config))
 
-        return this.$store.dispatch('updateConfig', { config }) // Todo: use init app instead
+        return this.$store.dispatch('init', {
+          serviceWorker: this.$serviceWorker,
+          config: config
+        })
       }
     },
     mounted () {

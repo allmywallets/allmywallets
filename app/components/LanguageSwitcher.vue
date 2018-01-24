@@ -18,12 +18,9 @@
     },
     methods: {
       changeLanguage (event) {
-        this.$language.current = event.target.value
-
-        const config = this.config
-        config.application.language = this.$language.current
-
-        return this.$store.dispatch('updateConfig', { config }) // Todo: create dedicated action
+        return this.$store.dispatch('changeLanguage', {
+          language: event.target.value
+        })
       }
     }
   }

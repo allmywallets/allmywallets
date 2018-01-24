@@ -89,6 +89,7 @@
   import Configurator from '../configurator'
   import { generateId } from '../helper/string'
   import CollapsibleSection from './CollapsibleSection.vue'
+  import { findConfigChangeActions } from '../manager/config-manager'
 
   export default {
     components: {
@@ -116,7 +117,22 @@
           this.error = ''
           try {
             const config = JSON.parse(e.target.value)
-            await this.$store.dispatch('updateConfig', { config }) // Todo: compute diff and dispatch the right actions
+            const actions = findConfigChangeActions(this.$store.state.config.config, config)
+
+            if (!actions) {
+              return this.$store.dispatch('init', {
+                serviceWorker: this.$serviceWorker,
+                config: config
+              })
+            }
+
+            for (const action in actions) {
+              if (!actions.hasOwnProperty(action)) {
+                continue
+              }
+
+              await this.$store.dispatch(action, actions[action])
+            }
           } catch (e) {
             this.error = e.message
           }

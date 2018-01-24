@@ -13,8 +13,7 @@
           contribution or feature request.
         </p>
         <p v-translate>
-          If you want to start contributing to the code base of AllMyWallets, don't hesitate to ask for help or indications
-          to successfully do your first contribution.
+          If you want to start contributing to the code base of AllMyWallets, don't hesitate to ask for help or directions.
         </p>
         <p>
           <a class="button" href="https://github.com/allmywallets/allmywallets" target="_blank">
@@ -34,7 +33,7 @@
           </template>.
         </p>
         <p v-translate>
-          Don't hesitate to contribute by correcting or adding new translations.
+          Do not hesitate to contribute by correcting or adding new translations.
         </p>
         <p>
           <a class="button" href="https://github.com/allmywallets/allmywallets/tree/master/app/translations" target="_blank">
@@ -78,7 +77,7 @@
           to enhance translations, existing features and fix bugs.
         </p>
         <p>
-          <translate>Do no hesitate to give a star to the AllMyWallets repository on Github.</translate>
+          <translate>Do not hesitate to give a star to the AllMyWallets repository on Github.</translate>
           <a class="button button-small" href="https://github.com/allmywallets/allmywallets" target="_blank">
             <fa-icon :icon="['fab', 'github']" />
             <translate>Star on GitHub</translate>

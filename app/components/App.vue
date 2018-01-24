@@ -16,6 +16,7 @@
   import AppIndicators from './AppIndicators.vue'
   import AppFooter from './AppFooter.vue'
   import AppNotifications from './AppNotifications.vue'
+  import Configurator from '../configurator'
 
   export default {
     name: 'app',
@@ -26,9 +27,10 @@
       AppFooter
     },
     async mounted () {
-      const serviceWorker = this.$serviceWorker
-
-      return this.$store.dispatch('initApplication', { serviceWorker })
+      return this.$store.dispatch('init', {
+        serviceWorker: this.$serviceWorker,
+        config: await Configurator.getConfig()
+      })
     }
   }
 </script>

@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import Configurator from '../configurator'
 import { enablePushNotifications } from '../notification/subscription'
 
@@ -44,8 +45,9 @@ const mutations = {
     state.config.profiles[0].wallets.push(wallet)
     state.loading.wallets = false
   },
-  UPDATE_CONFIG (state, { config }) {
-    state.config = config // Todo: remove this (handled by other mutations)
+  CHANGE_LANGUAGE (state, language) {
+    state.config.application = language
+    Vue.config.language = language
   },
   UPDATE_DISPLAY (state, { display }) {
     state.display = display
@@ -53,9 +55,7 @@ const mutations = {
 }
 
 const actions = {
-  initApplication: async ({ commit, dispatch }, { serviceWorker }) => {
-    const config = await Configurator.getConfig() // Todo: pass this as a parameter
-
+  init: async ({ commit, dispatch }, { serviceWorker, config }) => {
     const registration = await serviceWorker.getRegistration()
 
     if (registration) {
@@ -80,16 +80,15 @@ const actions = {
 
     return Configurator.setConfig(state.config)
   },
-  addWallet: ({ commit, state, dispatch }, { wallet }) => { // Todo use this method
+  addWallet: ({ commit }, { wallet }) => { // Todo use this method
     commit('ADD_WALLET', { wallet })
 
     return Configurator.setConfig(state.config)
   },
-  /** @deprecated config should be set after commit in action **/
-  updateConfig: async ({ commit }, { config }) => {
-    await Configurator.setConfig(config) // Todo: e.g. action.addWallet -> dispatch(updateConfig) -> commit('ADD_WALLET')
+  changeLanguage: ({ commit }, { language }) => {
+    commit('CHANGE_LANGUAGE', language)
 
-    commit('UPDATE_CONFIG', { config })
+    return Configurator.setConfig(state.config)
   },
   updateDisplay: async ({ commit }, { display }) => {
     commit('UPDATE_DISPLAY', { display })
