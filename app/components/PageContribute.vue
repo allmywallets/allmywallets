@@ -37,9 +37,9 @@
           Don't hesitate to contribute by correcting or adding new translations.
         </p>
         <p>
-          <a class="button" href="https://github.com/allmywallets/allmywallets/tree/master/app/translations" target="_blank" v-translate>
+          <a class="button" href="https://github.com/allmywallets/allmywallets/tree/master/app/translations" target="_blank">
             <fa-icon icon="language" />
-            Translate the application
+            <translate>Translate the application</translate>
           </a>
         </p>
       </div>
