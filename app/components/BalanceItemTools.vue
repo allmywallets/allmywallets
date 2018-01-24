@@ -33,7 +33,9 @@
     },
     data () {
       return {
-        loading: false
+        loading: false,
+        now: new Date(),
+        interval : null
       }
     },
     computed: {
@@ -51,7 +53,7 @@
       lastUpdate () {
         this.loading = false
 
-        return moment(this.balance.lastUpdate).fromNow()
+        return moment(this.balance.lastUpdate).from(this.now)
       }
     },
     methods: {
@@ -63,10 +65,19 @@
           walletId: this.balance.wallet.id,
           currencies: [this.balance.ticker]
         })
+      },
+      refreshDateEverySecond () {
+        this.interval = setInterval(() => this.now = new Date(), 60 * 1000)
       }
     },
     mounted () {
       new Clipboard('.address')
+      this.refreshDateEverySecond()
+    },
+    destroyed () {
+      if (this.interval) {
+        clearInterval(this.interval)
+      }
     }
   }
 </script>
