@@ -2,7 +2,7 @@
   <div>
     <h2 v-translate>Contribute</h2>
     <p v-translate>
-      AllMyWallets is being developed by a group of volunteers and the AllMyWallets community. If you like  the app,
+      AllMyWallets is being developed by a group of volunteers and the AllMyWallets community. If you like the app,
       don't hesitate to contribute too! There are many easy methods to get started.
     </p>
     <div class="contributions">
@@ -46,7 +46,8 @@
         <h3 v-translate>Contact</h3>
         <p>
           <translate>
-            We don't respond to bug reports (except for responsible disclosures) nor feature requests. Please use our GitHub repository instead.
+            We don't respond to bug reports (except for responsible disclosures) nor feature requests.
+            Please use our GitHub repository instead.
           </translate>
           <a class="button button-small" href="https://github.com/allmywallets/allmywallets/issues" target="_blank">
             <fa-icon :icon="['fab', 'github']" />
@@ -73,8 +74,8 @@
       <div class="contribution">
         <h3 v-translate>Spread the word</h3>
         <p v-translate>
-          Spreading the word about AllMyWallets is extremely beneficial to the app, because it offers more users and contributors
-          to enhance translations, existing features and fix bugs.
+          Spreading the word about AllMyWallets is extremely beneficial to the app, because it offers more users and
+          contributors to enhance translations, existing features and fix bugs.
         </p>
         <p>
           <translate>Do not hesitate to give a star to the AllMyWallets repository on Github.</translate>
@@ -91,8 +92,8 @@
         <div class="contribution-column">
           <h3 v-translate>Donate</h3>
           <p v-translate>
-            You can send us a tip if you like our work. This will help us paying for the servers and allow us spending more
-            time on AMW development.
+            You can send us a tip if you like our work. This will help us paying for the servers and allow us spending
+            more time on AMW development.
           </p>
           <p>
             <translate>You can also use Brave to donate a small amount of BAT each month to the project.</translate>
