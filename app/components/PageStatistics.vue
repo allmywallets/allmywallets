@@ -1,7 +1,9 @@
 <template>
   <div>
     <h2>Statistics</h2>
-    <p>Under development.</p>
+    <p>
+      <span class="badge badge-light">Available soon...</span>
+    </p>
   </div>
 </template>
 

@@ -50,6 +50,7 @@ a, a:hover {
 
 .badge {
   display: inline;
+  cursor: default;
   padding: .15em .5em .25em;
   font-size: .85em;
   line-height: 1;
@@ -59,6 +60,10 @@ a, a:hover {
   vertical-align: baseline;
   border-radius: .25em;
   background-color: #434343;
+
+  &.badge-light {
+    background-color: #bfbfbf;
+  }
 }
 
 .button {
@@ -69,9 +74,10 @@ a, a:hover {
   user-select: none;
   color: white;
   background: $color-primary;
-  padding: .5rem;
+  padding: .7em;
   border: 0;
   border-radius: 3px;
+  line-height: 1;
 
   &:hover {
     background: darken($color-primary, 5);
@@ -94,7 +100,7 @@ a, a:hover {
 
   &.button-small {
     font-size: 0.8rem;
-    padding: .1rem .4rem;
+    padding: .35em;
   }
 }
 

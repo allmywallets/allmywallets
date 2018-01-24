@@ -65,12 +65,66 @@
         </p>
       </div>
     </div>
-    <h2 v-translate>Donate</h2>
+    <h2 v-translate>Support</h2>
     <p v-translate>
-      You can send us a tip if you like our work. This will help us paying for the servers and allow us spending more
-      time on AMW development.
+      There are many different ways to support AllMyWallets. Don't hesitate to propose new ideas to promote AllMyWallets
+      on our GitHub repository.
     </p>
-    <p>Available soon...</p>
+    <div class="contributions">
+      <div class="contribution">
+        <h3 v-translate>Spread the word</h3>
+        <p v-translate>
+          Spreading the word about AllMyWallets is extremely beneficial to the app, because it offers more users and contributors
+          to enhance translations, existing features and fix bugs.
+        </p>
+        <p>
+          <translate>Do no hesitate to give a star to the AllMyWallets repository on Github.</translate>
+          <a class="button button-small" href="https://github.com/allmywallets/allmywallets" target="_blank">
+            <fa-icon :icon="['fab', 'github']" />
+            <translate>Star on GitHub</translate>
+          </a>
+        </p>
+        <p v-translate>
+          You can also share a link to AMW on social networks or Reddit, for instance.
+        </p>
+      </div>
+      <div class="contribution contribution-double">
+        <div class="contribution-column">
+          <h3 v-translate>Donate</h3>
+          <p v-translate>
+            You can send us a tip if you like our work. This will help us paying for the servers and allow us spending more
+            time on AMW development.
+          </p>
+          <p>
+            <translate>You can also use Brave to donate a small amount of BAT each month to the project.</translate>
+            <a class="button button-small" href="https://www.brave.com/download/" target="_blank">
+              <fa-icon icon="globe" />
+              <translate>Download Brave browser</translate>
+            </a>
+          </p>
+          <p v-translate>
+            If you want to donate in another currency directly (to avoid paying too much exchange fees), don't hesitate to contact us.
+          </p>
+        </div>
+        <div class="contribution-column">
+          <ul>
+            <li>Bitcoin <span class="badge badge-light" v-translate>Available soon...</span></li>
+            <li>Ethereum <span class="badge badge-light" v-translate>Available soon...</span></li>
+            <li>Litecoin <span class="badge badge-light" v-translate>Available soon...</span></li>
+            <li>ZCash <span class="badge badge-light" v-translate>Available soon...</span></li>
+            <li>IOTA <span class="badge badge-light" v-translate>Available soon...</span></li>
+            <li>RaiBlocks <span class="badge badge-light" v-translate>Available soon...</span></li>
+            <li>
+              <translate>Other</translate>
+              <a class="button button-small" href="mailto:team@allmywallets.io">
+                <fa-icon icon="envelope" />
+                <translate>Contact us</translate>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <providers-credits />
   </div>
 </template>
@@ -108,6 +162,35 @@
 
       @media screen and(min-width: $breakpoint-large) {
         width: calc(33% - 20px);
+
+        &.contribution-double {
+          width: calc(66% - 20px);
+        }
+      }
+
+      &.contribution-double {
+        display: flex;
+
+        .contribution-column {
+          &:first-child {
+            padding-right: 20px;
+          }
+
+          &:last-child {
+            padding-left: 20px;
+            border-left: 1px solid $color-section-notifications;
+          }
+
+          ul {
+            list-style-type: none;
+            padding: 0;
+            line-height: 2.2rem;
+          }
+
+          @media screen and(min-width: $breakpoint-medium) {
+            width: 50%;
+          }
+        }
       }
     }
   }

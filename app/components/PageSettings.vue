@@ -14,7 +14,9 @@
       <system-check class="collapsible" />
       <collapsible-section icon="desktop">
         <translate slot="title">Display customization</translate>
-        <template slot="intro">Coming soon!</template>
+        <template slot="intro" v-translate>
+          <span class="badge badge-light">Available soon...</span>
+        </template>
       </collapsible-section>
       <config-export />
       <config-import />

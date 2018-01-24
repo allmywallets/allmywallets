@@ -77,7 +77,7 @@
         The configuration require unique ids of 20 characters for each wallet to be generated. You can use the following
         ones if you are not inspired:
       </translate>
-      <template v-for="n in 3">{{ generateId() }}&nbsp;</template>
+      <template v-for="n in 3"><span class="badge">{{ generateId() }}</span>&nbsp;</template>
     </p>
     <p v-translate>Current editable configuration:</p>
     <p class="error" v-if="error !== ''">{{ error }}</p>
