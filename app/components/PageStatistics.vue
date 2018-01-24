@@ -2,7 +2,7 @@
   <div>
     <h2>Statistics</h2>
     <p>
-      <span class="badge badge-light">Available soon...</span>
+      <span class="badge badge-light" v-translate>Available soon...</span>
     </p>
   </div>
 </template>
