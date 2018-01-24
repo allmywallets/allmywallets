@@ -16,8 +16,8 @@
         <balance-item-prices :ticker="balance.ticker" :amount="balance.amount" />
       </div>
       <footer class="balance-footer">
-        <div class="balance-provider" v-translate="{ provider: balance.wallet.provider.charAt(0).toUpperCase() + balance.wallet.provider.slice(1) }">
-          Data from %{provider}
+        <div class="balance-provider">
+          <span class="badge badge-light">{{ balance.wallet.provider|capitalize }}</span>
         </div>
         <balance-item-tools :balance="balance" />
       </footer>
@@ -173,7 +173,7 @@
     .balance-content {
       position: relative;
       z-index: 100;
-      padding: 3px 15px;
+      padding: 3px 10px;
       display: grid;
       grid-template-columns: 1fr;
       grid-template-rows: 50px 1fr 25px;
