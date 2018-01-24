@@ -80,7 +80,7 @@ const actions = {
 
     return Configurator.setConfig(state.config)
   },
-  addWallet: async ({ commit }, { wallet }) => { // Todo use this method
+  addWallet: async ({ commit }, { wallet }) => {
     await Configurator.validateWalletConfig(wallet)
 
     commit('ADD_WALLET', wallet)
