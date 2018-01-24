@@ -11,7 +11,6 @@
         <a href="#" @click.prevent="loadProvider(provider)">
           <span class="network">{{ provider.split('.')[0]|capitalize }}</span><br />
           <span class="provider">{{ provider.split('.')[1]|capitalize }}</span><br />
-          <img src="https://www.weusecoins.com/images/company/kraken.png" alt="" />
         </a>
       </li>
     </ul>

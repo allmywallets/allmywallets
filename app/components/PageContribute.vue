@@ -7,7 +7,7 @@
     </p>
     <div class="contributions">
       <div class="contribution">
-        <h3 v-translate>Bugs</h3>
+        <h3 v-translate>Bugs and new features</h3>
         <p v-translate>
           You can send bugs reports or contribute to the development in our GitHub repository. We are open to any
           contribution or feature request.
@@ -109,7 +109,8 @@
         <div class="contribution-column">
           <ul>
             <li>Bitcoin <span class="badge badge-light" v-translate>Available soon...</span></li>
-            <li><translate>Ethereum (including ERC20 Tokens)</translate> <span class="badge badge-light" v-translate>Available soon...</span></li>
+            <li><translate>Ethereum, ERC20 Tokens</translate> <span class="badge badge-light" v-translate>Available soon...</span></li>
+            <li>Bitcoin Cash <span class="badge badge-light" v-translate>Available soon...</span></li>
             <li>Litecoin <span class="badge badge-light" v-translate>Available soon...</span></li>
             <li>ZCash <span class="badge badge-light" v-translate>Available soon...</span></li>
             <li>IOTA <span class="badge badge-light" v-translate>Available soon...</span></li>
@@ -184,7 +185,7 @@
           ul {
             list-style-type: none;
             padding: 0;
-            line-height: 2.2rem;
+            line-height: 2rem;
           }
 
           @media screen and(min-width: $breakpoint-medium) {
