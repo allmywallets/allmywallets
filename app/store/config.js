@@ -30,11 +30,11 @@ const getters = {
 }
 
 const mutations = {
-  INIT_APPLICATION (state, { config }) {
+  INIT_APPLICATION (state, config) {
     state.config = config
     state.loading.app = false
   },
-  CHECK_FOR_UPDATES (state, { version }) {
+  CHECK_FOR_UPDATES (state, version) {
     state.version = version
 
     if (state.config.application.version === 'unknown') {
@@ -49,7 +49,7 @@ const mutations = {
     state.config.application.language = language
     Vue.config.language = language
   },
-  UPDATE_DISPLAY (state, { display }) {
+  UPDATE_DISPLAY (state, display) {
     state.display = display
   }
 }
@@ -66,7 +66,7 @@ const actions = {
       }
     }
 
-    commit('INIT_APPLICATION', { config })
+    commit('INIT_APPLICATION', config)
 
     dispatch('checkForUpdates')
     dispatch('reloadAllBalances').then(() => {
@@ -76,12 +76,14 @@ const actions = {
   checkForUpdates: async ({ commit, state }) => {
     const version = await Configurator.getVersion()
 
-    commit('CHECK_FOR_UPDATES', { version })
+    commit('CHECK_FOR_UPDATES', version)
 
     return Configurator.setConfig(state.config)
   },
-  addWallet: ({ commit }, { wallet }) => { // Todo use this method
-    commit('ADD_WALLET', { wallet })
+  addWallet: async ({ commit }, { wallet }) => { // Todo use this method
+    await Configurator.validateWalletConfig(wallet)
+
+    commit('ADD_WALLET', wallet)
 
     return Configurator.setConfig(state.config)
   },
@@ -91,7 +93,7 @@ const actions = {
     return Configurator.setConfig(state.config)
   },
   updateDisplay: async ({ commit }, { display }) => {
-    commit('UPDATE_DISPLAY', { display })
+    commit('UPDATE_DISPLAY', display)
   }
 }
 

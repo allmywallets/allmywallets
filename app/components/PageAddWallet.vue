@@ -53,13 +53,6 @@
         this.currentProvider = provider
       },
       async save () {
-        const config = await Configurator.getConfig()
-        const profile = config.profiles[0]
-
-        if (!Object(profile).hasOwnProperty('wallets')) {
-          profile.wallets = []
-        }
-
         // Change string "address1,address2" to array [address1, address2]
         // TODO: Do it directly with vue-form-generator
         if (this.currentParameters.addresses) {
@@ -71,15 +64,16 @@
         }
 
         const provider = this.currentProvider.split('.')
-        profile.wallets.push({
-          id: generateId(20),
-          network: provider[0],
-          provider: provider[1],
-          name: this.currentName,
-          parameters: this.currentParameters
+        await this.$store.dispatch('addWallet', {
+          wallet: {
+            id: generateId(20),
+            network: provider[0],
+            provider: provider[1],
+            name: this.currentName,
+            parameters: this.currentParameters
+          }
         })
 
-        await Configurator.setConfig(config)
         this.reset()
       },
       reset () {

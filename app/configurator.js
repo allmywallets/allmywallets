@@ -1,6 +1,7 @@
 import { Validator } from 'jsonschema'
 import idbKeyval from 'idb-keyval'
 import Proxy from './providers'
+import Wallet from './model/Wallet'
 
 export default class Configurator {
   static async getConfig () {
@@ -34,15 +35,11 @@ export default class Configurator {
       throw new Error('Config is not valid')
     }
 
-    await this.validateWalletsArgs(config)
-
     return idbKeyval.set('config', config)
   }
 
-  static async validateWalletsArgs (config) {
-    config.profiles[0].wallets.forEach(async wallet => {
-      await new Proxy(wallet).checkParameters()
-    })
+  static async validateWalletConfig (wallet) {
+    return new Proxy(wallet).checkParameters()
   }
 
   static validateWalletIds (config) {
@@ -73,7 +70,7 @@ export default class Configurator {
           minLength: 20,
           maxLength: 20
         },
-        'name': { type: 'string' },
+        'name': { type: 'string', minLength: 1 },
         'network': { type: 'string' },
         'provider': { type: 'string' },
         'parameters': { type: 'object' }
