@@ -109,7 +109,7 @@
         <div class="contribution-column">
           <ul>
             <li>Bitcoin <span class="badge badge-light" v-translate>Available soon...</span></li>
-            <li>Ethereum <span class="badge badge-light" v-translate>Available soon...</span></li>
+            <li><translate>Ethereum (including ERC20 Tokens)</translate> <span class="badge badge-light" v-translate>Available soon...</span></li>
             <li>Litecoin <span class="badge badge-light" v-translate>Available soon...</span></li>
             <li>ZCash <span class="badge badge-light" v-translate>Available soon...</span></li>
             <li>IOTA <span class="badge badge-light" v-translate>Available soon...</span></li>
