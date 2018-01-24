@@ -116,7 +116,7 @@
           this.error = ''
           try {
             const config = JSON.parse(e.target.value)
-            await this.$store.dispatch('updateConfig', { config })
+            await this.$store.dispatch('updateConfig', { config }) // Todo: compute diff and dispatch the right actions
           } catch (e) {
             this.error = e.message
           }

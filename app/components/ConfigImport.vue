@@ -32,7 +32,7 @@
       updateConfig () {
         const config = JSON.parse(LZString.decompressFromEncodedURIComponent(this.config))
 
-        return this.$store.dispatch('updateConfig', { config })
+        return this.$store.dispatch('updateConfig', { config }) // Todo: use init app instead
       }
     },
     mounted () {

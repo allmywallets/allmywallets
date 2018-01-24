@@ -35,13 +35,17 @@ const mutations = {
   },
   CHECK_FOR_UPDATES (state, { version }) {
     state.version = version
+
+    if (state.config.application.version === 'unknown') {
+      state.config.application.version = version.current
+    }
   },
   ADD_WALLET (state, wallet) {
     state.config.profiles[0].wallets.push(wallet)
     state.loading.wallets = false
   },
   UPDATE_CONFIG (state, { config }) {
-    state.config = config
+    state.config = config // Todo: remove this (handled by other mutations)
   },
   UPDATE_DISPLAY (state, { display }) {
     state.display = display
@@ -50,7 +54,7 @@ const mutations = {
 
 const actions = {
   initApplication: async ({ commit, dispatch }, { serviceWorker }) => {
-    const config = await Configurator.getConfig()
+    const config = await Configurator.getConfig() // Todo: pass this as a parameter
 
     const registration = await serviceWorker.getRegistration()
 
@@ -69,16 +73,21 @@ const actions = {
       dispatch('refreshPriceHistories')
     })
   },
-  checkForUpdates: async ({ commit }) => {
+  checkForUpdates: async ({ commit, state }) => {
     const version = await Configurator.getVersion()
 
     commit('CHECK_FOR_UPDATES', { version })
+
+    return Configurator.setConfig(state.config)
   },
-  addWallet: ({ commit }) => { // Todo
-    commit('ADD_WALLET')
+  addWallet: ({ commit, state, dispatch }, { wallet }) => { // Todo use this method
+    commit('ADD_WALLET', { wallet })
+
+    return Configurator.setConfig(state.config)
   },
+  /** @deprecated config should be set after commit in action **/
   updateConfig: async ({ commit }, { config }) => {
-    await Configurator.setConfig(config) // Todo: reset all balances and re-init app
+    await Configurator.setConfig(config) // Todo: e.g. action.addWallet -> dispatch(updateConfig) -> commit('ADD_WALLET')
 
     commit('UPDATE_CONFIG', { config })
   },

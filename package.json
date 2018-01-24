@@ -32,6 +32,7 @@
     "langs": "^2.0.0",
     "lz-string": "^1.4.4",
     "moment": "^2.20.1",
+    "rfc6902": "^2.2.2",
     "showdown": "^1.8.6",
     "sweet-modal-vue": "^2.0.0",
     "tippy.js": "^2.0.9",

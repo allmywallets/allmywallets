@@ -23,7 +23,7 @@
         const config = this.config
         config.application.language = this.$language.current
 
-        return this.$store.dispatch('updateConfig', { config })
+        return this.$store.dispatch('updateConfig', { config }) // Todo: create dedicated action
       }
     }
   }
