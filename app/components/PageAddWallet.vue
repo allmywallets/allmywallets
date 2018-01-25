@@ -6,16 +6,16 @@
       <translate>A wallet is a set of balances which will be displayed on the homepage of AMW.</translate>
     </p>
     <label for="wallet-filter" v-translate>Filter:</label> <input type="search" id="wallet-filter" />
-    <ul :class="{ 'selected': currentProvider !== '' }">
-      <li v-for="provider in providers" :key="provider" :class="{ 'selected': currentProvider === provider }">
+    <ul :class="{ 'selected': currentProvider !== null }">
+      <li v-for="provider in providers" :key="provider.network + '.' + provider.provider" :class="{ 'selected': currentProvider && currentProvider.name === provider.name }">
         <a href="#" @click.prevent="loadProvider(provider)">
-          <span class="network">{{ provider.split('.')[0]|capitalize }}</span><br />
-          <span class="provider">{{ provider.split('.')[1]|capitalize }}</span><br />
+          <span class="network">{{ provider.network|capitalize }}</span><br />
+          <span class="provider">{{ provider.name }}</span><br />
         </a>
       </li>
     </ul>
-    <template v-if="currentProvider !== ''">
-      <h3 v-translate="{ provider: currentProvider.split('.')[1].charAt(0).toUpperCase() + currentProvider.split('.')[1].slice(1) }">
+    <template v-if="currentProvider !== null">
+      <h3 v-translate="{ provider: currentProvider.name }">
         New %{provider} wallet
       </h3>
       <form>
@@ -41,14 +41,14 @@
         providers: {},
         currentName: '',
         currentSchema: null,
-        currentProvider: '',
+        currentProvider: null,
         currentParameters: null
       }
     },
     methods: {
       async loadProvider (provider) {
         this.reset()
-        this.currentSchema = { fields: await Proxy.getProviderParameters(provider) }
+        this.currentSchema = { fields: await Proxy.getProviderParameters(provider.network + '.' + provider.provider) }
         this.currentParameters = VueFormGenerator.schema.createDefaultObject(this.currentSchema)
         this.currentProvider = provider
       },
@@ -63,12 +63,11 @@
           this.currentParameters.wallets = [this.currentParameters.wallets]
         }
 
-        const provider = this.currentProvider.split('.')
         await this.$store.dispatch('addWallet', {
           wallet: {
             id: generateId(20),
-            network: provider[0],
-            provider: provider[1],
+            network: this.currentProvider.network,
+            provider: this.currentProvider.provider,
             name: this.currentName,
             parameters: this.currentParameters
           }
@@ -79,7 +78,7 @@
       reset () {
         this.currentSchema = null
         this.currentParameters = {}
-        this.currentProvider = ''
+        this.currentProvider = null
       }
     },
     mounted () {

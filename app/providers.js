@@ -22,7 +22,7 @@ export default class Proxy {
   }
 
   static getProvidersList () {
-    return Providers.list()
+    return Providers.list().map(provider => Providers.providers[provider].info)
   }
 }
 
