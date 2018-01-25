@@ -43,7 +43,7 @@
     @include card();
 
     &.warning {
-      background: lighten($color-warning, 25);
+      border-left: 3px solid $color-warning;
     }
 
     .collapsible-header {
