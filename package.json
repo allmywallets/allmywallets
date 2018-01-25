@@ -15,7 +15,7 @@
     "test:functional": "npm run build && concurrently 'http-server build/ -p 1337 -s' 'nightwatch -c features/conf/default.conf.js' --success first --kill-others"
   },
   "dependencies": {
-    "@allmywallets/providers": "0.0.1",
+    "@allmywallets/providers": "latest",
     "@fortawesome/fontawesome": "^1.1.0",
     "@fortawesome/fontawesome-free-brands": "^5.0.4",
     "@fortawesome/fontawesome-free-solid": "^5.0.2",
@@ -39,11 +39,11 @@
     "vue": "^2.5",
     "vue-chartjs": "^3.1.0",
     "vue-filter": "^0.2.3",
-    "vue-form-generator": "^2.1.1",
+    "vue-form-generator": "^2.2.0",
     "vue-gettext": "^2.0.25",
     "vue-moment": "^3.1.0",
     "vue-router": "^3.0.1",
-    "vue-tippy": "^2.0.5",
+    "vue-tippy": "^2.0.7",
     "vuex": "^3.0.1",
     "xml-loader": "^1.2.1"
   },
@@ -56,7 +56,7 @@
     "babel-eslint": "^8.2.1",
     "babel-loader": "^8.0.0-beta.0",
     "chai": "^4.1.2",
-    "chromedriver": "^2.34.1",
+    "chromedriver": "^2.35.0",
     "concurrently": "^3.5.1",
     "copy-webpack-plugin": "^4.3.1",
     "cryptocurrency-icons": "git+https://github.com/cjdowner/cryptocurrency-icons.git",
@@ -86,7 +86,7 @@
     "vue-template-compiler": "^2.5.13",
     "vue2-filters": "^0.2.2",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.0",
+    "webpack-dev-server": "^2.11.1",
     "workbox-webpack-plugin": "^2.1.2"
   }
 }
