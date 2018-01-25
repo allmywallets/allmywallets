@@ -38,13 +38,12 @@
   @import '../scss/vars';
 
   .collapsible {
-    background: white;
-    border-radius: 3px;
     padding: 5px 15px 0;
     margin-bottom: 10px;
+    @include card();
 
     &.warning {
-      background: lighten($color-warning, 35);
+      border-left: 3px solid $color-warning;
     }
 
     .collapsible-header {
