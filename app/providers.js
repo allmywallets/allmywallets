@@ -27,7 +27,7 @@ export default class Proxy {
 }
 
 function getGenericProviderClass (explorerName) {
-  const Explorer = Providers.explorer(explorerName)
+  const Explorer = Providers.providers[explorerName]
   class GenericProvider {
     constructor (parameters, wallet) {
       this.parameters = parameters
