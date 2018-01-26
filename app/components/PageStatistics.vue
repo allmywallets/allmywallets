@@ -1,6 +1,9 @@
 <template>
   <div>
     <h2 v-translate>Statistics</h2>
+    <p v-translate>
+      You can use this page to get some statistics about your current holdings.
+    </p>
     <div class="stats-card">
       <h3 v-translate>Holdings distribution</h3>
       <p v-translate="{ currency: currencies.primary }">
