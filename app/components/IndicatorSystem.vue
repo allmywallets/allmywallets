@@ -23,7 +23,7 @@
     name: 'indicator-system',
     data () {
       return {
-        needsRefresh: this.$serviceWorker.controller === null
+        needsRefresh: this.$serviceWorker && this.$serviceWorker.controller === null
       }
     },
     computed: {
@@ -60,6 +60,10 @@
       }
     },
     mounted () {
+      if (!this.$serviceWorker) {
+        return
+      }
+
       runtime.register()
       this.$serviceWorker.addEventListener('controllerchange', () => {
         this.needsRefresh = this.$serviceWorker.controller === null

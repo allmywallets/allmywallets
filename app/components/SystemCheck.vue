@@ -4,7 +4,7 @@
     <template slot="intro">
       <p v-if="!missing" v-translate>Your browser is compatible with AllMyWallets!</p>
       <p v-else>
-        <translate>Some critical requirements are missing to get all the features of AllMyWallets.</translate><br />
+        <span class="text-danger" v-translate>Some critical requirements are missing to get all the features of AllMyWallets.</span><br />
         <translate>Please consider upgrading to the last version of one of the following browsers:</translate>
         <a href="https://www.google.com/chrome/">Chrome</a>,
         <a href="https://www.chromium.org/getting-involved/download-chromium">Chromium</a>,

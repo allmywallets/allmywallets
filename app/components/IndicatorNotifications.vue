@@ -42,6 +42,10 @@
         this.loading = false
       },
       async getNotificationState () {
+        if (!this.$serviceWorker) {
+          return Subscription.getNotificationState(false)
+        }
+
         const registration = await this.$serviceWorker.getRegistration()
         const subscription = await registration.pushManager.getSubscription()
 

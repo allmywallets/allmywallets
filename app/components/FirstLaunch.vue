@@ -1,5 +1,8 @@
 <template>
   <article>
+    <template v-if="missingCapabilities">
+      <system-check />
+    </template>
     <h2 v-translate>Welcome to AllMyWallets!</h2>
     <p class="intro">
       <translate>
@@ -36,10 +39,6 @@
       <translate>AMW can be used on any modern devices, including your smartphone using Chrome, Chromium or Brave.</translate>
     </p>
     <hr />
-    <template v-if="missingCapabilities">
-      <system-check />
-      <hr />
-    </template>
     <providers-credits />
   </article>
 </template>

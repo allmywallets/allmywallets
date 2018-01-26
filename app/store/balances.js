@@ -4,7 +4,7 @@ import { collapseBalances } from '../manager/balance-manager'
 
 const state = {
   loading: {
-    balances: true
+    balances: false
   },
   balances: [],
   pricesHistories: [] // Todo: holdings should be cached in database
@@ -51,6 +51,8 @@ const actions = {
    * Reloads all balances from database.
    */
   reloadAllBalances: async ({ commit }) => {
+    commit('BALANCES_LOADING')
+
     const balances = await database.findAllBalances()
 
     commit('UPDATE_BALANCES', { balances })

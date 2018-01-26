@@ -56,8 +56,15 @@ const mutations = {
 
 const actions = {
   init: async ({ commit, dispatch }, { serviceWorker, config }) => {
-    const registration = await serviceWorker.getRegistration()
+    commit('INIT_APPLICATION', config)
 
+    dispatch('checkForUpdates')
+
+    if (!serviceWorker) { // No service worker; the app won't work
+      return
+    }
+
+    const registration = await serviceWorker.getRegistration()
     if (registration) {
       const subscription = await registration.pushManager.getSubscription()
 
@@ -66,9 +73,6 @@ const actions = {
       }
     }
 
-    commit('INIT_APPLICATION', config)
-
-    dispatch('checkForUpdates')
     dispatch('reloadAllBalances').then(() => {
       dispatch('refreshPriceHistories')
     })
