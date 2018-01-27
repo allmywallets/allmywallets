@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Configurator from '../configurator'
 import { enablePushNotifications } from '../notification/subscription'
 import { migrate } from '../migrations/config'
-import {checkLocale} from "../translator";
 
 const state = {
   loading: {
