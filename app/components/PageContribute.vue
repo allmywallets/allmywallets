@@ -153,11 +153,11 @@
   .contributions {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -10px 10px;
+    margin: 0 -10px;
 
     .contribution {
       width: 100%;
-      margin: 0 10px;
+      margin: 0 10px 10px;
       padding: 10px 20px;
       @include card();
 
