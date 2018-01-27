@@ -46,7 +46,7 @@ const mutations = {
     state.loading.wallets = false
   },
   CHANGE_LANGUAGE (state, language) {
-    state.config.application.language = language
+    Vue.set(state.config.application, 'language', language)
     Vue.config.language = language
   },
   UPDATE_DISPLAY (state, display) {
