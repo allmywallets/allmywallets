@@ -5,8 +5,14 @@
     <app-indicators />
     <app-notifications />
     <section class="content">
-      <router-view />
-      <app-footer />
+      <article class="loading" v-if="loading">
+        <h1>
+          <fa-icon icon="sync-alt" :spin="true" />
+          <translate>AllMyWallets is loading...</translate>
+        </h1>
+      </article>
+      <router-view v-else />
+      <app-footer v-if="!loading" />
     </section>
   </main>
 </template>
@@ -25,6 +31,11 @@
       AppIndicators,
       AppNotifications,
       AppFooter
+    },
+    computed: {
+      loading () {
+        return this.$store.state.config.loading.app
+      }
     },
     async mounted () {
       return this.$store.dispatch('init', {
@@ -70,6 +81,14 @@
       top: 5px;
       left: 20px;
       z-index: 10000;
+    }
+
+    article.loading {
+      text-align: center;
+
+      h1 {
+        margin: 40px 0;
+      }
     }
   }
 </style>

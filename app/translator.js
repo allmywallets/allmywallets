@@ -11,16 +11,6 @@ export const locale = () => {
   return 'en-US'
 }
 
-export const checkLocale = async () => {
-  const config = await Configurator.getConfig()
-
-  if (Object(config.application).hasOwnProperty('language')) {
-    return config.application.language
-  }
-
-  return false
-}
-
 export const getAvailableLanguages = () => {
   const languages = { 'en-US': 'English' }
 

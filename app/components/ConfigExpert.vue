@@ -81,15 +81,15 @@
     </p>
     <p v-translate>Current editable configuration:</p>
     <p class="error" v-if="error !== ''">{{ error }}</p>
-    <textarea @input="updateConfig" title="Edit your configuration">{{ config }}</textarea>
+    <textarea title="Edit your configuration" v-model="config"></textarea>
   </collapsible-section>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import Configurator from '../configurator'
   import { generateId } from '../helper/string'
   import CollapsibleSection from './CollapsibleSection.vue'
-  import { findConfigChangeActions } from '../manager/config-manager'
 
   export default {
     components: {
@@ -103,41 +103,30 @@
       }
     },
     computed: {
-      config () {
-        return JSON.stringify(this.$store.state.config.config, null, 2)
+      config: {
+        get () {
+          return JSON.stringify(this.$store.state.config.config, null, 2)
+        },
+        async set (config) {
+          clearTimeout(this.timeout)
+          this.timeout = setTimeout(async () => {
+            this.error = ''
+            try {
+              return this.$store.dispatch('init', {
+                serviceWorker: this.$serviceWorker,
+                config: JSON.parse(config)
+              })
+            } catch (e) {
+              this.error = e.message
+            }
+          }, 500)
+        }
       },
       needsUpdate () {
         return !Configurator.validateConfig(this.$store.state.config.config)
       }
     },
     methods: {
-      async updateConfig (e) {
-        clearTimeout(this.timeout)
-        this.timeout = setTimeout(async () => {
-          this.error = ''
-          try {
-            const config = JSON.parse(e.target.value)
-            const actions = findConfigChangeActions(this.$store.state.config.config, config)
-
-            if (!actions) {
-              return this.$store.dispatch('init', {
-                serviceWorker: this.$serviceWorker,
-                config: config
-              })
-            }
-
-            for (const action in actions) {
-              if (!actions.hasOwnProperty(action)) {
-                continue
-              }
-
-              await this.$store.dispatch(action, actions[action])
-            }
-          } catch (e) {
-            this.error = e.message
-          }
-        }, 500)
-      },
       generateId () {
         return generateId(20)
       }

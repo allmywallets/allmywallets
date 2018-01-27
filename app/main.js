@@ -11,7 +11,7 @@ import '@fortawesome/fontawesome-free-solid'
 import VueFontAwesome from '@fortawesome/vue-fontawesome'
 import VueQRCode from '@xkeshi/vue-qrcode'
 
-import { locale, checkLocale, translations, getAvailableLanguages } from './translator'
+import { locale, translations, getAvailableLanguages } from './translator'
 import router from './router'
 import store from './store'
 import Filters from './filters'
@@ -36,12 +36,6 @@ Vue.use(VueGetText, {
 })
 Vue.component('fa-icon', VueFontAwesome)
 Vue.component('qrcode', VueQRCode)
-
-checkLocale().then(locale => {
-  if (locale) {
-    Vue.config.language = locale
-  }
-})
 
 Vue.prototype.$serviceWorker = navigator.serviceWorker
 

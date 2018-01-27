@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Configurator from '../configurator'
 import { enablePushNotifications } from '../notification/subscription'
+import { migrate } from '../migrations/config'
+import {checkLocale} from "../translator";
 
 const state = {
   loading: {
@@ -8,7 +10,7 @@ const state = {
     wallets: false // Wallets changes
   },
   config: Configurator.getDefaultConfiguration(),
-  version: { current: 'unknown', upstream: 'unknown' },
+  version: { current: process.env.APP_VERSION, upstream: process.env.APP_VERSION },
   display: {
     balances: {
       charts: false,
@@ -32,14 +34,12 @@ const getters = {
 const mutations = {
   INIT_APPLICATION (state, config) {
     state.config = config
+  },
+  APPLICATION_LOADED (state) {
     state.loading.app = false
   },
   CHECK_FOR_UPDATES (state, version) {
     state.version = version
-
-    if (state.config.application.version === 'unknown') {
-      state.config.application.version = version.current
-    }
   },
   ADD_WALLET (state, wallet) {
     state.config.profiles[0].wallets.push(wallet)
@@ -56,7 +56,11 @@ const mutations = {
 
 const actions = {
   init: async ({ commit, dispatch }, { serviceWorker, config }) => {
-    commit('INIT_APPLICATION', config)
+    commit('INIT_APPLICATION', migrate(config))
+
+    if (config.application.hasOwnProperty('language')) {
+      commit('CHANGE_LANGUAGE', config.application.language)
+    }
 
     dispatch('checkForUpdates')
 
@@ -73,9 +77,9 @@ const actions = {
       }
     }
 
-    dispatch('reloadAllBalances').then(() => {
-      dispatch('refreshPriceHistories')
-    })
+    await dispatch('reloadAllBalances')
+    commit('APPLICATION_LOADED')
+    await dispatch('refreshPriceHistories')
   },
   checkForUpdates: async ({ commit, state }) => {
     const version = await Configurator.getVersion()

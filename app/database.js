@@ -5,6 +5,8 @@ class Database {
   constructor () {
     this.connection = idb.open('balance-store', 1, upgradeDB => {
       upgradeDB.createObjectStore('balance')
+    }).catch(() => {
+      console.error('Failed to open balances database')
     })
   }
 
