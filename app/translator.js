@@ -1,5 +1,4 @@
 import langs from 'langs'
-import Configurator from './configurator'
 
 export const locale = () => {
   for (let language of navigator.languages) {

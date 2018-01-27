@@ -1,7 +1,6 @@
 import { Validator } from 'jsonschema'
 import idbKeyval from 'idb-keyval'
 import Proxy from './providers'
-import Wallet from './model/Wallet'
 
 export default class Configurator {
   static async getConfig () {
