@@ -35,7 +35,7 @@
           ref="modalProvider"
           v-if="currentProvider.documentation"
           :provider="currentProvider.name"
-          url="https://raw.githubusercontent.com/allmywallets/providers-docs/master/exchange.poloniex"
+          :url="currentProvider.documentation"
       />
       <template v-if="currentProvider.warnings">
         <p v-if="currentProvider.warnings.cors" class="alert alert-warning" v-translate>
