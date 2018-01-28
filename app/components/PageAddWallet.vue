@@ -39,7 +39,7 @@
       />
       <template v-if="currentProvider.warnings">
         <p v-if="currentProvider.warnings.cors" class="alert alert-warning" v-translate>
-          This exchange is missing some requirements to work in a decentralized way (CORS support is missing). API
+          This provider is missing some requirements to work in a decentralized way (CORS support is missing). API
           requests will use an intermediate server owned by the AllMyWallets team.
         </p>
         <p v-if="currentProvider.warnings.apiKey" class="alert alert-warning" v-translate>
