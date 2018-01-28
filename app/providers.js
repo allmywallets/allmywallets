@@ -34,37 +34,37 @@ export default class Proxy {
   }
 }
 
-function getGenericProviderClass (explorerName) {
-  const Explorer = Providers.providers[explorerName]
+function getGenericProviderClass (providerName) {
+  const Provider = Providers.providers[providerName]
   class GenericProvider {
     constructor (parameters, wallet) {
       this.parameters = parameters
-      this.explorer = new Explorer(this.parameters)
-      this.explorer.setProxy(Explorer.info.hasCORS ? '' : AMW_PROXY_URL)
+      this.provider = new Provider(this.parameters)
+      this.provider.setProxy(Provider.info.hasCORS ? '' : AMW_PROXY_URL)
       this.wallet = wallet
     }
 
     async checkParameters () {
-      await this.explorer.checkParameters()
-      await this.explorer.checkAddresses(this.parameters.addresses)
-      await this.explorer.checkWallets(this.parameters.wallets)
+      await this.provider.checkParameters()
+      await this.provider.checkAddresses(this.parameters.addresses)
+      await this.provider.checkWallets(this.parameters.wallets)
     }
 
     async getBalances (currencies = []) {
-      this._selectCurrenciesToUpdate(this.explorer, currencies)
+      this._selectCurrenciesToUpdate(this.provider, currencies)
       if (this.parameters.addresses) {
-        this.explorer.addresses(this.parameters.addresses)
+        this.provider.addresses(this.parameters.addresses)
       } else {
-        this.explorer.wallets(this.parameters.wallets)
+        this.provider.wallets(this.parameters.wallets)
       }
-      const wallets = await this.explorer
+      const wallets = await this.provider
         .fetch(['balances', 'addresses'])
         .exec()
 
       const balances = []
       wallets.forEach(wallet => {
         let i = 0
-        this.explorer.getSelectedCurrencies().forEach(selectedCurrency => {
+        this.provider.getSelectedCurrencies().forEach(selectedCurrency => {
           const amount = wallet.balances[i]
           const address = wallet.addresses[i]
           const balance = new Balance(
@@ -82,22 +82,22 @@ function getGenericProviderClass (explorerName) {
       return balances
     }
 
-    _selectCurrenciesToUpdate (explorer, currencies) {
+    _selectCurrenciesToUpdate (provider, currencies) {
       if (currencies.length === 0) { // Refresh all
         if (this.parameters.currencies) {
-          explorer.currencies(this.parameters.currencies)
+          provider.currencies(this.parameters.currencies)
         }
       } else { // Refresh only specified
-        explorer.currencies(currencies)
+        provider.currencies(currencies)
       }
     }
 
     static async _getSupportedTickers () {
       let supportedTickers = []
       try {
-        const explorer = new Explorer()
-        explorer.setProxy(Explorer.info.hasCORS ? '' : AMW_PROXY_URL)
-        const currencies = await explorer.getSupportedCurrencies()
+        const provider = new Provider()
+        provider.setProxy(Provider.info.hasCORS ? '' : AMW_PROXY_URL)
+        const currencies = await provider.getSupportedCurrencies()
         supportedTickers = Object.keys(currencies)
       } catch (e) {} // Provider needs credentials to retrieve tickers
 
@@ -105,14 +105,14 @@ function getGenericProviderClass (explorerName) {
     }
 
     static async getSupportedParameters () {
-      let explorerParameters = Explorer.getExplorerParameters().map(param => {
-        param.model = `explorerSpecific.${param.model}`
+      let providerParameters = Provider.getProviderParameters().map(param => {
+        param.model = `providerSpecific.${param.model}`
         return param
       })
 
-      explorerParameters = explorerParameters.concat(Explorer.getWalletIdentifierParameters())
+      providerParameters = providerParameters.concat(Provider.getWalletIdentifierParameters())
 
-      explorerParameters.push({
+      providerParameters.push({
         type: 'checklist',
         label: 'Currencies',
         model: 'currencies',
@@ -122,7 +122,7 @@ function getGenericProviderClass (explorerName) {
         values: await GenericProvider._getSupportedTickers()
       })
 
-      return explorerParameters
+      return providerParameters
     }
 }
 
