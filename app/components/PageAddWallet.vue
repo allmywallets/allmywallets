@@ -5,49 +5,97 @@
       <translate>You can add a new wallet by selecting a provider on the list below.</translate>
       <translate>A wallet is a set of balances which will be displayed on the homepage of AMW.</translate>
     </p>
-    <label for="wallet-filter" v-translate>Filter:</label> <input type="search" id="wallet-filter" />
-    <ul :class="{ 'selected': currentProvider !== null }">
-      <li v-for="provider in providers" :key="provider.network + '.' + provider.provider" :class="{ 'selected': currentProvider && currentProvider.name === provider.name }">
-        <a href="#" @click.prevent="loadProvider(provider)">
-          <span class="network">{{ provider.network|capitalize }}</span><br />
-          <span class="provider">{{ provider.name }}</span><br />
-        </a>
-      </li>
-    </ul>
-    <template v-if="currentProvider !== null">
+    <article v-if="currentProvider === null">
+      <provider-list-filters :providers="providerList" :networks="networkList" @filter="filterProviders" />
+      <ul>
+        <li v-for="provider in providers" :key="provider.network + '.' + provider.provider">
+          <a href="#" @click.prevent="loadProvider(provider)">
+            <span class="network">{{ provider.network|capitalize }}</span><br />
+            <span class="provider">{{ provider.name }}</span><br />
+          </a>
+        </li>
+      </ul>
+    </article>
+    <article v-else class="add-wallet">
+      <span class="button button-small" @click.prevent="reset"><fa-icon icon="chevron-left" /> Cancel</span>
       <h3 v-translate="{ provider: currentProvider.name }">
-        New %{provider} wallet
+        Add a %{provider} wallet
       </h3>
       <form>
         <label for="name">Name</label>
         <input type="text" v-model="currentName" id="name" />
         <vue-form-generator :schema="currentSchema" :model="currentParameters" />
-        <button @click.prevent="save">Save</button>
+        <button @click.prevent="save" class="button">
+          <fa-icon icon="plus" />
+          <translate>Add wallet</translate>
+        </button>
       </form>
-    </template>
+    </article>
   </div>
 </template>
 
 <script>
   import VueFormGenerator from 'vue-form-generator'
+  import ProviderListFilters from './ProviderListFilters'
   import Proxy from '../providers'
-  import Configurator from '../configurator'
   import { generateId } from '../helper/string'
 
   export default {
     name: 'page-add-wallet',
+    components: {
+      ProviderListFilters
+    },
     data () {
       return {
-        providers: {},
         currentName: '',
         currentSchema: null,
         currentProvider: null,
-        currentParameters: null
+        currentParameters: null,
+        filters: []
+      }
+    },
+    computed: {
+      providers () {
+        if (this.filters.length === 0) {
+          return Proxy.getProvidersList()
+        }
+
+        return Proxy.getProvidersList().filter(value => {
+          for (const filter of this.filters) {
+            if (filter.type === 'network' && value.network !== filter.name.toLowerCase()) {
+              return false
+            }
+
+            if (filter.type === 'provider' && value.name !== filter.name) {
+              return false
+            }
+          }
+
+          return true
+        })
+      },
+      providerList () {
+        return this.providers.map(provider => {
+          return {
+            type: 'provider',
+            name: provider.name
+          }
+        })
+      },
+      networkList () {
+        return this.providers.map(provider => {
+          return {
+            type: 'network',
+            name: provider.network.charAt(0).toUpperCase() + provider.network.slice(1)
+          }
+        }).filter((value, index, array) => array.map(mapObj => mapObj['name']).indexOf(value['name']) === index)
       }
     },
     methods: {
+      filterProviders (filters) {
+        this.filters = filters
+      },
       async loadProvider (provider) {
-        this.reset()
         this.currentSchema = { fields: await Proxy.getProviderParameters(provider.network + '.' + provider.provider) }
         this.currentParameters = VueFormGenerator.schema.createDefaultObject(this.currentSchema)
         this.currentProvider = provider
@@ -79,10 +127,8 @@
         this.currentSchema = null
         this.currentParameters = {}
         this.currentProvider = null
+        this.filters = []
       }
-    },
-    mounted () {
-      this.providers = Proxy.getProvidersList()
     }
   }
 </script>
@@ -98,9 +144,7 @@
     @include card();
 
     &.selected {
-      li:not(.selected) {
-        display: none;
-      }
+      display: none;
     }
 
     li {
@@ -118,10 +162,6 @@
 
       @media screen and(min-width: $breakpoint-larger) {
         width: 14.285714286%;
-      }
-
-      &.selected {
-        width: 100%;
       }
 
       a {
@@ -149,5 +189,10 @@
         }
       }
     }
+  }
+
+  .add-wallet {
+    @include card();
+    padding: 10px 20px;
   }
 </style>
