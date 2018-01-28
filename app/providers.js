@@ -2,7 +2,7 @@ import Balance from './model/Balance'
 import Providers from '@allmywallets/providers'
 import Wallet from './model/Wallet'
 
-const AMW_PROXY_URL = 'https://cors-anywhere.herokuapp.com/'
+const AMW_PROXY_URL = process.env.NODE_ENV === 'production' ? 'https://cors.allmywallets.io/' : 'https://cors-anywhere.herokuapp.com/'
 
 export default class Proxy {
   constructor (wallet) {
