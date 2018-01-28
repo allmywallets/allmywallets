@@ -17,17 +17,47 @@
       </ul>
     </article>
     <article v-else class="add-wallet">
-      <span class="button button-small" @click.prevent="reset"><fa-icon icon="chevron-left" /> Cancel</span>
-      <h3 v-translate="{ provider: currentProvider.name }">
-        Add a %{provider} wallet
+      <h3>
+        <translate :translate-params="{ provider: currentProvider.name }">Add a %{provider} wallet</translate>
       </h3>
+      <p>
+        {{ currentProvider.description }}<br />
+        <a href="#" class="button button-small button-info" v-if="currentProvider.documentation" @click.prevent="$refs.modalProvider.open()">
+          <fa-icon icon="file-alt" />
+          <translate>Documentation</translate>
+        </a>
+        <a :href="currentProvider.url" target="_blank" class="button button-small">
+          <fa-icon icon="globe" />
+          <translate>View website</translate>
+        </a>
+      </p>
+      <modal-provider
+          ref="modalProvider"
+          v-if="currentProvider.documentation"
+          :provider="currentProvider.name"
+          url="https://raw.githubusercontent.com/allmywallets/providers-docs/master/exchange.poloniex"
+      />
+      <template v-if="currentProvider.warnings">
+        <p v-if="currentProvider.warnings.cors" class="alert alert-warning" v-translate>
+          This exchange is missing some requirements to work in a decentralized way (CORS support is missing). API
+          requests will use an intermediate server owned by the AllMyWallets team.
+        </p>
+        <p v-if="currentProvider.warnings.apiKey" class="alert alert-warning" v-translate>
+          AllMyWallets is not able to check if your API key is read only for this exchange. Be sure to check on your
+          exchange account that the provided key does not allow any trading or withdraw.
+        </p>
+      </template>
       <form>
-        <label for="name">Name</label>
+        <label for="name" v-translate>Name of the wallet</label>
         <input type="text" v-model="currentName" id="name" />
         <vue-form-generator :schema="currentSchema" :model="currentParameters" />
         <button @click.prevent="save" class="button">
           <fa-icon icon="plus" />
           <translate>Add wallet</translate>
+        </button>
+        <button @click.prevent="reset" class="button button-warning">
+          <fa-icon icon="trash" />
+          <translate>Cancel</translate>
         </button>
       </form>
     </article>
@@ -37,13 +67,15 @@
 <script>
   import VueFormGenerator from 'vue-form-generator'
   import ProviderListFilters from './ProviderListFilters'
+  import ModalProvider from './ModalProvider'
   import Proxy from '../providers'
   import { generateId } from '../helper/string'
 
   export default {
     name: 'page-add-wallet',
     components: {
-      ProviderListFilters
+      ProviderListFilters,
+      ModalProvider
     },
     data () {
       return {
@@ -189,6 +221,10 @@
         }
       }
     }
+  }
+
+  form {
+    padding: 10px 0;
   }
 
   .add-wallet {

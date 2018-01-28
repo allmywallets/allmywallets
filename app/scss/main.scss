@@ -49,6 +49,20 @@ a, a:hover {
   color: $color-danger;
 }
 
+.alert {
+  font-size: 0.95em;
+  padding: 0.4em 0.7em;
+  border-radius: 3px;
+  color: white;
+  margin-bottom: 5px;
+  display: block;
+
+  &.alert-warning {
+    background: $color-warning;
+    color: darken($color-warning, 30);
+  }
+}
+
 .badge {
   display: inline;
   cursor: default;
@@ -107,6 +121,14 @@ a, a:hover {
   &.button-small {
     font-size: 0.8rem;
     padding: .35em;
+  }
+
+  &.button-warning {
+    background: $color-warning;
+  }
+
+  &.button-info {
+    background: $color-info;
   }
 }
 
