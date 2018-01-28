@@ -24,7 +24,13 @@ export default class Proxy {
   }
 
   static getProvidersList () {
-    return Providers.list().map(provider => Providers.providers[provider].info)
+    return Providers.list().map(provider => {
+      const info = Providers.providers[provider].info
+      info.warnings = {hasCORS: info.hasCORS, apiKeyPermission: info.apiKeyPermission}
+      delete info.hasCORS
+      delete info.apiKeyPermission
+      return info
+    })
   }
 }
 
