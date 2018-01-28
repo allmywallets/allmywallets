@@ -2,6 +2,8 @@ import Balance from './model/Balance'
 import Providers from '@allmywallets/providers'
 import Wallet from './model/Wallet'
 
+const AMW_PROXY_URL = 'https://cors-anywhere.herokuapp.com/'
+
 export default class Proxy {
   constructor (wallet) {
     const walletObject = new Wallet(wallet.id, wallet.name, wallet.network, wallet.provider)
@@ -32,6 +34,7 @@ function getGenericProviderClass (explorerName) {
     constructor (parameters, wallet) {
       this.parameters = parameters
       this.explorer = new Explorer(this.parameters)
+      this.explorer.setProxy(Explorer.info.hasCORS ? '' : AMW_PROXY_URL)
       this.wallet = wallet
     }
 
@@ -91,7 +94,9 @@ function getGenericProviderClass (explorerName) {
 
       explorerParameters = explorerParameters.concat(Explorer.getWalletIdentifierParameters())
 
-      const currencies = await Explorer.getSupportedCurrencies()
+      const explorer = new Explorer()
+      explorer.setProxy(Explorer.info.hasCORS ? '' : AMW_PROXY_URL)
+      const currencies = await explorer.getSupportedCurrencies()
       explorerParameters.push({
         type: 'checklist',
         label: 'Currencies',
