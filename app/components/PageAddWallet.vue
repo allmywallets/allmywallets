@@ -43,7 +43,7 @@
           requests will use an intermediate server owned by the AllMyWallets team.
         </p>
         <p v-if="currentProvider.warnings.apiKey" class="alert alert-warning" v-translate>
-          AllMyWallets is not able to check if your API key is read only for this exchange. Be sure that the provided
+          AllMyWallets is not able to check if your API key is read only. Be sure that the provided
           key does not allow any trading, withdraw or other dangerous actions.
         </p>
       </template>
