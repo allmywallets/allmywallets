@@ -92,6 +92,18 @@ function getGenericProviderClass (explorerName) {
       }
     }
 
+    static async _getSupportedTickers () {
+      let supportedTickers = []
+      try {
+        const explorer = new Explorer()
+        explorer.setProxy(Explorer.info.hasCORS ? '' : AMW_PROXY_URL)
+        const currencies = await explorer.getSupportedCurrencies()
+        supportedTickers = Object.keys(currencies)
+      } catch (e) {} // Provider needs credentials to retrieve tickers
+
+      return supportedTickers
+    }
+
     static async getSupportedParameters () {
       let explorerParameters = Explorer.getExplorerParameters().map(param => {
         param.model = `explorerSpecific.${param.model}`
@@ -100,9 +112,6 @@ function getGenericProviderClass (explorerName) {
 
       explorerParameters = explorerParameters.concat(Explorer.getWalletIdentifierParameters())
 
-      const explorer = new Explorer()
-      explorer.setProxy(Explorer.info.hasCORS ? '' : AMW_PROXY_URL)
-      const currencies = await explorer.getSupportedCurrencies()
       explorerParameters.push({
         type: 'checklist',
         label: 'Currencies',
@@ -110,7 +119,7 @@ function getGenericProviderClass (explorerName) {
         multi: true,
         required: false,
         multiSelect: true,
-        values: Object.keys(currencies)
+        values: await GenericProvider._getSupportedTickers()
       })
 
       return explorerParameters
