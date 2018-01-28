@@ -12,6 +12,7 @@
 <script>
   import Showdown from 'showdown'
   import Configurator from '../configurator'
+  import xss from 'xss'
 
   export default {
     name: 'modal-upgrade',
@@ -31,7 +32,9 @@
       const version = await Configurator.getVersion()
 
       this.version = version.current
-      this.content = converter.makeHtml(version.releaseNotes)
+
+      converter.setFlavor('github')
+      this.content = xss(converter.makeHtml(version.releaseNotes))
 
       this.$refs.modalUpgrade.open()
     }

@@ -12,7 +12,7 @@
       </a>
     </div>
     <div class="actions-right">
-      <router-link :to="{ name: 'home-add-wallet' }" title="Add a wallet" v-tippy>
+      <router-link :to="{ name: 'add-wallet' }" title="Add a wallet" v-tippy>
         <fa-icon icon="plus" />
       </router-link>
     </div>

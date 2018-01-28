@@ -9,7 +9,7 @@
         AMW is the first decentralized privacy-focused app to see all your wallets at a glance, and receive push notifications
         whenever your balances change.
       </translate><br />
-      <router-link :to="{ name: 'home-add-wallet' }" class="button" v-translate>Add a first wallet</router-link>
+      <router-link :to="{ name: 'add-wallet' }" class="button" v-translate>Add a first wallet</router-link>
       <router-link :to="{ name: 'settings' }" class="button" v-translate>Import configuration</router-link>
     </p>
     <ul class="features">
@@ -35,7 +35,7 @@
       </li>
     </ul>
     <p class="intro">
-      <router-link :to="{ name: 'home-add-wallet' }" class="button" v-translate>Add a first wallet</router-link><br />
+      <router-link :to="{ name: 'add-wallet' }" class="button" v-translate>Add a first wallet</router-link><br />
       <translate>AMW can be used on any modern devices, including your smartphone using Chrome, Chromium or Brave.</translate>
     </p>
     <hr />
