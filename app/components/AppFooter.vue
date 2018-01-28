@@ -6,6 +6,10 @@
     </template>
     &middot;
     <language-switcher />
+    <br />
+    <translate>Software is provided without warranty: AllMyWallets and its contributors cannot be held liable for damages.</translate>
+    &middot;
+    <a href="https://github.com/allmywallets/allmywallets/blob/master/LICENSE" target="_blank" v-translate>MIT License</a>
   </footer>
 </template>
 

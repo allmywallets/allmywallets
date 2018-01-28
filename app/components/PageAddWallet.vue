@@ -23,8 +23,8 @@
       <p>
         {{ currentProvider.description }}<br />
         <a href="#" class="button button-small button-info" v-if="currentProvider.documentation" @click.prevent="$refs.modalProvider.open()">
-          <fa-icon icon="file-alt" />
-          <translate>Documentation</translate>
+          <fa-icon icon="question-circle" />
+          <translate>Help</translate>
         </a>
         <a :href="currentProvider.url" target="_blank" class="button button-small">
           <fa-icon icon="globe" />
@@ -48,7 +48,7 @@
         </p>
       </template>
       <form>
-        <label for="name" v-translate>Name of the wallet</label>
+        <label for="name" v-translate>Name of the wallet</label><br />
         <input type="text" v-model="currentName" id="name" />
         <vue-form-generator :schema="currentSchema" :model="currentParameters" />
         <button @click.prevent="save" class="button">
