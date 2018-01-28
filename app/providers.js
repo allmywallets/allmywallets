@@ -26,7 +26,7 @@ export default class Proxy {
   static getProvidersList () {
     return Providers.list().map(provider => {
       const info = Providers.providers[provider].info
-      info.warnings = {cors: info.hasCORS, apiKey: info.apiKeyPermission}
+      info.warnings = {cors: !info.hasCORS, apiKey: typeof info.apiKeyPermission !== 'undefined' && !info.apiKeyPermission}
       delete info.hasCORS
       delete info.apiKeyPermission
       return info
