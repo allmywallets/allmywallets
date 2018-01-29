@@ -31,16 +31,11 @@
         content: ''
       }
     },
-    methods: {
-      open () {
-        this.$refs.modalProvider.open()
-      }
-    },
     async mounted () {
       Showdown.extension('githubImage', () => {
         return [{
           type: 'lang',
-          regex: /\!\[(.*)\]\((.*)\)/,
+          regex: /!\[(.*)\]\((.*)\)/,
           replace: (match, alt, src) => {
             return `<img src="${this.url}/${src}" alt="${alt}" />`
           }
@@ -50,6 +45,11 @@
 
       converter.setFlavor('github')
       this.content = xss(converter.makeHtml(await fetch(this.url + '/how-to.md').then(res => res.text())))
+    },
+    methods: {
+      open () {
+        this.$refs.modalProvider.open()
+      }
     }
   }
 </script>

@@ -8,7 +8,7 @@
       <fa-icon icon="inbox" /> <br /> <translate>You don't have any notifications.</translate>
     </p>
     <div class="notifications">
-      <notification-item v-for="notification, key in notifications" :key="key" :notification="notification" />
+      <notification-item v-for="(notification, key) in notifications" :key="key" :notification="notification" />
     </div>
   </aside>
 </template>

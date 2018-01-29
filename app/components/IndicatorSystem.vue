@@ -34,6 +34,18 @@
         return missingCapabilities()
       }
     },
+    mounted () {
+      if (!this.$serviceWorker) {
+        return
+      }
+
+      runtime.register()
+      this.$serviceWorker.addEventListener('controllerchange', () => {
+        this.needsRefresh = this.$serviceWorker.controller === null
+      })
+
+      this.$serviceWorker.addEventListener('message', this.handleMessage)
+    },
     methods: {
       refreshPage () {
         location.reload()
@@ -58,18 +70,6 @@
 
         return this.$store.dispatch('reloadBalances', { balanceIds })
       }
-    },
-    mounted () {
-      if (!this.$serviceWorker) {
-        return
-      }
-
-      runtime.register()
-      this.$serviceWorker.addEventListener('controllerchange', () => {
-        this.needsRefresh = this.$serviceWorker.controller === null
-      })
-
-      this.$serviceWorker.addEventListener('message', this.handleMessage)
     }
   }
 </script>

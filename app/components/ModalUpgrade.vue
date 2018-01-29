@@ -22,11 +22,6 @@
         content: ''
       }
     },
-    methods: {
-      closeModal () {
-        this.$router.push('/')
-      }
-    },
     async mounted () {
       const converter = new Showdown.Converter()
       const version = await Configurator.getVersion()
@@ -37,6 +32,11 @@
       this.content = xss(converter.makeHtml(version.releaseNotes))
 
       this.$refs.modalUpgrade.open()
+    },
+    methods: {
+      closeModal () {
+        this.$router.push('/')
+      }
     }
   }
 </script>

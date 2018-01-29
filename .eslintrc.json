@@ -1,8 +1,23 @@
 {
   "extends": ["standard", "plugin:vue/recommended"],
-  "plugins": ["html"],
   "rules": {
-    "no-new": "off"
+    "no-new": "off",
+    "vue/html-self-closing": ["error",
+      {
+        "html": {
+          "void": "always",
+          "normal": "never"
+        }
+      }
+    ],
+    "vue/name-property-casing": ["error", "kebab-case"],
+    "vue/max-attributes-per-line": [2, {
+      "singleline": 5,
+      "multiline": {
+        "max": 1,
+        "allowFirstLine": false
+      }
+    }]
   },
   "env": {
     "browser": true

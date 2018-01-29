@@ -7,9 +7,11 @@
     mixins: [mixins.reactiveProp],
     props: {
       chartData: {
+        type: Object,
         required: true
       },
       options: {
+        type: Object,
         required: true
       }
     },

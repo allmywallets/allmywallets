@@ -1,11 +1,11 @@
 <template>
   <div class="balance">
-    <holdings-chart :class="{ 'balance-background': true, 'showed': showCharts }" :options="chartOptions" :chartData="chartData" />
+    <holdings-chart :class="{ 'balance-background': true, 'showed': showCharts }" :options="chartOptions" :chart-data="chartData" />
     <div class="balance-content">
       <header class="balance-header">
-      <span class="balance-logo" v-if="logo">
-        <img height="40" :src="`/static/icons/${logo}%402x.png`" @error="removeLogo" :alt="balance.ticker" />
-      </span>
+        <span class="balance-logo" v-if="logo">
+          <img height="40" :src="`/static/icons/${logo}%402x.png`" @error="removeLogo" :alt="balance.ticker" />
+        </span>
         <h4 class="balance-name">
           {{ balance.wallet.name }}<br />
           <small class="balance-currency">{{ balance.currency }}</small>
@@ -115,13 +115,13 @@
         }
       }
     },
+    async mounted () {
+      this.$serviceWorker.addEventListener('message', this.load)
+    },
     methods: {
       removeLogo (event) {
         event.target.remove()
       }
-    },
-    async mounted () {
-      this.$serviceWorker.addEventListener('message', this.load)
     }
   }
 </script>

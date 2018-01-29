@@ -49,11 +49,11 @@
   import { missingCapabilities } from '../manager/system-manager'
 
   export default {
+    name: 'first-launch',
     components: {
       SystemCheck,
       ProvidersCredits
     },
-    name: 'first-launch',
     data () {
       return {
         missingCapabilities: false

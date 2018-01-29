@@ -4,7 +4,7 @@
       <holdings-summary />
       <balance-list-actions />
       <article class="balance-list" v-if="balances.length > 0">
-        <balance-item v-for="balance, key in balances" :key="key" :id="balance.id" />
+        <balance-item v-for="(balance, key) in balances" :key="key" :id="balance.id" />
       </article>
       <article v-else>
         <p v-translate>No balance has been loaded yet. Click on the button below to refresh your wallets.</p>
@@ -33,16 +33,16 @@
       FirstLaunch,
       ModalUpgrade
     },
-    methods: {
-      async refreshBalances () {
-        return this.$store.dispatch('refreshBalances', { wallets: this.wallets, serviceWorker: this.$serviceWorker })
-      }
-    },
     computed: {
       ...mapGetters([
         'balances',
         'wallets'
       ])
+    },
+    methods: {
+      async refreshBalances () {
+        return this.$store.dispatch('refreshBalances', { wallets: this.wallets, serviceWorker: this.$serviceWorker })
+      }
     }
   }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <fa-icon icon="wifi" :class="{ 'text-danger': !online }" :title="getTitle()" v-tippy="{ showOnLoad: !this.online }" />
+    <fa-icon icon="wifi" :class="{ 'text-danger': !online }" :title="getTitle()" v-tippy="{ showOnLoad: !online }" />
   </div>
 </template>
 
@@ -12,11 +12,6 @@
         online: navigator.onLine
       }
     },
-    methods: {
-      getTitle () {
-        return this.online ? 'App is online' : 'App is offline'
-      }
-    },
     mounted () {
       window.addEventListener('offline', () => {
         this.online = false
@@ -24,6 +19,11 @@
       window.addEventListener('online', () => {
         this.online = true
       })
+    },
+    methods: {
+      getTitle () {
+        return this.online ? 'App is online' : 'App is offline'
+      }
     }
   }
 </script>

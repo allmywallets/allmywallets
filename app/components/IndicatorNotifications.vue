@@ -1,14 +1,17 @@
 <template>
   <div v-if="state">
-    <a href="#"
-       @click.prevent="updateNotificationState"
-       :title="state.title"
-       :class="{ 'no-action': state.action === false }"
-       v-tippy="{ showOnLoad: state.showOnLoad }"
+    <a
+      href="#"
+      @click.prevent="updateNotificationState"
+      :title="state.title"
+      :class="{ 'no-action': state.action === false }"
+      v-tippy="{ showOnLoad: state.showOnLoad }"
     >
-      <fa-icon :icon="this.loading ? 'spinner' : state.icon" :spin="this.loading" :class="`text-${state.state}`" />
+      <fa-icon :icon="loading ? 'spinner' : state.icon" :spin="loading" :class="`text-${state.state}`" />
     </a>
-    <div class="counter" v-if="countNotifications > 0">{{ countNotifications }}</div>
+    <div class="counter" v-if="countNotifications > 0">
+      {{ countNotifications }}
+    </div>
   </div>
 </template>
 
@@ -23,6 +26,17 @@
         state: null,
         loading: false
       }
+    },
+    computed: {
+      ...mapGetters([
+        'display'
+      ]),
+      countNotifications () {
+        return this.$store.state.notifications.length
+      }
+    },
+    async mounted () {
+      this.state = await this.getNotificationState()
     },
     methods: {
       togglePanel () {
@@ -55,17 +69,6 @@
           Notification.permission !== 'denied'
         )
       }
-    },
-    computed: {
-      ...mapGetters([
-        'display'
-      ]),
-      countNotifications () {
-        return this.$store.state.notifications.length
-      }
-    },
-    async mounted () {
-      this.state = await this.getNotificationState()
     }
   }
 </script>

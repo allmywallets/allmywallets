@@ -1,6 +1,6 @@
 <template>
   <div class="holdings">
-    <holdings-chart :options="chartOptions" :chartData="chartData" class="holdings-chart" />
+    <holdings-chart :options="chartOptions" :chart-data="chartData" class="holdings-chart" />
     <holdings-value />
   </div>
 </template>

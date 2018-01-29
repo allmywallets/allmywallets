@@ -2,17 +2,17 @@
   <section :class="{ 'collapsible': true, 'expanded': expanded }">
     <header class="collapsible-header">
       <h3 class="collapsible-title">
-        <fa-icon :icon="icon" v-if="icon" class="icon" />
-        <slot name="title" />
+        <fa-icon :icon="icon" v-if="icon !== ''" class="icon" />
+        <slot name="title">Section title</slot>
         <a class="button button-small" @click.prevent="expanded = !expanded" href="#" v-if="this.$slots.default">
           <translate v-if="expanded">Collapse</translate>
           <translate v-else>Expand</translate>
         </a>
       </h3>
-      <slot name="intro" />
+      <slot name="intro">Section intro</slot>
     </header>
     <article class="collapsible-content">
-      <slot />
+      <slot>Section content</slot>
     </article>
   </section>
 </template>
@@ -23,7 +23,8 @@
     props: {
       icon: {
         type: String,
-        required: false
+        required: false,
+        default: ''
       }
     },
     data () {

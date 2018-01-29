@@ -4,12 +4,16 @@
   export default {
     name: 'holdings-chart',
     extends: Line,
-    mixins: [mixins.reactiveProp],
+    mixins: [
+      mixins.reactiveProp
+    ],
     props: {
       chartData: {
+        type: Object,
         required: true
       },
       options: {
+        type: Object,
         required: true
       }
     },

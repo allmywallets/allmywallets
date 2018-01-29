@@ -17,11 +17,13 @@
 <script>
   import { mapGetters } from 'vuex'
   import PieChart from './PieChart.vue'
-  import { computeAllHoldingsHistories } from '../manager/holdings-manager'
-  import { formatCurrency } from '../manager/holdings-manager'
+  import { computeAllHoldingsHistories, formatCurrency } from '../manager/holdings-manager'
 
   export default {
     name: 'page-statistics',
+    components: {
+      PieChart
+    },
     computed: {
       ...mapGetters([
         'balances',
@@ -42,16 +44,16 @@
           datasets: [{
             data: holdingsKeys.map(key => holdingsHistories[key].primary[holdingsHistories[key].primary.length - 1]),
             backgroundColor: [
-              "#1f77b4",
-              "#ff7f0e",
-              "#2ca02c",
-              "#d62728",
-              "#9467bd",
-              "#8c564b",
-              "#e377c2",
-              "#7f7f7f",
-              "#bcbd22",
-              "#17becf"
+              '#1f77b4',
+              '#ff7f0e',
+              '#2ca02c',
+              '#d62728',
+              '#9467bd',
+              '#8c564b',
+              '#e377c2',
+              '#7f7f7f',
+              '#bcbd22',
+              '#17becf'
             ]
           }]
         }
@@ -71,9 +73,6 @@
           }
         }
       }
-    },
-    components: {
-      PieChart
     }
   }
 </script>

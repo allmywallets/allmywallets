@@ -21,11 +21,20 @@
   import CollapsibleSection from './CollapsibleSection.vue'
 
   export default {
-    components: {CollapsibleSection},
     name: 'config-import',
+    components: {
+      CollapsibleSection
+    },
     data () {
       return {
         config: ''
+      }
+    },
+    mounted () {
+      const { config } = this.$route.params
+
+      if (config) {
+        this.config = config
       }
     },
     methods: {
@@ -36,13 +45,6 @@
           serviceWorker: this.$serviceWorker,
           config: config
         })
-      }
-    },
-    mounted () {
-      const { config } = this.$route.params
-
-      if (config) {
-        this.config = config
       }
     }
   }

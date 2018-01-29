@@ -1,19 +1,20 @@
 <template>
   <multiselect
-      v-model="filterTest"
-      :options="filterOptions"
-      :multiple="true"
-      group-values="options"
-      group-label="name"
-      label="name"
-      track-by="name"
-      placeholder="Click and type to filter providers"
-      class="provider-list-filter"
-      @input="filterProviders"
+    v-model="filterTest"
+    :options="filterOptions"
+    :multiple="true"
+    group-values="options"
+    group-label="name"
+    label="name"
+    track-by="name"
+    placeholder="Click and type to filter providers"
+    class="provider-list-filter"
+    @input="filterProviders"
   >
     <template slot="tag" slot-scope="props">
-      <span class="badge badge-light"><span>
-        {{ props.option.name }}</span> <fa-icon icon="times" @click="props.remove(props.option)" />
+      <span class="badge badge-light">
+        {{ props.option.name }}
+        <fa-icon icon="times" @click="props.remove(props.option)" />
       </span>&nbsp;
     </template>
     <template slot="option" slot-scope="props">
@@ -21,7 +22,7 @@
         {{ props.option.$groupLabel }}
       </template>
       <template v-else>
-        {{props.option.name }}
+        {{ props.option.name }}
       </template>
     </template>
   </multiselect>
@@ -32,6 +33,9 @@
 
   export default {
     name: 'provider-list-filters',
+    components: {
+      Multiselect
+    },
     props: {
       networks: {
         type: Array,
@@ -40,14 +44,6 @@
       providers: {
         type: Array,
         required: true
-      }
-    },
-    components: {
-      Multiselect
-    },
-    methods: {
-      filterProviders (values) {
-        this.$emit('filter', values)
       }
     },
     data () {
@@ -65,6 +61,11 @@
           }
         ],
         filterTest: ''
+      }
+    },
+    methods: {
+      filterProviders (values) {
+        this.$emit('filter', values)
       }
     }
   }

@@ -9,75 +9,12 @@
       <strong v-translate>Beware! Editing this configuration may break the application.</strong>
       <translate>Be sure to know what you are doing...</translate>
     </p>
-    <p v-translate>Example:</p>
-    <pre>
-{
-  "profiles": [{
-    "wallets": [{
-        "id": "random id (20 chars)",
-        "network": "bitcoin",
-        "provider": "blockexplorer",
-        "name": "My Bitcoin wallet",
-        "parameters": {
-          "addresses": [
-            "ADDRESS"
-          ]
-        }
-      },
-      {
-        "id": "random id (20 chars)",
-        "network": "ethereum",
-        "provider": "etherscan",
-        "name": "My Ethereum wallet",
-        "parameters": {
-          "addresses": [
-            "ADDRESS"
-          ],
-          "currencies": [
-            "ETH",
-            "BAT",
-            "IND"
-          ],
-          "customTokens": {
-            "IND": {
-              "name": "Indorse",
-              "ticker": "IND",
-              "decimals": 18,
-              "contractAddress": "0xf8e386eda857484f5a12e4b5daa9984e06e73705"
-            }
-          }
-        }
-      },
-      {
-        "id": "random id (20 chars)",
-        "network": "iota",
-        "provider": "native",
-        "name": "My IOTA wallet",
-        "parameters": {
-          "address": "ADDRESS",
-          "node": "https://iota.thathost.net"
-        }
-      }
-    ],
-    "application": {
-      "currencies": {
-        "primary": "USD",
-        "secondary": "BTC"
-      }
-    }
-  }],
-  "application": {
-    "version": "X.X.X",
-    "language": "fr"
-  }
-}
-  </pre>
     <p>
       <translate>
         The configuration require unique ids of 20 characters for each wallet to be generated. You can use the following
         ones if you are not inspired:
       </translate>
-      <template v-for="n in 3"><span class="badge">{{ generateId() }}</span>&nbsp;</template>
+      <template v-for="n in 3"><span class="badge" :key="n">{{ generateId() }}</span>&nbsp;</template>
     </p>
     <p v-translate>Current editable configuration:</p>
     <p class="error" v-if="error !== ''">{{ error }}</p>
@@ -86,16 +23,15 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
   import Configurator from '../configurator'
   import { generateId } from '../helper/string'
   import CollapsibleSection from './CollapsibleSection.vue'
 
   export default {
+    name: 'config-expert',
     components: {
       CollapsibleSection
     },
-    name: 'config-expert',
     data () {
       return {
         error: '',

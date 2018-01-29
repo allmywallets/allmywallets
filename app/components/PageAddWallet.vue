@@ -32,10 +32,10 @@
         </a>
       </p>
       <modal-provider
-          ref="modalProvider"
-          v-if="currentProvider.documentation"
-          :provider="currentProvider.name"
-          :url="currentProvider.documentation"
+        ref="modalProvider"
+        v-if="currentProvider.documentation"
+        :provider="currentProvider.name"
+        :url="currentProvider.documentation"
       />
       <template v-if="currentProvider.warnings">
         <p v-if="currentProvider.warnings.cors" class="alert alert-warning" v-translate>

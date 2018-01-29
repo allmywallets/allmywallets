@@ -13,10 +13,11 @@
       </p>
     </template>
     <ul class="capabilities">
-      <li v-for="capability in capabilities">
+      <li v-for="(capability, key) in capabilities" :key="key">
         <fa-icon
-            :icon="capability.available ? 'check' : 'times'"
-            :class="capability.available ? 'text-success' : 'text-danger'" />
+          :icon="capability.available ? 'check' : 'times'"
+          :class="capability.available ? 'text-success' : 'text-danger'"
+        />
         {{ capability.name }}
       </li>
     </ul>

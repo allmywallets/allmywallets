@@ -34,19 +34,21 @@
   import CollapsibleSection from './CollapsibleSection.vue'
 
   export default {
-    components: {CollapsibleSection},
     name: 'config-export',
+    components: {
+      CollapsibleSection
+    },
+    data () {
+      return {
+        importUrl: window.location.href
+      }
+    },
     computed: {
       config () {
         return LZString.compressToEncodedURIComponent(JSON.stringify(this.$store.state.config))
       },
       url () {
         return `${this.importUrl}/${this.config}`
-      }
-    },
-    data () {
-      return {
-        importUrl: window.location.href
       }
     }
   }

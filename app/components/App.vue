@@ -1,6 +1,8 @@
 <template>
   <main>
-    <router-link :to="{ name: 'home' }"><img src="/static/logo.png" alt="AMW" class="main-logo" height="40" /></router-link>
+    <router-link :to="{ name: 'home' }">
+      <img src="/static/logo.png" alt="AMW" class="main-logo" height="40" />
+    </router-link>
     <app-menu />
     <app-indicators />
     <app-notifications />

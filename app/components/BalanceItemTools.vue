@@ -1,15 +1,17 @@
 <template>
   <div class="balance-tools">
-    <a href="#"
-       class="address"
-       title="Public key copied!"
-       :data-clipboard-text="balance.address"
-       v-if="balance.address !== ''"
-       v-tippy="{ trigger: 'click' }">
+    <a
+      href="#"
+      class="address"
+      title="Public key copied!"
+      :data-clipboard-text="balance.address"
+      v-if="balance.address !== ''"
+      v-tippy="{ trigger: 'click' }"
+    >
       <fa-icon icon="copy" />
     </a>
     <a href="#" v-if="!display.balances.collapsed" @click.prevent="refresh" :title="`Updated ${lastUpdate}`" v-tippy>
-      <fa-icon icon="sync-alt" :spin="loading" />
+      <fa-icon icon="sync-alt" />
     </a>
     <a href="#" v-if="status" :title="`Wallet update failed: ${status.title}`" class="text-warning" v-tippy>
       <fa-icon icon="exclamation-triangle" />
@@ -33,9 +35,8 @@
     },
     data () {
       return {
-        loading: false,
         now: new Date(),
-        interval : null
+        interval: null
       }
     },
     computed: {
@@ -44,16 +45,21 @@
         'display'
       ]),
       status () {
-        this.loading = false
-
         return this.notifications.find(notification => {
           return notification.level === 'ERROR' && notification.walletId === this.balance.wallet.id
         })
       },
       lastUpdate () {
-        this.loading = false
-
         return moment(this.balance.lastUpdate).from(this.now)
+      }
+    },
+    mounted () {
+      new Clipboard('.address')
+      this.refreshDateEverySecond()
+    },
+    destroyed () {
+      if (this.interval) {
+        clearInterval(this.interval)
       }
     },
     methods: {
@@ -67,16 +73,7 @@
         })
       },
       refreshDateEverySecond () {
-        this.interval = setInterval(() => this.now = new Date(), 60 * 1000)
-      }
-    },
-    mounted () {
-      new Clipboard('.address')
-      this.refreshDateEverySecond()
-    },
-    destroyed () {
-      if (this.interval) {
-        clearInterval(this.interval)
+        this.interval = setInterval(() => { this.now = new Date() }, 60 * 1000)
       }
     }
   }
