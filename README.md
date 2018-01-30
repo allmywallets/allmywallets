@@ -1,6 +1,6 @@
 # AllMyWallets
 
-AllMyWallets brings all your wallets in the same place! It is safe, decentralized and respects your privacy. https://allmywallets.io
+AllMyWallets brings all your cryptocurrency wallets in the same place! It is safe, decentralized and respects your privacy. https://allmywallets.io
 
 [![Build Status](https://travis-ci.org/allmywallets/allmywallets.svg?branch=master)](https://travis-ci.org/allmywallets/allmywallets)
 
