@@ -58,6 +58,8 @@
 
   .actions {
     margin-bottom: 10px;
+    position: relative;
+    z-index: 1; // Strange, unexpected bug on Android
 
     &::after {
       content: ' ';
