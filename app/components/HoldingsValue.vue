@@ -63,19 +63,26 @@
   .holdings-value {
     font-family: $font-title;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 75px;
     color: $color-primary;
     line-height: 1.5rem;
     position: relative;
     z-index: 1;
     pointer-events: none;
 
+    @media screen and (min-width: $breakpoint-medium) {
+      padding-top: 100px;
+    }
+
     .holdings-amount {
-      font-size: 5rem;
+      font-size: 3rem;
+
+      @media screen and (min-width: $breakpoint-medium) {
+        font-size: 5rem;
+      }
     }
 
     .holdings-secondary-amount, .evolution {
-      font-size: 1.2rem;
       font-family: $font-default;
     }
 

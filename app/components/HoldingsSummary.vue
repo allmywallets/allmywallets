@@ -82,9 +82,13 @@
   .holdings {
     margin-bottom: 12px;
     position: relative;
-    height: 300px;
+    height: 200px;
     border-radius: 0 0 15px 15px;
     overflow: hidden;
+
+    @media screen and (min-width: $breakpoint-medium) {
+      height: 300px;
+    }
 
     .holdings-chart {
       position: absolute;
