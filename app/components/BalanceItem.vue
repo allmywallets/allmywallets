@@ -17,7 +17,7 @@
       </div>
       <footer class="balance-footer">
         <div class="balance-provider">
-          <span class="badge badge-light">{{ balance.wallet.provider|capitalize }}</span>
+          <span class="badge badge-light">{{ provider }}</span>
         </div>
         <balance-item-tools :balance="balance" />
       </footer>
@@ -31,6 +31,7 @@
   import HoldingsChart from './HoldingsChart.vue'
   import BalanceItemPrices from './BalanceItemPrices.vue'
   import BalanceItemTools from './BalanceItemTools.vue'
+  import Proxy from '../providers'
 
   export default {
     name: 'balance-item',
@@ -93,6 +94,9 @@
         }
 
         return false
+      },
+      provider () {
+        return Proxy.getProvidersList().find(provider => provider.provider === this.balance.wallet.provider).name
       },
       showCharts () {
         return this.display.balances.charts
