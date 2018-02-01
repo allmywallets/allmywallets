@@ -160,6 +160,7 @@
       position: absolute;
       left: 0;
       right: 0;
+      top: 50px;
       bottom: 0;
       overflow: hidden;
       opacity: 0;

@@ -9,7 +9,7 @@
     <section class="content">
       <article class="loading" v-if="loading">
         <h1>
-          <fa-icon icon="sync-alt" :spin="true" />
+          <fa-icon icon="sync-alt" :spin="true" /><br />
           <translate>AllMyWallets is loading...</translate>
         </h1>
       </article>
