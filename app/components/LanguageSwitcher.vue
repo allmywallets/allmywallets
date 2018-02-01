@@ -33,5 +33,8 @@
 
   select {
     width: 75px;
+    height: 20px;
+    vertical-align: middle;
+    padding: 1px 0;
   }
 </style>
