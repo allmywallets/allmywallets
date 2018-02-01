@@ -73,14 +73,14 @@
 
       &:first-child {
         padding-left: 12px;
-        border-top-left-radius: 15px;
-        border-bottom-left-radius: 15px;
+        border-top-left-radius: $radius-default;
+        border-bottom-left-radius: $radius-default;
       }
 
       &:last-child {
         padding-right: 12px;
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
+        border-top-right-radius: $radius-default;
+        border-bottom-right-radius: $radius-default;
       }
 
       &:not(:last-child) {

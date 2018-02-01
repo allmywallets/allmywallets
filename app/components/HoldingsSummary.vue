@@ -83,7 +83,7 @@
     margin-bottom: 12px;
     position: relative;
     height: 200px;
-    border-radius: 0 0 15px 15px;
+    border-radius: 0 0 $radius-default $radius-default;
     overflow: hidden;
 
     @media screen and (min-width: $breakpoint-medium) {
