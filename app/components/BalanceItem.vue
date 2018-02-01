@@ -120,14 +120,6 @@
         }
       }
     },
-    async mounted () {
-      this.$serviceWorker.addEventListener('message', this.load)
-    },
-    methods: {
-      removeLogo (event) {
-        event.target.remove()
-      }
-    },
     watch: {
       balance (newBalance, oldBalance) {
         if (newBalance.lastUpdate === oldBalance.lastUpdate) {
@@ -139,6 +131,14 @@
         setTimeout(() => {
           this.highlighted = false
         }, 200)
+      }
+    },
+    async mounted () {
+      this.$serviceWorker.addEventListener('message', this.load)
+    },
+    methods: {
+      removeLogo (event) {
+        event.target.remove()
       }
     }
   }

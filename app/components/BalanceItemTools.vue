@@ -54,6 +54,15 @@
         return moment(this.balance.lastUpdate).from(this.now)
       }
     },
+    watch: {
+      balance (oldBalance, newBalance) {
+        if (newBalance.lastUpdate === oldBalance.lastUpdate) {
+          return
+        }
+
+        this.loading = false
+      }
+    },
     mounted () {
       new Clipboard('.address')
       this.refreshDateEverySecond()
@@ -75,15 +84,6 @@
       },
       refreshDateEverySecond () {
         this.interval = setInterval(() => { this.now = new Date() }, 60 * 1000)
-      }
-    },
-    watch: {
-      balance (oldBalance, newBalance) {
-        if (newBalance.lastUpdate === oldBalance.lastUpdate) {
-          return
-        }
-
-        this.loading = false
       }
     }
   }
