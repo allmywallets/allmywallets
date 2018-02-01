@@ -66,7 +66,7 @@ function getGenericProviderClass (providerName) {
         let i = 0
         this.provider.getSelectedCurrencies().forEach(selectedCurrency => {
           const amount = wallet.balances[i]
-          const address = wallet.addresses[i]
+          const address = wallet.addresses[i] || ''
           const balance = new Balance(
             this.wallet,
             address,
