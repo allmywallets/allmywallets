@@ -11,7 +11,7 @@
       <fa-icon icon="copy" />
     </a>
     <a href="#" v-if="!display.balances.collapsed" @click.prevent="refresh" :title="`Updated ${lastUpdate}`" v-tippy>
-      <fa-icon icon="sync-alt" />
+      <fa-icon icon="sync-alt" :spin="loading" />
     </a>
     <a href="#" v-if="status" :title="`Wallet update failed: ${status.title}`" class="text-warning" v-tippy>
       <fa-icon icon="exclamation-triangle" />
@@ -36,7 +36,8 @@
     data () {
       return {
         now: new Date(),
-        interval: null
+        interval: null,
+        loading: false
       }
     },
     computed: {
@@ -51,6 +52,15 @@
       },
       lastUpdate () {
         return moment(this.balance.lastUpdate).from(this.now)
+      }
+    },
+    watch: {
+      balance (oldBalance, newBalance) {
+        if (newBalance.lastUpdate === oldBalance.lastUpdate) {
+          return
+        }
+
+        this.loading = false
       }
     },
     mounted () {

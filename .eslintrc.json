@@ -25,7 +25,8 @@
   "globals": {
     "opts": true,
     "vue": true,
-    "WorkerGlobalScope": true
+    "WorkerGlobalScope": true,
+    "clients": true
   },
   "parserOptions": {
     "parser": "babel-eslint"

@@ -69,7 +69,7 @@ export default class Configurator {
           minLength: 20,
           maxLength: 20
         },
-        'name': { type: 'string', minLength: 1 },
+        'name': { type: 'string', minLength: 1, maxLength: 30 },
         'network': { type: 'string' },
         'provider': { type: 'string' },
         'parameters': { type: 'object' }

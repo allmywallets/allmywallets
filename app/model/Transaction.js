@@ -18,7 +18,7 @@ export default class Transaction {
     this._amount = amount
   }
 
-  hasTrade () {
+  isTrade () {
     return !!this._trade
   }
 

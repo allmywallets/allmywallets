@@ -2,7 +2,7 @@ import '@babel/polyfill'
 import database from './database'
 import Configurator from './configurator'
 import Proxy from './providers'
-import { getNotification, shouldNotify } from './notification/balance-notifier'
+import { getNotification } from './notification/balance-notifier'
 import { getNotification as getBackgroundNotification } from './notification/background-notifier'
 import { sendNotification } from './notification/notify'
 import { syncBalances } from './manager/balance-manager'
@@ -105,6 +105,14 @@ self.addEventListener('push', async () => {
   if (!sentNotification) {
     sendNotification(getBackgroundNotification(), self.registration)
   }
+})
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+
+  event.waitUntil(
+    clients.openWindow('/')
+  )
 })
 
 self.addEventListener('message', async event => {
