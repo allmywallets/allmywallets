@@ -1,5 +1,5 @@
 <template>
-  <div class="balance">
+  <div :class="{ 'balance': true, 'balance-highlighted': highlighted }">
     <holdings-chart :class="{ 'balance-background': true, 'showed': showCharts }" :options="chartOptions" :chart-data="chartData" />
     <div class="balance-content">
       <header class="balance-header">
@@ -48,6 +48,7 @@
     },
     data () {
       return {
+        highlighted: false,
         chartOptions: {
           responsive: true,
           maintainAspectRatio: false,
@@ -126,6 +127,19 @@
       removeLogo (event) {
         event.target.remove()
       }
+    },
+    watch: {
+      balance (newBalance, oldBalance) {
+        if (newBalance.lastUpdate === oldBalance.lastUpdate) {
+          return
+        }
+
+        this.highlighted = true
+
+        setTimeout(() => {
+          this.highlighted = false
+        }, 200)
+      }
     }
   }
 </script>
@@ -139,6 +153,11 @@
     position: relative;
     width: 100%;
     @include card();
+    transition: transform .2s;
+
+    &.balance-highlighted {
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
 
     h4 {
       color: $color-text;
