@@ -44,7 +44,7 @@
       const converter = new Showdown.Converter({ extensions: ['githubImage'] })
 
       converter.setFlavor('github')
-      this.content = xss(converter.makeHtml(await fetch(this.url + '/how-to.md').then(res => res.text())))
+      this.content = xss(converter.makeHtml(await fetch(this.url).then(res => res.text())))
     },
     methods: {
       open () {
