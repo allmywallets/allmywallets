@@ -8,7 +8,7 @@
         <p slot="intro">
           <strong v-translate>An upgrade is available!</strong>
           <translate>It is strongly recommended to update to benefit from bug and security fixes as well as new features.</translate>
-          <a href="#" @click.prevent="upgrade" v-translate>Click here to upgrade.</a>
+          <a href="#" @click.prevent="upgrade(false)" v-translate>Click here to upgrade.</a>
         </p>
       </collapsible-section>
       <system-check class="collapsible" />
@@ -26,7 +26,7 @@
         <p v-translate slot="intro">Some dangerous actions you can do with the application.</p>
         <ul>
           <li>
-            <a href="#" @click.prevent="forceUpgrade" v-translate>Force app upgrade:</a>
+            <a href="#" @click.prevent="upgrade(true)" v-translate>Force app upgrade:</a>
             <translate>
               The app will be entirely reinstalled, but data should be preserved. You may also want to remove and add back
               the application icon on your home screen to refresh the splash screen.
@@ -61,7 +61,7 @@
       ])
     },
     methods: {
-      async upgrade () {
+      async upgrade (force) {
         await this.$store.dispatch('appUpgrade', { serviceWorker: this.$serviceWorker })
 
         this.$serviceWorker.addEventListener('message', ({ data }) => {
@@ -69,21 +69,17 @@
             return
           }
 
-          this.redirect()
-        })
-      },
-      forceUpgrade () {
-        this.$serviceWorker.getRegistrations().then((registrations) => { // Todo: rework this and put it elsewhere
-          for (const registration of registrations) {
-            registration.unregister()
-            // Todo: unregister from api
+          if (force) {
+            this.$serviceWorker.getRegistrations().then((registrations) => {
+              for (const registration of registrations) {
+                registration.unregister()
+                // Todo: unregister from api
+              }
+            })
           }
-        })
 
-        this.redirect()
-      },
-      redirect () {
-        window.location.href = '/upgraded'
+          window.location.href = '/upgraded'
+        })
       }
     }
   }
