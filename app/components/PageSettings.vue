@@ -8,7 +8,7 @@
         <p slot="intro">
           <strong v-translate>An upgrade is available!</strong>
           <translate>It is strongly recommended to update to benefit from bug and security fixes as well as new features.</translate>
-          <a href="#" @click.prevent="forceUpgrade" v-translate>Click here to upgrade.</a>
+          <a href="#" @click.prevent="upgrade" v-translate>Click here to upgrade.</a>
         </p>
       </collapsible-section>
       <system-check class="collapsible" />
@@ -61,6 +61,17 @@
       ])
     },
     methods: {
+      async upgrade () {
+        await this.$store.dispatch('appUpgrade', { serviceWorker: this.$serviceWorker })
+
+        this.$serviceWorker.addEventListener('message', ({ data }) => {
+          if (data.action !== 'app-upgrade') {
+            return
+          }
+
+          this.redirect()
+        })
+      },
       forceUpgrade () {
         this.$serviceWorker.getRegistrations().then((registrations) => { // Todo: rework this and put it elsewhere
           for (const registration of registrations) {
@@ -68,6 +79,10 @@
             // Todo: unregister from api
           }
         })
+
+        this.redirect()
+      },
+      redirect () {
         window.location.href = '/upgraded'
       }
     }

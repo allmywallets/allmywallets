@@ -37,7 +37,10 @@ const mutations = {
   APPLICATION_LOADED (state) {
     state.loading.app = false
   },
-  CHECK_FOR_UPDATES (state, version) {
+  APPLICATION_LOADING (state) {
+    state.loading.app = true
+  },
+  CHECK_FOR_UPGRADE (state, version) {
     state.version = version
   },
   ADD_WALLET (state, wallet) {
@@ -61,7 +64,7 @@ const actions = {
       commit('CHANGE_LANGUAGE', config.application.language)
     }
 
-    dispatch('checkForUpdates')
+    dispatch('checkForUpgrade')
 
     if (!serviceWorker) { // No service worker; the app won't work
       return
@@ -80,12 +83,19 @@ const actions = {
     commit('APPLICATION_LOADED')
     await dispatch('refreshPriceHistories')
   },
-  checkForUpdates: async ({ commit, state }) => {
+  checkForUpgrade: async ({ commit, state }) => {
     const version = await Configurator.getVersion()
 
-    commit('CHECK_FOR_UPDATES', version)
+    commit('CHECK_FOR_UPGRADE', version)
 
     return Configurator.setConfig(state.config)
+  },
+  appUpgrade: ({ commit }, { serviceWorker }) => {
+    serviceWorker.controller.postMessage({
+      action: 'app-upgrade'
+    })
+
+    commit('APPLICATION_LOADING')
   },
   addWallet: async ({ commit }, { wallet }) => {
     await Configurator.validateWalletConfig(wallet)

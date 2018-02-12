@@ -116,26 +116,45 @@ self.addEventListener('notificationclick', (event) => {
 })
 
 self.addEventListener('message', async event => {
+  const { action } = event.data
   const clients = await self.clients.matchAll()
 
-  const { walletId, currencies } = event.data
+  switch (action) {
+    case 'balance-refresh':
+      const { walletId, currencies } = event.data
 
-  let error = false
-  let balances = []
-  try {
-    const wallet = await Configurator.getWallet(walletId)
-    balances = await new Proxy(wallet).getBalances(currencies)
+      let error = false
+      let balances = []
+      try {
+        const wallet = await Configurator.getWallet(walletId)
+        balances = await new Proxy(wallet).getBalances(currencies)
 
-    await database.storeBalances(balances)
-  } catch (e) {
-    error = { _level: 'ERROR', _date: new Date(), _walletId: walletId, _title: e.message, _content: e.stack }
+        await database.storeBalances(balances)
+      } catch (e) {
+        error = { _level: 'ERROR', _date: new Date(), _walletId: walletId, _title: e.message, _content: e.stack }
+      }
+
+      clients.forEach(client => {
+        client.postMessage({
+          action: action,
+          walletId: walletId,
+          balanceIds: balances.map(balance => balance.id),
+          error: error
+        })
+      })
+
+      break
+    case 'app-upgrade':
+      caches.keys().then((names) => {
+        for (let name of names) {
+          caches.delete(name)
+        }
+      })
+
+      clients.forEach(client => {
+        client.postMessage({
+          action: action
+        })
+      })
   }
-
-  clients.forEach(client => {
-    client.postMessage({
-      walletId: walletId,
-      balanceIds: balances.map(balance => balance.id),
-      error: error
-    })
-  })
 })

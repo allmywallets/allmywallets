@@ -6,7 +6,7 @@
     <a v-else-if="needsRefresh" href="#" @click.prevent="refreshPage" title="App restart required" v-tippy="{ showOnLoad: needsRefresh }">
       <fa-icon icon="sync-alt" class="text-danger" />
     </a>
-    <a v-else-if="needsUpgrade" href="#" @click.prevent="forceUpgrade" title="Click to upgrade" v-tippy="{ showOnLoad: needsUpgrade }">
+    <a v-else-if="needsUpgrade" href="#" @click.prevent="upgrade" title="Click to upgrade" v-tippy="{ showOnLoad: needsUpgrade }">
       <fa-icon icon="arrow-alt-circle-up" class="text-warning" />
     </a>
     <fa-icon v-else icon="check" title="App working properly" v-tippy />
@@ -44,22 +44,26 @@
         this.needsRefresh = this.$serviceWorker.controller === null
       })
 
-      this.$serviceWorker.addEventListener('message', this.handleMessage)
+      this.$serviceWorker.addEventListener('message', ({ data }) => {
+        switch (data.action) {
+          case 'balance-refresh':
+            return this.balanceRefreshed(data)
+          case 'app-upgrade':
+            return this.appUpgraded(data)
+        }
+      })
     },
     methods: {
       refreshPage () {
         location.reload()
       },
-      forceUpgrade () {
-        this.$serviceWorker.getRegistrations().then((registrations) => { // Todo: rework this and put it elsewhere
-          for (const registration of registrations) {
-            registration.unregister()
-            // Todo: unregister from api
-          }
-        })
+      upgrade () {
+        return this.$store.dispatch('appUpgrade', { serviceWorker: this.$serviceWorker })
+      },
+      appUpgraded () {
         window.location.href = '/upgraded'
       },
-      async handleMessage ({ data }) {
+      async balanceRefreshed (data) {
         if (data.error) {
           const notification = Notification.fromObject(data.error)
 
