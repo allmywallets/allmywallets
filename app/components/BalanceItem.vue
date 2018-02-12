@@ -133,9 +133,6 @@
         }, 200)
       }
     },
-    async mounted () {
-      this.$serviceWorker.addEventListener('message', this.load)
-    },
     methods: {
       removeLogo (event) {
         event.target.remove()
