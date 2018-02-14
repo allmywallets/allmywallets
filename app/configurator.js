@@ -142,7 +142,7 @@ export default class Configurator {
         }
       }],
       application: {
-        version: 'unknown'
+        version: '0.0.0'
       }
     }
   }
@@ -159,9 +159,9 @@ export default class Configurator {
       })
       .catch(() => {
         return {
-          current: 'unknown',
+          current: '0.0.0',
           releaseNotes: '',
-          upstream: 'unknown'
+          upstream: '0.0.0'
         }
       })
   }

@@ -11,7 +11,7 @@ module.exports = {
     }
 
     config.application = {}
-    config.application['version'] = 'unknown'
+    config.application['version'] = '0.1.0'
     config.profiles[0].application = {}
     config.profiles[0].application['currencies'] = { 'primary': 'USD', 'secondary': 'BTC' }
   },

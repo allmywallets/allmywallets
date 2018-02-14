@@ -2,12 +2,13 @@
  * Migrations can be partially generated with createPatch method from lib rfc6902
  */
 const allVersions = {
+  '0.0.0': { next: '0.0.1' },
   '0.0.1': require('./config/0.0.1.migration'),
   '0.1.0': {}
 }
 
 export const migrate = (config, versions = allVersions) => {
-  let from = 'unknown'
+  let from = '0.0.0'
   if (!config.application || !config.application.version) {
     from = '0.0.1'
   } else {
