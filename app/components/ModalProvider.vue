@@ -1,6 +1,6 @@
 <template>
   <sweet-modal :title="`How to use ${provider}?`" ref="modalProvider">
-    <a slot="box-action" class="button button-small" href="https://github.com/allmywallets/providers-docs" target="_blank">
+    <a slot="box-action" class="button button-small" href="https://github.com/allmywallets/providers-docs" target="_blank" rel="noopener">
       <fa-icon :icon="['fab', 'github']" />
       <translate>Edit on GitHub</translate>
     </a>

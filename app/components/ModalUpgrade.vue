@@ -1,6 +1,6 @@
 <template>
   <sweet-modal :title="`Upgraded to version ${version}!`" ref="modalUpgrade" @close="closeModal">
-    <a slot="box-action" class="button button-small" href="https://github.com/allmywallets/allmywallets/releases" target="_blank">
+    <a slot="box-action" class="button button-small" href="https://github.com/allmywallets/allmywallets/releases" target="_blank" rel="noopener">
       <fa-icon :icon="['fab', 'github']" />
       <translate>See on GitHub</translate>
     </a>

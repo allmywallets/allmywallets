@@ -16,7 +16,7 @@
           If you want to start contributing to the code base of AllMyWallets, don't hesitate to ask for help or directions.
         </p>
         <p>
-          <a class="button" href="https://github.com/allmywallets/allmywallets" target="_blank">
+          <a class="button" href="https://github.com/allmywallets/allmywallets" target="_blank" rel="noopener">
             <fa-icon :icon="['fab', 'github']" />
             <translate>Contribute on GitHub</translate>
           </a>
@@ -36,7 +36,7 @@
           Do not hesitate to contribute by correcting or adding new translations.
         </p>
         <p>
-          <a class="button" href="https://github.com/allmywallets/allmywallets/tree/master/app/translations" target="_blank">
+          <a class="button" href="https://github.com/allmywallets/allmywallets/tree/master/app/translations" target="_blank" rel="noopener">
             <fa-icon icon="language" />
             <translate>Translate the application</translate>
           </a>
@@ -49,7 +49,7 @@
             We don't respond to bug reports (except for responsible disclosures) nor feature requests.
             Please use our GitHub repository instead.
           </translate>
-          <a class="button button-small" href="https://github.com/allmywallets/allmywallets/issues" target="_blank">
+          <a class="button button-small" href="https://github.com/allmywallets/allmywallets/issues" target="_blank" rel="noopener">
             <fa-icon :icon="['fab', 'github']" />
             <translate>See on GitHub</translate>
           </a>
@@ -79,7 +79,7 @@
         </p>
         <p>
           <translate>Do not hesitate to give a star to the AllMyWallets repository on Github.</translate>
-          <a class="button button-small" href="https://github.com/allmywallets/allmywallets" target="_blank">
+          <a class="button button-small" href="https://github.com/allmywallets/allmywallets" target="_blank" rel="noopener">
             <fa-icon :icon="['fab', 'github']" />
             <translate>Star on GitHub</translate>
           </a>
@@ -97,7 +97,7 @@
           </p>
           <p>
             <translate>You can also use Brave to donate a small amount of BAT each month to the project.</translate>
-            <a class="button button-small" href="https://www.brave.com/download/" target="_blank">
+            <a class="button button-small" href="https://www.brave.com/download/" target="_blank" rel="noopener">
               <fa-icon icon="globe" />
               <translate>Download Brave browser</translate>
             </a>

@@ -26,7 +26,7 @@
           <fa-icon icon="question-circle" />
           <translate>Help</translate>
         </a>
-        <a :href="currentProvider.url" target="_blank" class="button button-small">
+        <a :href="currentProvider.url" target="_blank" rel="noopener" class="button button-small">
           <fa-icon icon="globe" />
           <translate>View website</translate>
         </a>
