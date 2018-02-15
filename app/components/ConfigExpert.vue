@@ -1,5 +1,5 @@
 <template>
-  <collapsible-section icon="user-md" :class="{ 'warning': needsUpdate }">
+  <collapsible-section icon="user-md" :class="{ 'warning': needsUpdate || this.error !== '' }">
     <translate slot="title">Expert mode</translate>
     <p slot="intro">
       <translate>Expert mode allows you to update your raw configuration directly.</translate>
@@ -11,7 +11,7 @@
     </p>
     <p>
       <translate>
-        The configuration require unique ids of 20 characters for each wallet to be generated. You can use the following
+        The configuration require unique ids of 20 characters for each wallet to be generated. You can use some of the following
         ones if you are not inspired:
       </translate>
       <template v-for="n in 3"><span class="badge" :key="n">{{ generateId() }}</span>&nbsp;</template>
