@@ -8,7 +8,7 @@ module.exports = env => ({
     'main': ['@babel/polyfill', path.resolve(__dirname, '../index.js')]
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, '../build'),
     publicPath: '/',
     filename: './[name].bundle.js'
   },
