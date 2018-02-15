@@ -1,20 +1,10 @@
 const webpack = require('webpack')
 const path = require('path')
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 
 module.exports = env => ({
-  devServer: {
-    historyApiFallback: true,
-    hot: true,
-    inline: true,
-    progress: true,
-    contentBase: false,
-    port: 8080
-  },
-  devtool: 'source-map',
   entry: {
-    'webpack': 'webpack-dev-server/client?http://localhost:8080',
     'main': ['@babel/polyfill', path.resolve(__dirname, '../index.js')]
   },
   output: {
@@ -22,20 +12,26 @@ module.exports = env => ({
     publicPath: '/',
     filename: './[name].bundle.js'
   },
+  resolve: {
+    extensions: ['.js', '.vue'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    }
+  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
+        loader: 'babel-loader',
         include: path.resolve(__dirname, '../'),
-        exclude: /node_modules/,
-        loader: 'babel-loader'
+        exclude: /node_modules/
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
           loaders: {
-            scss: 'vue-style-loader!css-loader!resolve-url-loader!sass-loader?sourceMap'
+            scss: 'vue-style-loader!css-loader!resolve-url-loader!sass-loader'
           }
         }
       },
@@ -49,22 +45,7 @@ module.exports = env => ({
       }
     ]
   },
-  resolve: {
-    extensions: ['.js', '.vue'],
-    alias: {
-      vue: 'vue/dist/vue'
-    }
-  },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        context: path.join(__dirname, 'src'),
-        output: {
-          path: path.join(__dirname, 'www')
-        }
-      }
-    }),
     new CopyWebpackPlugin([
       { from: 'index.html', to: 'index.html' },
       { from: 'static', to: '' },
@@ -72,7 +53,6 @@ module.exports = env => ({
     ]),
     new webpack.DefinePlugin({
       'process.env': {
-        APP_SERVER_URL: '"http://localhost:3030"',
         APP_VERSION: `"${env.APP_VERSION}"`
       }
     }),
