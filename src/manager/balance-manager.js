@@ -82,7 +82,7 @@ export const collapseBalances = (balances) => {
       let nbWallets = existingBalance.wallet.name.replace(/\D/g, '')
       existingBalance.wallet.name = `${++nbWallets} wallets`
       existingBalance.wallet.network = existingBalance.wallet.network === balance.wallet.network ? balance.wallet.network : 'Multiple networks'
-      existingBalance.wallet.provider = existingBalance.wallet.provider === balance.wallet.provider ? balance.wallet.provider : 'multiple providers'
+      existingBalance.wallet.provider = existingBalance.wallet.provider === balance.wallet.provider ? balance.wallet.provider : 'Multiple providers'
     } else {
       const aggregateWallet = new Wallet(balance.currency, '1 wallet', balance.wallet.network, balance.wallet.provider)
       collapsed[balance.currency] = new Balance(aggregateWallet, '', balance.currency, balance.ticker, balance.amount, balance.lastUpdate)

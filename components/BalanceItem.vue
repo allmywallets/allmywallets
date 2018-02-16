@@ -97,7 +97,9 @@
         return false
       },
       provider () {
-        return Proxy.getProvidersList().find(provider => provider.provider === this.balance.wallet.provider).name
+        const provider = Proxy.getProvidersList().find(provider => provider.provider === this.balance.wallet.provider)
+
+        return provider ? provider.name : this.balance.wallet.provider
       },
       showCharts () {
         return this.display.balances.charts

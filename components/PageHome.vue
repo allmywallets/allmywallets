@@ -4,7 +4,7 @@
       <holdings-summary />
       <balance-list-actions />
       <article class="balance-list" v-if="balances.length > 0">
-        <balance-item v-for="(balance, key) in balances" :key="key" :id="balance.id" />
+        <balance-item v-for="balance in balances" :key="balance.id" :id="balance.id" />
       </article>
       <article v-else>
         <p v-translate>No balance has been loaded yet. Click on the button below to refresh your wallets.</p>
