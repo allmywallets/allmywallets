@@ -31,7 +31,7 @@ module.exports = env => ({
         loader: 'vue-loader',
         options: {
           loaders: {
-            scss: 'vue-style-loader!css-loader!resolve-url-loader!sass-loader'
+            scss: 'vue-style-loader!css-loader!resolve-url-loader!sass-loader?sourceMap'
           }
         }
       },

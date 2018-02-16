@@ -13,7 +13,7 @@ const RUNTIME = 'runtime'
 const PRECACHE_URLS = [
   'index.html',
   './',
-  'main.js'
+  'main.bundle.js'
 ]
 
 self.addEventListener('install', event => {
