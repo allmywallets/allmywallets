@@ -36,7 +36,7 @@
           Do not hesitate to contribute by correcting or adding new translations.
         </p>
         <p>
-          <a class="button" href="https://github.com/allmywallets/allmywallets/tree/master/app/translations" target="_blank" rel="noopener">
+          <a class="button" href="https://github.com/allmywallets/allmywallets/tree/master/translations" target="_blank" rel="noopener">
             <fa-icon icon="language" />
             <translate>Translate the application</translate>
           </a>
