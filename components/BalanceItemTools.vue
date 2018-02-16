@@ -10,7 +10,7 @@
     >
       <fa-icon icon="copy" />
     </a>
-    <a href="#" v-if="!display.balances.collapsed" @click.prevent="refresh" :title="`Updated ${lastUpdate}`" v-tippy>
+    <a href="#" v-if="!display.balances.collapsed" @click.prevent="refresh" :title="`Updated ${lastUpdate} ago`" v-tippy>
       <fa-icon icon="sync-alt" :spin="loading" />
     </a>
     <a href="#" v-if="status" :title="`Wallet update failed: ${status.title}`" class="text-warning" v-tippy>
@@ -22,7 +22,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import Clipboard from 'clipboard'
-  import moment from 'moment'
+  import distanceInWords from 'date-fns/distance_in_words'
   import Balance from '../src/model/Balance'
 
   export default {
@@ -51,7 +51,7 @@
         })
       },
       lastUpdate () {
-        return moment(this.balance.lastUpdate).from(this.now)
+        return distanceInWords(this.balance.lastUpdate, this.now)
       }
     },
     watch: {

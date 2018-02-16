@@ -3,11 +3,11 @@ import VueFilter from 'vue-filter'
 import Vue2Filters from 'vue2-filters'
 import VueFormGenerator from 'vue-form-generator'
 import VueTippy from 'vue-tippy'
-import VueMoment from 'vue-moment'
 import SweetModal from 'sweet-modal-vue/src/plugin'
 import VueGetText from 'vue-gettext'
-import '@fortawesome/fontawesome-free-brands'
-import '@fortawesome/fontawesome-free-solid'
+import FontAwesome from '@fortawesome/fontawesome'
+import faGithub from '@fortawesome/fontawesome-free-brands/faGithub'
+import faSolid from '@fortawesome/fontawesome-free-solid'
 import VueFontAwesome from '@fortawesome/vue-fontawesome'
 import VueQRCode from '@xkeshi/vue-qrcode'
 
@@ -26,7 +26,6 @@ Vue.use(VueTippy, {
   arrow: true,
   inertia: true
 })
-Vue.use(VueMoment)
 Vue.use(SweetModal)
 Vue.use(VueGetText, {
   availableLanguages: getAvailableLanguages(),
@@ -34,6 +33,9 @@ Vue.use(VueGetText, {
   translations: translations,
   silent: true
 })
+
+FontAwesome.library.add(faGithub, faSolid)
+
 Vue.component('fa-icon', VueFontAwesome)
 Vue.component('qrcode', VueQRCode)
 

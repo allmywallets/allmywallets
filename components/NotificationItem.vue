@@ -5,15 +5,16 @@
     <footer class="notification-footer">
       <span class="badge" v-if="wallet">{{ wallet.name }} ({{ wallet.network|camelcase }})</span>
       <time class="notification-date" :datetime="notification.date" :title="notification.date">
-        <fa-icon icon="clock" /> {{ notification.date|moment('from', 'now') }}
+        <fa-icon icon="clock" /> {{ date }}
       </time>
     </footer>
   </article>
 </template>
 
 <script>
-  import Notification from '../src/model/Notification'
   import { mapGetters } from 'vuex'
+  import distanceInWords from 'date-fns/distance_in_words'
+  import Notification from '../src/model/Notification'
 
   export default {
     name: 'notification-item',
@@ -29,6 +30,9 @@
       ]),
       wallet () {
         return this.wallets.find(wallet => wallet.id === this.notification.walletId)
+      },
+      date () {
+        return distanceInWords(this.notification.date, new Date())
       }
     }
   }
