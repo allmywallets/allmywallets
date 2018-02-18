@@ -15,6 +15,7 @@ export const loadModules = async (router) => {
 
   for (const moduleConfig of config.profiles[0].application.modules) {
     const moduleCode = await fetch(`https://raw.githubusercontent.com${moduleConfig.repository}/master/dist/module.js`).then(res => res.text())
+    /* eslint-disable no-new-func */
     const module = new Function('Vue', `${moduleCode};return Module;`)(Vue).instance
 
     registerRoutes(moduleConfig.name, module.routes(), router)
