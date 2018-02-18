@@ -8,11 +8,6 @@ Feature: Navigate through the application
     And I wait 1 second
     Then I should see "Welcome to AllMyWallets!" in the "h2" element
 
-  Scenario: Going to the statistics page
-
-    When I follow "Statistics"
-    Then I should see "Statistics" in the "h2" element
-
   Scenario: Going to the settings page
 
     When I follow "Settings"
