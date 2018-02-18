@@ -3,8 +3,8 @@
     <router-link :to="{ name: 'home' }" :class="{ 'router-link-exact-active': $route.name && $route.name.startsWith('home') }">
       <fa-icon icon="home" /> <span class="title">AllMyWallets</span>
     </router-link>
-    <router-link :to="{ name: 'stats' }">
-      <fa-icon icon="chart-pie" /> <span class="title" v-translate>Statistics</span>
+    <router-link :to="{ name: `${module.name}-page` }" v-for="module in modules" :key="module.name">
+      <fa-icon icon="chart-pie" /> <span class="title">{{ module.name }}</span>
     </router-link>
     <router-link :to="{ name: 'settings' }">
       <fa-icon icon="cog" /> <span class="title" v-translate>Settings</span>
@@ -17,7 +17,19 @@
 
 <script>
   export default {
-    name: 'app-menu'
+    name: 'app-menu',
+    data () {
+      return {
+        modules: []
+      }
+    },
+    mounted () {
+      setTimeout(() => {
+        this.modules = [{
+          name: 'statistics' // Todo: new config for modules
+        }]
+      }, 3000)
+    }
   }
 </script>
 
