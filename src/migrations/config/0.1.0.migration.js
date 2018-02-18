@@ -1,4 +1,4 @@
-module.exports = function (config) {
+export default function (config) {
   for (const wallet of config.profiles[0].wallets) {
     if ('explorerSpecific' in wallet.parameters) {
       for (const key in wallet.parameters.explorerSpecific) {

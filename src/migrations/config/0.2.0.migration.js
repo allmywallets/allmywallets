@@ -1,4 +1,4 @@
-module.exports = function (config) {
+export default function (config) {
   config.profiles[0].application.modules = [
     {
       name: 'statistics',
