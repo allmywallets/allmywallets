@@ -77,6 +77,17 @@ export default class Configurator {
       required: ['id', 'name', 'network', 'provider', 'parameters']
     }
 
+    const moduleSchema = {
+      id: '/Module',
+      type: 'object',
+      properties: {
+        'name': { type: 'string', minLength: 1 },
+        'repository': { type: 'string', minLength: 4 },
+        'config': { type: 'object' }
+      },
+      required: ['name', 'repository', 'config']
+    }
+
     const configSchema = {
       id: '/Config',
       type: 'object',
@@ -103,9 +114,15 @@ export default class Configurator {
                       'secondary': { type: 'string', minItems: 3, pattern: '^[A-Z]+$' }
                     },
                     required: ['primary', 'secondary']
+                  },
+                  'modules': {
+                    type: 'array',
+                    items: {
+                      $ref: '/Module'
+                    }
                   }
                 },
-                required: ['currencies']
+                required: ['currencies', 'modules']
               }
             },
             required: ['wallets', 'application']
@@ -126,6 +143,7 @@ export default class Configurator {
     const validator = new Validator()
 
     validator.addSchema(walletSchema, '/Wallet')
+    validator.addSchema(moduleSchema, '/Module')
 
     return validator.validate(config, configSchema).valid && Configurator.validateWalletIds(config)
   }
@@ -138,7 +156,14 @@ export default class Configurator {
           currencies: {
             primary: 'USD',
             secondary: 'BTC'
-          }
+          },
+          modules: [
+            {
+              name: 'statistics',
+              repository: '/allmywallets/statistics-module',
+              config: {}
+            }
+          ]
         }
       }],
       application: {

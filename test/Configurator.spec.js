@@ -14,7 +14,8 @@ describe('Configurator.js', () => {
                 currencies: {
                   primary: 'USD',
                   secondary: 'BTC'
-                }
+                },
+                modules: []
               }
             }
           ],
@@ -54,7 +55,8 @@ describe('Configurator.js', () => {
                 currencies: {
                   primary: 'USD',
                   secondary: 'BTC'
-                }
+                },
+                modules: []
               }
             }
           ],
@@ -105,7 +107,8 @@ describe('Configurator.js', () => {
                 currencies: {
                   primary: 'USD',
                   secondary: 'BTC'
-                }
+                },
+                modules: []
               }
             }
           ],

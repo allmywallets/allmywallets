@@ -15,13 +15,12 @@ describe('database/migrations.js', () => {
           'version': '0.0.1'
         }
       }, {
-        '0.0.1': {
+        '0.0.1': { next: '0.1.0' },
+        '0.1.0': {
           migrate (config) {
             config.test = true
-          },
-          next: '0.1.0'
-        },
-        '0.1.0': {}
+          }
+        }
       })
 
       assert.deepEqual(config, {
@@ -48,19 +47,18 @@ describe('database/migrations.js', () => {
           'version': '0.0.1'
         }
       }, {
-        '0.0.1': {
+        '0.0.1': { next: '0.1.0' },
+        '0.1.0': {
           migrate (config) {
             config.test = true
           },
-          next: '0.1.0'
-        },
-        '0.1.0': {
-          migrate (config) {
-            config.toast = true
-          },
           next: '0.1.1'
         },
-        '0.1.1': {}
+        '0.1.1': {
+          migrate (config) {
+            config.toast = true
+          }
+        }
       })
 
       assert.deepEqual(config, {

@@ -2,9 +2,9 @@
  * Migrations can be partially generated with createPatch method from lib rfc6902
  */
 const allVersions = {
-  '0.0.0': { next: '0.0.1' },
-  '0.0.1': require('./config/0.0.1.migration'),
-  '0.1.0': {}
+  '0.0.0': { next: '0.1.0' },
+  '0.1.0': { migrate: require('./config/0.1.0.migration'), next: '0.2.0' },
+  '0.2.0': { migrate: require('./config/0.2.0.migration') }
 }
 
 export const migrate = (config, versions = allVersions) => {
@@ -24,21 +24,23 @@ export const migrate = (config, versions = allVersions) => {
     return config
   }
 
-  do {
-    const version = versions[from]
+  let next = 'next' in versions[from] ? versions[from].next : null
+
+  while (next !== null) {
+    const version = versions[next]
 
     if ('migrate' in version) {
       version.migrate(config)
     }
 
-    config.application.version = from
+    config.application.version = next
 
     if ('next' in version) {
-      from = version.next
+      next = version.next
     } else {
-      from = null
+      next = null
     }
-  } while (from !== null)
+  }
 
   return config
 }
