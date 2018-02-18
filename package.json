@@ -44,7 +44,6 @@
     "vue-router": "^3.0.1",
     "vue-tippy": "^2.0.8",
     "vuex": "^3.0.1",
-    "xml-loader": "^1.2.1",
     "xss": "^0.3.7"
   },
   "devDependencies": {
