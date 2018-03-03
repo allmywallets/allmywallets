@@ -29,11 +29,11 @@ export const loadModules = async () => {
     const routes = sanitizeRoutes(module.name(), module.routes())
 
     modules.push({
-      module: module.name(),
+      name: module.name(),
       routes: routes
     })
 
-    router.addRoutes(routes.map(entry => entry.router))
+    router.addRoutes(routes.map(route => route.router))
   }
 
   return modules

@@ -18,6 +18,7 @@
           <span class="badge badge-light" v-translate>Available soon...</span>
         </template>
       </collapsible-section>
+      <config-modules />
       <config-export />
       <config-import />
       <config-expert />
@@ -41,6 +42,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import CollapsibleSection from './CollapsibleSection.vue'
+  import ConfigModules from './ConfigModules.vue'
   import ConfigExpert from './ConfigExpert.vue'
   import ConfigExport from './ConfigExport.vue'
   import ConfigImport from './ConfigImport.vue'
@@ -51,6 +53,7 @@
     components: {
       CollapsibleSection,
       SystemCheck,
+      ConfigModules,
       ConfigExport,
       ConfigExpert,
       ConfigImport

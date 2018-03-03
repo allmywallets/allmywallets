@@ -16,7 +16,8 @@ const getters = {
     })
 
     return routes
-  }
+  },
+  modules: state => state.modules
 }
 
 const mutations = {
