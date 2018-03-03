@@ -60,6 +60,8 @@ const actions = {
   init: async ({ commit, dispatch }, { serviceWorker, config }) => {
     commit('INIT_APPLICATION', migrate(config))
 
+    dispatch('loadModules')
+
     if (config.application.hasOwnProperty('language')) {
       commit('CHANGE_LANGUAGE', config.application.language)
     }

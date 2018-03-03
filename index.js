@@ -16,7 +16,6 @@ import router from './src/router'
 import store from './src/store/index'
 import Filters from './src/filters'
 import App from './components/App.vue'
-import { loadModules } from './src/manager/modules'
 
 Vue.use(VueFilter)
 Vue.use(Vue2Filters)
@@ -40,11 +39,7 @@ FontAwesome.library.add(faGithub, faSolid)
 Vue.component('fa-icon', VueFontAwesome)
 Vue.component('qrcode', VueQRCode)
 
-Vue.prototype.$serviceWorker = navigator.serviceWorker;
-
-(async () => {
-  await loadModules(router)
-})()
+Vue.prototype.$serviceWorker = navigator.serviceWorker
 
 new Vue({
   store,

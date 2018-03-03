@@ -3,19 +3,24 @@
     <router-link :to="{ name: 'home' }" :class="{ 'router-link-exact-active': $route.name && $route.name.startsWith('home') }">
       <fa-icon icon="home" /> <span class="title">AllMyWallets</span>
     </router-link>
-    <router-link :to="{ name: `${module.name}-page` }" v-for="module in modules" :key="module.name">
-      <fa-icon icon="chart-pie" /> <span class="title">{{ module.name }}</span>
-    </router-link>
     <router-link :to="{ name: 'settings' }">
       <fa-icon icon="cog" /> <span class="title" v-translate>Settings</span>
     </router-link>
     <router-link :to="{ name: 'contribute' }">
       <fa-icon icon="heart" /> <span class="title" v-translate>Contribute</span>
     </router-link>
+    <router-link :to="{ name: route.router.name }" v-for="route in menuRoutes" :key="route.router.name">
+      <fa-icon :icon="route.icon" /> <span class="title">{{ route.title }}</span>
+    </router-link>
+    <a href="#" class="loading" v-if="loadingRoutes">
+      <fa-icon icon="spinner" spin /> <span class="title">Loading modules...</span>
+    </a>
   </nav>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
     name: 'app-menu',
     data () {
@@ -23,12 +28,13 @@
         modules: []
       }
     },
-    mounted () {
-      setTimeout(() => {
-        this.modules = [{
-          name: 'statistics' // Todo: new config for modules
-        }]
-      }, 3000)
+    computed: {
+      ...mapGetters([
+        'menuRoutes'
+      ]),
+      loadingRoutes () {
+        return this.$store.state.modules.loading.modules
+      }
     }
   }
 </script>
@@ -60,6 +66,10 @@
 
       &.router-link-exact-active {
         color: $color-primary;
+      }
+
+      &.loading {
+        pointer-events: none;
       }
 
       @media screen and (min-width: $breakpoint-medium) {

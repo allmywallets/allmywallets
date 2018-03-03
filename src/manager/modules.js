@@ -1,23 +1,40 @@
 import Vue from 'vue'
+import router from '../router'
 import Configurator from './configuration'
 
-const registerRoutes = (name, routes, router) => {
-  for (const entry of routes) {
-    entry.router.path = '/' + name + entry.router.path
-    entry.router.name = name + '-' + entry.router.name
+const sanitizeRoutes = (moduleId, routes) => {
+  const sanitizedRoutes = []
+
+  // todo: rename router to routing
+  for (const route of routes) {
+    route.router.path = `/${moduleId}${route.router.path}`
+    route.router.name = `${moduleId}-${route.router.name}`
+
+    sanitizedRoutes.push(route)
   }
 
-  router.addRoutes(routes.map(entry => entry.router))
+  return sanitizedRoutes
 }
 
-export const loadModules = async (router) => {
+export const loadModules = async () => {
   const config = await Configurator.getConfig()
+  const modules = []
 
   for (const moduleConfig of config.profiles[0].application.modules) {
     const moduleCode = await fetch(`https://raw.githubusercontent.com${moduleConfig.repository}/master/dist/module.js`).then(res => res.text())
     /* eslint-disable no-new-func */
     const module = new Function('Vue', `${moduleCode};return Module;`)(Vue).instance
+    // Todo: cache module
 
-    registerRoutes(moduleConfig.name, module.routes(), router)
+    const routes = sanitizeRoutes(module.name(), module.routes())
+
+    modules.push({
+      module: module.name(),
+      routes: routes
+    })
+
+    router.addRoutes(routes.map(entry => entry.router))
   }
+
+  return modules
 }
