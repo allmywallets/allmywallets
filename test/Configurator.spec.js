@@ -44,7 +44,7 @@ describe('Configurator.js', () => {
             {
               wallets: [
                 {
-                  id: '72e98ac9b08e34a816af',
+                  id: '72e98ac',
                   network: 'Network',
                   provider: 'Provider',
                   name: 'Name',
