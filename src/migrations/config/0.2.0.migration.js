@@ -1,4 +1,4 @@
-export default function (config) {
+module.exports = function (config) {
   config.profiles[0].application.modules = [
     {
       name: 'statistics',
@@ -6,4 +6,7 @@ export default function (config) {
       config: {}
     }
   ]
+  config.profiles[0].wallets.forEach(wallet => {
+    wallet.id = wallet.id.substr(0, 7)
+  })
 }

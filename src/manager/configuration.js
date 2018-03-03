@@ -66,8 +66,8 @@ export default class Configurator {
       properties: {
         'id': {
           type: 'string',
-          minLength: 20,
-          maxLength: 20
+          minLength: 7,
+          maxLength: 7
         },
         'name': { type: 'string', minLength: 1, maxLength: 30 },
         'network': { type: 'string' },

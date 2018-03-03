@@ -23,9 +23,10 @@
 </template>
 
 <script>
+  import ShortId from 'shortid'
   import Configurator from '../src/manager/configuration'
-  import { generateId } from '../src/helper/string'
   import CollapsibleSection from './CollapsibleSection.vue'
+  import { migrate } from '../src/migrations/config'
 
   export default {
     name: 'config-expert',
@@ -50,7 +51,7 @@
             try {
               return this.$store.dispatch('init', {
                 serviceWorker: this.$serviceWorker,
-                config: JSON.parse(config)
+                config: migrate(JSON.parse(config))
               })
             } catch (e) {
               this.error = e.message
@@ -64,7 +65,7 @@
     },
     methods: {
       generateId () {
-        return generateId(20)
+        return ShortId.generate()
       }
     }
   }

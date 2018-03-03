@@ -65,11 +65,11 @@
 </template>
 
 <script>
+  import ShortId from 'shortid'
   import VueFormGenerator from 'vue-form-generator'
   import ProviderListFilters from './ProviderListFilters'
   import ModalProvider from './ModalProvider'
   import Proxy from '../src/manager/providers'
-  import { generateId } from '../src/helper/string'
 
   export default {
     name: 'page-add-wallet',
@@ -145,7 +145,7 @@
 
         await this.$store.dispatch('addWallet', {
           wallet: {
-            id: generateId(20),
+            id: ShortId.generate(),
             network: this.currentProvider.network,
             provider: this.currentProvider.provider,
             name: this.currentName,
