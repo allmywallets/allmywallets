@@ -171,16 +171,10 @@
 
       &.contribution-double {
         display: flex;
+        flex-wrap: wrap;
 
         .contribution-column {
-          &:first-child {
-            padding-right: 20px;
-          }
-
-          &:last-child {
-            padding-left: 20px;
-            border-left: 1px solid $color-section-notifications;
-          }
+          width: 100%;
 
           ul {
             list-style-type: none;
@@ -190,6 +184,15 @@
 
           @media screen and(min-width: $breakpoint-medium) {
             width: 50%;
+
+            &:first-child {
+              padding-right: 20px;
+            }
+
+            &:last-child {
+              padding-left: 20px;
+              border-left: 1px solid $color-section-notifications;
+            }
           }
         }
       }
