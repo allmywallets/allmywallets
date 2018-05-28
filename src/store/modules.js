@@ -22,6 +22,7 @@ const getters = {
 
 const mutations = {
   MODULES_LOADED (state, modules) {
+    state.modules = []
     modules.forEach(module => {
       state.modules.push(module)
     })
