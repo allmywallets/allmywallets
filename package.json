@@ -12,7 +12,7 @@
     "build": "webpack --env.production --env.APP_VERSION=\"$(git describe --tags)\" --config config/webpack.prod.config.js",
     "test": "npm run test:unit && npm run test:functional",
     "test:unit": "mocha --require @babel/register --require @babel/polyfill --recursive",
-    "test:functional": "npm run build && concurrently 'http-server build/ -p 1337 -s' 'nightwatch -c features/conf/default.conf.js' --success first --kill-others"
+    "test:functional": "concurrently 'http-server build/ -p 1337 -s' 'nightwatch -c features/conf/default.conf.js' --success first --kill-others"
   },
   "dependencies": {
     "@allmywallets/providers": "0.0.6",
@@ -72,7 +72,7 @@
     "file-loader": "^1.1.11",
     "http-server": "^0.10.0",
     "mocha": "^4.1.0",
-    "nightwatch": "^1.0.6",
+    "nightwatch": "0.9.20",
     "nightwatch-cucumber": "^9.1.2",
     "node-sass": "^4.9.0",
     "resolve-url-loader": "^2.3.0",
