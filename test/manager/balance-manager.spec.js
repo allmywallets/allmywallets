@@ -1,5 +1,4 @@
-import { describe, it } from 'mocha'
-import { assert } from 'chai'
+import "isomorphic-fetch"
 import * as BalanceManager from '../../src/manager/balance-manager'
 import Balance from '../../src/model/Balance'
 import Transaction from '../../src/model/Transaction'
@@ -10,42 +9,42 @@ describe('manager/balance-manager.js', () => {
     it('returns a diff with new balance amount when no old balance', () => {
       const newBalance = new Balance(new Wallet('id', 'MyWallet', 'ethereum', 'native'), '0x0', 'ethereum', 'ETH', 5, new Date())
 
-      assert.deepEqual(
-        BalanceManager.getBalanceDiff(null, newBalance),
-        {
-          amount: 5,
-          balance: newBalance,
-          transactions: [new Transaction(`generated.${newBalance.lastUpdate}`, '', newBalance.address, 5)]
-        }
-      )
+      expect(BalanceManager.getBalanceDiff(null, newBalance))
+        .toEqual(
+          {
+            amount: 5,
+            balance: newBalance,
+            transactions: [new Transaction(`generated.${newBalance.lastUpdate}`, '', newBalance.address, 5)]
+          }
+        )
     })
 
     it('returns a valid diff increase', () => {
       const oldBalance = new Balance(new Wallet('id', 'MyWallet', 'ethereum', 'native'), '0x0', 'ethereum', 'ETH', 3, new Date())
       const newBalance = new Balance(new Wallet('id', 'MyWallet', 'ethereum', 'native'), '0x0', 'ethereum', 'ETH', 5, new Date())
 
-      assert.deepEqual(
-        BalanceManager.getBalanceDiff(oldBalance, newBalance),
-        {
-          amount: 2,
-          balance: newBalance,
-          transactions: [new Transaction(`generated.${newBalance.lastUpdate}`, '', newBalance.address, 2)]
-        }
-      )
+      expect(BalanceManager.getBalanceDiff(oldBalance, newBalance))
+        .toEqual(
+          {
+            amount: 2,
+            balance: newBalance,
+            transactions: [new Transaction(`generated.${newBalance.lastUpdate}`, '', newBalance.address, 2)]
+          }
+        )
     })
 
     it('returns a valid diff decrease', () => {
       const oldBalance = new Balance(new Wallet('id', 'MyWallet', 'ethereum', 'native'), '0x0', 'ethereum', 'ETH', 5, new Date())
       const newBalance = new Balance(new Wallet('id', 'MyWallet', 'ethereum', 'native'), '0x0', 'ethereum', 'ETH', 3, new Date())
 
-      assert.deepEqual(
-        BalanceManager.getBalanceDiff(oldBalance, newBalance),
-        {
-          amount: -2,
-          balance: newBalance,
-          transactions: [new Transaction(`generated.${newBalance.lastUpdate}`, newBalance.address, '', 2)]
-        }
-      )
+      expect(BalanceManager.getBalanceDiff(oldBalance, newBalance))
+        .toEqual(
+          {
+            amount: -2,
+            balance: newBalance,
+            transactions: [new Transaction(`generated.${newBalance.lastUpdate}`, newBalance.address, '', 2)]
+          }
+        )
     })
   })
 
@@ -63,26 +62,26 @@ describe('manager/balance-manager.js', () => {
         new Balance(new Wallet('id', 'MyWallet', 'bitcoin', 'native'), '0x2', 'bitcoin', 'BTC', 2, date)
       ]
 
-      assert.deepEqual(
-        BalanceManager.compareBalances(oldBalances, newBalances),
-        [
-          {
-            amount: -2,
-            balance: newBalances[0],
-            transactions: [new Transaction(`generated.${date}`, '0x0', '', 2)]
-          },
-          {
-            amount: -5,
-            balance: newBalances[1],
-            transactions: [new Transaction(`generated.${date}`, '0x1', '', 5)]
-          },
-          {
-            amount: 1,
-            balance: newBalances[2],
-            transactions: [new Transaction(`generated.${date}`, '', '0x2', 1)]
-          }
-        ]
-      )
+      expect(BalanceManager.compareBalances(oldBalances, newBalances))
+        .toEqual(
+          [
+            {
+              amount: -2,
+              balance: newBalances[0],
+              transactions: [new Transaction(`generated.${date}`, '0x0', '', 2)]
+            },
+            {
+              amount: -5,
+              balance: newBalances[1],
+              transactions: [new Transaction(`generated.${date}`, '0x1', '', 5)]
+            },
+            {
+              amount: 1,
+              balance: newBalances[2],
+              transactions: [new Transaction(`generated.${date}`, '', '0x2', 1)]
+            }
+          ]
+        )
     })
 
     it('computes diffs for new balances', () => {
@@ -96,26 +95,26 @@ describe('manager/balance-manager.js', () => {
         new Balance(new Wallet('id', 'MyWallet', 'bitcoin', 'native'), '0x2', 'bitcoin', 'BTC', 2, date)
       ]
 
-      assert.deepEqual(
-        BalanceManager.compareBalances(oldBalances, newBalances),
-        [
-          {
-            amount: -2,
-            balance: newBalances[0],
-            transactions: [new Transaction(`generated.${date}`, '0x0', '', 2)]
-          },
-          {
-            amount: 5,
-            balance: newBalances[1],
-            transactions: [new Transaction(`generated.${date}`, '', '0x1', 5)]
-          },
-          {
-            amount: 2,
-            balance: newBalances[2],
-            transactions: [new Transaction(`generated.${date}`, '', '0x2', 2)]
-          }
-        ]
-      )
+      expect(BalanceManager.compareBalances(oldBalances, newBalances))
+        .toEqual(
+          [
+            {
+              amount: -2,
+              balance: newBalances[0],
+              transactions: [new Transaction(`generated.${date}`, '0x0', '', 2)]
+            },
+            {
+              amount: 5,
+              balance: newBalances[1],
+              transactions: [new Transaction(`generated.${date}`, '', '0x1', 5)]
+            },
+            {
+              amount: 2,
+              balance: newBalances[2],
+              transactions: [new Transaction(`generated.${date}`, '', '0x2', 2)]
+            }
+          ]
+        )
     })
 
     it('computes diffs for new empty balances', () => {
@@ -126,21 +125,21 @@ describe('manager/balance-manager.js', () => {
         new Balance(new Wallet('id', 'MyWallet', 'iota', 'native'), '0x1', 'iota', 'IOTA', 0, date)
       ]
 
-      assert.deepEqual(
-        BalanceManager.compareBalances(oldBalances, newBalances),
-        [
-          {
-            amount: 0,
-            balance: newBalances[0],
-            transactions: [new Transaction(`generated.${date}`, '', '0x0', 0)]
-          },
-          {
-            amount: 0,
-            balance: newBalances[1],
-            transactions: [new Transaction(`generated.${date}`, '', '0x1', 0)]
-          }
-        ]
-      )
+      expect(BalanceManager.compareBalances(oldBalances, newBalances))
+        .toEqual(
+          [
+            {
+              amount: 0,
+              balance: newBalances[0],
+              transactions: [new Transaction(`generated.${date}`, '', '0x0', 0)]
+            },
+            {
+              amount: 0,
+              balance: newBalances[1],
+              transactions: [new Transaction(`generated.${date}`, '', '0x1', 0)]
+            }
+          ]
+        )
     })
 
     it('computes ignore diffs for old balances', () => {
@@ -154,16 +153,16 @@ describe('manager/balance-manager.js', () => {
         new Balance(new Wallet('id', 'MyWallet', 'iota', 'native'), '0x1', 'iota', 'IOTA', 1, date)
       ]
 
-      assert.deepEqual(
-        BalanceManager.compareBalances(oldBalances, newBalances),
-        [
-          {
-            amount: -2,
-            balance: newBalances[0],
-            transactions: [new Transaction(`generated.${date}`, '0x1', '', 2)]
-          }
-        ]
-      )
+      expect(BalanceManager.compareBalances(oldBalances, newBalances))
+        .toEqual(
+          [
+            {
+              amount: -2,
+              balance: newBalances[0],
+              transactions: [new Transaction(`generated.${date}`, '0x1', '', 2)]
+            }
+          ]
+        )
     })
 
     it('computes diffs for new balances while ignoring old ones', () => {
@@ -176,16 +175,16 @@ describe('manager/balance-manager.js', () => {
         new Balance(new Wallet('id', 'MyWallet', 'bitcoin', 'native'), '0x2', 'bitcoin', 'BTC', 2, date)
       ]
 
-      assert.deepEqual(
-        BalanceManager.compareBalances(oldBalances, newBalances),
-        [
-          {
-            amount: 2,
-            balance: newBalances[0],
-            transactions: [new Transaction(`generated.${date}`, '', '0x2', 2)]
-          }
-        ]
-      )
+      expect(BalanceManager.compareBalances(oldBalances, newBalances))
+        .toEqual(
+          [
+            {
+              amount: 2,
+              balance: newBalances[0],
+              transactions: [new Transaction(`generated.${date}`, '', '0x2', 2)]
+            }
+          ]
+        )
     })
   })
 })

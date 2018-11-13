@@ -1,5 +1,3 @@
-import { describe, it } from 'mocha'
-import { assert } from 'chai'
 import BrowserNotification from '../../src/model/BrowserNotification'
 import { sendNotification } from '../../src/notification/notify'
 
@@ -16,8 +14,8 @@ describe('notification/notify.js', () => {
 
       const registration = {
         showNotification: (message, config) => {
-          assert.equal(message, 'You received 5 ETH')
-          assert.deepEqual(config, {
+          expect(message).toBe('You received 5 ETH')
+          expect(config).toEqual({
             'body': 'You received 5 ETH to your wallet MyWallet',
             'icon': 'https://amw.app/static/android-chrome-192x192.png',
             'lang': 'EN',
@@ -41,8 +39,8 @@ describe('notification/notify.js', () => {
 
       const registration = {
         showNotification: (message, config) => {
-          assert.equal(message, 'You received 5 ETH')
-          assert.deepEqual(config, {
+          expect(message).toBe('You received 5 ETH')
+          expect(config).toEqual({
             'body': 'You received 5 ETH to your wallet MyWallet',
             'icon': 'https://amw.app/static/android-chrome-192x192.png',
             'lang': 'FR',

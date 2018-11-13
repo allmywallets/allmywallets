@@ -1,5 +1,3 @@
-import { describe, it } from 'mocha'
-import { assert } from 'chai'
 import { getNotification } from '../../src/notification/background-notifier'
 
 describe('notification/background-notifier.js', () => {
@@ -7,10 +5,10 @@ describe('notification/background-notifier.js', () => {
     it('returns a background notification', () => {
       const notification = getNotification()
 
-      assert.equal(notification.options.tag, 'background')
-      assert.isFalse(notification.options.requireInteraction)
-      assert.isTrue(notification.options.noscreen)
-      assert.isTrue(notification.options.silent)
+      expect(notification.options.tag).toBe('background')
+      expect(notification.options.requireInteraction).toBe(false)
+      expect(notification.options.noscreen).toBe(true)
+      expect(notification.options.silent).toBe(true)
     })
   })
 })

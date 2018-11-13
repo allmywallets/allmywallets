@@ -1,11 +1,10 @@
-import { describe, it } from 'mocha'
-import { assert } from 'chai'
+import "isomorphic-fetch"
 import Configurator from '../src/manager/configuration.js'
 
 describe('Configurator.js', () => {
   describe('.validateConfig()', () => {
     it('validates a valid config', () => {
-      assert.isTrue(Configurator.validateConfig(
+      expect(Configurator.validateConfig(
         {
           profiles: [
             {
@@ -23,22 +22,22 @@ describe('Configurator.js', () => {
             version: '0.1'
           }
         }
-      ))
+      )).toBe(true)
     })
 
     it('invalidates empty profiles', () => {
-      assert.isFalse(Configurator.validateConfig(
+      expect(Configurator.validateConfig(
         {
           profiles: [],
           application: {
             version: '0.1'
           }
         }
-      ))
+      )).toBe(false)
     })
 
     it('validates a valid wallet config', () => {
-      assert.isTrue(Configurator.validateConfig(
+      expect(Configurator.validateConfig(
         {
           profiles: [
             {
@@ -64,37 +63,37 @@ describe('Configurator.js', () => {
             version: '0.1'
           }
         }
-      ))
+      )).toBe(true)
     })
 
     it('invalidates a void config', () => {
-      assert.isFalse(Configurator.validateConfig({}))
+      expect(Configurator.validateConfig({})).toBe(false)
     })
 
     it('invalidates a void profile', () => {
-      assert.isFalse(Configurator.validateConfig(
+      expect(Configurator.validateConfig(
         {
           profiles: [{}],
           application: {
             version: '0.1'
           }
         }
-      ))
+      )).toBe(false)
     })
 
     it('invalidates an invalid profiles config', () => {
-      assert.isFalse(Configurator.validateConfig(
+      expect(Configurator.validateConfig(
         {
           profiles: 'invalid',
           application: {
             version: '0.1'
           }
         }
-      ))
+      )).toBe(false)
     })
 
     it('invalidates an invalid wallet config', () => {
-      assert.isFalse(Configurator.validateConfig(
+      expect(Configurator.validateConfig(
         {
           profiles: [
             {
@@ -116,7 +115,7 @@ describe('Configurator.js', () => {
             version: '0.1'
           }
         }
-      ))
+      )).toBe(false)
     })
   })
 })

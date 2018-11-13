@@ -1,5 +1,3 @@
-import { describe, it } from 'mocha'
-import { assert } from 'chai'
 import { migrate } from '../../src/migrations/config'
 
 describe('database/migrations.js', () => {
@@ -23,7 +21,7 @@ describe('database/migrations.js', () => {
         }
       })
 
-      assert.deepEqual(config, {
+      expect(config).toEqual({
         'profiles': [
           {
             'wallets': []
@@ -61,7 +59,7 @@ describe('database/migrations.js', () => {
         }
       })
 
-      assert.deepEqual(config, {
+      expect(config).toEqual({
         'profiles': [
           {
             'wallets': []

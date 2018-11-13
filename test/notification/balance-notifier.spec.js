@@ -1,5 +1,3 @@
-import { describe, it } from 'mocha'
-import { assert } from 'chai'
 import Balance from '../../src/model/Balance'
 import BrowserNotification from '../../src/model/BrowserNotification'
 import { getNotification } from '../../src/notification/balance-notifier'
@@ -19,15 +17,15 @@ describe('notification/balance-notifier.js', () => {
 
       const notification = getNotification(diff)
 
-      assert.instanceOf(notification, BrowserNotification)
-      assert.equal(notification.title, 'You received 5 ETH')
-      assert.deepEqual(
-        notification.options,
-        {
-          body: 'You received 5 ETH to your wallet MyWallet.',
-          requireInteraction: true
-        }
-      )
+      expect(notification).toBeInstanceOf(BrowserNotification)
+      expect(notification.title).toBe('You received 5 ETH')
+      expect(notification.options)
+        .toEqual(
+          {
+            body: 'You received 5 ETH to your wallet MyWallet.',
+            requireInteraction: true
+          }
+        )
     })
   })
 })
