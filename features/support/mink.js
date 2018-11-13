@@ -1,5 +1,5 @@
-const { defineSupportCode } = require('cucumber')
-const Mink = require('cucumber-mink')
+const cucumber = require('cucumber')
+const mink = require('cucumber-mink')
 const { url } = require('../conf/default.conf.js').test_settings.default.globals
 const { desiredCapabilities } = require('../conf/default.conf.js').test_settings.default
 
@@ -11,7 +11,6 @@ const parameters = {
   }
 }
 
-defineSupportCode((cucumber) => {
-  Mink.configure(parameters)
-  Mink.init(cucumber)
-})
+const driver = new mink.Mink(parameters)
+
+driver.hook(cucumber)

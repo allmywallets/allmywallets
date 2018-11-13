@@ -19,7 +19,7 @@ describe('notification/notify.js', () => {
           assert.equal(message, 'You received 5 ETH')
           assert.deepEqual(config, {
             'body': 'You received 5 ETH to your wallet MyWallet',
-            'icon': 'https://allmywallets.io/static/android-chrome-192x192.png',
+            'icon': 'https://amw.app/static/android-chrome-192x192.png',
             'lang': 'EN',
             'requireInteraction': true
           })
@@ -44,7 +44,7 @@ describe('notification/notify.js', () => {
           assert.equal(message, 'You received 5 ETH')
           assert.deepEqual(config, {
             'body': 'You received 5 ETH to your wallet MyWallet',
-            'icon': 'https://allmywallets.io/static/android-chrome-192x192.png',
+            'icon': 'https://amw.app/static/android-chrome-192x192.png',
             'lang': 'FR',
             'requireInteraction': true
           })

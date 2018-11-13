@@ -4,7 +4,7 @@
     <div class="balance-content">
       <header class="balance-header">
         <span class="balance-logo" v-if="logo">
-          <img height="40" :src="`/icons/${logo}%402x.png`" @error="removeLogo" :alt="balance.ticker" />
+          <img height="40" :src="`/icons/${balance.ticker.toLowerCase()}%402x.png`" @error="removeLogo" :alt="balance.ticker" />
         </span>
         <h4 class="balance-name">
           {{ balance.wallet.name }}<br />
@@ -90,11 +90,7 @@
       logo () {
         const ticker = this.balance.ticker.toLowerCase()
 
-        if (Object.keys(icons.icons).includes(ticker)) {
-          return icons.icons[ticker]
-        }
-
-        return false
+        return icons.icons.includes(ticker)
       },
       provider () {
         const provider = Proxy.getProvidersList().find(provider => provider.provider === this.balance.wallet.provider)

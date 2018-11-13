@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = env => ({
   entry: {
@@ -28,12 +29,16 @@ module.exports = env => ({
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            scss: 'vue-style-loader!css-loader!resolve-url-loader!sass-loader?sourceMap'
-          }
-        }
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'resolve-url-loader',
+          'sass-loader'
+        ]
       },
       {
         test: /\.(png|jpe?g|gif|svg|ttf|woff2?|eot|ico)(\?.*)?$/,
@@ -58,6 +63,7 @@ module.exports = env => ({
     }),
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, '../src/worker/service-worker.js')
-    })
+    }),
+    new VueLoaderPlugin()
   ]
 })
