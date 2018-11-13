@@ -8,7 +8,7 @@ cache:
     - node_modules
 
 install:
-  - npm ci
+  - npm ci --build-from-source
 
 script:
   - npm run test
