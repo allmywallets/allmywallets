@@ -11,7 +11,7 @@
     "start": "webpack-dev-server --env.APP_VERSION=\"$(git describe --tags)\" --host 0.0.0.0 --devtool eval --progress --hot --content-base app --config config/webpack.dev.config.js",
     "build": "webpack --env.production --env.APP_VERSION=\"$(git describe --tags)\" --config config/webpack.prod.config.js",
     "test": "npm run test:unit && npm run test:functional",
-    "test:unit": "jest",
+    "test:unit": "jest test/",
     "test:functional": "concurrently 'http-server build/ -p 1337 -s' 'cypress run' --success first --kill-others"
   },
   "dependencies": {
