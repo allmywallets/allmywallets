@@ -12,7 +12,7 @@
     "build": "webpack --mode production --env.production --env.APP_VERSION=\"$(git describe --tags)\" --config config/webpack.prod.config.js",
     "test": "npm run test:unit && npm run test:functional",
     "test:unit": "jest test/",
-    "test:functional": "concurrently 'http-server build/ -p 1337 -s' 'cypress run' --success first --kill-others"
+    "test:functional": "npm run build && concurrently 'http-server build/ -p 1337 -s' 'cypress run' --success first --kill-others"
   },
   "dependencies": {
     "@allmywallets/providers": "0.0.6",
