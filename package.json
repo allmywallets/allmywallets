@@ -77,7 +77,6 @@
     "serviceworker-webpack-plugin": "^1.0.1",
     "standard": "^11.0.1",
     "style-loader": "^0.23.1",
-    "uglifyjs-webpack-plugin": "^2.0.1",
     "url-loader": "^1.1.2",
     "vue-loader": "^15.4.2",
     "vue-template-compiler": "^2.5.17",
