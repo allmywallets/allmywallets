@@ -1,4 +1,5 @@
-import "isomorphic-fetch"
+/* global describe, it, expect */
+import 'isomorphic-fetch'
 import Configurator from '../src/manager/configuration.js'
 
 describe('Configurator.js', () => {

@@ -1,3 +1,4 @@
+/* global describe, it, expect */
 import { getNotification } from '../../src/notification/background-notifier'
 
 describe('notification/background-notifier.js', () => {

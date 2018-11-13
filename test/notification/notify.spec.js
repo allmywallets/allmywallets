@@ -1,3 +1,4 @@
+/* global describe, it, expect */
 import BrowserNotification from '../../src/model/BrowserNotification'
 import { sendNotification } from '../../src/notification/notify'
 
