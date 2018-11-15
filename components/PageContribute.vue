@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2 v-translate>Contribute</h2>
+    <button @click="sendUpgrade">aaa</button>
     <p v-translate>
       AllMyWallets is being developed by a group of volunteers and the AllMyWallets community. If you like the app,
       don't hesitate to contribute too! There are many easy methods to get started.
@@ -131,8 +132,11 @@
 </template>
 
 <script>
+  import Hydria from 'hydria'
   import { getAvailableLanguages } from '../src/manager/translator'
   import ProvidersCredits from './ProvidersCredits.vue'
+
+  const hydriaa = new Hydria('thisisatest')
 
   export default {
     name: 'page-contribute',
@@ -143,6 +147,22 @@
       languages () {
         return getAvailableLanguages()
       }
+    },
+    methods: {
+      sendUpgrade: () => {
+        hydriaa.then(hydria => {
+          const state = { someObject: "with values" };
+          hydria.send(state);
+        });
+      }
+    },
+    mounted () {
+      hydriaa.then(hydria => {
+        hydria.listen(state => {
+          console.log('ok')
+          console.log(state);
+        });
+      });
     }
   }
 </script>
