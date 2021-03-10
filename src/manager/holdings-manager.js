@@ -32,6 +32,7 @@ export const computeAllHoldingsHistories = (priceHistories, balances) => { // To
   const holdingHistories = {}
   for (const ticker in summedAmounts) {
     const pricesHistory = priceHistories.find(history => history.ticker === ticker)
+    // eslint-disable-next-line no-prototype-builtins
     if (!summedAmounts.hasOwnProperty(ticker) || !pricesHistory) {
       continue
     }

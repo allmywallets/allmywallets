@@ -62,6 +62,7 @@ const actions = {
 
     dispatch('loadModules')
 
+    // eslint-disable-next-line no-prototype-builtins
     if (config.application.hasOwnProperty('language')) {
       commit('CHANGE_LANGUAGE', config.application.language)
     }

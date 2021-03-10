@@ -15,6 +15,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import runtime from 'serviceworker-webpack-plugin/lib/runtime'
   import Notification from '../model/Notification'
   import { missingCapabilities } from '../manager/system-manager'
 
@@ -38,6 +39,7 @@
         return
       }
 
+      runtime.register()
       this.$serviceWorker.addEventListener('controllerchange', () => {
         this.needsRefresh = this.$serviceWorker.controller === null
       })

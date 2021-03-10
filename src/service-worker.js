@@ -1,4 +1,5 @@
-import '@babel/polyfill'
+/* eslint-disable */
+
 import database from '@/manager/database'
 import Configurator from '@/manager/configuration'
 import Proxy from '@/manager/providers'

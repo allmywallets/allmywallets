@@ -27,8 +27,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  // https://github.com/atomiclabs/cryptocurrency-icons/pull/238
-  // import icons from 'cryptocurrency-icons/manifest.json'
+  import icons from 'cryptocurrency-icons/manifest.json'
   import HoldingsChart from './HoldingsChart.vue'
   import BalanceItemPrices from './BalanceItemPrices.vue'
   import BalanceItemTools from './BalanceItemTools.vue'
@@ -91,7 +90,7 @@
       logo () {
         const ticker = this.balance.ticker.toLowerCase()
 
-        return icons.icons.includes(ticker)
+        return icons.map(icon => icon.symbol.toLowerCase()).includes(ticker)
       },
       provider () {
         const provider = Proxy.getProvidersList().find(provider => provider.provider === this.balance.wallet.provider)
