@@ -2,7 +2,8 @@
 .DS_Store
 app.yaml
 build/
+dist/
 node_modules/
 .env
-cypress/screenshots
-cypress/videos
+tests/e2e/screenshots
+tests/e2e/videos

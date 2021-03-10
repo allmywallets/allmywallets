@@ -1,0 +1,201 @@
+@import '~bootstrap/dist/css/bootstrap-reboot.css';
+@import '~@fortawesome/fontawesome/styles.css';
+@import '~vue-form-generator/dist/vfg.css';
+@import '~vue-multiselect/dist/vue-multiselect.min.css';
+
+@import 'vars';
+
+@font-face {
+  font-family: 'GeosansLight';
+  src: url('~@/assets/fonts/GeosansLight.ttf');
+}
+
+body {
+  background: $color-background;
+  font-family: $font-default;
+}
+
+@for $i from 1 through 6 {
+  h#{$i} {
+    font-weight: normal;
+    font-family: $font-title;
+    font-size: #{2.4 - ($i - 1)*0.3}em;
+    color: $color-primary;
+  }
+}
+
+*:focus {
+  outline: none;
+}
+
+a, a:hover {
+  color: $color-primary;
+  text-decoration: none;
+}
+
+.text-success, .text-success:hover {
+  color: $color-success;
+}
+
+.text-info, .text-info:hover {
+  color: $color-info;
+}
+
+.text-warning, .text-warning:hover {
+  color: $color-warning;
+}
+
+.text-danger, .text-danger:hover {
+  color: $color-danger;
+}
+
+.alert {
+  font-size: 0.95em;
+  padding: 0.4em 0.7em;
+  border-radius: 3px;
+  color: white;
+  margin-bottom: 5px;
+  display: block;
+
+  &.alert-warning {
+    background: $color-warning;
+    color: darken($color-warning, 30);
+  }
+}
+
+.badge {
+  display: inline;
+  cursor: default;
+  padding: .15em .5em .25em;
+  font-size: .85em;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+  background-color: #434343;
+
+  &.badge-light {
+    background-color: #efefef;
+    color: #777777;
+  }
+
+  img, svg {
+    vertical-align: middle;
+  }
+}
+
+.button {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  color: white;
+  background: $color-primary;
+  padding: .7em;
+  border: 0;
+  border-radius: 3px;
+  line-height: 1;
+
+  &:hover {
+    background: darken($color-primary, 5);
+    color: white;
+  }
+
+  &:focus,
+  &.focus {
+    outline: 0;
+  }
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.3;
+  }
+
+  &:not([disabled]):not(.disabled) {
+    cursor: pointer;
+  }
+
+  &.button-small {
+    font-size: 0.8rem;
+    padding: .35em;
+  }
+
+  &.button-warning {
+    background: $color-warning;
+  }
+
+  &.button-info {
+    background: $color-info;
+  }
+}
+
+.card {
+  @include card();
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px solid $color-section-notifications;
+  height: 1px;
+  margin: 20px auto;
+  width: 80%;
+}
+
+::-webkit-scrollbar-track
+{
+  background: transparent;
+}
+
+::-webkit-scrollbar
+{
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb
+{
+  background-color: #d0d0d0;
+  border-radius: 5px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+
+  &:hover {
+    background-color: darken(#d0d0d0, 7);
+  }
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0);
+}
+
+.sweet-modal-overlay {
+  z-index: 99999 !important;
+
+  .sweet-modal {
+    .sweet-box-actions .sweet-action-close:hover {
+      background: none;
+
+      svg {
+        color: $color-primary;
+      }
+    }
+
+    .sweet-title {
+      border: none;
+    }
+
+    .sweet-content {
+      border: none;
+      background: $color-background;
+    }
+
+    .sweet-content + .sweet-buttons {
+      border: none;
+    }
+  }
+}
+
+@import 'forms';

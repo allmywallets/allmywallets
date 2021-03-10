@@ -177,7 +177,7 @@ export default class Configurator {
       .then(response => response.json())
       .then(data => {
         return {
-          current: process.env.APP_VERSION,
+          current: process.env.VUE_APP_VERSION,
           releaseNotes: data[0].body,
           upstream: data[0].tag_name
         }
