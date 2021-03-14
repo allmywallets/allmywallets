@@ -14,8 +14,8 @@
     <template slot="tag" slot-scope="props">
       <span class="badge badge-light">
         {{ props.option.name }}
-        <fa-icon icon="times" @click="props.remove(props.option)" />
-      </span>&nbsp;
+        <fa-icon icon="times" @click="props.remove(props.option)" /> </span
+      >&nbsp;
     </template>
     <template slot="option" slot-scope="props">
       <template v-if="props.option.$isLabel">
@@ -29,81 +29,82 @@
 </template>
 
 <script>
-  import Multiselect from 'vue-multiselect'
+import Multiselect from "vue-multiselect"
 
-  export default {
-    name: 'provider-list-filters',
-    components: {
-      Multiselect
+export default {
+  name: "provider-list-filters",
+  components: {
+    Multiselect
+  },
+  props: {
+    networks: {
+      type: Array,
+      required: true
     },
-    props: {
-      networks: {
-        type: Array,
-        required: true
-      },
-      providers: {
-        type: Array,
-        required: true
-      }
-    },
-    data () {
-      return {
-        filterOptions: [
-          {
-            name: 'Networks',
-            value: '',
-            options: this.networks
-          },
-          {
-            name: 'Providers',
-            value: '',
-            options: this.providers
-          }
-        ],
-        filterTest: ''
-      }
-    },
-    methods: {
-      filterProviders (values) {
-        this.$emit('filter', values)
-      }
+    providers: {
+      type: Array,
+      required: true
+    }
+  },
+  data() {
+    return {
+      filterOptions: [
+        {
+          name: "Networks",
+          value: "",
+          options: this.networks
+        },
+        {
+          name: "Providers",
+          value: "",
+          options: this.providers
+        }
+      ],
+      filterTest: ""
+    }
+  },
+  methods: {
+    filterProviders(values) {
+      this.$emit("filter", values)
     }
   }
+}
 </script>
 
 <style lang="scss">
-  @import '../assets/scss/vars';
+@import "../assets/scss/vars";
 
-  .provider-list-filter {
-    margin-bottom: 15px;
-    @include card();
+.provider-list-filter {
+  margin-bottom: 15px;
+  @include card();
 
-    .multiselect__input, .multiselect__tags {
-      background: none;
-      border: none;
-    }
+  .multiselect__input,
+  .multiselect__tags {
+    background: none;
+    border: none;
+  }
 
-    .multiselect__option--highlight {
-      background: $color-section-notifications;
-      color: $color-text;
-    }
+  .multiselect__option--highlight {
+    background: $color-section-notifications;
+    color: $color-text;
+  }
 
-    .multiselect__option--highlight::after {
-      background: none;
-      color: #777777;
-    }
+  .multiselect__option--highlight::after {
+    background: none;
+    color: #777777;
+  }
 
-    .multiselect__option.multiselect__option--disabled {
-      background-color: #efefef;
-      color: #777777;
-    }
+  .multiselect__option.multiselect__option--disabled {
+    background-color: #efefef;
+    color: #777777;
+  }
 
-    .badge svg {
-      cursor: pointer;
+  .badge svg {
+    cursor: pointer;
 
-      &:hover {
-        color: $color-danger;
-      }
+    &:hover {
+      color: $color-danger;
     }
   }
+}
 </style>

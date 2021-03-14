@@ -1,4 +1,4 @@
-import langs from 'langs'
+import langs from "langs"
 
 export const locale = () => {
   for (let language of navigator.languages) {
@@ -7,18 +7,18 @@ export const locale = () => {
     }
   }
 
-  return 'en-US'
+  return "en-US"
 }
 
 export const getAvailableLanguages = () => {
-  const languages = { 'en-US': 'English' }
+  const languages = { "en-US": "English" }
 
   for (let language of Object.keys(translations)) {
-    const lang = langs.where('1', language.split('-')[0])
+    const lang = langs.where("1", language.split("-")[0])
     languages[language] = lang.local
   }
 
   return languages
 }
 
-export const translations = require('../../translations/translations.json')
+export const translations = require("../../translations/translations.json")

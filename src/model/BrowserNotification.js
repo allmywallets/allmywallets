@@ -8,16 +8,16 @@ export default class BrowserNotification {
    * @param {string} title
    * @param {object} options
    */
-  constructor (title, options) {
+  constructor(title, options) {
     this._title = title
     this._options = options
   }
 
-  get title () {
+  get title() {
     return this._title
   }
 
-  get options () {
+  get options() {
     return this._options
   }
 }

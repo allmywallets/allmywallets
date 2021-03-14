@@ -1,23 +1,23 @@
-import { Validator } from 'jsonschema'
-import idbKeyval from 'idb-keyval'
-import Proxy from './providers'
+import { Validator } from "jsonschema"
+import idbKeyval from "idb-keyval"
+import Proxy from "./providers"
 
 export default class Configurator {
-  static async getConfig () {
-    let config = await idbKeyval.get('config')
+  static async getConfig() {
+    let config = await idbKeyval.get("config")
 
     config = config || Configurator.getDefaultConfiguration()
 
     return config
   }
 
-  static async getWallets () {
+  static async getWallets() {
     const config = await Configurator.getConfig()
 
     return config.profiles[0].wallets
   }
 
-  static async getWallet (walletId) {
+  static async getWallet(walletId) {
     const wallets = await Configurator.getWallets()
 
     const wallet = wallets.find(wallet => wallet.id === walletId)
@@ -29,19 +29,19 @@ export default class Configurator {
     return wallet
   }
 
-  static async setConfig (config) {
+  static async setConfig(config) {
     if (!this.validateConfig(config)) {
-      throw new Error('Config is not valid')
+      throw new Error("Config is not valid")
     }
 
-    return idbKeyval.set('config', config)
+    return idbKeyval.set("config", config)
   }
 
-  static async validateWalletConfig (wallet) {
+  static async validateWalletConfig(wallet) {
     return new Proxy(wallet).checkParameters()
   }
 
-  static validateWalletIds (config) {
+  static validateWalletIds(config) {
     if (config.profiles.length === 0) {
       return true
     }
@@ -50,7 +50,7 @@ export default class Configurator {
     const wallets = config.profiles[0].wallets
     for (const key in wallets) {
       if (ids.includes(wallets[key].id)) {
-        throw new Error('Config has duplicated ids')
+        throw new Error("Config has duplicated ids")
       }
 
       ids.push(wallets[key].id)
@@ -59,121 +59,136 @@ export default class Configurator {
     return true
   }
 
-  static validateConfig (config) {
+  static validateConfig(config) {
     const walletSchema = {
-      id: '/Wallet',
-      type: 'object',
+      id: "/Wallet",
+      type: "object",
       properties: {
-        'id': {
-          type: 'string',
+        id: {
+          type: "string",
           minLength: 7,
           maxLength: 14
         },
-        'name': { type: 'string', minLength: 1, maxLength: 30 },
-        'network': { type: 'string' },
-        'provider': { type: 'string' },
-        'parameters': { type: 'object' }
+        name: { type: "string", minLength: 1, maxLength: 30 },
+        network: { type: "string" },
+        provider: { type: "string" },
+        parameters: { type: "object" }
       },
-      required: ['id', 'name', 'network', 'provider', 'parameters']
+      required: ["id", "name", "network", "provider", "parameters"]
     }
 
     const moduleSchema = {
-      id: '/Module',
-      type: 'object',
+      id: "/Module",
+      type: "object",
       properties: {
-        'name': { type: 'string', minLength: 1 },
-        'repository': { type: 'string', minLength: 4 },
-        'config': { type: 'object' }
+        name: { type: "string", minLength: 1 },
+        repository: { type: "string", minLength: 4 },
+        config: { type: "object" }
       },
-      required: ['name', 'repository', 'config']
+      required: ["name", "repository", "config"]
     }
 
     const configSchema = {
-      id: '/Config',
-      type: 'object',
+      id: "/Config",
+      type: "object",
       properties: {
-        'profiles': {
-          type: 'array',
+        profiles: {
+          type: "array",
           minItems: 1,
           items: {
-            type: 'object',
+            type: "object",
             properties: {
-              'wallets': {
-                type: 'array',
+              wallets: {
+                type: "array",
                 items: {
-                  $ref: '/Wallet'
+                  $ref: "/Wallet"
                 }
               },
-              'application': {
-                type: 'object',
+              application: {
+                type: "object",
                 properties: {
-                  'currencies': {
-                    type: 'object',
+                  currencies: {
+                    type: "object",
                     properties: {
-                      'primary': { type: 'string', minLength: 3, pattern: '^[A-Z]+$' },
-                      'secondary': { type: 'string', minItems: 3, pattern: '^[A-Z]+$' }
+                      primary: {
+                        type: "string",
+                        minLength: 3,
+                        pattern: "^[A-Z]+$"
+                      },
+                      secondary: {
+                        type: "string",
+                        minItems: 3,
+                        pattern: "^[A-Z]+$"
+                      }
                     },
-                    required: ['primary', 'secondary']
+                    required: ["primary", "secondary"]
                   },
-                  'modules': {
-                    type: 'array',
+                  modules: {
+                    type: "array",
                     items: {
-                      $ref: '/Module'
+                      $ref: "/Module"
                     }
                   }
                 },
-                required: ['currencies', 'modules']
+                required: ["currencies", "modules"]
               }
             },
-            required: ['wallets', 'application']
+            required: ["wallets", "application"]
           }
         },
-        'application': {
-          type: 'object',
+        application: {
+          type: "object",
           properties: {
-            'version': { type: 'string' },
-            'language': { type: 'string' }
+            version: { type: "string" },
+            language: { type: "string" }
           },
-          required: ['version']
+          required: ["version"]
         }
       },
-      required: ['profiles', 'application']
+      required: ["profiles", "application"]
     }
 
     const validator = new Validator()
 
-    validator.addSchema(walletSchema, '/Wallet')
-    validator.addSchema(moduleSchema, '/Module')
+    validator.addSchema(walletSchema, "/Wallet")
+    validator.addSchema(moduleSchema, "/Module")
 
-    return validator.validate(config, configSchema).valid && Configurator.validateWalletIds(config)
+    return (
+      validator.validate(config, configSchema).valid &&
+      Configurator.validateWalletIds(config)
+    )
   }
 
-  static getDefaultConfiguration () {
+  static getDefaultConfiguration() {
     return {
-      profiles: [{
-        wallets: [],
-        application: {
-          currencies: {
-            primary: 'USD',
-            secondary: 'BTC'
-          },
-          modules: [
-            {
-              name: 'statistics',
-              repository: '/allmywallets/statistics-module',
-              config: {}
-            }
-          ]
+      profiles: [
+        {
+          wallets: [],
+          application: {
+            currencies: {
+              primary: "USD",
+              secondary: "BTC"
+            },
+            modules: [
+              {
+                name: "statistics",
+                repository: "/allmywallets/statistics-module",
+                config: {}
+              }
+            ]
+          }
         }
-      }],
+      ],
       application: {
-        version: '0.0.0'
+        version: "0.0.0"
       }
     }
   }
 
-  static async getVersion () {
-    return fetch('https://api.github.com/repos/allmywallets/allmywallets/releases')
+  static async getVersion() {
+    return fetch(
+      "https://api.github.com/repos/allmywallets/allmywallets/releases"
+    )
       .then(response => response.json())
       .then(data => {
         return {
@@ -184,9 +199,9 @@ export default class Configurator {
       })
       .catch(() => {
         return {
-          current: '0.0.0',
-          releaseNotes: '',
-          upstream: '0.0.0'
+          current: "0.0.0",
+          releaseNotes: "",
+          upstream: "0.0.0"
         }
       })
   }

@@ -10,38 +10,38 @@ export default class Notification {
    * @param {string} content
    * @param {Date} date
    */
-  constructor (level, title, content, date) {
+  constructor(level, title, content, date) {
     this._level = level
     this._title = title
     this._content = content
     this._date = date
   }
 
-  get level () {
+  get level() {
     return this._level
   }
 
-  get title () {
+  get title() {
     return this._title
   }
 
-  get content () {
+  get content() {
     return this._content
   }
 
-  get date () {
+  get date() {
     return this._date
   }
 
-  set walletId (walletId) {
+  set walletId(walletId) {
     this._walletId = walletId
   }
 
-  get walletId () {
+  get walletId() {
     return this._walletId
   }
 
-  static fromObject (object) {
+  static fromObject(object) {
     const notification = new Notification(
       object._level,
       object._title,

@@ -1,74 +1,80 @@
-import { migrate } from '../../../src/migrations/config'
+import { migrate } from "../../../src/migrations/config"
 
-describe('database/migrations.js', () => {
-  describe('migrate()', () => {
-    it('migrates configuration properly', () => {
-      const config = migrate({
-        'profiles': [
-          {
-            'wallets': []
+describe("database/migrations.js", () => {
+  describe("migrate()", () => {
+    it("migrates configuration properly", () => {
+      const config = migrate(
+        {
+          profiles: [
+            {
+              wallets: []
+            }
+          ],
+          application: {
+            version: "0.0.1"
           }
-        ],
-        'application': {
-          'version': '0.0.1'
-        }
-      }, {
-        '0.0.1': { next: '0.1.0' },
-        '0.1.0': {
-          migrate (config) {
-            config.test = true
+        },
+        {
+          "0.0.1": { next: "0.1.0" },
+          "0.1.0": {
+            migrate(config) {
+              config.test = true
+            }
           }
         }
-      })
+      )
 
       expect(config).toEqual({
-        'profiles': [
+        profiles: [
           {
-            'wallets': []
+            wallets: []
           }
         ],
-        'application': {
-          'version': '0.1.0'
+        application: {
+          version: "0.1.0"
         },
-        'test': true
+        test: true
       })
     })
 
-    it('migrates multiple versions at once properly', () => {
-      const config = migrate({
-        'profiles': [
-          {
-            'wallets': []
+    it("migrates multiple versions at once properly", () => {
+      const config = migrate(
+        {
+          profiles: [
+            {
+              wallets: []
+            }
+          ],
+          application: {
+            version: "0.0.1"
           }
-        ],
-        'application': {
-          'version': '0.0.1'
-        }
-      }, {
-        '0.0.1': { next: '0.1.0' },
-        '0.1.0': {
-          migrate (config) {
-            config.test = true
-          },
-          next: '0.1.1'
         },
-        '0.1.1': {
-          migrate (config) {
-            config.toast = true
+        {
+          "0.0.1": { next: "0.1.0" },
+          "0.1.0": {
+            migrate(config) {
+              config.test = true
+            },
+            next: "0.1.1"
+          },
+          "0.1.1": {
+            migrate(config) {
+              config.toast = true
+            }
           }
         }
-      })
+      )
 
       expect(config).toEqual({
-        'profiles': [
+        profiles: [
           {
-            'wallets': []
+            wallets: []
           }
         ],
-        'test': true,
-        'toast': true,
-        'application': {
-          'version': '0.1.1'
+        test: true,
+        toast: true,
+        application: {
+          version: "0.1.1"
         }
       })
     })

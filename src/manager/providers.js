@@ -1,12 +1,20 @@
-import Balance from '../model/Balance'
-import Providers from '@allmywallets/providers'
-import Wallet from '../model/Wallet'
+import Balance from "../model/Balance"
+import Providers from "@allmywallets/providers"
+import Wallet from "../model/Wallet"
 
-const AMW_PROXY_URL = process.env.NODE_ENV === 'production' ? 'https://cors.allmywallets.io/' : 'https://cors-anywhere.herokuapp.com/'
+const AMW_PROXY_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://cors.allmywallets.io/"
+    : "https://cors-anywhere.herokuapp.com/"
 
 export default class Proxy {
-  constructor (wallet) {
-    const walletObject = new Wallet(wallet.id, wallet.name, wallet.network, wallet.provider)
+  constructor(wallet) {
+    const walletObject = new Wallet(
+      wallet.id,
+      wallet.name,
+      wallet.network,
+      wallet.provider
+    )
     const network = wallet.network
     const provider = wallet.provider
     const networkProvider = `${network}.${provider}`
@@ -19,14 +27,18 @@ export default class Proxy {
     return new Provider(wallet.parameters, walletObject)
   }
 
-  static getProviderParameters (provider) {
+  static getProviderParameters(provider) {
     return getGenericProviderClass(provider).getSupportedParameters()
   }
 
-  static getProvidersList () {
+  static getProvidersList() {
     return Providers.list().map(provider => {
       const info = Providers.providers[provider].info
-      info.warnings = {cors: !info.hasCORS, apiKey: typeof info.apiKeyPermission !== 'undefined' && !info.apiKeyPermission}
+      info.warnings = {
+        cors: !info.hasCORS,
+        apiKey:
+          typeof info.apiKeyPermission !== "undefined" && !info.apiKeyPermission
+      }
       delete info.hasCORS
       delete info.apiKeyPermission
       return info
@@ -34,23 +46,23 @@ export default class Proxy {
   }
 }
 
-function getGenericProviderClass (providerName) {
+function getGenericProviderClass(providerName) {
   const Provider = Providers.providers[providerName]
   class GenericProvider {
-    constructor (parameters, wallet) {
+    constructor(parameters, wallet) {
       this.parameters = parameters
       this.provider = new Provider(this.parameters)
-      this.provider.setProxy(Provider.info.hasCORS ? '' : AMW_PROXY_URL)
+      this.provider.setProxy(Provider.info.hasCORS ? "" : AMW_PROXY_URL)
       this.wallet = wallet
     }
 
-    async checkParameters () {
+    async checkParameters() {
       await this.provider.checkParameters()
       await this.provider.checkAddresses(this.parameters.addresses)
       await this.provider.checkWallets(this.parameters.wallets)
     }
 
-    async getBalances (currencies = []) {
+    async getBalances(currencies = []) {
       this._selectCurrenciesToUpdate(this.provider, currencies)
       if (this.parameters.addresses) {
         this.provider.addresses(this.parameters.addresses)
@@ -58,7 +70,7 @@ function getGenericProviderClass (providerName) {
         this.provider.wallets(this.parameters.wallets)
       }
       const wallets = await this.provider
-        .fetch(['balances', 'addresses'])
+        .fetch(["balances", "addresses"])
         .exec()
 
       const balances = []
@@ -66,7 +78,7 @@ function getGenericProviderClass (providerName) {
         let i = 0
         this.provider.getSelectedCurrencies().forEach(selectedCurrency => {
           const amount = wallet.balances[i]
-          const address = wallet.addresses[i] || ''
+          const address = wallet.addresses[i] || ""
           const balance = new Balance(
             this.wallet,
             address,
@@ -82,21 +94,23 @@ function getGenericProviderClass (providerName) {
       return balances
     }
 
-    _selectCurrenciesToUpdate (provider, currencies) {
-      if (currencies.length === 0) { // Refresh all
+    _selectCurrenciesToUpdate(provider, currencies) {
+      if (currencies.length === 0) {
+        // Refresh all
         if (this.parameters.currencies) {
           provider.currencies(this.parameters.currencies)
         }
-      } else { // Refresh only specified
+      } else {
+        // Refresh only specified
         provider.currencies(currencies)
       }
     }
 
-    static async _getSupportedTickers () {
+    static async _getSupportedTickers() {
       let supportedTickers = []
       try {
         const provider = new Provider()
-        provider.setProxy(Provider.info.hasCORS ? '' : AMW_PROXY_URL)
+        provider.setProxy(Provider.info.hasCORS ? "" : AMW_PROXY_URL)
         const currencies = await provider.getSupportedCurrencies()
         supportedTickers = Object.keys(currencies)
         // eslint-disable-next-line no-empty
@@ -105,18 +119,20 @@ function getGenericProviderClass (providerName) {
       return supportedTickers
     }
 
-    static async getSupportedParameters () {
+    static async getSupportedParameters() {
       let providerParameters = Provider.getProviderParameters().map(param => {
         param.model = `providerSpecific.${param.model}`
         return param
       })
 
-      providerParameters = providerParameters.concat(Provider.getWalletIdentifierParameters())
+      providerParameters = providerParameters.concat(
+        Provider.getWalletIdentifierParameters()
+      )
 
       providerParameters.push({
-        type: 'checklist',
-        label: 'Currencies',
-        model: 'currencies',
+        type: "checklist",
+        label: "Currencies",
+        model: "currencies",
         multi: true,
         required: false,
         multiSelect: true,
@@ -125,7 +141,7 @@ function getGenericProviderClass (providerName) {
 
       return providerParameters
     }
-}
+  }
 
   return GenericProvider
 }

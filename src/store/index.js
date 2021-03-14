@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import config from './config'
-import balances from './balances'
-import notifications from './notifications'
-import modules from './modules'
+import Vue from "vue"
+import Vuex from "vuex"
+import config from "./config"
+import balances from "./balances"
+import notifications from "./notifications"
+import modules from "./modules"
 
 Vue.use(Vuex)
 

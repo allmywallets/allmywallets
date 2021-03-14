@@ -1,4 +1,4 @@
-import { loadModules } from '../manager/modules'
+import { loadModules } from "../manager/modules"
 
 const state = {
   modules: [],
@@ -21,7 +21,7 @@ const getters = {
 }
 
 const mutations = {
-  MODULES_LOADED (state, modules) {
+  MODULES_LOADED(state, modules) {
     state.modules = []
     modules.forEach(module => {
       state.modules.push(module)
@@ -35,7 +35,7 @@ const actions = {
   loadModules: async ({ commit }) => {
     const modules = await loadModules()
 
-    commit('MODULES_LOADED', modules)
+    commit("MODULES_LOADED", modules)
   }
 }
 

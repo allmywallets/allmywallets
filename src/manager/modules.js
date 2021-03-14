@@ -1,6 +1,6 @@
-import Vue from 'vue'
-import router from '../router'
-import Configurator from './configuration'
+import Vue from "vue"
+import router from "../router"
+import Configurator from "./configuration"
 
 const sanitizeRoutes = (moduleId, routes) => {
   const sanitizedRoutes = []
@@ -21,9 +21,12 @@ export const loadModules = async () => {
   const modules = []
 
   for (const moduleConfig of config.profiles[0].application.modules) {
-    const moduleCode = await fetch(`https://raw.githubusercontent.com${moduleConfig.repository}/master/dist/module.js`).then(res => res.text())
+    const moduleCode = await fetch(
+      `https://raw.githubusercontent.com${moduleConfig.repository}/master/dist/module.js`
+    ).then(res => res.text())
     /* eslint-disable no-new-func */
-    const module = new Function('Vue', `${moduleCode};return Module;`)(Vue).instance
+    const module = new Function("Vue", `${moduleCode};return Module;`)(Vue)
+      .instance
     // Todo: cache module
 
     const routes = sanitizeRoutes(module.name(), module.routes())
