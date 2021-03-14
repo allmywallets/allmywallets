@@ -9,7 +9,7 @@ const state = {
     wallets: false // Wallets changes
   },
   config: Configurator.getDefaultConfiguration(),
-  version: { current: process.env.APP_VERSION, upstream: process.env.APP_VERSION },
+  version: { current: process.env.VUE_APP_VERSION, upstream: process.env.APP_VERSION },
   display: {
     balances: {
       charts: false,
@@ -62,6 +62,7 @@ const actions = {
 
     dispatch('loadModules')
 
+    // eslint-disable-next-line no-prototype-builtins
     if (config.application.hasOwnProperty('language')) {
       commit('CHANGE_LANGUAGE', config.application.language)
     }

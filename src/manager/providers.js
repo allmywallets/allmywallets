@@ -99,6 +99,7 @@ function getGenericProviderClass (providerName) {
         provider.setProxy(Provider.info.hasCORS ? '' : AMW_PROXY_URL)
         const currencies = await provider.getSupportedCurrencies()
         supportedTickers = Object.keys(currencies)
+        // eslint-disable-next-line no-empty
       } catch (e) {} // Provider needs credentials to retrieve tickers
 
       return supportedTickers
