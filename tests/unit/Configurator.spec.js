@@ -1,4 +1,3 @@
-/* global describe, it, expect */
 import 'isomorphic-fetch'
 import Configurator from '../../src/manager/configuration.js'
 

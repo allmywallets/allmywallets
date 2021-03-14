@@ -1,4 +1,3 @@
-/* global describe, it, expect */
 import Balance from '../../../src/model/Balance'
 import BrowserNotification from '../../../src/model/BrowserNotification'
 import { getNotification } from '../../../src/notification/balance-notifier'

@@ -1,4 +1,3 @@
-/* global describe, it, expect */
 import 'isomorphic-fetch'
 import * as BalanceManager from '../../../src/manager/balance-manager'
 import Balance from '../../../src/model/Balance'

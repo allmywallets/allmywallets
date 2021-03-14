@@ -1,4 +1,3 @@
-/* global describe, it, expect */
 import { migrate } from '../../../src/migrations/config'
 
 describe('database/migrations.js', () => {
