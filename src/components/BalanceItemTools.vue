@@ -2,7 +2,7 @@
   <div class="balance-tools">
     <a
       href="#"
-      class="address"
+      class="address balance-tool"
       title="Public key copied!"
       :data-clipboard-text="balance.address"
       v-if="balance.address !== ''"
@@ -10,10 +10,10 @@
     >
       <fa-icon icon="copy" />
     </a>
-    <a href="#" v-if="!display.balances.collapsed" @click.prevent="refresh" :title="`Updated ${lastUpdate} ago`" v-tippy>
+    <a href="#" v-if="!display.balances.collapsed" @click.prevent="refresh" :title="`Updated ${lastUpdate} ago`" class="balance-tool" v-tippy>
       <fa-icon icon="sync-alt" :spin="loading" />
     </a>
-    <a href="#" v-if="status" :title="`Wallet update failed: ${status.title}`" class="text-warning" v-tippy>
+    <a href="#" v-if="status" :title="`Wallet update failed: ${status.title}`" class="text-warning balance-tool" v-tippy>
       <fa-icon icon="exclamation-triangle" />
     </a>
   </div>
@@ -93,7 +93,10 @@
   .balance-tools {
     text-align: right;
     margin-right: 5px;
-    letter-spacing: 0.3rem;
+
+    .balance-tool {
+      margin-left: 5px;
+    }
   }
 
   input {
