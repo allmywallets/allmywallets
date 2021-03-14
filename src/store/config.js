@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Configurator from '../manager/configuration'
-import { enablePushNotifications } from '../notification/subscription'
-import { migrate } from '../migrations/config'
+import Vue from "vue"
+import Configurator from "../manager/configuration"
+import { enablePushNotifications } from "../notification/subscription"
+import { migrate } from "../migrations/config"
 
 const state = {
   loading: {
@@ -9,7 +9,10 @@ const state = {
     wallets: false // Wallets changes
   },
   config: Configurator.getDefaultConfiguration(),
-  version: { current: process.env.VUE_APP_VERSION, upstream: process.env.APP_VERSION },
+  version: {
+    current: process.env.VUE_APP_VERSION,
+    upstream: process.env.APP_VERSION
+  },
   display: {
     balances: {
       charts: false,
@@ -31,45 +34,46 @@ const getters = {
 }
 
 const mutations = {
-  INIT_APPLICATION (state, config) {
+  INIT_APPLICATION(state, config) {
     state.config = config
   },
-  APPLICATION_LOADED (state) {
+  APPLICATION_LOADED(state) {
     state.loading.app = false
   },
-  APPLICATION_LOADING (state) {
+  APPLICATION_LOADING(state) {
     state.loading.app = true
   },
-  CHECK_FOR_UPGRADE (state, version) {
+  CHECK_FOR_UPGRADE(state, version) {
     state.version = version
   },
-  ADD_WALLET (state, wallet) {
+  ADD_WALLET(state, wallet) {
     state.config.profiles[0].wallets.push(wallet)
     state.loading.wallets = false
   },
-  CHANGE_LANGUAGE (state, language) {
-    Vue.set(state.config.application, 'language', language)
+  CHANGE_LANGUAGE(state, language) {
+    Vue.set(state.config.application, "language", language)
     Vue.config.language = language
   },
-  UPDATE_DISPLAY (state, display) {
+  UPDATE_DISPLAY(state, display) {
     state.display = display
   }
 }
 
 const actions = {
   init: async ({ commit, dispatch }, { serviceWorker, config }) => {
-    commit('INIT_APPLICATION', migrate(config))
+    commit("INIT_APPLICATION", migrate(config))
 
-    dispatch('loadModules')
+    dispatch("loadModules")
 
     // eslint-disable-next-line no-prototype-builtins
-    if (config.application.hasOwnProperty('language')) {
-      commit('CHANGE_LANGUAGE', config.application.language)
+    if (config.application.hasOwnProperty("language")) {
+      commit("CHANGE_LANGUAGE", config.application.language)
     }
 
-    dispatch('checkForUpgrade')
+    dispatch("checkForUpgrade")
 
-    if (!serviceWorker) { // No service worker; the app won't work
+    if (!serviceWorker) {
+      // No service worker; the app won't work
       return
     }
 
@@ -82,38 +86,38 @@ const actions = {
       }
     }
 
-    await dispatch('reloadAllBalances')
-    commit('APPLICATION_LOADED')
-    await dispatch('refreshPriceHistories')
+    await dispatch("reloadAllBalances")
+    commit("APPLICATION_LOADED")
+    await dispatch("refreshPriceHistories")
   },
   checkForUpgrade: async ({ commit, state }) => {
     const version = await Configurator.getVersion()
 
-    commit('CHECK_FOR_UPGRADE', version)
+    commit("CHECK_FOR_UPGRADE", version)
 
     return Configurator.setConfig(state.config)
   },
   appUpgrade: ({ commit }, { serviceWorker }) => {
     serviceWorker.controller.postMessage({
-      action: 'app-upgrade'
+      action: "app-upgrade"
     })
 
-    commit('APPLICATION_LOADING')
+    commit("APPLICATION_LOADING")
   },
   addWallet: async ({ commit }, { wallet }) => {
     await Configurator.validateWalletConfig(wallet)
 
-    commit('ADD_WALLET', wallet)
+    commit("ADD_WALLET", wallet)
 
     return Configurator.setConfig(state.config)
   },
   changeLanguage: ({ commit }, { language }) => {
-    commit('CHANGE_LANGUAGE', language)
+    commit("CHANGE_LANGUAGE", language)
 
     return Configurator.setConfig(state.config)
   },
   updateDisplay: async ({ commit }, { display }) => {
-    commit('UPDATE_DISPLAY', display)
+    commit("UPDATE_DISPLAY", display)
   }
 }
 

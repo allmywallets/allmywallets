@@ -7,27 +7,27 @@ const getters = {
 }
 
 const mutations = {
-  ADD_NOTIFICATION (state, { notification }) {
-    if (notification.level === 'ERROR') {
+  ADD_NOTIFICATION(state, { notification }) {
+    if (notification.level === "ERROR") {
       console.error(notification)
     }
 
     state.notifications.unshift(notification)
   },
-  REMOVE_NOTIFICATION (state, { notification }) {
+  REMOVE_NOTIFICATION(state, { notification }) {
     state.notifications.splice(state.notifications.indexOf(notification), 1)
   },
-  REMOVE_ALL_NOTIFICATIONS (state) {
+  REMOVE_ALL_NOTIFICATIONS(state) {
     state.notifications = []
   }
 }
 
 const actions = {
   addNotification: ({ commit }, { notification }) => {
-    commit('ADD_NOTIFICATION', { notification })
+    commit("ADD_NOTIFICATION", { notification })
   },
   clearAllNotifications: ({ commit }) => {
-    commit('REMOVE_ALL_NOTIFICATIONS')
+    commit("REMOVE_ALL_NOTIFICATIONS")
   }
 }
 

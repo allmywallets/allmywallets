@@ -1,16 +1,17 @@
 export const getCapabilities = () => {
   return {
-    'service-worker': {
-      available: 'serviceWorker' in navigator,
-      name: 'Service workers (offline mode, background sync, push notifications)'
+    "service-worker": {
+      available: "serviceWorker" in navigator,
+      name:
+        "Service workers (offline mode, background sync, push notifications)"
     },
-    'notification': {
-      available: 'Notification' in window,
-      name: 'Notifications'
+    notification: {
+      available: "Notification" in window,
+      name: "Notifications"
     },
-    'indexed-db': {
-      available: 'indexedDB' in window,
-      name: 'Local database (IndexedDB)'
+    "indexed-db": {
+      available: "indexedDB" in window,
+      name: "Local database (IndexedDB)"
     }
   }
 }

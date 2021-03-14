@@ -9,7 +9,10 @@ module.exports = {
         entry: path.join(__dirname, "./src/service-worker.js")
       }),
       new CopyWebpackPlugin([
-        { from: 'node_modules/cryptocurrency-icons/32@2x/icon', to: 'public/icons' }
+        {
+          from: "node_modules/cryptocurrency-icons/32@2x/icon",
+          to: "public/icons"
+        }
       ])
     ]
   }

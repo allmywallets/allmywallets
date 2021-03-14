@@ -1,13 +1,15 @@
-import idb from 'idb'
-import Balance from '../model/Balance'
+import idb from "idb"
+import Balance from "../model/Balance"
 
 class Database {
-  constructor () {
-    this.connection = idb.open('balance-store', 1, upgradeDB => {
-      upgradeDB.createObjectStore('balance')
-    }).catch(() => {
-      console.error('Failed to open balances database')
-    })
+  constructor() {
+    this.connection = idb
+      .open("balance-store", 1, upgradeDB => {
+        upgradeDB.createObjectStore("balance")
+      })
+      .catch(() => {
+        console.error("Failed to open balances database")
+      })
   }
 
   /**
@@ -16,22 +18,25 @@ class Database {
    * @param {Balance[]} balances
    * @returns {Promise}
    */
-  async storeBalances (balances) {
+  async storeBalances(balances) {
     const db = await this.connection
-    const tx = db.transaction('balance', 'readwrite')
+    const tx = db.transaction("balance", "readwrite")
 
     const txs = []
     balances.forEach(balance => {
-      txs.push(tx.objectStore('balance').put(balance, balance.id))
+      txs.push(tx.objectStore("balance").put(balance, balance.id))
     })
 
     return Promise.all(txs)
   }
 
-  async findBalance (id) {
+  async findBalance(id) {
     const db = await this.connection
 
-    const balance = await db.transaction('balance').objectStore('balance').get(id)
+    const balance = await db
+      .transaction("balance")
+      .objectStore("balance")
+      .get(id)
 
     if (balance === undefined) {
       return null
@@ -40,20 +45,25 @@ class Database {
     return Balance.fromObject(balance)
   }
 
-  async findBalances (ids) {
+  async findBalances(ids) {
     const balancePromises = []
 
     ids.forEach(id => {
       balancePromises.push(this.findBalance(id))
     })
 
-    return Promise.all(balancePromises).then(balances => balances.filter(balance => balance !== null))
+    return Promise.all(balancePromises).then(balances =>
+      balances.filter(balance => balance !== null)
+    )
   }
 
-  async findAllBalances () {
+  async findAllBalances() {
     const db = await this.connection
 
-    const balances = await db.transaction('balance').objectStore('balance').getAll()
+    const balances = await db
+      .transaction("balance")
+      .objectStore("balance")
+      .getAll()
 
     return balances.map(balance => Balance.fromObject(balance))
   }

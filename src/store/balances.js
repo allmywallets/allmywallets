@@ -1,6 +1,6 @@
-import database from '../manager/database'
-import * as HoldingsManager from '../manager/holdings-manager'
-import { collapseBalances } from '../manager/balance-manager'
+import database from "../manager/database"
+import * as HoldingsManager from "../manager/holdings-manager"
+import { collapseBalances } from "../manager/balance-manager"
 
 const state = {
   loading: {
@@ -11,16 +11,26 @@ const state = {
 }
 
 const getters = {
-  balances: (state, getters, rootState) => rootState.config.display.balances.collapsed ? collapseBalances(state.balances) : state.balances,
+  balances: (state, getters, rootState) =>
+    rootState.config.display.balances.collapsed
+      ? collapseBalances(state.balances)
+      : state.balances,
   pricesHistories: state => state.pricesHistories,
-  holdingsHistories: state => HoldingsManager.computeAllHoldingsHistories(state.pricesHistories, state.balances),
-  globalHoldingsHistory: (state, getters) => HoldingsManager.sumHoldingsHistories(getters.holdingsHistories)
+  holdingsHistories: state =>
+    HoldingsManager.computeAllHoldingsHistories(
+      state.pricesHistories,
+      state.balances
+    ),
+  globalHoldingsHistory: (state, getters) =>
+    HoldingsManager.sumHoldingsHistories(getters.holdingsHistories)
 }
 
 const mutations = {
-  UPDATE_BALANCES (state, { balances }) {
+  UPDATE_BALANCES(state, { balances }) {
     balances.forEach(updatedBalance => {
-      const index = state.balances.findIndex(balance => updatedBalance.equals(balance))
+      const index = state.balances.findIndex(balance =>
+        updatedBalance.equals(balance)
+      )
 
       if (index === -1) {
         state.balances.push(updatedBalance)
@@ -31,11 +41,13 @@ const mutations = {
 
     state.loading.balances = false
   },
-  BALANCES_LOADING (state) {
+  BALANCES_LOADING(state) {
     state.loading.balances = true
   },
-  UPDATE_PRICES_HISTORY (state, { pricesHistory }) {
-    const index = state.pricesHistories.findIndex(history => pricesHistory.ticker === history.ticker)
+  UPDATE_PRICES_HISTORY(state, { pricesHistory }) {
+    const index = state.pricesHistories.findIndex(
+      history => pricesHistory.ticker === history.ticker
+    )
 
     if (index === -1) {
       state.pricesHistories.push(pricesHistory)
@@ -52,11 +64,11 @@ const actions = {
    * Reloads all balances from database.
    */
   reloadAllBalances: async ({ commit }) => {
-    commit('BALANCES_LOADING')
+    commit("BALANCES_LOADING")
 
     const balances = await database.findAllBalances()
 
-    commit('UPDATE_BALANCES', { balances })
+    commit("UPDATE_BALANCES", { balances })
   },
 
   /**
@@ -65,7 +77,7 @@ const actions = {
   reloadBalances: async ({ commit }, { balanceIds }) => {
     const balances = await database.findBalances(balanceIds)
 
-    commit('UPDATE_BALANCES', { balances })
+    commit("UPDATE_BALANCES", { balances })
   },
 
   /**
@@ -74,13 +86,13 @@ const actions = {
   refreshBalances: ({ commit }, { wallets, serviceWorker }) => {
     wallets.forEach(wallet => {
       serviceWorker.controller.postMessage({
-        action: 'balance-refresh',
+        action: "balance-refresh",
         walletId: wallet.id,
         currencies: []
       })
     })
 
-    commit('BALANCES_LOADING')
+    commit("BALANCES_LOADING")
   },
 
   /**
@@ -90,11 +102,18 @@ const actions = {
     const balances = await database.findAllBalances()
     const tickers = [...new Set(balances.map(balance => balance.ticker))]
 
-    const { primary, secondary } = rootState.config.config.profiles[0].application.currencies
+    const {
+      primary,
+      secondary
+    } = rootState.config.config.profiles[0].application.currencies
     for (const ticker of tickers) {
-      const pricesHistory = await HoldingsManager.getPeriodPriceHistory(ticker, primary, secondary)
+      const pricesHistory = await HoldingsManager.getPeriodPriceHistory(
+        ticker,
+        primary,
+        secondary
+      )
 
-      commit('UPDATE_PRICES_HISTORY', { ticker, pricesHistory })
+      commit("UPDATE_PRICES_HISTORY", { ticker, pricesHistory })
     }
   }
 }

@@ -11,42 +11,42 @@ export default class Wallet {
    * @param {string} network of the wallet (e.g. IOTA network, Exchange network)
    * @param {string} provider of the wallet (e.g. Etherscan, Binance)
    */
-  constructor (id, name, network, provider) {
+  constructor(id, name, network, provider) {
     this._id = id
     this._name = name
     this._network = network
     this._provider = provider
   }
 
-  get id () {
+  get id() {
     return this._id
   }
 
-  get name () {
+  get name() {
     return this._name
   }
 
-  set name (name) {
+  set name(name) {
     this._name = name
   }
 
-  get network () {
+  get network() {
     return this._network
   }
 
-  set network (network) {
+  set network(network) {
     this._network = network
   }
 
-  get provider () {
+  get provider() {
     return this._provider
   }
 
-  set provider (provider) {
+  set provider(provider) {
     this._provider = provider
   }
 
-  static fromObject (object) {
+  static fromObject(object) {
     return new Wallet(
       object._id,
       object._name,

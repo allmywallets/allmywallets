@@ -1,8 +1,8 @@
-import PricesHistory from '../model/PricesHistory'
-import CurrencyFormatter from 'currency-formatter'
+import PricesHistory from "../model/PricesHistory"
+import CurrencyFormatter from "currency-formatter"
 
-const getHistoryLength = (nbDays) => {
-  return nbDays * 24 / 6 + 1
+const getHistoryLength = nbDays => {
+  return (nbDays * 24) / 6 + 1
 }
 
 const precisionRound = (number, precision) => {
@@ -12,7 +12,9 @@ const precisionRound = (number, precision) => {
 }
 
 export const formatCurrency = (value, ticker) => {
-  if (!CurrencyFormatter.currencies.find(currency => currency.code === ticker)) {
+  if (
+    !CurrencyFormatter.currencies.find(currency => currency.code === ticker)
+  ) {
     return `${ticker} ${precisionRound(value, 4)}`
   }
 
@@ -21,24 +23,32 @@ export const formatCurrency = (value, ticker) => {
 
 export const computeHoldingsHistory = (pricesHistory, amountHistory) => {
   return {
-    primary: pricesHistory.getValues('primary', amountHistory),
-    secondary: pricesHistory.getValues('secondary', amountHistory)
+    primary: pricesHistory.getValues("primary", amountHistory),
+    secondary: pricesHistory.getValues("secondary", amountHistory)
   }
 }
 
-export const computeAllHoldingsHistories = (priceHistories, balances) => { // Todo: change this to take balance history into account instead of balances
+export const computeAllHoldingsHistories = (priceHistories, balances) => {
+  // Todo: change this to take balance history into account instead of balances
   const summedAmounts = getSummedAmounts(balances)
 
   const holdingHistories = {}
   for (const ticker in summedAmounts) {
-    const pricesHistory = priceHistories.find(history => history.ticker === ticker)
+    const pricesHistory = priceHistories.find(
+      history => history.ticker === ticker
+    )
     // eslint-disable-next-line no-prototype-builtins
     if (!summedAmounts.hasOwnProperty(ticker) || !pricesHistory) {
       continue
     }
 
-    const balanceHistory = [...new Array(getHistoryLength(45)).keys()].map(() => summedAmounts[ticker]) // Todo: replace this with balanceHistories[ticker]
-    holdingHistories[ticker] = computeHoldingsHistory(pricesHistory, balanceHistory)
+    const balanceHistory = [...new Array(getHistoryLength(45)).keys()].map(
+      () => summedAmounts[ticker]
+    ) // Todo: replace this with balanceHistories[ticker]
+    holdingHistories[ticker] = computeHoldingsHistory(
+      pricesHistory,
+      balanceHistory
+    )
   }
 
   return holdingHistories
@@ -65,7 +75,12 @@ export const sumHoldingsHistories = holdings => {
   return summedHoldings
 }
 
-export const getPeriodPriceHistory = async (ticker, primary, secondary, nbDays = 45) => {
+export const getPeriodPriceHistory = async (
+  ticker,
+  primary,
+  secondary,
+  nbDays = 45
+) => {
   const empty = [...new Array(getHistoryLength(nbDays)).keys()].map(() => 0)
   const currencies = { primary: primary, secondary: secondary }
   const prices = { primary: empty, secondary: empty }
@@ -73,14 +88,20 @@ export const getPeriodPriceHistory = async (ticker, primary, secondary, nbDays =
   try {
     for (const category in currencies) {
       if (currencies[category] === ticker) {
-        prices[category] = [...new Array(getHistoryLength(nbDays)).keys()].map(() => 1)
+        prices[category] = [...new Array(getHistoryLength(nbDays)).keys()].map(
+          () => 1
+        )
       }
 
-      const response = await fetch(`https://min-api.cryptocompare.com/data/histohour?fsym=${ticker}&tsym=${currencies[category]}&limit=${getHistoryLength(nbDays) - 1}&aggregate=6`)
+      const response = await fetch(
+        `https://min-api.cryptocompare.com/data/histohour?fsym=${ticker}&tsym=${
+          currencies[category]
+        }&limit=${getHistoryLength(nbDays) - 1}&aggregate=6`
+      )
       const json = await response.json()
 
-      if (json['Data'].length >= getHistoryLength(nbDays)) {
-        prices[category] = json['Data'].map(data => data.close)
+      if (json["Data"].length >= getHistoryLength(nbDays)) {
+        prices[category] = json["Data"].map(data => data.close)
       }
     }
   } catch (e) {

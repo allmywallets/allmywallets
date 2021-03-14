@@ -1,121 +1,121 @@
-import 'isomorphic-fetch'
-import Configurator from '../../src/manager/configuration.js'
+import "isomorphic-fetch"
+import Configurator from "../../src/manager/configuration.js"
 
-describe('Configurator.js', () => {
-  describe('.validateConfig()', () => {
-    it('validates a valid config', () => {
-      expect(Configurator.validateConfig(
-        {
+describe("Configurator.js", () => {
+  describe(".validateConfig()", () => {
+    it("validates a valid config", () => {
+      expect(
+        Configurator.validateConfig({
           profiles: [
             {
               wallets: [],
               application: {
                 currencies: {
-                  primary: 'USD',
-                  secondary: 'BTC'
+                  primary: "USD",
+                  secondary: "BTC"
                 },
                 modules: []
               }
             }
           ],
           application: {
-            version: '0.1'
+            version: "0.1"
           }
-        }
-      )).toBe(true)
+        })
+      ).toBe(true)
     })
 
-    it('invalidates empty profiles', () => {
-      expect(Configurator.validateConfig(
-        {
+    it("invalidates empty profiles", () => {
+      expect(
+        Configurator.validateConfig({
           profiles: [],
           application: {
-            version: '0.1'
+            version: "0.1"
           }
-        }
-      )).toBe(false)
+        })
+      ).toBe(false)
     })
 
-    it('validates a valid wallet config', () => {
-      expect(Configurator.validateConfig(
-        {
+    it("validates a valid wallet config", () => {
+      expect(
+        Configurator.validateConfig({
           profiles: [
             {
               wallets: [
                 {
-                  id: '72e98ac',
-                  network: 'Network',
-                  provider: 'Provider',
-                  name: 'Name',
-                  parameters: { address: 'XABCDEFG' }
+                  id: "72e98ac",
+                  network: "Network",
+                  provider: "Provider",
+                  name: "Name",
+                  parameters: { address: "XABCDEFG" }
                 }
               ],
               application: {
                 currencies: {
-                  primary: 'USD',
-                  secondary: 'BTC'
+                  primary: "USD",
+                  secondary: "BTC"
                 },
                 modules: []
               }
             }
           ],
           application: {
-            version: '0.1'
+            version: "0.1"
           }
-        }
-      )).toBe(true)
+        })
+      ).toBe(true)
     })
 
-    it('invalidates a void config', () => {
+    it("invalidates a void config", () => {
       expect(Configurator.validateConfig({})).toBe(false)
     })
 
-    it('invalidates a void profile', () => {
-      expect(Configurator.validateConfig(
-        {
+    it("invalidates a void profile", () => {
+      expect(
+        Configurator.validateConfig({
           profiles: [{}],
           application: {
-            version: '0.1'
+            version: "0.1"
           }
-        }
-      )).toBe(false)
+        })
+      ).toBe(false)
     })
 
-    it('invalidates an invalid profiles config', () => {
-      expect(Configurator.validateConfig(
-        {
-          profiles: 'invalid',
+    it("invalidates an invalid profiles config", () => {
+      expect(
+        Configurator.validateConfig({
+          profiles: "invalid",
           application: {
-            version: '0.1'
+            version: "0.1"
           }
-        }
-      )).toBe(false)
+        })
+      ).toBe(false)
     })
 
-    it('invalidates an invalid wallet config', () => {
-      expect(Configurator.validateConfig(
-        {
+    it("invalidates an invalid wallet config", () => {
+      expect(
+        Configurator.validateConfig({
           profiles: [
             {
               wallets: [
                 {
-                  provider: 'Provider'
+                  provider: "Provider"
                 }
               ],
               application: {
                 currencies: {
-                  primary: 'USD',
-                  secondary: 'BTC'
+                  primary: "USD",
+                  secondary: "BTC"
                 },
                 modules: []
               }
             }
           ],
           application: {
-            version: '0.1'
+            version: "0.1"
           }
-        }
-      )).toBe(false)
+        })
+      ).toBe(false)
     })
   })
 })
