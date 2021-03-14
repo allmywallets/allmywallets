@@ -51,6 +51,7 @@
     text-align: left;
     list-style-type: none;
     padding-left: 15px;
+    margin: 0;
 
     svg {
       width: 25px;

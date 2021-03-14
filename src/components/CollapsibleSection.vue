@@ -4,9 +4,9 @@
       <h3 class="collapsible-title">
         <fa-icon :icon="icon" v-if="icon !== ''" class="icon" />
         <slot name="title">Section title</slot>
-        <a class="button button-small" @click.prevent="expanded = !expanded" href="#" v-if="this.$slots.default">
-          <translate v-if="expanded">Collapse</translate>
-          <translate v-else>Expand</translate>
+        <a class="button button-small expand-button" @click.prevent="expanded = !expanded" href="#" v-if="this.$slots.default">
+          <translate v-if="expanded" key="text-collapse">Collapse</translate>
+          <translate v-else key="text-expand">Expand</translate>
         </a>
       </h3>
       <slot name="intro">Section intro</slot>
@@ -39,7 +39,7 @@
   @import '../assets/scss/vars';
 
   .collapsible {
-    padding: 5px 15px 0;
+    padding: 5px 15px 15px;
     margin-bottom: 10px;
     @include card();
 
@@ -54,17 +54,22 @@
 
       .icon {
         width: 20px;
+        margin-right: 10px;
+      }
+
+      .expand-button {
+        margin-left: 5px;
       }
     }
 
     .collapsible-content {
       max-height: 0;
       overflow: hidden;
-      margin-top: 15px;
     }
 
     &.expanded .collapsible-content {
       max-height: none;
+      padding: 15px 0 0;
     }
   }
 </style>
