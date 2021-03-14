@@ -4,7 +4,7 @@
     <div class="balance-content">
       <header class="balance-header">
         <span class="balance-logo" v-if="logo">
-          <img height="40" :src="`/icons/${balance.ticker.toLowerCase()}%402x.png`" @error="removeLogo" :alt="balance.ticker" />
+          <img height="40" :src="`/public/icons/${balance.ticker.toLowerCase()}%402x.png`" @error="removeLogo" :alt="balance.ticker" />
         </span>
         <h4 class="balance-name">
           {{ balance.wallet.name }}<br />
