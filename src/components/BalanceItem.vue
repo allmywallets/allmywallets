@@ -206,7 +206,6 @@
       justify-content: center;
 
       .balance-logo {
-        font-size: 2rem;
         display: inline-block;
         margin: 0 5px;
       }
@@ -214,8 +213,8 @@
       .balance-name {
         line-height: 0.9rem;
         display: inline-block;
-        margin-top: 13px;
         white-space: nowrap;
+        margin: 0;
 
         .balance-currency {
           font-style: italic;
