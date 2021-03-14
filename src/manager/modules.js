@@ -33,7 +33,7 @@ export const loadModules = async () => {
       routes: routes
     })
 
-    router.addRoutes(routes.map(route => route.router))
+    routes.map(route => router.addRoute(route.router))
   }
 
   return modules
