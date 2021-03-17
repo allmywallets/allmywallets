@@ -12,7 +12,7 @@
     "cypress": "vue-cli-service test:e2e"
   },
   "dependencies": {
-    "@allmywallets/providers": "0.0.6",
+    "@allmywallets/providers": "^1.4.3",
     "@babel/runtime": "^7.13.10",
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-brands": "^5.0.13",

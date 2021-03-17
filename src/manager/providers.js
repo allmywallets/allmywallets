@@ -46,8 +46,85 @@ export default class Proxy {
   }
 }
 
+function wrapDefiProvider(Provider) {
+  // Fix web3 related error: Uncaught TypeError: Cannot read property 'node' of undefined
+  // https://github.com/ChainSafe/web3.js/issues/1986
+  process.versions = { node: "11.2.0" }
+
+  class DeFiProvider {
+    constructor(parameters, wallet) {
+      this.parameters = parameters
+      this.defi = new Provider(this.parameters)
+      this.defi.setProxy(Provider.info.hasCORS ? "" : AMW_PROXY_URL)
+      this.wallet = wallet
+    }
+
+    async checkParameters() {
+      await this.defi.checkParameters()
+      await this.defi.checkAddresses(this.parameters.address)
+      await this.defi.checkWallets(this.parameters.wallet)
+    }
+
+    async getBalances() {
+      const balances = []
+
+      const platforms = this.parameters.platforms
+      const platformPools = await this.defi
+        .address(this.parameters.address)
+        .platforms(platforms)
+        .exec()
+
+      platformPools.forEach((platformPool, i) => {
+        platformPool.forEach(pool => {
+          const balance = new Balance(
+            this.wallet,
+            this.parameters.address,
+            platforms[i],
+            "LP " + Object.keys(pool.tokens).join(),
+            pool.lpTokenAmount,
+            new Date()
+          )
+          balances.push(balance)
+        })
+      })
+
+      return balances
+    }
+
+    static async getSupportedParameters() {
+      let providerParameters = Provider.getProviderParameters().map(param => {
+        param.model = `providerSpecific.${param.model}`
+        return param
+      })
+
+      providerParameters = providerParameters.concat(
+        Provider.getWalletIdentifierParameters()
+      )
+
+      providerParameters.push({
+        type: "checklist",
+        label: "DeFi platforms",
+        model: "platforms",
+        multi: true,
+        required: false,
+        multiSelect: true,
+        values: new Provider().availablePlatforms()
+      })
+
+      return providerParameters
+    }
+  }
+
+  return DeFiProvider
+}
+
 function getGenericProviderClass(providerName) {
   const Provider = Providers.providers[providerName]
+
+  if (Provider.isDeFi) {
+    return wrapDefiProvider(Provider)
+  }
+
   class GenericProvider {
     constructor(parameters, wallet) {
       this.parameters = parameters
@@ -134,7 +211,7 @@ function getGenericProviderClass(providerName) {
         label: "Currencies",
         model: "currencies",
         multi: true,
-        required: false,
+        required: true,
         multiSelect: true,
         values: await GenericProvider._getSupportedTickers()
       })
