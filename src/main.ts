@@ -34,7 +34,7 @@ Vue.use(SweetModal)
 Vue.use(VueGetText, {
   availableLanguages: getAvailableLanguages(),
   defaultLanguage: locale(),
-  translations: translations,
+  translations,
   silent: true
 })
 
