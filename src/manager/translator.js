@@ -1,4 +1,5 @@
 import langs from "langs"
+import translations from "../../translations/translations.json"
 
 export const locale = () => {
   for (let language of navigator.languages) {
@@ -21,4 +22,4 @@ export const getAvailableLanguages = () => {
   return languages
 }
 
-export const translations = require("../../translations/translations.json")
+export { translations }
