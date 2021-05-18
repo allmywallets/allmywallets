@@ -1,6 +1,7 @@
 import Balance from "../model/Balance"
 import Providers from "@allmywallets/providers"
 import Wallet from "../model/Wallet"
+import { DeFiBalance } from "@/model/DeFiBalance"
 
 const AMW_PROXY_URL =
   process.env.NODE_ENV === "production"
@@ -76,12 +77,16 @@ function wrapDefiProvider(Provider) {
 
       platformPools.forEach((platformPool, i) => {
         platformPool.forEach(pool => {
-          const balance = new Balance(
+          const balance = new DeFiBalance(
             this.wallet,
-            this.parameters.address,
             platforms[i],
-            "LP " + Object.keys(pool.tokens).join(),
+            this.parameters.address,
+            pool.tokens,
+            "LP " + Object.keys(pool.tokens).join("-"),
             pool.lpTokenAmount,
+            pool.totalDeposited,
+            pool.rewardPerYear,
+            pool.pendingRewards,
             new Date()
           )
           balances.push(balance)
